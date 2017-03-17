@@ -28,4 +28,21 @@ class Reportepersonal extends CI_Controller{
       );
     }
   }
+
+  public function form_tiempoLaboradoGeneral()
+  {
+    $this->load->database('ot');
+    $bases = $this->db->get('base');
+    $this->load->view('miscelanios/reportepersonal/form_tiempoLaborado', array("bases"=>$bases));
+  }
+
+  public function tiempoLaboradoGeneral()
+  {
+    $mes = $this->input->post("consultatiempoMes");
+    $year = $this->input->post("consultatiempoYear");
+    $base = $this->input->post("consultatiempoBase");
+    $this->load->model('Reportepersonal_db', 'rper');
+    $rows = $this->rper->tiempoLaboradoGeneral($mes, $year, $base);
+    $this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
+  }
 }

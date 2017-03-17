@@ -55,7 +55,7 @@ class Reportepersonal_db extends CI_Model{
       "" as firma,
 '
     );
-//      if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,    
+//      if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
     $this->db->from('reporte_diario AS rd');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
@@ -106,6 +106,45 @@ class Reportepersonal_db extends CI_Model{
   {
     $this->load->database('ot');
     return $this->db->select(' ( select @rownum := @rownum + 1 from ( select @rownum := 0 ) d2 ) AS t FROM reporte_diario ')->get();
+  }
+
+  public function tiempoLaboradoGeneral($mes, $year, $base)
+  {
+
+    $this->load->database('ot');
+    return $this->db->select(
+      '
+      OT.nombre_ot,
+      rd.fecha_reporte,
+      p.identificacion,
+      p.nombre_completo,
+      if(rrd.facturable, "SI", "NO") AS facturable,
+      rrd.hora_inicio AS turno1_inicio,
+      rrd.hora_fin AS turno1_fin,
+      rrd.hora_inicio2 AS turno2_inicio,
+      rrd.hora_fin2 AS turno2_fin,
+      if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
+      if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
+      if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
+      if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
+      if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
+      if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
+      if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
+      if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
+      rrd.racion,
+      rrd.gasto_viaje_pr AS pernocto,
+      rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
+      rd.validado_pyco AS estado_reporte
+      '
+    )->from("recurso_reporte_diario AS rrd")
+    ->join("reporte_diario AS rd","rd.idreporte_diario = rrd.idreporte_diario")
+    ->join("OT","OT.idOT = rd.OT_idOT")
+    ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
+    ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
+    ->join("persona AS p","p.identificacion = r.persona_identificacion")
+    ->where(" MONTH(rd.fecha_reporte) = ".$mes."  AND YEAR(rd.fecha_reporte) = ".$year." ")
+    ->where("OT.base_idbase", $base)
+    ->get();
   }
 
 }
