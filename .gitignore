@@ -1,0 +1,7 @@
+/nbproject/private/
+/application/controllers/Sesion.*
+/application/config/database.*
+/application/config/config.*
+/uploads/
+/uploads/*
+/application/helpers/dompdf/lib/fonts/*

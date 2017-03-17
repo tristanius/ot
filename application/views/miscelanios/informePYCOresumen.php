@@ -1,0 +1,9 @@
+<td> <?= number_format($pyco->directo, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->aiu, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->gastos_viaje, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->horas_extra, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->raciones, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->aiu_otros, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->reembolsables, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->aiu_reemb, 2, ',', '.')  ?> </td>
+<td> <?= number_format($pyco->total, 2, ',', '.')  ?> </td>

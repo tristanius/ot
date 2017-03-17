@@ -1,0 +1,16 @@
+.regularForm{
+
+}
+
+.regularForm input, .regularForm select, .regularForm input[type="checkbox"]:not(:checked), .regularForm input[type="checkbox"]:checked{
+  margin: 0px;
+  position: relative;
+  display: inline-block;
+}
+
+.regularForm input.inputSmall, .regularForm select.inputSmall{
+  width: 9ex;
+}
+.regularForm input.inputMedium, .regularForm select.inputMedium{
+  width: 16ex;
+}
