@@ -118,6 +118,9 @@ class Reportepersonal_db extends CI_Model{
       rd.fecha_reporte,
       p.identificacion,
       p.nombre_completo,
+      itf.itemc_item,
+      itf.codigo,
+      itf.descripcion,
       if(rrd.facturable, "SI", "NO") AS facturable,
       rrd.hora_inicio AS turno1_inicio,
       rrd.hora_fin AS turno1_fin,
@@ -137,6 +140,7 @@ class Reportepersonal_db extends CI_Model{
       rd.validado_pyco AS estado_reporte
       '
     )->from("recurso_reporte_diario AS rrd")
+    ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
     ->join("reporte_diario AS rd","rd.idreporte_diario = rrd.idreporte_diario")
     ->join("OT","OT.idOT = rd.OT_idOT")
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
