@@ -53,7 +53,7 @@
 						<input type="text" ng-model="ot.ccosto" ><!-- Campo habilitado a todos en PYCO -->
 						<!-- <input type="text" ng-model="ot.ccosto" ng-if="validPriv(54)" readonly> -->
 					</td>
-					<td></td>
+					<td> Orden Basica: <input type="checkbox" ng-model="ot.basica" ng-init="toboolean(ot.basica)"> </td>
 					<td colspan="4">
 						Valor OT: <span ng-bind="ot.valor_ot | currency"></span>
 					</td>
