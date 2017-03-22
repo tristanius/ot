@@ -36,7 +36,7 @@
 
 				<li ng-show="validGestion('maestros_ot')">
 					<a href="#" ng-click="getFromMenu('#MenuMaestros','#slideOpciones')" data-icon="&#xe050;">
-					  Maestros (80%)
+					  Maestros
 					</a>
 				</li>
 		    </ul>

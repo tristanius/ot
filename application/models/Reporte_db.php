@@ -193,7 +193,7 @@ class Reporte_db extends CI_Model{
 
   public function getRecursos($idrepo, $tipo){
     $this->load->database('ot');
-    $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad');
+    $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item');
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
     $this->db->join('itemf AS itf', 'rrd.itemf_iditemf = itf.iditemf', 'LEFT');

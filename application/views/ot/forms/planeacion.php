@@ -31,7 +31,7 @@
 
 		<p class="noMaterialStyles regularForm" ng-if="validPriv(49)">
 			<label for="">Editar tarea:</label>
-			<input type="checkbox" ng-model="toboolean(tr.editable)" ng-click="tr.editable = toboolean(!tr.editable)">
+			<input type="checkbox" ng-model="tr.editable" ng-click="tr.editable = toboolean(tr.editable)" ng-init="tr.editable = toboolean(!tr.editable)">
 		</p>
 
 

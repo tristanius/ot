@@ -3,7 +3,7 @@
   <section class="list" ng-controller="listaOT">
     <h4>Gestion de ordenes de trabajo:</h4>
 
-    <div class="row botonera">
+    <div class="row botonera" ng-if="validPriv(37)">
       Add. OT: <button type="button" class="btn mini-btn" data-icon="&#xe052;" ng-click="getAjaxWindow('<?= site_url('ot/addNew') ?>', $event, 'Gestion de OTs');"></button>
     </div>
 

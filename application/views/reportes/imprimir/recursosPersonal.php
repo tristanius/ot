@@ -45,7 +45,7 @@
 			  <td><?= $v->identificacion ?></td>
 			  <td><?= $v->nombre_completo ?></td>
 			  <td><?= $v->itemc_item ?></td>
-			  <td><?= $v->descripcion ?></td>
+			  <td><?= ($v->CL == "L")? $v->descripcion_item : $v->descripcion; ?></td>
 			  <td><?= $v->CL ?></td>
 			  <td><?= (isset($v->facturable) && !$v->facturable)?'N':(isset($v->BO)?$v->BO:'') ?></td>
 			  <td><?= $v->unidad ?></td>

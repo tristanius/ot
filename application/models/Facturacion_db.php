@@ -236,7 +236,7 @@ class Facturacion_db extends CI_Controller{
       tr.nombre_tarea,
       IFNULL(tr.sap , OT.numero_sap) AS sap,
       b.nombre_base,
-      OT.indole_ot,
+      if(OT.basica, "BASICA","-") AS ot_basica,
       OT.vereda,
       OT.actividad,
       OT.estado_doc,

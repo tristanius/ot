@@ -18,7 +18,8 @@ class Ot_db extends CI_Model {
 	public function add(
 		$nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad, $justificacion,
 		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $sap, $gerencia, $sistema_ecp, $estado_doc,
-		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin, $fecha_creacion_cc=NULL
+		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
+		$fecha_creacion_cc=NULL,  $basica = NULL
 	){
 		$this->load->database('ot');
 		$data = array(
@@ -49,7 +50,8 @@ class Ot_db extends CI_Model {
 			"presupuesto_porcent_ini"=>$presupuesto_porcent_ini,
 			"presupuesto_fecha_fin"=>$presupuesto_fecha_fin,
 			"presupuesto_porcent_fin"=>$presupuesto_porcent_fin,
-			"fecha_creacion_cc"=>$fecha_creacion_cc
+			"fecha_creacion_cc"=>$fecha_creacion_cc,
+			"basica" =>$basica
 		);
 		$this->db->insert('OT', $data);
 		return $this->db->insert_id();
@@ -58,7 +60,8 @@ class Ot_db extends CI_Model {
 	public function update(
 		$idot, $nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad,
 		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $sap, $gerencia, $sistema_ecp, $estado_doc,
-		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin, $fecha_creacion_cc=NULL
+		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
+		$fecha_creacion_cc=NULL, $basica = NULL
 	) {
 		$this->load->database('ot');
 		$data = array(
@@ -89,7 +92,8 @@ class Ot_db extends CI_Model {
 			"presupuesto_porcent_ini"=>$presupuesto_porcent_ini,
 			"presupuesto_fecha_fin"=>$presupuesto_fecha_fin,
 			"presupuesto_porcent_fin"=>$presupuesto_porcent_fin,
-			"fecha_creacion_cc"=>$fecha_creacion_cc
+			"fecha_creacion_cc"=>$fecha_creacion_cc,
+			"basica" =>$basica
 		);
 		return $this->db->update('OT', $data, "idOT =".$idot);
 	}

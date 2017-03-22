@@ -120,7 +120,8 @@ class Ot extends CI_Controller {
 						isset($orden->presupuesto_porcent_ini)?$orden->presupuesto_porcent_ini:NULL,
 						isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 						isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
-						isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL
+						isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
+						isset($orden->basica)?$orden->basica:FALSE
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s') );	}
@@ -346,7 +347,8 @@ class Ot extends CI_Controller {
 				isset($orden->presupuesto_porcent_ini)?$orden->presupuesto_porcent_ini:NULL,
 				isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 				isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
-				isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL
+				isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
+				isset($orden->basica)?$orden->basica:FALSE
 			);
 
 		$this->load->helper('log');
