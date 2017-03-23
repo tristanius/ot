@@ -1,5 +1,6 @@
 /nbproject/private/
 /application/controllers/Sesion.*
+/application/controllers/Validator.*
 /application/config/database.*
 /application/config/config.*
 /uploads/

@@ -114,12 +114,14 @@ class Reportepersonal_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select(
       '
-      OT.nombre_ot,
+      OT.nombre_ot AS Orden,
+      OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
       p.nombre_completo,
       itf.itemc_item,
       itf.codigo,
+      if(titc.CL="L", "LEGAL", if(titc.CL="C","CONVECIONAL", "NO DATA")) AS tipo_item,
       itf.descripcion,
       if(rrd.facturable, "SI", "NO") AS facturable,
       rrd.hora_inicio AS turno1_inicio,
@@ -141,6 +143,8 @@ class Reportepersonal_db extends CI_Model{
       '
     )->from("recurso_reporte_diario AS rrd")
     ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
+    ->join("itemc AS itc","itc.iditemc = itf.itemc_iditemc")
+    ->join("tipo_itemc AS titc","titc.idtipo_itemc = itc.idtipo_itemc")
     ->join("reporte_diario AS rd","rd.idreporte_diario = rrd.idreporte_diario")
     ->join("OT","OT.idOT = rd.OT_idOT")
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")

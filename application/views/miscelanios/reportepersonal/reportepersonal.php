@@ -33,8 +33,8 @@ th,td{
       <th rowspan="2" colspan="3"><img src="<?= base_url('assets/img/termotecnica.jpg') ?>" width="180" height="40"></th>
       <th rowspan="2" colspan="15" class="f16">REPORTE DIARIO DE TIEMPO LABORADO</th>
       <th>BASE</th>
-      <th colspan="3" class="f16"><?= $laOT->row()->nombre_base ?></th>          
-<?php 
+      <th colspan="3" class="f16"><?= $laOT->row()->nombre_base ?></th>
+<?php
             switch ($laOT->row()->nombre_base) {
                 case 'Ayacucho':
                   $horasDia=9;
@@ -47,12 +47,12 @@ th,td{
                   break;
                 default:
                   $horasDia=8;
-            }   
-?>      
+            }
+?>
     </tr>
     <tr>
       <th>DIA</th>
-      <th colspan="3" class="f16"><?= $dias_semana[$laOT->row()->dia_semana-1] ?><?= $laOT->row()->festivo?"(F)":"" ?></th>          
+      <th colspan="3" class="f16"><?= $dias_semana[$laOT->row()->dia_semana-1] ?><?= $laOT->row()->festivo?"(F)":"" ?></th>
     </tr>
     <tr>
     	<th rowspan="2" colspan="2">CONTRATO: MA-0032887</th>
@@ -89,9 +89,9 @@ th,td{
       <th class="thCentro" style="width:1.5cm;">SALIDA</th>
       <th class="thCentro" style="width:1.2cm;">HO</th>
       <th class="thCentro" style="width:0.8cm;">HOF</th>
-      <th class="thCentro" style="width:0.8cm;">HED</th>
-      <th class="thCentro" style="width:0.8cm;">HEN</th>
-      <th class="thCentro" style="width:0.8cm;">HRN</th>
+      <th class="thCentro" style="width:0.8cm;">HED<?=$laOT->row()->festivo?"F":"" ?></th>
+      <th class="thCentro" style="width:0.8cm;">HEN<?=$laOT->row()->festivo?"F":"" ?></th>
+      <th class="thCentro" style="width:0.8cm;">HRN<?=$laOT->row()->festivo?"F":"" ?></th>
       <th class="thCentro" style="width:0.8cm;">NVD</th>
       <th class="thCentro" style="width:1.1cm;">PN/RT</th>
       <th class="thCentro" style="width:1.5cm;">LUGAR</th>
@@ -101,7 +101,7 @@ th,td{
         <?php foreach ($elpersonal->result() as $key => $value): ?>
           <tr>
             <?php foreach ($value as $k => $v): ?>
-            <?php            
+            <?php
             switch ($k) {
                 case 'nombre_completo':
                   echo "<td colspan='3'>";
@@ -111,9 +111,9 @@ th,td{
                   break;
                 default:
                   echo "<td  class='thCentro'>";
-            }    
+            }
             if ($k=='cantidad'){
-                echo $v * $horasDia; 
+                echo $v * $horasDia;
              }else{
                 $swFormato=false;
                 switch ($k) {
@@ -131,7 +131,7 @@ th,td{
                       break;
                     default:
                       $swFormato=false;
-                }    
+                }
                 if  ($swFormato){
                       if (strpos($v,":")==0 and is_numeric($v)){
                           echo ($v==24)?"00:00":$v.":00";
@@ -152,7 +152,7 @@ th,td{
     <tr>
       <td colspan="22" style="height:30px;">
 NOVEDADES:  <b>A:</b> INCAPACIDAD ACCIDENTE DE TRABAJO, <b>E:</b> INCAPACIDAD ENFERMEDAD GENERAL,  <b>P:</b> PERMISO NO REMUNERADO, <b>R:</b> PERMISO REMUNERADO, <b>F:</b> AUSENCIA NO JUSTIFICADA, <b>LR:</b> LICENCIA REMUNERADA,
-CONVENCIONES: <b>OD:</b> HORA DIURNA, <b>ON:</b> HORA NOCTURNA, <b>HED:</b> HORA EXTRA DIURNA,  <b>HEN:</b> HORA EXTRA NOCTURNA, <b>NVD:</b> NOVEDADES. EN LA CASILLA P/R, <b>PN:</b> PERNOCTADO, <b>RT:</b> RETORNO.          
+CONVENCIONES: <b>OD:</b> HORA DIURNA, <b>ON:</b> HORA NOCTURNA, <b>HED:</b> HORA EXTRA DIURNA,  <b>HEN:</b> HORA EXTRA NOCTURNA, <b>NVD:</b> NOVEDADES. EN LA CASILLA P/R, <b>PN:</b> PERNOCTADO, <b>RT:</b> RETORNO.
       </td>
     </tr>
     <tr>
@@ -171,6 +171,6 @@ CONVENCIONES: <b>OD:</b> HORA DIURNA, <b>ON:</b> HORA NOCTURNA, <b>HED:</b> HORA
       <td colspan="18"></td>
       <td colspan="4">FIRMA:</td>
     </tr>
-  </tfoot>        
+  </tfoot>
 </table>
 <div style="text-align: right;font-size:10px;">F-QAQC-CUT-41. Rev2</div>

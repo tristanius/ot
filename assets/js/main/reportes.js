@@ -584,9 +584,9 @@ var editReporte = function($scope, $http, $timeout){
     $scope.rd.info.validado_pyco = value.nombre_validacion_doc;
 
     $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+value.nombre_validacion_doc);
-    if(value.nombre_validacion_doc == "CORREGIDO"){
+    /* if(value.nombre_validacion_doc == "CORREGIDO"){
       $http.post($scope.$parent.site_url+"/sesion/sendMail2",{msj: " El reporte <b>"+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+value.nombre_validacion_doc+" </b>. "});
-    }
+    } */
   }
 
   $scope.getDataInfo = function(link){
