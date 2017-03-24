@@ -112,6 +112,7 @@ class Reportepersonal_db extends CI_Model{
   {
 
     $this->load->database('ot');
+    if(isset($base)){$this->db->where('OT.base_idbase', $base);}
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
@@ -151,7 +152,6 @@ class Reportepersonal_db extends CI_Model{
     ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
     ->where(" MONTH(rd.fecha_reporte) = ".$mes."  AND YEAR(rd.fecha_reporte) = ".$year." ")
-    ->where("OT.base_idbase", $base)
     ->get();
   }
 

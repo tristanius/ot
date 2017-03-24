@@ -42,6 +42,7 @@ class Reportepersonal extends CI_Controller{
     $year = $this->input->post("consultatiempoYear");
     $base = $this->input->post("consultatiempoBase");
     $this->load->model('Reportepersonal_db', 'rper');
+    if($base == "all"){$base = NULL;}
     $rows = $this->rper->tiempoLaboradoGeneral($mes, $year, $base);
     $this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
   }
