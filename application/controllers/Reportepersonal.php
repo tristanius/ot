@@ -46,4 +46,30 @@ class Reportepersonal extends CI_Controller{
     $rows = $this->rper->tiempoLaboradoGeneral($mes, $year, $base);
     $this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
   }
+
+  #=========================================================================================
+  # dias laborados del mes
+
+  public function form_reporteMes(){
+    $this->load->database('ot');
+    $rows = $this->db->get('base');
+    $this->load->view("miscelanios/reportepersonal/form_reportemespersona", array("bases"=>$rows));
+  }
+
+  public function reporteMes($mes, $year, $laBase=NULL)
+  {
+    $post = json_decode( file_get_contents("php://input") );
+    $this->load->model('Reportepersonal_db', 'rpermes');
+    $rows = $this->rpermes->getBy($mes, $year, $laBase);
+    if($rows->num_rows() > 0){
+      echo 'invalid';
+    }else{
+      $rowsPersonal = $this->rpermes->getPerMes($mes, $year,$laBase);
+      //echo $this->db->last_query();
+      $ds = cal_days_in_month(CAL_GREGORIAN,$mes,$year);
+      $this->load->view('miscelanios/reportepersonal/reportemespersona',
+        array('lashoras'=>$rowsPersonal,'nodownload'=>false,'inicio'=>$year.'-'.$mes.'-01','final'=>$year.'-'.$mes.'-'.$ds,'labase'=>$laBase)
+      );
+    }
+  }
 }

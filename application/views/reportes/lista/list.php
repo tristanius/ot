@@ -12,6 +12,7 @@
       </select>
     </span>
     <span> Día: <input type="text" ng-if="filtroReportes.mes" style="width:8ex" ng-model="filtroReportes.dia"></span>
+    <span ng-if="!filtroReportes.mes" ng-init="filtroReportes.dia = ''"></span>
   </div>
   <table class="mytabla font11 striped">
     <thead>

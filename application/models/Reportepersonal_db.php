@@ -155,4 +155,64 @@ class Reportepersonal_db extends CI_Model{
     ->get();
   }
 
+  /// --------------------------------------
+
+  public function getPerMes($mes, $year,$laBase)
+  {
+    $tmp_base  =($laBase=="-")?"":" and OT.base_idbase=".$laBase;
+    
+    $this->load->database('ot');
+    return $this->db->query(
+      '
+        select OT.base_idbase as base,
+        rrd.itemf_codigo as codigo,
+        p.identificacion,
+        p.nombre_completo,
+        OT.nombre_ot,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-1))))  as d01,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-2))))  as d02,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-3))))  as d03,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-4))))  as d04,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-5))))  as d05,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-6))))  as d06,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-7))))  as d07,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-8))))  as d08,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-9))))  as d09,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-10)))) as d10,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-11)))) as d11,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-12)))) as d12,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-13)))) as d13,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-14)))) as d14,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-15)))) as d15,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-16)))) as d16,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-17)))) as d17,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-18)))) as d18,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-19)))) as d19,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-20)))) as d20,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-21)))) as d21,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-22)))) as d22,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-23)))) as d23,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-24)))) as d24,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-25)))) as d25,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-26)))) as d26,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-27)))) as d27,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-28)))) as d28,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-29)))) as d29,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-30)))) as d30,
+        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-31)))) as d31
+        from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,persona p
+        where MONTH(rd.fecha_reporte) = '.$mes.' and 
+        YEAR(rd.fecha_reporte)  = '.$year.' and
+        OT.base_idbase = '.$laBase.' and
+        rd.idreporte_diario=rrd.idreporte_diario and 
+        OT.idot=rd.ot_idot and
+        rrd.idrecurso_ot=rot.idrecurso_ot and
+        rot.recurso_idrecurso=recurso.idrecurso and
+        recurso.persona_identificacion=p.identificacion
+        group by p.identificacion,nombre_ot
+        order by p.identificacion,nombre_ot
+    '
+    );
+  }
+
 }
