@@ -233,7 +233,7 @@ class Reporte_db extends CI_Model{
     }
     $this->db->where('rrd.idreporte_diario', $idrepo);
     $this->db->order_by('itf.codigo', 'asc');
-    $this->db->order_by('rrd.facturable', 'desc');
+    //$this->db->order_by('rrd.facturable', 'desc');
     if ($tipo != 'actividades') {
       $this->db->order_by('titc.idtipo_itemc', 'desc');
     }

@@ -33,12 +33,12 @@
       $sumatoria = array('ho'=>0, 'hed'=>0, 'hen'=>0, 'hrn'=>0, 'rac'=>0 );
       foreach ($recursos->personal as $k => $v): ?>
       <?php
-        $sumatoria['ho'] +=$v->horas_ordinarias;
-        $sumatoria['hed'] +=$v->horas_extra_dia;
-        $sumatoria['hen'] +=$v->horas_extra_noc;
-        $sumatoria['hrn'] +=$v->horas_recargo;
-        $sumatoria['rac'] +=$v->racion;
 		    if(  (isset($v->facturable) && $v->facturable ) || ( isset($v->print) && $v->print) ){
+          $sumatoria['ho'] +=$v->horas_ordinarias;
+          $sumatoria['hed'] +=$v->horas_extra_dia;
+          $sumatoria['hen'] +=$v->horas_extra_noc;
+          $sumatoria['hrn'] +=$v->horas_recargo;
+          $sumatoria['rac'] +=$v->racion;
 			?>
 			<tr>
 			  <td><?php $i++; echo $i; ?></td>
