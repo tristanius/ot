@@ -122,7 +122,7 @@ class Reportepersonal_db extends CI_Model{
       p.nombre_completo,
       itf.itemc_item,
       itf.codigo,
-      if(titc.CL="L", "LEGAL", if(titc.CL="C","CONVECIONAL", "NO DATA")) AS tipo_item,
+      if(titc.CL="L", "LEGAL", if(titc.CL="C","CONVENCIONAL", "NO DATA")) AS tipo_item,
       itf.descripcion,
       if(rrd.facturable, "SI", "NO") AS facturable,
       rrd.hora_inicio AS turno1_inicio,
@@ -160,7 +160,7 @@ class Reportepersonal_db extends CI_Model{
   public function getPerMes($mes, $year,$laBase)
   {
     $tmp_base  =($laBase=="-")?"":" and OT.base_idbase=".$laBase;
-    
+
     $this->load->database('ot');
     return $this->db->query(
       '
@@ -201,10 +201,10 @@ class Reportepersonal_db extends CI_Model{
         sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-30)))) as d30,
         sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-31)))) as d31
         from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,persona p
-        where MONTH(rd.fecha_reporte) = '.$mes.' and 
+        where MONTH(rd.fecha_reporte) = '.$mes.' and
         YEAR(rd.fecha_reporte)  = '.$year.' and
         OT.base_idbase = '.$laBase.' and
-        rd.idreporte_diario=rrd.idreporte_diario and 
+        rd.idreporte_diario=rrd.idreporte_diario and
         OT.idot=rd.ot_idot and
         rrd.idrecurso_ot=rot.idrecurso_ot and
         rot.recurso_idrecurso=recurso.idrecurso and

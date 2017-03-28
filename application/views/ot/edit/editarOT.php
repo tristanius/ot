@@ -62,7 +62,7 @@
 			<thead>
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Gerencia</th>
-					<th>Sistemas ECP</th>
+					<th>Departamento ECP</th>
 					<th colspan="5"></th>
 				</tr>
 			</thead>

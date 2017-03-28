@@ -24,7 +24,8 @@
         <th>Validación</th>
         <th>Gestionar</th>
         <th>R. día</th>
-        <th><small>T. Laborado</small></th>
+        <th><small>T.L.</small></th>
+        <th>F. creación</th>
       </tr>
     </thead>
     <tbody>
@@ -51,6 +52,7 @@
         <td>
           <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>
         </td>
+        <td> <span ng-if="rd.fecha_registro" ng-bind="rd.fecha_registro"></span></td>
       </tr>
     </tbody>
   </table>

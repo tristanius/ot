@@ -247,7 +247,7 @@ class Facturacion_db extends CI_Controller{
       OT.presupuesto_fecha_fin AS fecha_fin_presupuesto,
       OT.presupuesto_porcent_fin AS porcentaje_final,
       OT.fecha_creacion_cc,
-      OT.sistema_ecp,
+      OT.sistema_ecp as departamento_ecp,
       OT.cc_ecp,
       "" AS cuenta_mayor,
       e.nombre_especialidad,
