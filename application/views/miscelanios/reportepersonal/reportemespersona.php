@@ -87,22 +87,22 @@ table tr td, table tr th{
                           echo "<span style='color:brown'>1</span>";
                           break;
                         case 3:
-                          echo "D";
+                          echo "<span style='color:green'>D</span>";
                           break;
                         case 4:
-                          echo "D";
+                          echo "<span style='color:brown'>D</span>";
                           break;
                         case 5:
                           echo "AP";
                           break;
                         case 6:
-                          echo "AP";
+                          echo "AS";
                           break;
                         case 7:
                           echo "IC";
                           break;
                         case 8:
-                          echo "I";
+                          echo "<span style='color:red'>I</span>";
                           break;
                         case 9:
                           echo "V";
@@ -114,7 +114,7 @@ table tr td, table tr th{
                           echo "S";
                           break;
                         case 20:
-                          echo "-";
+                          echo "";
                           break;
                         default:
                           echo  ($v>0?$v:'');

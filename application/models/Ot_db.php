@@ -99,7 +99,16 @@ class Ot_db extends CI_Model {
 		);
 		return $this->db->update('OT', $data, "idOT =".$idot);
 	}
-  	// obetener información de una OT
+
+	#=============================================================================
+	# Insertando información adicional
+	public function addRendimientoMesAMes($)
+	{
+		//$this->db->insert('', $data);
+	}
+	#=============================================================================
+
+	// obetener información de una OT
 	public function getData($idot){
 		$this->load->database('ot');
 		$this->db->from('OT');

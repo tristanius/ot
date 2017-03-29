@@ -14,11 +14,19 @@
   </thead>
   <tbody>
     <?php foreach ($rows->result() as $key => $value): ?>
+      <?php $r = json_decode($value->responsable_pyco); $i=0; ?>
       <tr style="max-height: 45px;" height="45">
         <?php foreach ($value as $k => $v): ?>
-          <td >
-            <?= $v ?>
-          </td>
+            <?php $i++; ?>
+            <?php if ($k == "responsable_pyco" ): ?>
+              <td> <?= $r->pyco ?> </td>
+            <?php elseif($k == "ing_residente" || $k == "facturador"): ?>
+              <td> <?= $r->$k ?></td>
+            <?php elseif($i>=25 && $i<=41): ?>
+              <td> <?= number_format($v*1,2) ?></td>
+            <?php else: ?>
+              <td><?= $v ?></td>
+            <?php endif; ?>
         <?php endforeach; ?>
       </tr>
     <?php endforeach; ?>
