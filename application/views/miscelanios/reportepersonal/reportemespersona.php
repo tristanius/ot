@@ -74,44 +74,57 @@ table tr td, table tr th{
                $fila++;
           ?>
             <tr style="background-color:<?= $bgcolor; ?>;" >
-            <?php foreach ($valoresFila as $k => $v):
+            <?php
+            $contador = 0;
+            foreach ($valoresFila as $k => $v):
                 $ultimoDia='d'.$nDias;
                 if ($k>='d01' and $k<='d31'){
                     if ($k<=$ultimoDia){
                       echo  "<td><b>";
                       switch ($v) {
                         case 1:
-                          echo "<span style='color:green'>1</span>";
+                          echo "<span style='color:#275b1f'>1</span>";
+                          $contador++;
                           break;
                         case 2:
                           echo "<span style='color:brown'>1</span>";
+                          $contador++;
                           break;
                         case 3:
-                          echo "<span style='color:green'>D</span>";
+                          echo "<span style='color:#275b1f'>D</span>";
+                          $contador++;
                           break;
                         case 4:
                           echo "<span style='color:brown'>D</span>";
+                          $contador++;
                           break;
                         case 5:
                           echo "AP";
+                          $contador++;
                           break;
                         case 6:
                           echo "AS";
+                          $contador++;
                           break;
                         case 7:
                           echo "IC";
+                          $contador++;
                           break;
                         case 8:
                           echo "<span style='color:red'>I</span>";
+                          $contador++;
                           break;
                         case 9:
                           echo "V";
+                          $contador++;
                           break;
                         case 10:
                           echo "A";
+                          //$contador++;
                           break;
                         case 11:
                           echo "S";
+                          //$contador++;
                           break;
                         case 20:
                           echo "";
@@ -125,7 +138,7 @@ table tr td, table tr th{
                     echo  "<td>".$v."</td>";
                 }
             endforeach;
-            echo  "<td>=contar.si(indirecto(concatenar(DIRECCION(".$fila.";6;4);\":\";DIRECCION(".$fila.";".($nDias+5).";4)));1)+contar.si(indirecto(concatenar(DIRECCION(".$fila.";6;4);\":\";DIRECCION(".$fila.";".($nDias+5).";4)));\"=D\")</td>";
+            echo  "<td>".$contador."</td>";
             ?>
             </tr>
         <?php endforeach; ?>
