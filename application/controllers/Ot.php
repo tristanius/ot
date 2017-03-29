@@ -111,7 +111,7 @@ class Ot extends CI_Controller {
 						isset($orden->json)?json_encode($orden->json):'{"p1":false,"p2":false,"p3":false,"p4":false,"p5":false}',
 						isset($orden->numero_sap)?$orden->numero_sap:NULL,
 						isset($orden->gerencia)?$orden->gerencia:NULL,
-						isset($orden->sistema_ecp)?$orden->sistema_ecp:NULL,
+						isset($orden->departamento_ecp)?$orden->departamento_ecp:NULL,
 						isset($orden->estado_doc)?$orden->estado_doc:NULL,
 						isset($orden->ot_legalizada)?$orden->ot_legalizada:NULL,
 						isset($orden->fecha_inicio)?$orden->fecha_inicio:NULL,
@@ -121,7 +121,8 @@ class Ot extends CI_Controller {
 						isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 						isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 						isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-						isset($orden->basica)?$orden->basica:FALSE
+						isset($orden->basica)?$orden->basica:FALSE,
+						isset($orden->estado_sap)?$orden->estado_sap:FALSE
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s') );	}
@@ -338,7 +339,7 @@ class Ot extends CI_Controller {
 				isset( $orden->json )?json_encode($orden->json):'{"p1":false,"p2":false,"p3":false,"p4":false,"p5":false}',
 				isset($orden->numero_sap)?$orden->numero_sap:NULL,
 				isset($orden->gerencia)?$orden->gerencia:NULL,
-				isset($orden->sistema_ecp)?$orden->sistema_ecp:NULL,
+				isset($orden->departamento_ecp)?$orden->departamento_ecp:NULL,
 				isset($orden->estado_doc)?$orden->estado_doc:NULL,
 				isset($orden->ot_legalizada)?$orden->ot_legalizada:NULL,
 				isset($orden->fecha_inicio)?$orden->fecha_inicio:NULL,
@@ -348,7 +349,8 @@ class Ot extends CI_Controller {
 				isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 				isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 				isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-				isset($orden->basica)?$orden->basica:FALSE
+				isset($orden->basica)?$orden->basica:FALSE,
+				isset($orden->estado_sap)?$orden->estado_sap:FALSE
 			);
 
 		$this->load->helper('log');
@@ -608,6 +610,12 @@ class Ot extends CI_Controller {
 		$this->load->view('ot/vista_resumen', array('items'=>$resumen) );
 	}
 	# ===============================================================================
+	// Informes de PYCO en excel
+	public function getInformes($value='')
+	{
+		$this->load->view('miscelanios/informesPyco/form_informesPyco.php');
+	}
+
 	// BORRADOS
 
 	public function delete($idOT)

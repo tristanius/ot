@@ -9,10 +9,7 @@ class Facturacion_db extends CI_Controller{
     //Codeigniter : Write Less Do More
   }
 
-  function index()
-  {
-
-  }
+  function index(){}
 
   public function informeFacturacion($f1=NULL, $f2=NULL, $idOT=NULL, $bases = NULL)
   {
@@ -25,7 +22,7 @@ class Facturacion_db extends CI_Controller{
       "MA0032887" as contrato,
       OT.gerencia as gerencia,
       "" as departamento,
-      OT.sistema_ecp as sistema_ecop,
+      OT.departamento_ecp as departamento_ecp,
       bs.sector as sector,
       bs.nombre_base as base,
       OT.base_idbase as CO,
@@ -128,7 +125,6 @@ class Facturacion_db extends CI_Controller{
     return $this->db->get();
   }
 
-
   public function sabanaActa($idfactura)
   {
     $this->load->database('ot');
@@ -140,7 +136,7 @@ class Facturacion_db extends CI_Controller{
       "MA0032887" as contrato,
       OT.gerencia as gerencia,
       "" as departamento,
-      OT.sistema_ecp as sistema_ecop,
+      OT.departamento_ecp as departamento_ecp,
       bs.sector as sector,
       bs.nombre_base as base,
       OT.base_idbase as CO,
@@ -227,7 +223,6 @@ class Facturacion_db extends CI_Controller{
     return $this->db->get();
   }
 
-
   public function informePYCO($value='')
   {
     $this->load->database('ot');
@@ -247,7 +242,7 @@ class Facturacion_db extends CI_Controller{
       OT.presupuesto_fecha_fin AS fecha_fin_presupuesto,
       OT.presupuesto_porcent_fin AS porcentaje_final,
       OT.fecha_creacion_cc,
-      OT.sistema_ecp as departamento_ecp,
+      OT.departamento_ecp as departamento_ecp,
       OT.cc_ecp,
       "" AS cuenta_mayor,
       e.nombre_especialidad,
@@ -269,6 +264,60 @@ class Facturacion_db extends CI_Controller{
     ->join('especialidad AS e','e.idespecialidad = OT.especialidad_idespecialidad')
     ->group_by('tr.idtarea_ot')
     ->get();
+  }
+  public function informeOtPyco()
+  {
+    $this->load->database('ot');
+    return $this->db->select(
+      '
+      OT.nombre_ot,
+      COUNT(tr.idtarea_ot) AS no_tareas,
+      OT.estado_sap,
+      if(OT.numero_sap="",tr.sap,OT.OT.numero_sap) AS numero_sap,
+      if(OT.basica, "BASICA","NO BASICA") AS ot_basica,
+      CONCAT( b.idbase, " - ", b.nombre_base ) AS base,
+      OT.gerencia,
+      OT.departamento_ecp,
+      OT.vereda,
+      OT.actividad,
+      "" AS cuenta_mayor,
+      MIN(tr.fecha_inicio) AS fecha_inicio_planeado,
+      MAX(tr.fecha_fin) AS fecha_fin_planeado,
+      DATEDIFF(MIN(tr.fecha_fin), MIN(tr.fecha_inicio) ) AS plazo_planeado,
+      esp.nombre_especialidad,
+      tp.nombre_tipo_ot,
+      OT.estado_doc AS estado_ot,
+      OT.fecha_inicio,
+      OT.fecha_fin,
+      DATEDIFF(tr.fecha_fin, tr.fecha_inicio ) AS plazo_ejecutado,
+      tr.responsables,
+      "" AS observaciones,
+      ( SELECT  SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN tarea_ot AS tar ON itt.tarea_ot_idtarea_ot = tar.idtarea_ot WHERE tar.OT_idOT = OT.idOT AND itemf_codigo LIKE "1%" ) AS actividad_apu,
+      ( SELECT  SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN tarea_ot AS tar ON itt.tarea_ot_idtarea_ot = tar.idtarea_ot WHERE tar.OT_idOT = OT.idOT AND itemf_codigo LIKE "2%" ) AS personal,
+      ( SELECT  SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN tarea_ot AS tar ON itt.tarea_ot_idtarea_ot = tar.idtarea_ot WHERE tar.OT_idOT = OT.idOT AND itemf_codigo LIKE "3%" ) AS equipo,
+      regot.enero,
+      regot.febrero,
+      regot.marzo,
+      regot.abril,
+      regot.mayo,
+      regot.junio,
+      regot.julio,
+      regot.agosto,
+      regot.septiembre,
+      regot.noviembre,
+      regot.diciembre,
+      "" AS total,
+      "" AS total_directo_aiu,
+      OT.presupuesto_porcent_ini AS porcentaje_utilidad_inicial,
+      OT.presupuesto_porcent_fin AS porcentaje_utilidad_fin
+      '
+      )->from('OT')
+      ->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
+      ->join('base AS b','b.idbase = OT.base_idbase')
+      ->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad')
+      ->join('tipo_ot AS tp','tp.idtipo_ot = OT.tipo_ot_idtipo_ot')
+      ->join('registro_mes_ot AS regot', 'regot.OT_idOT = OT.idOT',"LEFT")
+      ->group_by('OT.idOT')->get();
   }
 
 

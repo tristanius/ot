@@ -71,6 +71,13 @@ class Export extends CI_Controller{
     force_download('./uploads/sabanaFactura.xlsx',NULL);
   }
 
+  public function informeOtPyco($nodownload=FALSE)
+  {
+    $this->load->helper(array('config'));
+    $this->load->model('facturacion_db', 'infofac');
+    $rows = $this->infofac->informeOtPyco();
+    $this->load->view('miscelanios/informesPyco/informeMesesOT', array('rows'=>$rows,'nodownload'=>$nodownload, "nombre"=>"InformeOrdenesPYCO") );
+  }
   public function informePYCO($nodownload=FALSE)
   {
     $this->load->helper(array('config'));

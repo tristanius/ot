@@ -8,6 +8,9 @@ if(!$nodownload){
 
 <meta http-equiv="Content-type" content="application/excel; charset=utf-8" />
 <style>
+table tr td, table tr th{
+  border: 1px solid #AAA;
+}
 .f12{
   font-size: 12px;
 }
@@ -18,7 +21,7 @@ if(!$nodownload){
   font-size: 18px;
 }
 .thT {
-  background-color:#ccc;
+  background-color:#DDD;
   text-align:center;
 }
 <?php
@@ -63,7 +66,7 @@ if(!$nodownload){
                   $SWper = !$SWper;
               }
               if ($SWper){
-                  $bgcolor='#ddd';
+                  $bgcolor='#DDD';
                }else{
                   $bgcolor='#fff';
                }
@@ -78,10 +81,10 @@ if(!$nodownload){
                       echo  "<td><b>";
                       switch ($v) {
                         case 1:
-                          echo "L";
+                          echo "<span style='color:green'>1</span>";
                           break;
                         case 2:
-                          echo "L";
+                          echo "<span style='color:brown'>1</span>";
                           break;
                         case 3:
                           echo "D";

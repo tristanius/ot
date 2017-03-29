@@ -9,10 +9,10 @@
     </a>
   </div>
 
-  <div class="col l2" ng-show"validPriv(52)">
-    <a href="<?= site_url('export/informePYCO') ?>" class="btn-panel  orange darken-3 white-text" style="width:100%">
-      <h3 class="center-align" data-icon="x"></h3>
-      <p class="center-align">Informe General sabana de PyCO</p>
+  <div class="col l2" ng-if="validPriv(52)">
+    <a href="#" ng-click="clickeableLink('<?= site_url('ot/getInformes') ?>', $event, 'Informes de OTs');" class="btn-panel" style="width:100%">
+      <h3 class="center-align" data-icon="&#xe009;"></h3>
+      <p class="center-align">Informes de PyCO de OT´s </p>
     </a>
   </div>
 
@@ -38,8 +38,8 @@
   </div>
 
   <div class="col l2" ng-show="validPriv(62)">
-    <a href="#" ng-click="clickeableLink('<?= site_url('reportepersonal/form_reporteMes') ?>', $event, 'Tiempo Laborado');" class="btn-panel yellow darken-1 black-text" style="width:100%">
-      <h3 class="center-align" data-icon="3"></h3>
+    <a href="#" ng-click="clickeableLink('<?= site_url('reportepersonal/form_reporteMes') ?>', $event, 'Tiempo Laborado');" class="btn-panel yellow lighten-2 black-text" style="width:100%">
+      <h3 class="center-align"> <span data-icon="&#xe02d;"></span><span data-icon="&#xe054;"></span>  </h3>
       <p class="center-align"> Informe de dias laborados por mes </p>
     </a>
   </div>

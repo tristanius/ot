@@ -18,6 +18,7 @@
 					<th>Especialidad</th>
 					<th>Tipo OT</th>
 					<th>C.C. ECP</th>
+					<th>Estado SAP</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -62,9 +63,10 @@
 					</td>
 
 					<td>
-						<input type="text" ng-model="ot.cc_ecp" ><!-- Campo habilitado a todos en PYCO
+						<input type="text"  style="width:10ex;" ng-model="ot.cc_ecp" ><!-- Campo habilitado a todos en PYCO
 						<input type="text" ng-model="ot.cc_ecp" ng-if="validPriv(54)" readonly> -->
 					</td>
+					<td> <input type="text" style="width:10ex;" ng-model="ot.estado_sap"> </td>
 				</tr>
 				<tr>
 					<td>
@@ -98,7 +100,7 @@
 						</select>
 					</td>
 					<td>
-						<select class="noMaterialStyles" ng-model="ot.sistema_ecp" ng-init="ot.sistema_ecp = 'PCL'">
+						<select class="noMaterialStyles" ng-model="ot.departamento_ecp" ng-init="ot.departamento_ecp = 'PCL'">
 							<option value="PCL">PCL</option>
 							<option value="OBC">OBC</option>
 							<option value="PNO">PNO</option>
