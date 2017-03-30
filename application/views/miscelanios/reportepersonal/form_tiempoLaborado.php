@@ -17,7 +17,7 @@ $meses = array(
 <form id="inftiempolaboradogeneral" action="<?= site_url("reportepersonal/tiempoLaboradoGeneral") ?>" method="post">
   <h4>Consulta de tiempo laborado por bases y mes</h4>
   <fieldset style="margin:1ex" class="noMaterialStyles regularForm">
-    <span>
+    <div>
       <label for="">Base:</label>
       <select id="consultatiempoBase" name="consultatiempoBase" ng-model="consultatiempo.base" ng-init="consultatiempo.base = (''+log.base_idbase)" required>
         <option value="all">Todos</option>
@@ -25,21 +25,21 @@ $meses = array(
         <option value="<?= $val->idbase ?>"><?= $val->idbase." ".$val->nombre_base ?></option>
         <?php endforeach; ?>
       </select>
-    </span>
+    </div>
+    <p class="">
+      (Recuerda, entre más grande sea el rango de fechas más tiempo puede tardar la petición)
+    </p>
 
-    <span>
-      <label for="">Mes: </label>
-      <select id="consultatiempoMes" name="consultatiempoMes" ng-model="consultatiempo.mes" ng-init="consultatiempo.mes = '<?= date('m')*1 ?>' " required>
-        <?php foreach ($meses as $key => $value): ?>
-        <option value="<?= $key?>"><?= $value ?></option>
-        <?php endforeach; ?>
-      </select>
-    </span>
+    <div>
+      <label for="">Fecha inicio rango:</label>
+      <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="consultatiempo.mes_i" name="fecha_tl_ini" readonly="readonly" />
+    </div>
 
-    <span>
-      <label for="">Año</label> <input id="consultatiempoYear" name="consultatiempoYear" type="text" ng-model="consultatiempo.year" ng-init="consultatiempo.year = <?= date("Y") ?>" required>
-    </span>
+    <div>
+      <label for="">Fecha fin rango:</label>
+      <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="consultatiempo.mes_f" name="fecha_tl_fin" readonly="readonly" />
+    </div>
 
-    <button style="margin-top:0" type="submit" class="btn mini-btn" data-icon="&#xe031;" ng-if="consultatiempo.mes && consultatiempo.year && consultatiempo.base"></button>
+    <button style="margin-top:0" type="submit" class="btn mini-btn" data-icon="&#xe031;" ng-if="consultatiempo.mes_i && consultatiempo.mes_f && consultatiempo.base"></button>
   </fieldset>
 </form>

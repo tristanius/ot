@@ -38,13 +38,17 @@ class Reportepersonal extends CI_Controller{
 
   public function tiempoLaboradoGeneral()
   {
-    $mes = $this->input->post("consultatiempoMes");
-    $year = $this->input->post("consultatiempoYear");
+    $ini = $this->input->post("fecha_tl_ini");
+    $fin = $this->input->post("fecha_tl_fin");
     $base = $this->input->post("consultatiempoBase");
-    $this->load->model('Reportepersonal_db', 'rper');
+    $this->load->helper('xlsxwriter');
+    $this->load->helper('download');
+    $this->load->model('reportepersonal_db', 'rper');
     if($base == "all"){$base = NULL;}
-    $rows = $this->rper->tiempoLaboradoGeneral($mes, $year, $base);
-    $this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
+    $rows = $this->rper->tiempoLaboradoGeneral($ini, $fin, $base);
+    xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeTL'.$mes.$year.'.xlsx');
+    force_download('./uploads/informeTL'.$mes.$year.'.xlsx',NULL);
+    //$this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
   }
 
   #=========================================================================================

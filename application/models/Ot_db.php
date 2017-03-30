@@ -102,7 +102,7 @@ class Ot_db extends CI_Model {
 
 	#=============================================================================
 	# Insertando información adicional
-	public function addRendimientoMesAMes($)
+	public function addRendimientoMesAMes()
 	{
 		//$this->db->insert('', $data);
 	}

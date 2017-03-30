@@ -108,7 +108,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(' ( select @rownum := @rownum + 1 from ( select @rownum := 0 ) d2 ) AS t FROM reporte_diario ')->get();
   }
 
-  public function tiempoLaboradoGeneral($mes, $year, $base)
+  public function tiempoLaboradoGeneral($ini, $fin, $base)
   {
 
     $this->load->database('ot');
@@ -151,7 +151,7 @@ class Reportepersonal_db extends CI_Model{
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
     ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
-    ->where(" MONTH(rd.fecha_reporte) = ".$mes."  AND YEAR(rd.fecha_reporte) = ".$year." ")
+    ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
     ->get();
   }
 
