@@ -131,7 +131,7 @@ class Reporteequipomes_db extends CI_Model{
         rot.recurso_idrecurso=recurso.idrecurso and
         recurso.equipo_idequipo=e.idequipo
         group by e.codigo_siesa,nombre_ot
-        order by base,e.codigo_siesa,nombre_ot
+        order by e.codigo_siesa,nombre_ot,base
     '
     );
   }

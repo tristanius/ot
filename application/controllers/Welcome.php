@@ -48,10 +48,22 @@ class Welcome extends CI_Controller {
 		return FALSE;
 	}
 
-	public function test($v1, $v2)
+	public function corregirHoras($v1, $v2, $ot=NULL)
 	{
 		$this->load->database('ot');
-		$data = $this->db->get_where('recurso_reporte_diario',array('idrecurso_reporte_diario >'=>$v1, 'idrecurso_reporte_diario <'=>$v2));
+		if (isset($ot)) {
+			$this->db->where('OT.idOT', $ot);
+		}else{
+			$this->db->where('rrd.idrecurso_reporte_diario >',$v1);
+			$this->db->where('rrd.idrecurso_reporte_diario <',$v2);
+		}
+		$data = $this->db->select("OT.nombre_ot, OT.base_idbase, rd.fecha_reporte, rrd.*")
+	 			->from('recurso_reporte_diario AS rrd')
+				->join("reporte_diario AS rd","rd.idreporte_diario = rrd.idreporte_diario")
+				->join("OT","OT.idOT = rd.OT_idOT")
+				->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
+				->where('itf.tipo',2)
+				->get();
 		foreach ($data->result() as $key => $val) {
 			$tiempo = 0;
 			if ( is_numeric($val->hora_inicio) || is_numeric($val->hora_fin2) ) {
@@ -74,14 +86,20 @@ class Welcome extends CI_Controller {
 				if ( !$this->isHora($val->hora_inicio2) && !$this->isHora($val->hora_fin) ) {
 					$tiempo = $this->getTiempo($val->hora_inicio, $val->hora_fin2) -($val->hr_almuerzo?1:0);
 				}
+			}else{
+				echo '------------------------------------------------- '.$val->hora_inicio.'-'.$val->hora_fin.' | '.$val->hora_inicio2.'-'.$val->hora_fin2.'<br>';
 			}
-			if ($tiempo > 10) {
-				$tiempo = 10;
+			if ($tiempo >= 10) {
+				if($val->base_idbase == 172 || $val->base_idbase == 173 || $val->base_idbase == 174 || $val->base_idbase == 194 )
+					$tiempo = 9;
+				else
+					$tiempo = 8;
 			}
-			$this->db->update('recurso_reporte_diario', array('horas_ordinarias'=>$tiempo),'idrecurso_reporte_diario = '.$val->idrecurso_reporte_diario);
-			//echo  $tiempo.': '.$val->hora_inicio.'-'.$val->hora_fin.' | '.$val->hora_inicio2.'-'.$val->hora_fin2."<br>";
+			$bandera = $this->db->update('recurso_reporte_diario', array('horas_ordinarias'=>$tiempo),'idrecurso_reporte_diario = '.$val->idrecurso_reporte_diario);
+			if($bandera)
+				echo  $tiempo.' '.$val->nombre_ot.': '.$val->hora_inicio.'-'.$val->hora_fin.' | '.$val->hora_inicio2.'-'.$val->hora_fin2."<br>";
 		}
-		echo 'Fin';
+		echo "<a href='".site_url("welcome/corregirHoras/".($v1+1000)."/".($v2+1000)."/".(isset($ot)?$ot:""))."' > Siguiente </a>";
 	}
 
 	private function getTiempo($hr_inicio, $hr_fin)

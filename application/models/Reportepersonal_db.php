@@ -159,8 +159,7 @@ class Reportepersonal_db extends CI_Model{
 
   public function getPerMes($mes, $year,$laBase)
   {
-    $tmp_base  =($laBase=="-")?"":" and OT.base_idbase=".$laBase;
-
+    $base = $laBase?'':'OT.base_idbase = '.$laBase.' and ';
     $this->load->database('ot');
     return $this->db->query(
       '
@@ -203,7 +202,7 @@ class Reportepersonal_db extends CI_Model{
         from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,persona p
         where MONTH(rd.fecha_reporte) = '.$mes.' and
         YEAR(rd.fecha_reporte)  = '.$year.' and
-        OT.base_idbase = '.$laBase.' and
+        '.$base.'
         rd.idreporte_diario=rrd.idreporte_diario and
         OT.idot=rd.ot_idot and
         rrd.idrecurso_ot=rot.idrecurso_ot and
