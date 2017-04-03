@@ -55,37 +55,47 @@ class Reporte extends CI_Controller{
   # insetar el reporte
   public function insert(){
     $post = json_decode( file_get_contents("php://input") );
-    $info = $post->info;
 
-    $this->load->model('reporte_db', 'repo');
-    $rows = $this->repo->getBy($post->info->idOT, $post->info->fecha_reporte);
+    $validReporte = $this->validarRecursos("retornable", $post);
+    if ($validReporte->succ) {
+      $info = $post->info;
+      $this->load->model('reporte_db', 'repo');
+      $rows = $this->repo->getBy($post->info->idOT, $post->info->fecha_reporte);
+      if($rows->num_rows() == 0){
+        $recusos = $post->recursos;
+        $this->repo->init_transact();
+        // Insertamos el reporte y devolvemos el ID
+        $idrepo = $this->repo->add($post->info);
+        $this->load->helper('log');
+        if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $idrepo, 'reporte_diario', 'reporte_diario '.$post->info->fecha_reporte." de ".$post->info->nombre_ot.' creado', date('Y-m-d H:i:s') );	}
+        //Recorremos los arregos de recursos
+        $this->insertarRecursoRep($post->recursos->actividades, $idrepo);
+        $this->insertarRecursoRep($post->recursos->personal, $idrepo);
+        $this->insertarRecursoRep($post->recursos->equipos, $idrepo);
+        $validProcc = $this->repo->end_transact();
+        if($validProcc != FALSE){
+          $response = new stdClass();
+          $response->success = 'success';
+          $response->msj = 'El reporte ha sido guardado correctamente';
+          $response->idreporte_diario = $idrepo;
 
-    if($rows->num_rows() == 0){
-      $recusos = $post->recursos;
-      $this->repo->init_transact();
-      // Insertamos el reporte y devolvemos el ID
-      $idrepo = $this->repo->add($post->info);
-      $this->load->helper('log');
-      if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $idrepo, 'reporte_diario', 'reporte_diario '.$post->info->fecha_reporte." de ".$post->info->nombre_ot.' creado', date('Y-m-d H:i:s') );	}
-      //Recorremos los arregos de recursos
-      $this->insertarRecursoRep($post->recursos->actividades, $idrepo);
-      $this->insertarRecursoRep($post->recursos->personal, $idrepo);
-      $this->insertarRecursoRep($post->recursos->equipos, $idrepo);
-      $validProcc = $this->repo->end_transact();
-      if($validProcc != FALSE){
-        $response = new stdClass();
-        $response->success = 'success';
-        $response->idreporte_diario = $idrepo;
-
-        $var = $this->getRecursoData($idrepo);
-        $response->personal = $var->personal;
-        $response->equipos = $var->equipos;
-        $response->actividades = $var->actividades;
-
-        echo json_encode($response);
-      }else{
-        show_404();
+          $var = $this->getRecursoData($idrepo);
+          $response->personal = $var->personal;
+          $response->equipos = $var->equipos;
+          $response->actividades = $var->actividades;
+          echo json_encode($response);
+        }else{
+          show_404();
+        }
       }
+    }else{
+      $response = new stdClass();
+      $response->success = 'unsuccess';
+      $response->msj = 'Los recursos deben ser validados';
+      $response->personal = $validReporte->recursos->personal;
+      $response->equipos = $validReporte->recursos->equipos;
+      $response->actividades = $validReporte->recursos->actividades;
+      echo json_encode($response);
     }
   }
   public function insertarRecursoRep($list, $idr){
@@ -134,10 +144,12 @@ class Reporte extends CI_Controller{
   }
 
   # Valida un conjunto de recursos en una fecha a reportar
-  public function validarRecursos($tipo = NULL)
+  public function validarRecursos($tipo = NULL, $post = NULL)
   {
     $this->load->model('reporte_db', 'repo');
-    $post = json_decode( file_get_contents("php://input") );
+    if (!isset($post)) {
+      $post = json_decode( file_get_contents("php://input") );
+    }
     $post->succ = TRUE;
     foreach ($post->recursos as $k => $v) {
       if($k!='actividades'){
@@ -163,7 +175,11 @@ class Reporte extends CI_Controller{
         }
       }
     }
-    echo json_encode($post);
+    if (isset($tipo)) {
+      return $post;
+    }else {
+      echo json_encode($post);
+    }
   }
 
   # Valida la existencia de un items en la OT
@@ -253,28 +269,39 @@ class Reporte extends CI_Controller{
   public function update($value='')
   {
     $post = json_decode( file_get_contents("php://input") );
-    $info = $post->info;
-    $this->load->model('reporte_db', 'repo');
-    $this->repo->init_transact();
-    $this->repo->update($post);
+    $validReporte = $this->validarRecursos("retornable", $post);
+    if($validReporte->succ){
+      $info = $post->info;
+      $this->load->model('reporte_db', 'repo');
+      $this->repo->init_transact();
+      $this->repo->update($post);
 
-    $this->load->helper('log');
-    if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' modificado', date('Y-m-d H:i:s') );	}
+      $this->load->helper('log');
+      if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' modificado', date('Y-m-d H:i:s') );	}
 
-    $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
-    $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
-    $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
+      $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
+      $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
+      $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
 
-    if($this->repo->end_transact() != FALSE){
+      if($this->repo->end_transact() != FALSE){
+        $response = new stdClass();
+        $response->success = 'success';
+        $var = $this->getRecursoData($post->idreporte_diario);
+        $response->personal = $var->personal;
+        $response->equipos = $var->equipos;
+        $response->actividades = $var->actividades;
+        echo json_encode($response);
+      }else{
+        echo "Falló la inserción";
+      }
+    }else {
       $response = new stdClass();
-      $response->success = 'success';
-      $var = $this->getRecursoData($post->idreporte_diario);
-      $response->personal = $var->personal;
-      $response->equipos = $var->equipos;
-      $response->actividades = $var->actividades;
+      $response->success = 'unsuccess';
+      $response->msj = 'Los recursos deben ser validados';
+      $response->personal = $validReporte->recursos->personal;
+      $response->equipos = $validReporte->recursos->equipos;
+      $response->actividades = $validReporte->recursos->actividades;
       echo json_encode($response);
-    }else{
-      echo "Falló la inserción";
     }
   }
 

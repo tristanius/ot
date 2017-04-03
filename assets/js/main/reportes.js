@@ -497,6 +497,7 @@ var addReporte = function($scope, $http, $timeout) {
         $http.post(
           url,
           {
+            idOT: $scope.rd.info.idOT,
             fecha: $scope.rd.info.fecha_reporte,
             recursos: $scope.rd.recursos,
             info: $scope.rd.info,
@@ -514,7 +515,13 @@ var addReporte = function($scope, $http, $timeout) {
                 //$scope.$parent.refreshTabs();
               });
             }else{
-              alert("¡Algo ha salido mal!");
+              alert("¡Oh Nooo! "+response.data.msj);
+              $timeout(function() {
+                $scope.rd.recursos.personal = response.data.personal;
+                $scope.rd.recursos.equipos = response.data.equipos;
+                $scope.rd.recursos.actividades = response.data.actividades;
+                $scope.booleanCorrection();
+              });
             }
           },
           function(response) {
@@ -888,6 +895,7 @@ var editReporte = function($scope, $http, $timeout){
   // Guardar reporte
   $scope.guardarRD = function(link, link2) {
     var data = {
+      idOT: $scope.rd.info.idOT,
       fecha: $scope.rd.fecha_reporte,
       recursos: $scope.rd.recursos,
       info: $scope.rd.info,
@@ -925,14 +933,17 @@ var editReporte = function($scope, $http, $timeout){
                 $scope.tipoGuardado = 1;
                 $scope.rd.idreporte_diario = response.data.idreporte_diario;
               }
-              $timeout(function() {
-                $scope.rd.recursos.personal = response.data.personal;
-                $scope.rd.recursos.equipos = response.data.equipos;
-                $scope.rd.recursos.actividades = response.data.actividades;
-                $scope.booleanCorrection();
-              });
+            }else{
+                alert("¡Oh Nooo! "+response.data.msj);
+                console.log(response.data);
             }
-            $('#guardar_reporte').hide();
+            $timeout(function() {
+              $scope.rd.recursos.personal = response.data.personal;
+              $scope.rd.recursos.equipos = response.data.equipos;
+              $scope.rd.recursos.actividades = response.data.actividades;
+              $scope.booleanCorrection();
+            });
+            //$('#guardar_reporte').hide();
             $scope.getReportesView($scope.site_url);
           },
           function(response) {

@@ -129,13 +129,15 @@
 	  <br>
 
       <div class="btnWindow">
-        <button type="button" class="waves-effect waves-light btn green mini-btn2" ng-click="validarRecursos('<?= site_url('reporte/validarRecursos/edit') ?>')" data-icon="&#xe02d;">
+        <!--
+        <button type="button" class="waves-effect waves-light btn green mini-btn2" ng-click="validarRecursos('<?= site_url('reporte/validarRecursos/') ?>')" data-icon="&#xe02d;">
            Validar reporte
         </button>
         <br>
         <br>
+        -->
 
-        <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2 nodisplay" ng-if=" (validPriv(38) || validPriv(45) || validPriv(46) ) "
+        <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-if=" (validPriv(38) || validPriv(45) || validPriv(46) ) "
             ng-click="guardarRD('<?= site_url('reporte/insert') ?>', '<?= site_url('reporte/update') ?>')">
           <b data-icon="&#xe015;"></b> Guardar
         </button>

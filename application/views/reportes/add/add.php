@@ -76,13 +76,15 @@
       <br>
 
       <div class="btnWindow">
+        <!--
         <button type="button" class="waves-effect waves-light btn green mini-btn2" ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')" data-icon="&#xe02d;">
            Validar recursos
         </button>
         <br>
         <br>
+        -->
 
-        <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2 nodisplay" ng-click="guardarRD('<?= site_url('reporte/insert') ?>')">
+        <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="guardarRD('<?= site_url('reporte/insert') ?>')">
           <b data-icon="&#xe015;"></b> Guardar
         </button>
         <button type="button" class="waves-effect waves-light btn grey mini-btn2" ng-click="toggleWindow2('#ventanaReporte', '#ventanaReporteOCulta')" data-icon="&#xe036;"> Ocultar</button>
