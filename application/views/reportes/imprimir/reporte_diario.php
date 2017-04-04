@@ -82,7 +82,7 @@
       $size = 7;
       $y = $pdf->get_height() - 25;
       $x = 30;//$pdf->get_width() - 15 - $fontMetrics->get_text_width("1/1", $font, $size);
-      $pdf->page_text($x, $y, "Pagina {PAGE_NUM} de {PAGE_COUNT} - Status: <?= ( substr($r->validado_pyco, 0, 1).substr($r->validado_pyco,-1,1) ) ?>", $font, $size);
+      $pdf->page_text($x, $y, "Pagina {PAGE_NUM} de {PAGE_COUNT} - Status: <?= $footer." ".( isset($partial)?"*":"" ) ?> ", $font, $size);
     }
     </script>
     <?php $this->load->view('reportes/imprimir/info', array('r'=>$r, 'json_r'=>$json_r)); ?>

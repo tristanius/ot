@@ -1,10 +1,10 @@
-<section ng-controller="imprimirRD" class="windowCentered2 row font10">
+<section ng-controller="imprimirRD" class="windowCentered2 row">
   <h4 ng-init="getRecursos('<?= site_url("export/printSelection/".$idOT."/".$idrepo) ?>')">Selecciona los recursos que deseas imprimir: {{ recursos.nombre_ot }}</h4>
   <hr>
 
   <div class="noMaterialStyles regularForm">
     <h5>Personal:</h5>
-    <table class="mytabla">
+    <table class="mytabla font10">
       <thead>
         <tr>
           <th rowspan="2"> imprimir</th>
@@ -35,7 +35,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="p in recursos.personal" ng-if="p.facturable == '1' ">
-          <td> <input type="checkbox" ng-model="p.imprimir"> </td>
+          <td> <input type="checkbox" ng-model="p.imprimir" ng-init="p.imprimir = true"> </td>
   			  <td>{{p.identificacion}}</td>
   			  <td>{{p.nombre_completo}}</td>
   			  <td>{{p.itemc_item}}</td>
@@ -67,7 +67,7 @@
     <hr>
 
     <h5>Equipo</h5>
-    <table class="mytabla">
+    <table class="mytabla font10">
       <thead style="background:#EEE">
         <tr>
           <th rowspan="2">Imprimir</th>
@@ -92,7 +92,7 @@
       </thead>
       <tbody>
           <tr ng-repeat="e in recursos.equipos" ng-if="e.facturable == '1' ">
-            <td><input type="checkbox" ng-model="e.imprimir"></td>
+            <td><input type="checkbox" ng-model="e.imprimir" ng-init="e.imprimir = true"></td>
             <td>{{ e.itemc_item }}</td>
             <td>{{ e.codigo_siesa }}</td>
             <td>{{ e.referencia }}</td>
@@ -110,7 +110,7 @@
     </table>
 
     <h5>Actividades:</h5>
-    <table class="mytabla">
+    <table class="mytabla font10">
       <thead style="background:#EEE">
         <tr>
           <th>Imprimir</th>
@@ -123,7 +123,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="a in recursos.actividades" ng-if="a.facturable == '1' ">
-          <td> <input type="checkbox" ng-model="a.imprimir"></td>
+          <td> <input type="checkbox" ng-model="a.imprimir" ng-init="a.imprimir = true"></td>
           <td> {{ a.itemc_item }} </td>
           <td> {{ a.descripcion + ( ( a.idsector_item_tarea!= 1 )?a.nom_sector:'' ) }} </td>
           <td> {{ a.unidad }} </td>
@@ -135,7 +135,7 @@
   </div>
 
 
-  <div class="btnWindow">
+  <div class="btnWindow ">
     <button type="button" class="waves-effect waves-light btn mini-btn2" ng-if=" (validPriv(38) || validPriv(45) || validPriv(46) ) "
         ng-click="printSelected('<?= site_url('export/reportePDFSelected'.$idOT."/".$idrepo) ?>')">
       <b data-icon="&#xe015;"></b> Generar
@@ -143,4 +143,8 @@
     <button type="button" class="waves-effect waves-light btn grey mini-btn2" ng-click="toggleWindow2('#ventanaReporte', '#ventanaReporteOCulta')" data-icon="&#xe036;"> Ocultar</button>
     <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="cerrarWindowLocal('#ventanaReporte', enlaceGetReporte)" data-icon="n"> Cerrar</button>
   </div>
+
+  <form id="formPrintSelected" class="nodisplay" action="<?= site_url('export/printSelected/'.$idOT.'/'.$idrepo); ?>" method="post">
+    <textarea id="jsonSelection" name="jsonSelection"></textarea>
+  </form>
 </section>

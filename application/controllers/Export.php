@@ -101,7 +101,9 @@ class Export extends CI_Controller{
     $recursos->equipos = $requs->result();
     $recursos->actividades = $racts->result();
 	  $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
-    $html = $this->load->view('reportes/imprimir/reporte_diario', array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias), TRUE);
+    $html = $this->load->view('reportes/imprimir/reporte_diario',
+      array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ), 
+      TRUE);
     doPDF($html, 'Reporte-'.$row->nombre_ot);
     //echo $html;
   }
@@ -129,10 +131,35 @@ class Export extends CI_Controller{
     echo json_encode($recursos);
   }
 
-  public function reportePDFSelected($idOT, $idrepo)
+  public function printSelected($idOT, $idrepo)
   {
-    # code...
+    $this->load->helper('pdf');
+    $this->load->model('reporte_db', 'repo');
+    $post = json_decode($this->input->post('jsonSelection'));
+    $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
+    $json_r = json_decode($row->json_r);
+    $recursos = new stdClass();
+    $recursos->personal = $post->personal;
+    $recursos->equipos = $post->equipos;
+    $recursos->actividades = $post->actividades;
+    $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
+    $html = $this->load->view('reportes/imprimir/reporte_diario',
+      array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
+      TRUE);
+    doPDF($html, 'Reporte-'.$row->nombre_ot);
   }
+
+  public function getStatusFooter($value='')
+  {
+    if($value == "CORREGIR"){
+      return "CGIR";
+    }elseif ($value == "CORREGIDO") {
+      return "CRDO";
+    }
+    return substr($value, 0, 2);
+  }
+
+  #=================================================================================
 
   public function testXLSX($value='')
   {

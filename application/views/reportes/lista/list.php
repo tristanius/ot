@@ -1,6 +1,5 @@
 <div style="border:1px solid #AAA; padding:1ex;">
   <h5>Listado de reportes de la orden de trabajo {{ ot.nombre_ot }} </h5>
-  <p style="color:red;  font-size: 10px">NOTA: Los movimientos en el sistema están registrados.</p>
   <div class="noMaterialStyles regularForm">
     <span>Año: <input type="number" style="width:8ex" ng-model="filtroReportes.year" ng-init="filtroReportes.year = <?= date('Y') ?> "></span>
     <span>
@@ -24,7 +23,7 @@
         <th>Estado doc.</th>
         <th>Validación</th>
         <th>Gestionar</th>
-        <th>R. día</th>
+        <th colspan="2">PDF reporte</th>
         <th><small>T.L.</small></th>
         <th>F. Elaborado</th>
       </tr>
@@ -48,8 +47,15 @@
           <button type="button" class="btn mini-btn2" data-icon="," ng-click="getReporte('<?= site_url('reporte/get/') ?>/'+rd.idreporte_diario, '#ventanaReporte', '#ventanaReporteOCulta')"> </button>
         </td>
         <td>
-          <a class="btn light-blue darken-3 mini-btn2" ng-href="<?= site_url('export/reportePDF')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="h">  </a>
-          <button class="btn light-blue mini-btn2" ng-click="getReporte('<?= site_url('export/vwPrintSelection')?>/'+rd.OT_idOT+'/'+rd.idreporte_diario,  '#ventanaReporte', '#ventanaReporteOCulta');" data-icon="&#xe036;">  </button>
+          <a class="btn light-blue darken-3 mini-btn2" ng-href="<?= site_url('export/reportePDF')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}"
+            target="_blank" data-icon="h">
+          </a>
+        </td>
+        <td>
+          <button class="btn light-blue mini-btn2"
+              ng-click="getReporte('<?= site_url('export/vwPrintSelection')?>/'+rd.OT_idOT+'/'+rd.idreporte_diario,  '#ventanaReporte', '#ventanaReporteOCulta');"
+              data-icon="&#xe036;">
+          </button>
         </td>
         <td>
           <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>

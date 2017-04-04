@@ -973,9 +973,11 @@ var editReporte = function($scope, $http, $timeout){
 }
 
 var imprimirRD = function($scope, $http, $timeout){
-  $scope.recursos = {
-  };
+  $scope.recursos = {};
+  $scope.retorno = { personal:[], equipos:[], actividades:[] };
+
   $scope.getRecursos = function(link){
+    $scope.retorno = { personal:[], equipos:[], actividades:[] };
     console.log(link);
     $http.get(link).then(
       function(response){
@@ -989,7 +991,25 @@ var imprimirRD = function($scope, $http, $timeout){
     )
   }
 
-  $scope.printSelected = function(link){
-    
+  $scope.filtrarImprimibles = function(recursos){
+    angular.forEach(recursos.personal, function(val,key){
+      if(val.imprimir)
+        $scope.retorno.personal.push(val);
+    });
+    angular.forEach(recursos.equipos, function(val,key){
+      if(val.imprimir)
+        $scope.retorno.equipos.push(val);
+    });
+    angular.forEach(recursos.personal, function(val,key){
+      if(val.imprimiractividades)
+        $scope.retorno.actividades.push(val);
+    });
+  }
+
+  $scope.printSelected = function(){
+    $scope.retorno = { personal:[], equipos:[], actividades:[] };
+    $scope.filtrarImprimibles($scope.recursos);
+    $("#jsonSelection").val( JSON.stringify($scope.retorno) );
+    $("#formPrintSelected").submit();
   }
 }
