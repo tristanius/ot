@@ -971,3 +971,25 @@ var editReporte = function($scope, $http, $timeout){
     })
   }
 }
+
+var imprimirRD = function($scope, $http, $timeout){
+  $scope.recursos = {
+  };
+  $scope.getRecursos = function(link){
+    console.log(link);
+    $http.get(link).then(
+      function(response){
+        $scope.recursos = response.data;
+        console.log(response.data);
+      },
+      function(response){
+        alert("Algo ha salido mal");
+        console.log(response.data);
+      }
+    )
+  }
+
+  $scope.printSelected = function(link){
+    
+  }
+}

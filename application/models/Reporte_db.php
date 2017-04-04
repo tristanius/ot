@@ -243,7 +243,13 @@ class Reporte_db extends CI_Model{
   public function listaBy($idOT)
   {
     $this->load->database('ot');
-    return $this->db->select('*')->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
+    return $this->db->select(
+        '
+        rd.*,
+        OT.nombre_ot,
+        (SELECT MIN(fecha) FROM log_movimiento WHERE idregistro = rd.idreporte_diario AND movimiento LIKE "%ELABORADO%" AND tabla = "reporte_diario" ) AS fecha_estado_elaborado
+        '
+      )->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
   }
 
   # =====================================================================================

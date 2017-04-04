@@ -1,5 +1,6 @@
 <div style="border:1px solid #AAA; padding:1ex;">
   <h5>Listado de reportes de la orden de trabajo {{ ot.nombre_ot }} </h5>
+  <p style="color:red;  font-size: 10px">NOTA: Los movimientos en el sistema están registrados.</p>
   <div class="noMaterialStyles regularForm">
     <span>Año: <input type="number" style="width:8ex" ng-model="filtroReportes.year" ng-init="filtroReportes.year = <?= date('Y') ?> "></span>
     <span>
@@ -25,7 +26,7 @@
         <th>Gestionar</th>
         <th>R. día</th>
         <th><small>T.L.</small></th>
-        <th>F. creación</th>
+        <th>F. Elaborado</th>
       </tr>
     </thead>
     <tbody>
@@ -48,11 +49,12 @@
         </td>
         <td>
           <a class="btn light-blue darken-3 mini-btn2" ng-href="<?= site_url('export/reportePDF')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="h">  </a>
+          <button class="btn light-blue mini-btn2" ng-click="getReporte('<?= site_url('export/vwPrintSelection')?>/'+rd.OT_idOT+'/'+rd.idreporte_diario,  '#ventanaReporte', '#ventanaReporteOCulta');" data-icon="&#xe036;">  </button>
         </td>
         <td>
           <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>
         </td>
-        <td> <span ng-if="rd.fecha_registro" ng-bind="rd.fecha_registro"></span></td>
+        <td> <span ng-if="rd.fecha_estado_elaborado" ng-bind="rd.fecha_estado_elaborado"></span> <span ng-if="!rd.fecha_estado_elaborado && rd.validado_pyco != 'PENDIENTE' " ng-bind="rd.fecha_registro"></span></td>
       </tr>
     </tbody>
   </table>

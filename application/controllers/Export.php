@@ -85,7 +85,7 @@ class Export extends CI_Controller{
     $rows = $this->repo->informePYCO();
     $this->load->view('miscelanios/informePYCO', array('rows'=>$rows,'nodownload'=>$nodownload));
   }
-
+  #=============================================================================
   public function reportePDF($idOT, $idrepo)
   {
     $this->load->helper('pdf');
@@ -104,6 +104,34 @@ class Export extends CI_Controller{
     $html = $this->load->view('reportes/imprimir/reporte_diario', array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias), TRUE);
     doPDF($html, 'Reporte-'.$row->nombre_ot);
     //echo $html;
+  }
+
+  public function vwPrintSelection($idOT, $idrepo)
+  {
+    $this->load->view('reportes/imprimir/preview_select', array('idOT'=>$idOT, 'idrepo'=>$idrepo));
+  }
+
+  public function printSelection($idOT, $idrepo)
+  {
+    $this->load->helper('pdf');
+    $this->load->model('reporte_db', 'repo');
+    $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
+    $rpers = $this->repo->getRecursos($idrepo,"personal");
+    $requs = $this->repo->getRecursos($idrepo,"equipos");
+    $racts = $this->repo->getRecursos($idrepo,"actividades");
+    $recursos = new stdClass();
+    $recursos->personal = $rpers->result();
+    $recursos->equipos = $requs->result();
+    $recursos->actividades = $racts->result();
+    $recursos->idOT = $idOT;
+    $recursos->idreportye = $idrepo;
+    $recursos->nombre_ot = $row->nombre_ot;
+    echo json_encode($recursos);
+  }
+
+  public function reportePDFSelected($idOT, $idrepo)
+  {
+    # code...
   }
 
   public function testXLSX($value='')

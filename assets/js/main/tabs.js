@@ -338,6 +338,10 @@ app.controller("formFactura",function($scope, $http, $timeout){
   formFactura($scope, $http, $timeout);
 });
 
+app.controller("imprimirRD", function($scope, $http, $timeout){
+  imprimirRD($scope, $http, $timeout);
+});
+
 
 //let's make a startFrom filter
 app.filter('startFrom', function() {
