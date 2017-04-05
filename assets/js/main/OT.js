@@ -695,6 +695,29 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.getMapa = function(){
 		//$scope.$parent.getMapa($scope);
 	}
+	// -------------------------------------------------
+	// COPIAR TAREA
+	$scope.copiar_tarea = function(tarea_cp){
+		var tr = angular.copy(tarea_cp);
+		tr.idtarea_ot = undefined;
+		tr.nombre_tarea = "TAREA "+($scope.ot.tareas.length+1);
+		tr.editable = true;
+		angular.forEach(tr.personal, function(v, k){
+			v.iditem_tarea_ot = undefined;
+			v.fecha_agregado = undefined;
+		});
+		angular.forEach(tr.equipos, function(v, k){
+			v.iditem_tarea_ot = undefined;
+			v.fecha_agregado = undefined;
+		});
+		angular.forEach(tr.actividades, function(v, k){
+			v.iditem_tarea_ot = undefined;
+			v.fecha_agregado = undefined;
+		});
+		$scope.showCopiar = false;
+		$scope.ot.tareas.push(tr);
+		$scope.tr = $scope.ot.tareas[ambito.ot.tareas.length];
+	}
 	$scope.guardarOT = function(url){
 		//tinyMCE.triggerSave();
 		if($scope.isOnPeticion){

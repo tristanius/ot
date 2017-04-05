@@ -148,7 +148,7 @@ class Item_db extends CI_Model {
 			'unidad'=>$unidad,
 			'tarifa'=>$tarifa,
 			'valor_plan'=>$valor_plan,
-			'fecha_agregado'=>$fecha_creacion,
+			//'fecha_agregado'=>$fecha_creacion,
 			'itemf_iditemf'=>$itemf_iditemf,
 			'itemf_codigo'=>$itemf_codigo,
 			'tarea_ot_idtarea_ot'=>$idTr,

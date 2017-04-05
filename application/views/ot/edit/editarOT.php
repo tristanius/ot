@@ -109,8 +109,8 @@
 		<div class="row">
 			<br>
 			<!-- seleccion de tarea -->
-			<div class="noMaterialStyles">
-				<label>Selecciona una Tarea:</label>
+			<div class="noMaterialStyles" ng-show="!showCopiar" ng-init="showCopiar = false">
+				<label>Selecciona una Tarea: </label>
 				<select id="selected_tarea" ng-model="selected_tarea" ng-init="selected_tarea = '0'" ng-change="selectTarea(ot, selected_tarea)">
 					<option ng-repeat="tar in ot.tareas track by $index" value="{{$index}}" ng-init="selectTarea(ot, 0)">{{tar.nombre_tarea}}</option>
 				</select>
@@ -121,7 +121,9 @@
 
 			</div>
 
-			<section class="row">
+			<?php $this->load->view("ot/edit/copiar_tarea"); ?>
+
+			<section class="row"  ng-show="!showCopiar">
 				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
 					<h6>Descripcion de la O.T.:</h6>
 					<button class="btn blue mini-btn2" ng-click="toggleContent('#descripcion', 'nodisplay', '.mypanel > div')">Descripción</button>
@@ -148,7 +150,7 @@
 		</div>
 
 		<!-- panel de contenidos -->
-		<div class="mypanel inset">
+		<div class="mypanel inset"  ng-show="!showCopiar">
 
 			<div id="descripcion" class="font12 nodisplay">
 				<?php $this->load->view('ot/forms/info'); ?>
