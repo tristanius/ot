@@ -44,6 +44,7 @@ var OT = function($scope, $http, $timeout){
 	}
 	$scope.selectTarea = function(ot, ambito, indice){
 		ambito.tr = ot.tareas[indice];
+		ambito.tr.editable = $scope.toboolean(ambito.tr.editable);
 	}
 	// eliminar un item
 	$scope.unset_item = function(lista, item, site_url, tr){
@@ -127,6 +128,7 @@ var OT = function($scope, $http, $timeout){
 						"valor_reembolsables": 0,
 						"administracion": 0
 					},
+					"editable":true,
 					"json_raciones": null,
 					"estado_tarea_ot": "",
 					"OT_idOT": idot,
@@ -403,10 +405,10 @@ var OT = function($scope, $http, $timeout){
 		return parseFloat(model);
 	}
 	$scope.toboolean = function(it){
-		if(it == undefined){
-			it = 0;
+		if(it == undefined || it == '0'){
+			it = false;
 		}
-		return it == 1 ? true: false;
+		return (it == 1 || it == true) ? true: false;
 	}
 	//--------------------------------------------------------------------------------------
 	// Municipios y locaciones

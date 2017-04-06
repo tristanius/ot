@@ -158,8 +158,8 @@ class Ot_db extends CI_Model {
 	public function getTareas($id, $arr_tareas=NULL)
 	{
 		$this->load->database('ot');
-		$this->db->select('*');
-		$this->db->from('tarea_ot');
+		$this->db->select('tr.*');
+		$this->db->from('tarea_ot AS tr');
 		$this->db->where('OT_idOT', $id);
 		if (isset($arr_tareas)) {
 			$this->db->where_in('idtarea_ot', $arr_tareas);

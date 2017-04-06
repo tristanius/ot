@@ -31,7 +31,7 @@
 
 		<p class="noMaterialStyles regularForm" ng-if="validPriv(49)">
 			<label for="">Editar tarea:</label>
-			<input type="checkbox" ng-model="tr.editable" ng-click="tr.editable = toboolean(tr.editable)" ng-init="tr.editable = toboolean(!tr.editable)">
+			<input type="checkbox" ng-model="tr.editable">
 		</p>
 
 
@@ -69,8 +69,8 @@
 					</th>
 					<td class="noMaterialStyles"> <input type="checkbox" ng-model="act.facturable" ng-init="act.facturable = toboolean(act.facturable)"> </td>
 					<td>{{ act.unidad }}</td>
-					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=0.1 ng-model="act.cantidad" ng-init="act.cantidad = strtonum(act.cantidad)" style="width:8ex" ng-change="calcularSubtotales()" ng-readonly="tr.editable == false"> </td>
-					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="tr.editable == false"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=0.1 ng-model="act.cantidad" ng-init="act.cantidad = strtonum(act.cantidad)" style="width:8ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right">{{ act.tarifa | currency:'$':0}}</td>
 					<td style="text-align: right">
 						{{ ( act.facturable?(act.cantidad * act.duracion)*act.tarifa: 0 ) | currency:'$':0  }}
@@ -95,8 +95,8 @@
 					</th>
 					<td class="noMaterialStyles"> <input type="checkbox" ng-model="per.facturable" ng-init="per.facturable = toboolean(per.facturable)"> </td>
 					<td>{{ per.unidad }}</td>
-					<td><input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="per.cantidad" ng-init="per.cantidad = strtonum(per.cantidad)" style="width:7ex" ng-change="calcularSubtotales()" ng-readonly="tr.editable == false"> </td>
-					<td><input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="per.duracion" ng-init="per.duracion = strtonum(per.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="tr.editable == false"> </td>
+					<td><input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="per.cantidad" ng-init="per.cantidad = strtonum(per.cantidad)" style="width:7ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td><input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="per.duracion" ng-init="per.duracion = strtonum(per.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right">{{ per.tarifa | currency:'$':0 }}</td>
 					<td style="text-align: right">
 						{{ ( per.facturable? (per.cantidad * per.duracion)*per.tarifa :0 ) | currency:'$':0  }}
@@ -121,8 +121,8 @@
 					</th>
 					<td class="noMaterialStyles"> <input type="checkbox" ng-model="eq.facturable" ng-init="eq.facturable = toboolean(eq.facturable)"> </td>
 					<td>{{ eq.unidad }}</td>
-					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="eq.cantidad" ng-init="eq.cantidad = strtonum(eq.cantidad)" ng-change="calcularSubtotales()" ng-readonly="tr.editable == false"> </td>
-					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="tr.editable == false"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="eq.cantidad" ng-init="eq.cantidad = strtonum(eq.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right">{{ eq.tarifa | currency:'$':0 }}</td>
 					<td style="text-align: right">
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$':0 }}

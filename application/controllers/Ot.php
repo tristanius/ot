@@ -171,7 +171,7 @@ class Ot extends CI_Controller {
 	      isset($tar->requisitos_documentales)?json_encode($tar->requisitos_documentales):'{}',
 				$idot,
 				isset($tar->sap)?$tar->sap:NULL,
-				isset($tr->editable)?$tr->editable:NULL
+				isset($tr->editable)?FALSE:FALSE
 			);
 	}
 
