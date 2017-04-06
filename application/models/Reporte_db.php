@@ -247,7 +247,7 @@ class Reporte_db extends CI_Model{
         '
         rd.*,
         OT.nombre_ot,
-        (SELECT MIN(fecha) FROM log_movimiento WHERE idregistro = rd.idreporte_diario AND movimiento LIKE "%ELABORADO%" AND tabla = "reporte_diario" ) AS fecha_estado_elaborado
+        rd.fecha_registro AS fecha_estado_elaborado
         '
       )->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
   }
