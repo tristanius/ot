@@ -1,6 +1,6 @@
 	<div>
 		<section class="row" ng-show="validPriv(41)">
-			<h4>Meastros de OT/Reportes diarios</h4>
+			<h5>Meastros de OT/Reportes diarios</h5>
 
 			<div class="col l2">
 				<a href="#" ng-click="clickeableLink('<?= site_url('recurso/recursosOT') ?>', $event, 'Recursos de OT');" class="btn-panel" style="width:100%">
@@ -9,7 +9,7 @@
 				</a>
 			</div>
 
-			<div class="col l2">
+			<div class="col l2" ng-show="validPriv(62)">
 				<a href="#" ng-click="clickeableLink('<?= site_url('persona/byOT') ?>', $event, 'Personal por OT');" class="btn-panel" style="width:100%">
 					<h3 class="center-align" data-icon="&#xe047;"></h3>
 					<p class="center-align">Personal x OT</p>
@@ -17,7 +17,7 @@
 			</div>
 
 			<div class="col l2">
-				<a href="#" class="btn-panel" style="width:100%"  ng-click="clickeableLink('<?= site_url('equipo/listado/edit') ?>', $event, 'Equipos por OT');">
+				<a href="#" class="btn-panel" ng-show="validPriv(48)" style="width:100%"  ng-click="clickeableLink('<?= site_url('equipo/listado/edit') ?>', $event, 'Equipos por OT');">
 					<h3 class="center-align" data-icon="&#xe042;"></h3>
 					<p class="center-align">Equipos X OT</p>
 				</a>
@@ -35,8 +35,20 @@
 
 		<hr class="col l12 m12 s12">
 
+		<section class="row">
+			<h5>Cargues de asociación</h5>
+			<div class="col l2" ng-show="validPriv(62)">
+				<a href="#" class="btn-panel" style="width:100%" ng-click="clickeableLink('<?= site_url('persona/view_cargue_horas') ?>', $event, 'Equipos');">
+					<h3 class="center-align" data-icon="V"></h3>
+					<p class="center-align">Carge asociación nomina/JobsL</p>
+				</a>
+			</div>
+		</section>
+
+		<hr class="col l12 m12 s12">
+
 		<section class="row" ng-show="validPriv(42)">
-			<h4>Maestros de la aplicación</h4>
+			<h5>Maestros de la aplicación</h5>
 
 			<div class="col l2">
 				<a href="#" ng-click="clickeableLink('<?= site_url('persona/listado') ?>', $event, 'Personal');" class="btn-panel" style="width:100%">

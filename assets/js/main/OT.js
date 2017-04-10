@@ -702,6 +702,7 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.copiar_tarea = function(tarea_cp){
 		var tr = angular.copy(tarea_cp);
 		tr.idtarea_ot = undefined;
+		tr.editable = true;
 		tr.nombre_tarea = "TAREA "+($scope.ot.tareas.length+1);
 		tr.editable = true;
 		angular.forEach(tr.personal, function(v, k){

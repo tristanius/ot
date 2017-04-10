@@ -25,7 +25,7 @@
         <th>Gestionar</th>
         <th colspan="2">PDF reporte</th>
         <th><small>T.L.</small></th>
-        <th>F. Elaborado</th>
+        <th>F. Creación</th>
       </tr>
     </thead>
     <tbody>

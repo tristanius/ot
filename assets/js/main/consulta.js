@@ -98,3 +98,7 @@ var vistaCantidadesMesRD = function($scope, $http, $timeout){
 		}
 	}
 }
+
+var consulta_nom = function($scope, $http, $timeout){
+	
+}

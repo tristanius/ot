@@ -81,11 +81,6 @@ class Persona extends CI_Controller{
       mkdir($carpeta, 0777, true);
     }
   }
-  #Prueba
-  public function testCargar($value='')
-  {
-      $this->cargarPersonalOT( $this->getDataPersonaByOT('./uploads/TEST.xlsx') ); //
-  }
 
   #  EN ESTA FUNCION REALIZAMOS EL PROCESO DE RECORRIDO DEL ARRAY DESPUES DE LEER LA HOJA DE CALCULO E INSERTAMOS LOS REGISTROS
   public function cargarPersonalOT($activeSheet)
@@ -163,5 +158,24 @@ class Persona extends CI_Controller{
       $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
     }
     echo "success";
+  }
+
+  #===============================================================================================
+  #===============================================================================================
+  #==================== PROCESO DE CARGA DE PERSONAL REPORTADO EN NOMINA =======================
+  #===============================================================================================
+  public function view_cargue_horas()
+  {
+    $this->load->view('asociaciones/nomina/nomina');
+  }
+
+  public function form_cargue_horas($value='')
+  {
+    $this->load->view('asociaciones/nomina/form_upload');
+  }
+
+  public function uplaod_cargue_horas($value='')
+  {
+    # code...
   }
 }

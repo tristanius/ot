@@ -330,6 +330,10 @@ app.controller("vistaCantidadesMesRD",function($scope, $http, $timeout){
   vistaCantidadesMesRD($scope, $http, $timeout);
 });
 
+app.controller("consulta_nom",function($scope, $http, $timeout){
+  consulta_nom($scope, $http, $timeout);
+});
+
 app.controller("factura",function($scope, $http, $timeout){
   factura($scope, $http, $timeout);
 });
