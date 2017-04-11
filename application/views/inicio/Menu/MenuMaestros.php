@@ -1,15 +1,15 @@
 	<div>
-		<section class="row" ng-show="validPriv(41)">
+		<section class="row">
 			<h5>Meastros de OT/Reportes diarios</h5>
 
-			<div class="col l2">
+			<div class="col l2" ng-show="validPriv(41)">
 				<a href="#" ng-click="clickeableLink('<?= site_url('recurso/recursosOT') ?>', $event, 'Recursos de OT');" class="btn-panel" style="width:100%">
 					<h3 class="center-align" data-icon="&#xe050;"></h3>
 					<p class="center-align">Recursos x OT</p>
 				</a>
 			</div>
 
-			<div class="col l2" ng-show="validPriv(62)">
+			<div class="col l2" ng-show="validPriv(64)">
 				<a href="#" ng-click="clickeableLink('<?= site_url('persona/byOT') ?>', $event, 'Personal por OT');" class="btn-panel" style="width:100%">
 					<h3 class="center-align" data-icon="&#xe047;"></h3>
 					<p class="center-align">Personal x OT</p>
@@ -17,14 +17,13 @@
 			</div>
 
 			<div class="col l2">
-				<a href="#" class="btn-panel" ng-show="validPriv(48)" style="width:100%"  ng-click="clickeableLink('<?= site_url('equipo/listado/edit') ?>', $event, 'Equipos por OT');">
+				<a href="#" class="btn-panel" ng-show="validPriv(48) || validPriv(65)" style="width:100%"  ng-click="clickeableLink('<?= site_url('equipo/listado/edit') ?>', $event, 'Equipos por OT');">
 					<h3 class="center-align" data-icon="&#xe042;"></h3>
 					<p class="center-align">Equipos X OT</p>
 				</a>
 			</div>
 
-
-			<div class="col l2"  ng-show="validPriv(48)">
+			<div class="col l2"  ng-show="validPriv(48) || validPriv(65)">
 				<a href="#" class="btn-panel" style="width:100%" ng-click="clickeableLink('<?= site_url('equipo/listado') ?>', $event, 'Equipos');">
 					<h3 class="center-align" data-icon="&#xe042;"></h3>
 					<p class="center-align">Equipos</p>
@@ -36,8 +35,8 @@
 		<hr class="col l12 m12 s12">
 
 		<section class="row">
-			<h5>Cargues de asociación</h5>
-			<div class="col l2" ng-show="validPriv(62)">
+			<h5>Procesos de asociación externa</h5>
+			<div class="col l2" ng-show="validPriv(66)">
 				<a href="#" class="btn-panel" style="width:100%" ng-click="clickeableLink('<?= site_url('persona/view_cargue_horas') ?>', $event, 'Equipos');">
 					<h3 class="center-align" data-icon="V"></h3>
 					<p class="center-align">Carge asociación nomina/JobsL</p>
