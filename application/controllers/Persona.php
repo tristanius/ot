@@ -174,8 +174,18 @@ class Persona extends CI_Controller{
     $this->load->view('asociaciones/nomina/form_upload');
   }
 
-  public function uplaod_cargue_horas($value='')
+  public function getJsonTiempoLaborado($value='')
   {
-    # code...
+    $post = json_decode(file_get_contents("php://input"));
+    $this->load->model('reportepersonal_db', 'rper');
+    $rows = $this->rper->tiempoLaboradoGeneral2($post->fecha_inicio, $post->fecha_hasta, isset( $post->base)? $pots->base:NULL,  isset($post->orden)?$post->orden:NULL,  isset($post->identificacion)?$post->identificacion:NULL);
+    echo json_encode($rows->result());
+  }
+  public function toNomina($value='')
+  {
+    $post = json_decode(file_get_contents("php://input"));
+    $this->load->model('reportepersonal_db', 'rper');
+    $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, isset( $post->base)? $pots->base:NULL,  isset($post->orden)?$post->orden:NULL);
+    echo "success";
   }
 }

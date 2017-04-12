@@ -140,7 +140,8 @@ class Reportepersonal_db extends CI_Model{
       rrd.racion,
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
-      rd.validado_pyco AS estado_reporte
+      rd.validado_pyco AS estado_reporte,
+      if(rrd.nomina, "SI","NO") AS en_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
     ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
@@ -153,6 +154,72 @@ class Reportepersonal_db extends CI_Model{
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
     ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
     ->get();
+  }
+
+  public function tiempoLaboradoGeneral2($ini, $fin, $base, $orden)
+  {
+
+    $this->load->database('ot');
+    if(isset($base)){$this->db->where('OT.base_idbase', $base);}
+    if(isset($orden)){$this->db->where('OT.nombre_ot', $orden);}
+    //$this->db->where_in('rd.validado_pyco', array('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO') );
+    return $this->db->select(
+      '
+      OT.nombre_ot AS Orden,
+      OT.base_idbase AS CO,
+      rd.fecha_reporte,
+      p.identificacion,
+      p.nombre_completo,
+      itf.itemc_item,
+      itf.codigo,
+      if(titc.CL="L", "LEGAL", if(titc.CL="C","CONVENCIONAL", "NO DATA")) AS tipo_item,
+      itf.descripcion,
+      if(rrd.facturable, "SI", "NO") AS facturable,
+      rrd.hora_inicio AS turno1_inicio,
+      rrd.hora_fin AS turno1_fin,
+      rrd.hora_inicio2 AS turno2_inicio,
+      rrd.hora_fin2 AS turno2_fin,
+      rrd.horas_ordinarias,
+      rrd.horas_extra_dia,
+      rrd.horas_extra_noc,
+      rrd.horas_recargo,
+      if(!rd.festivo, "SI", "NO") AS festivo,
+      rrd.racion,
+      rrd.gasto_viaje_pr AS pernocto,
+      rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
+      rd.validado_pyco AS validacion,
+      if(rrd.nomina, "SI","NO") AS para_nomina
+      '
+    )->from("recurso_reporte_diario AS rrd")
+    ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
+    ->join("itemc AS itc","itc.iditemc = itf.itemc_iditemc")
+    ->join("tipo_itemc AS titc","titc.idtipo_itemc = itc.idtipo_itemc")
+    ->join("reporte_diario AS rd","rd.idreporte_diario = rrd.idreporte_diario")
+    ->join("OT","OT.idOT = rd.OT_idOT")
+    ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
+    ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
+    ->join("persona AS p","p.identificacion = r.persona_identificacion")
+    ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
+    ->get();
+  }
+
+  public function personalNomina($ini, $fin, $base = NULL, $orden=NULL)
+  {
+    $this->load->database('ot');
+    /*$this->db->where("rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."'");
+    $this->db->where_in('rd.validado_pyco', array('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO') );
+    if(isset($base)){$this->db->where('OT.base_idbase', $base);}
+    if(isset($orden)){$this->db->where('OT.nombre_ot', $orden);}
+    $this->db->update(
+      'recurso_reporte_diario AS rrd JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario JOIN OT ON OT.idOT = rd.OT_idOT',
+      array('rd.nomina'=>TRUE)
+    );*/
+
+    $query = "UPDATE recurso_reporte_diario AS rrd JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario JOIN OT ON OT.idOT = rd.OT_idOT SET rrd.nomina = TRUE ".
+    " WHERE rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' AND rd.validado_pyco IN ('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO')";
+    if(isset($base)){ $query .= " AND OT.base_idbase = ".$base; }
+    if(isset($orden)){ $query .=" AND OT.nombre_ot = '".$orden."'"; }
+    $this->db->query($query);
   }
 
   /// --------------------------------------

@@ -100,5 +100,47 @@ var vistaCantidadesMesRD = function($scope, $http, $timeout){
 }
 
 var consulta_nom = function($scope, $http, $timeout){
-	
+	$scope.consulta_nom = {};
+  $scope.currentPage = 0;
+  $scope.pageSize = 100;
+	$scope.personal = [];
+
+  $scope.numberOfPages=function(){
+    return Math.ceil($scope.personal.length/$scope.pageSize);
+  }
+
+	$scope.obtenerPersonal = function(link){
+		$http.post(link,	$scope.consulta_nom	)
+		.then(
+			function(response){
+				$scope.personal = response.data;
+				console.log(response.data);
+			},
+			function(response){
+				alert("error")
+				console.log(response.data);
+			}
+		);
+	}
+
+	$scope.bloquearPersonal = function(link, link2){
+		$http.post(
+			link, $scope.consulta_nom
+		).then(
+			function(response){
+				if (response.data == "success") {
+					alert("Todo ha salido bien, el personal ha sido cerrado en sus registros de tiempo");
+					$scope.obtenerPersonal(link2);
+				}else{
+					alert("el proceso no ha finalizado con exito");
+					console.log(response.data);
+				}
+			},
+			function(response) {
+				alert("Algo ha salido mal");
+				console.log(response.data);
+			}
+		);
+	}
+
 }

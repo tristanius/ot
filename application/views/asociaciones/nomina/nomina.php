@@ -5,17 +5,27 @@
     <fieldset>
       <legend>Busqueda de personal: </legend>
       <div class="noMaterialStyles regularForm">
-        <label for="">Orden:</label> <input type="text" ng-model="consulta_nom.orden" placeholder="Ejemplo: OTATMTPA555-17-18">
-        <label for="">C.O.:</label> <input type="text" ng-model="consulta_nom.CO" placeholder="Ejemplo: 168">
-        <label for="">Identificacion::</label> <input type="text" ng-model="consulta_nom.orden" placeholder="Ejemplo: 123456789">
-      </div>
-      <br>
-      <div class="noMaterialStyles regularForm">
-        <label for="">Desde:</label> <input type="text" class="datepicker" ng-init="datepicker_init()" name="fecha_inicio" ng-model="consulta_nom.fecha_inicio">
-        <label for="">Hasta:</label> <input type="text" class="datepicker" ng-init="datepicker_init()" name="fecha_hasta" ng-model="consulta_nom.fecha_hasta">
-        <button type="button"class="btn mini-btn" ng-click="obtenerPersonal('<?= site_url('personal/getReportadosBy'); ?>')" data-icon=","></button>
+        <fieldset>
+          <legend style="color: #BBB; font-size:12px">filtros Obligatorios</legend>
+          <span for="">Desde:</span> <input placeholder="0000-00-00" type="text" class="datepicker" ng-init="datepicker_init()" name="fecha_inicio" ng-model="consulta_nom.fecha_inicio">
+          <span for="">Hasta:</span> <input placeholder="0000-00-00" type="text" class="datepicker" ng-init="datepicker_init()" name="fecha_hasta" ng-model="consulta_nom.fecha_hasta">
+        </fieldset>
+        <fieldset>
+          <legend style="color: #BBB; font-size:12px">Filtros opcionales</legend>
+            <span for="">Orden:</span> <input type="text" ng-model="consulta_nom.orden" name="orden" placeholder="Ejemplo: OTATMTPA555-17-18">
+            <span for="">C.O.:</span> <input type="text" ng-model="consulta_nom.base" name="base" placeholder="Ejemplo: 168">
+            <span for="">Estado excluido:</span> <input type="text" ng-model="consulta_nom.estado_exl" ng-init="consulta_nom.estado_exl = 'PENDIENTE, CORREGIR'" ng-readonly="true" name="orden" placeholder="Ejemplo: PENDIENTE">
+        </fieldset>
+        <fieldset ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
+          <legend style="color: #BBB; font-size:12px">Opciones</legend>
+          <button type="button" class="btn mini-btn" ng-click="obtenerPersonal('<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon=","></button>
+          <button type="button" class="btn mini-btn green" ng-click="descargarPersonal()" data-icon="&#xe03b;"></button>
+          <button type="button" class="btn mini-btn red" ng-click="bloquearPersonal('<?= site_url('persona/toNomina'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="O"></button>
+        </fieldset>
       </div>
     </fieldset>
+
+    <form method="post" action="<?= site_url('personal/descargar'); ?>"></form>
 
     <br><br>
 
@@ -31,6 +41,7 @@
             <th>Cargo</th>
             <th>Codigo</th>
             <th>Tipo cargo</th>
+            <th>Desc. cargo</th>
             <th>Fact.</th>
             <th>T1 inicio</th>
             <th>T1 fin</th>
@@ -40,22 +51,32 @@
             <th>HED.</th>
             <th>HEN</th>
             <th>RN</th>
-            <th>HOF</th>
-            <th>HEDF</th>
-            <th>HENF</th>
-            <th>RNF</th>
+            <th>FESTIVO?</th>
             <th>Ración</th>
             <th>Pernocto</th>
             <th>Lugar</th>
             <th>estado</th>
+            <th>nomina?</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="per in paginaPersonal">
-            <td ng-bind="field in per"></td>
+          <tr ng-repeat="per in personal | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <td ng-repeat="field in per"> <span  ng-bind="field"></span> </td>
           </tr>
         </tbody>
       </table>
+
+      <div class="noMaterialStyles regularForm">
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+          Anterior
+        </button>
+        {{currentPage+1}}/{{numberOfPages()}}
+        <button ng-disabled="currentPage >= personal.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+          Siguiente
+        </button>
+        &nbsp;
+        Ir a: <input type="number" max="numberOfPages" ng-model="pgNum" ng-change="currentPage = (pgNum-1 > 0)?(pgNum-1):0">
+      </div>
     </div>
 
   </div>

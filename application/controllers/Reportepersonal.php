@@ -50,6 +50,19 @@ class Reportepersonal extends CI_Controller{
     force_download('./uploads/informeTL'.$mes.$year.'.xlsx',NULL);
     //$this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
   }
+  public function reporteTiemposNomina()
+  {
+    $ini = $this->input->post("fecha_inicio");
+    $fin = $this->input->post("fecha_hasta");
+    $fin = $this->input->post("base");
+    $this->load->helper('xlsxwriter');
+    $this->load->helper('download');
+    $this->load->model('reportepersonal_db', 'rper');
+    $rows = $this->rper->tiempoLaboradoGeneral($ini, $fin, $base);
+    xlsx($rows->result_array(), $rows->list_fields(), './uploads/tiemposReportados'.date('Ymd').'.xlsx');
+    force_download('./uploads/tiemposReportados'.date('Ymd').'.xlsx',NULL);
+    //$this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));
+  }
 
   #=========================================================================================
   # dias laborados del mes
