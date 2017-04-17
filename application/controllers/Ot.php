@@ -478,6 +478,7 @@ class Ot extends CI_Controller {
 		$i = 0;
 		foreach ($ot->tareas as $key => $val) {
 			$val->idtarea_ot = NULL;
+			$val->editable = TRUE;
 			$i++;
 			if ( $i == 1  ) {	$val->nombre_tarea = 'TAREA INICIAL';	}else {	$val->nombre_tarea = 'TAREA '.$i;	}
 			foreach ($val->personal as $k => $v) {
