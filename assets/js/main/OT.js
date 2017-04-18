@@ -704,7 +704,7 @@ var editarOT = function($scope, $http, $timeout) {
 		tr.idtarea_ot = undefined;
 		tr.editable = true;
 		tr.nombre_tarea = "TAREA "+($scope.ot.tareas.length+1);
-		tr.editable = true;
+		/*tr.editable = true;*/
 		angular.forEach(tr.personal, function(v, k){
 			v.iditem_tarea_ot = undefined;
 			v.fecha_agregado = undefined;
