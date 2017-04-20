@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="p in recursos.personal" ng-if="p.facturable == '1' ">
+        <tr ng-repeat="p in recursos.personal" > <!-- ng-if="p.facturable == '1' " -->
           <td> <input type="checkbox" ng-model="p.imprimir" ng-init="p.imprimir = true"> </td>
   			  <td>{{p.identificacion}}</td>
   			  <td>{{p.nombre_completo}}</td>
@@ -72,6 +72,7 @@
         <tr>
           <th rowspan="2">Imprimir</th>
           <th rowspan="2">Item</th>
+          <th rowspan="2">Fact.</th>
           <th rowspan="2">Cod. Siesa</th>
           <th rowspan="2">Ref./AF</th>
           <th rowspan="2">Equipo</th>
@@ -91,9 +92,10 @@
         </tr>
       </thead>
       <tbody>
-          <tr ng-repeat="e in recursos.equipos" ng-if="e.facturable == '1' ">
+          <tr ng-repeat="e in recursos.equipos" > <!-- ng-if="e.facturable == '1' " -->
             <td><input type="checkbox" ng-model="e.imprimir" ng-init="e.imprimir = true"></td>
             <td>{{ e.itemc_item }}</td>
+            <td>{{ e.facturable?"SI":"NO" }}</td>
             <td>{{ e.codigo_siesa }}</td>
             <td>{{ e.referencia }}</td>
             <td>{{ e.descripcion }}</td>
@@ -117,16 +119,18 @@
           <th>Codigo</th>
           <th>Actividad</th>
           <th>Unidad</th>
+          <th>Fact.</th>
           <th>canditad día</th>
           <th>Cantidad Acumulada</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="a in recursos.actividades" ng-if="a.facturable == '1' ">
+        <tr ng-repeat="a in recursos.actividades"> <!-- ng-if="a.facturable == '1' " -->
           <td> <input type="checkbox" ng-model="a.imprimir" ng-init="a.imprimir = true"></td>
           <td> {{ a.itemc_item }} </td>
           <td> {{ a.descripcion + ( ( a.idsector_item_tarea!= 1 )?a.nom_sector:'' ) }} </td>
           <td> {{ a.unidad }} </td>
+          <td> {{ a.facturable?"SI":"NO" }}</td>
           <td> {{ a.cantidad }} </td>
           <td> {{ a.acumulado+(a.cantidad*1) }} </td>
         </tr>
