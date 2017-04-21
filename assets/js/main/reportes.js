@@ -655,6 +655,7 @@ var editReporte = function($scope, $http, $timeout){
               $scope.borrarIDs();
               alert('Reporte duplicado listo para guardar en fecha '+$scope.fecha_duplicar);
               $('#duplicar').toggleClass('nodisplay');
+              $scope.dupeInNomina($scope.rd.recursos.personal);
             }else{
               alert('Proceso en revisión, intenta más tarde'+response.data)
             }
@@ -664,6 +665,11 @@ var editReporte = function($scope, $http, $timeout){
           }
         );
       }
+  }
+  $scope.dupeInNomina = function(lista){
+    angular.forEach(lista, function(v,k){
+      v.nomina = false;
+    });
   }
 
   //Busque de equipos no relacionados
