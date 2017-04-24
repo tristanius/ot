@@ -1,4 +1,4 @@
-<table id="cabecera">
+<table id="cabecera" cellpadding="0" cellspacing="0" border="1">
   <thead>
     <tr class="font10">
       <th colspan="1"> <img src="<?= base_url('assets/img/termotecnica.jpg') ?>" style="max-width: 70px" alt=""> </th>
@@ -18,7 +18,7 @@
         EJECUCIÓN DE OBRAS Y TRABAJOS DE MANTENIMIENTO DE SISTEMAS DE TRANSPORTE DE HIDROCARBUROS
       </td>
       <td rowspan="2" colspan="1" style="padding:0">
-            <table style="">
+            <table style="" cellpadding="0" cellspacing="0" >
                 <thead>
                   <tr>
                     <th>DD</th>
@@ -45,7 +45,7 @@
   </tbody>
 </table>
 
-<table  class="font8">
+<table  class="font8" cellpadding="0" cellspacing="0" border="1">
   <thead>
     <tr style="background: #EEE">
       <th colspan="7">Descripción de actividad de la orden de trabajo</th>
@@ -82,7 +82,7 @@
   </tbody>
 </table>
 
-<table class="font8">
+<table class="font8" cellpadding="0" cellspacing="0" border="1">
   <thead>
     <tr style="background: #EEE">
       <th>Condiciones climaticas</th>
@@ -94,7 +94,7 @@
   <tbody>
     <tr>
       <td style="padding:0">
-          <table class="inner">
+          <table class="inner" cellpadding="0" cellspacing="0" >
             <thead>
               <tr>
                 <th>Hora inicio</th>
@@ -118,7 +118,7 @@
   </tbody>
 </table>
 
-<table class="font8">
+<table class="font8" cellpadding="0" cellspacing="0" border="1">
   <thead>
     <tr style="background: #EEE">
       <th colspan="1">ILICITAS:</th>
@@ -128,7 +128,7 @@
   <tbody>
     <tr>
       <td colspan="1">
-        <table>
+        <table cellpadding="0" cellspacing="0" >
           <tbody>
             <tr>
               <td>Extensión: <?= isset( $json_r->actividades->extension)? $json_r->actividades->extension:''; ?></td>
@@ -143,7 +143,7 @@
       </td>
 
       <td colspan="3">
-        <table>
+        <table cellpadding="0" cellspacing="0" >
           <tbody>
             <tr>
               <td>Inst. capuchon: <?= isset($json_r->actividades->capuchon)?$json_r->actividades->capuchon:''; ?></td>

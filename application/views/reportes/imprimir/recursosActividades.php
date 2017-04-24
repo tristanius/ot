@@ -1,4 +1,4 @@
-<table class="font9 recursos">
+<table class="font9 recursos" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE">
     <tr>
       <th>Codigo</th>
@@ -12,20 +12,11 @@
     <?php foreach ($recursos->actividades as $key => $v): ?>
     <tr>
       <td> <?= $v->itemc_item ?> </td>
-      <td> <?= $v->descripcion.($v->idsector_item_tarea != 1?' ('.$v->nom_sector.')':'') ?> </td>
+      <td> <p><?= $v->descripcion.($v->idsector_item_tarea != 1?' ('.$v->nom_sector.')':'') ?></p> </td>
       <td> <?= $v->unidad ?> </td>
       <td> <?= $v->cantidad*1 ?> </td>
       <td> <?= $v->acumulado+($v->cantidad*1) ?> </td>
     </tr>
     <?php endforeach; ?>
-    <?php for ($i=0; $i <= (1 - sizeof($recursos->actividades) ); $i++) { ?>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td> - </td>
-    </tr>
-    <?php } ?>
   </tbody>
 </table>

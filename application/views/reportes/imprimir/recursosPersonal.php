@@ -1,4 +1,4 @@
-<table class="font8 recursos">
+<table class="font8 recursos" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE">
     <tr>
       <th rowspan="2"> No.</th>
@@ -45,7 +45,7 @@
 			  <td><?= $v->identificacion ?></td>
 			  <td><?= $v->nombre_completo ?></td>
 			  <td><?= $v->itemc_item ?></td>
-			  <td><?= ($v->CL == "L")? $v->descripcion_item : $v->descripcion; ?></td>
+			  <td> <p><?= ($v->CL == "L")? $v->descripcion_item : $v->descripcion; ?></p> </td>
 			  <td><?= $v->CL ?></td>
 			  <td><?= (isset($v->facturable) && !$v->facturable)?'N':(isset($v->BO)?$v->BO:'') ?></td>
 			  <td><?= $v->unidad ?></td>
@@ -99,7 +99,7 @@
       <?php } ?>
         <tr>
           <td colspan="9">
-            Convenciones para novedadesd del personal: B: Basico/ O: Opcional / N: No Facturable/ D: Descanso compensario/ A: Ausente sin permiso/ I: Incapacidad por accidente de trabajo/
+            Convenciones para novedadesd del personal: B: Basico/ O: Opcional / N: No Facturable/ D: Descanso/ DC: Descanso compensario/ A: Ausente sin permiso/ I: Incapacidad por accidente de trabajo/
             IC: incapacidad por emfermedad común/ S: Sancionado/ ACSP: Ausente con permiso sin pago/ ACCP: Ausente con permiso con pago/ V: Vacaciones/ P: Pernoctó/ R: Retornó
           </td>
           <td>TOTAL:</td>

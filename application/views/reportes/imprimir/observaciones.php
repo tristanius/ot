@@ -1,4 +1,4 @@
-<table class="font7 nocenter">
+<table class="font7 nocenter" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE;">
     <tr>
       <th style="width:50%">Observaciones del Contratista</th>
@@ -12,19 +12,9 @@
         <td style="width:50%"></td>
       </tr>
     <?php endforeach; ?>
-    <?php
-    for ($i=0; $i <= (1 -  sizeof($observaciones) ); $i++) {
-    ?>
-    <tr>
-      <td> </td>
-      <td> &nbsp;</td>
-    </tr>
-    <?php
-    }
-    ?>
   </tbody>
 </table>
-<table class="font9 nocenter">
+<table class="font9 nocenter" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE">
     <tr>
       <th> Elaborado por </th>

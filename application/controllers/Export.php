@@ -102,10 +102,31 @@ class Export extends CI_Controller{
     $recursos->actividades = $racts->result();
 	  $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $html = $this->load->view('reportes/imprimir/reporte_diario',
-      array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ), 
+      array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
       TRUE);
     doPDF($html, 'Reporte-'.$row->nombre_ot);
     //echo $html;
+  }
+
+  public function reportePDFHTML($idOT, $idrepo)
+  {
+    $this->load->helper('pdf');
+    $this->load->model('reporte_db', 'repo');
+
+    $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
+    $json_r = json_decode($row->json_r);
+    $recursos = new stdClass();
+    $rpers = $this->repo->getRecursos($idrepo,"personal");
+    $requs = $this->repo->getRecursos($idrepo,"equipos");
+    $racts = $this->repo->getRecursos($idrepo,"actividades");
+    $recursos->personal = $rpers->result();
+    $recursos->equipos = $requs->result();
+    $recursos->actividades = $racts->result();
+	  $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
+    $html = $this->load->view('reportes/imprimir/reporte_diario',
+      array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
+      TRUE);
+    echo $html;
   }
 
   public function vwPrintSelection($idOT, $idrepo)

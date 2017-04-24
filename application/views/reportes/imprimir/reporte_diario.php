@@ -19,10 +19,11 @@
       table{
         width: 100%;
         max-width: 100%;
-        border-collapse: collapse;
+      }
+      table  table tr td, table  table tr th{
+          border: 1px solid #777;
       }
       table, td, th {
-        border: 1px solid #777;
         vertical-align: top;
         text-align: center;
       }
@@ -34,9 +35,8 @@
         vertical-align: top;
       }
       table.recursos td{
+        vertical-align: middle;
         min-height: 1ex;
-        padding-top: 3px;
-        padding-bottom: 3px;
       }
       .font10 {
         font-size: 10px;

@@ -1,4 +1,4 @@
-  <table class="font8 recursos">
+  <table class="font8 recursos" cellpadding="0" cellspacing="0" border="1">
     <thead style="background:#EEE">
       <tr>
         <th rowspan="2">Item</th>
@@ -22,13 +22,13 @@
     </thead>
     <tbody>
       <?php foreach ($recursos->equipos as $key => $v): ?>
-        <?php   if(  isset($v->facturable) && $v->facturable ): ?>
+        <?php  if(  isset($v->facturable) && $v->facturable ): ?>
           <tr>
             <td><?= $v->itemc_item ?></td>
             <td><?= ltrim($v->codigo_siesa, '0') ?></td>
             <td><?= $v->referencia ?></td>
-            <td><?= $v->descripcion ?></td>
-            <td><?= $v->nombre_operador ?></td>
+            <td> <p><?= $v->descripcion ?></p> </td>
+            <td> <span><?= $v->nombre_operador ?></span> </td>
             <td><?= ($v->cantidad == 0)?'-':$v->cantidad*1; ?></td>
             <td><?= $v->unidad ?></td>
             <td><?= $v->horometro_ini ?></td>
@@ -39,21 +39,5 @@
           </tr>
         <?php endif; ?>
       <?php endforeach; ?>
-      <?php for ($i=0; $i <= (1 - sizeof($recursos->equipos) ); $i++) { ?>
-      <tr>
-        <td> - </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <?php } ?>
     </tbody>
   </table>

@@ -24,8 +24,15 @@ header('Cache-Control: max-age=0');
           <tr>
             <?php foreach ($value as $k => $v): ?>
               <td style="min-width:15px">
-                <?= $v ?>
-                <?= ($k=='tipo' && ($v == '' || $v == NULL) )? 'Actividad' :''; ?>
+                <?php
+                if ($k != 'cantidad') {
+                  echo ($k=='tipo' && ($v == '' || $v == NULL) )? 'Actividad' :$v;
+                }else{
+                  $v = $v * 1;
+                  $v = is_float($v)?number_format($v,2):number_format($v);
+                  echo  ($v>0)?'<b>'.$v.'</b>':'';
+                }
+                ?>
               </td>
             <?php endforeach; ?>
           </tr>
