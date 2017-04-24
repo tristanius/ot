@@ -178,14 +178,24 @@ class Persona extends CI_Controller{
   {
     $post = json_decode(file_get_contents("php://input"));
     $this->load->model('reportepersonal_db', 'rper');
-    $rows = $this->rper->tiempoLaboradoGeneral2($post->fecha_inicio, $post->fecha_hasta, isset( $post->base)? $pots->base:NULL,  isset($post->orden)?$post->orden:NULL,  isset($post->identificacion)?$post->identificacion:NULL);
+    $args = array();
+    if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
+    if(isset($post->orden) && $post->orden != ''){ $args['orden'] = $post->orden; }
+    if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
+    $rows = $this->rper->tiempoLaboradoGeneral2($post->fecha_inicio, $post->fecha_hasta, $args);
     echo json_encode($rows->result());
   }
-  public function toNomina($value='')
+  public function toNomina($bandera=TRUE)
   {
     $post = json_decode(file_get_contents("php://input"));
     $this->load->model('reportepersonal_db', 'rper');
-    $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, isset( $post->base)? $pots->base:NULL,  isset($post->orden)?$post->orden:NULL);
+    $args = array();
+    if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
+    if(isset($post->orden) && $post->orden != ''){ $args['orden'] = $post->orden; }
+    if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
+    $bandera = $bandera==TRUE?TRUE:FALSE;
+    $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bandera);
+    echo $this->db->last_query();
     echo "success";
   }
 }

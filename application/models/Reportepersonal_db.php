@@ -156,12 +156,13 @@ class Reportepersonal_db extends CI_Model{
     ->get();
   }
 
-  public function tiempoLaboradoGeneral2($ini, $fin, $base, $orden)
+  public function tiempoLaboradoGeneral2($ini, $fin, $args)
   {
 
     $this->load->database('ot');
-    if(isset($base)){$this->db->where('OT.base_idbase', $base);}
-    if(isset($orden)){$this->db->where('OT.nombre_ot', $orden);}
+    if( isset($args['base']) ){$this->db->where('OT.base_idbase', $args['base']);}
+    if( isset($args['orden']) ){$this->db->where('OT.nombre_ot', $args['orden'] );}
+    if( isset($args['identificacion']) ){ $this->db->where("p.identificacion", $args['identificacion']); }
     //$this->db->where_in('rd.validado_pyco', array('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO') );
     return $this->db->select(
       '
@@ -203,22 +204,20 @@ class Reportepersonal_db extends CI_Model{
     ->get();
   }
 
-  public function personalNomina($ini, $fin, $base = NULL, $orden=NULL)
+  public function personalNomina($ini, $fin, $args, $bandera = TRUE)
   {
     $this->load->database('ot');
-    /*$this->db->where("rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."'");
-    $this->db->where_in('rd.validado_pyco', array('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO') );
-    if(isset($base)){$this->db->where('OT.base_idbase', $base);}
-    if(isset($orden)){$this->db->where('OT.nombre_ot', $orden);}
-    $this->db->update(
-      'recurso_reporte_diario AS rrd JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario JOIN OT ON OT.idOT = rd.OT_idOT',
-      array('rd.nomina'=>TRUE)
-    );*/
-
-    $query = "UPDATE recurso_reporte_diario AS rrd JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario JOIN OT ON OT.idOT = rd.OT_idOT SET rrd.nomina = TRUE ".
-    " WHERE rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' AND rd.validado_pyco IN ('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO')";
-    if(isset($base)){ $query .= " AND OT.base_idbase = ".$base; }
-    if(isset($orden)){ $query .=" AND OT.nombre_ot = '".$orden."'"; }
+    $query = "UPDATE recurso_reporte_diario AS rrd
+    JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
+    JOIN OT ON OT.idOT = rd.OT_idOT
+    JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
+    JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
+    SET rrd.nomina = ".$bandera."
+    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )
+    AND rd.validado_pyco IN ('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO')";
+    if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
+    if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
+    if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }
     $this->db->query($query);
   }
 

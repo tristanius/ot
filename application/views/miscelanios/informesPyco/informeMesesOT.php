@@ -19,9 +19,9 @@
         <?php foreach ($value as $k => $v): ?>
             <?php $i++; ?>
             <?php if ($k == "responsable_pyco" ): ?>
-              <td> <?= $r->pyco ?> </td>
+              <td> <?= isset($r->pyco)?$r->pyco:" "; ?> </td>
             <?php elseif($k == "ing_residente" || $k == "facturador"): ?>
-              <td> <?= $r->$k ?></td>
+              <td> <?= isset($r->$k)?$r->$k:" "; ?></td>
             <?php elseif($i>=25 && $i<=41): ?>
               <td> <?= number_format($v*1,2) ?></td>
             <?php else: ?>
