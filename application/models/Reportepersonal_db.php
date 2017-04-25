@@ -189,7 +189,7 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS validacion,
-      if(rrd.nomina, "SI","NO") AS para_nomina
+      if(rrd.nomina=1, "SI","NO") AS para_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
     ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
@@ -204,7 +204,7 @@ class Reportepersonal_db extends CI_Model{
     ->get();
   }
 
-  public function personalNomina($ini, $fin, $args, $bandera = TRUE)
+  public function personalNomina($ini, $fin, $args, $bandera)
   {
     $this->load->database('ot');
     $query = "UPDATE recurso_reporte_diario AS rrd

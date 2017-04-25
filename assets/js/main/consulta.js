@@ -129,7 +129,7 @@ var consulta_nom = function($scope, $http, $timeout){
 		).then(
 			function(response){
 				if (response.data == "success") {
-					alert("Todo ha salido bien, el personal ha sido cerrado en sus registros de tiempo");
+					alert("Todo ha salido bien, el tiempo de personal ha sido modificado al estado seleccionado.");
 					$scope.obtenerPersonal(link2);
 				}else{
 					alert("el proceso no ha finalizado con exito");
