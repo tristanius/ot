@@ -53,5 +53,62 @@
       </div>
     </div>
 
+    <section>
+        <div ng-repeat="meses in ot.allMeses">
+          <hr>
+          <b>Costo mes a mes: <span ng-bind="meses.year"></span> </b>
+          <div class="row">
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">enero</label>
+              <input type="text" ng-model="meses.enero">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">febrero</label>
+              <input type="text" ng-model="meses.febrero">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">marzo</label>
+              <input type="text" ng-model="meses.marzo">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">abril</label>
+              <input type="text" ng-model="meses.abril">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">mayo</label>
+              <input type="text" ng-model="meses.mayo">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">junio</label>
+              <input type="text" ng-model="meses.junio">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">julio</label>
+              <input type="text" ng-model="meses.julio">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">agosto</label>
+              <input type="text" ng-model="meses.agosto">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">septiembre</label>
+              <input type="text" ng-model="meses.septiembre">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">octubre</label>
+              <input type="text" ng-model="meses.octubre">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">noviembre</label>
+              <input type="text" ng-model="meses.noviembre">
+            </div>
+            <div class="col l2 m4 s6">
+              <label style="display:block" for="">diciembre</label>
+              <input type="text" ng-model="meses.diciembre">
+            </div>
+          </div>
+        </div>
+    </section>
+
   </div>
 </section>

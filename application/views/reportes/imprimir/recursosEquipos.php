@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       <?php foreach ($recursos->equipos as $key => $v): ?>
-        <?php  if(  isset($v->facturable) && $v->facturable ): ?>
+        <?php  if(  $v->facturable || $v->print ): ?>
           <tr>
             <td><?= $v->itemc_item ?></td>
             <td><?= ltrim($v->codigo_siesa, '0') ?></td>

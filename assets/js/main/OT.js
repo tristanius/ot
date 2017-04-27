@@ -35,6 +35,7 @@ var OT = function($scope, $http, $timeout){
 						ambito.recorrerTareas();
 						ambito.obtenerMunicipios(ambito.ot.departamento, $("#depart").data('getmunis'));
 					}
+					console.log(response.data);
 				},
 				function(response){		alert('Algo ha salido mal al cargar informacion de la OT');		}
 			);
@@ -547,6 +548,7 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.isOnPeticion = false;
 	$scope.ot.estado_doc = 'POR EJECUTAR';
 	$scope.myestado_doc = 'POR EJECUTAR';
+	$scope.ot.allMeses = [ ];
 	////$scope.$parent.tinyMCE();
 
 	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope); }
@@ -647,6 +649,7 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.filtroItems = {};
 	$scope.munis = [];
 	$scope.isOnPeticion = false;
+	$scope.ot.allMeses = [];
 
 	$scope.recorrerTareas = function(){
 		if ( $scope.ot.estado_doc == undefined || $scope.ot.estado_doc == ''){

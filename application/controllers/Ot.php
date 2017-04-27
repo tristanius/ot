@@ -315,7 +315,7 @@ class Ot extends CI_Controller {
 		$ots = json_decode(file_get_contents('php://input'));
 		$ot = $ots->ot;
 		$orden = $ots->ot;
-		$this->load->model(array('ot_db'=>'ot_db', 'tarea_db'=>'tarea', 'item_db'=>'item' ));
+		$this->load->model(array('ot_db'=>'ot_db', 'tarea_db'=>'tarea', 'item_db'=>'item', 'info_ot_db'=>'inf_ot' ));
 		# inicio de seguimiento de transacciones
 		$this->ot_db->init_transact();
 
@@ -352,6 +352,8 @@ class Ot extends CI_Controller {
 				isset($orden->basica)?$orden->basica:FALSE,
 				isset($orden->estado_sap)?$orden->estado_sap:FALSE
 			);
+
+		$this->inf_ot->saveAllMeses($orden->allMeses);
 
 		$this->load->helper('log');
 		if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $orden->idOT, 'OT', 'Orden '.$orden->nombre_ot.' modificada', date('Y-m-d H:i:s') );	}
@@ -513,18 +515,18 @@ class Ot extends CI_Controller {
 		$this->load->model('ot_db');
 		$ot = $this->ot_db->getData($id)->row();
 		$ot->json = json_decode($ot->json);
-		$trs = $this->getTareasByOT($id);
-		$ot->tareas = $trs;
+		$ot->tareas = $this->getTareasByOT($id);
+		$ot->allMeses = $this->inf_ot->getAllMeses($id, NULL);
 		return $ot;
 	}
 	# Obtener datos de una OT en JSON
 	public function getData($id)
 	{
-		$this->load->model('ot_db');
+		$this->load->model(array('ot_db'=>'ot_db','info_ot_db'=>'inf_ot'));
 		$ot = $this->ot_db->getData($id)->row();
 		$ot->json = json_decode($ot->json);
-		$trs = $this->getTareasByOT($id);
-		$ot->tareas = $trs;
+		$ot->tareas = $this->getTareasByOT($id);
+		$ot->allMeses = $this->inf_ot->getAllMeses($id, NULL);
 		echo json_encode($ot);
 		#echo '<pre>'.json_encode($ot).'</pre>';
 	}
