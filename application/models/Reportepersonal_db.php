@@ -213,8 +213,8 @@ class Reportepersonal_db extends CI_Model{
     JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera."
-    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )
-    AND rd.validado_pyco IN ('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO')";
+    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
+    $query .= $bandera?" AND rd.validado_pyco IN ('ELABORADO','VALIDO','VALIDADO','FIRMADO','CORREGIDO') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
     if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
     if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }

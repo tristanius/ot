@@ -193,7 +193,7 @@ class Persona extends CI_Controller{
     if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
     if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
     if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
-    $bool = isset($bandera)?0:1;
+    $bool = ( isset($bandera) && $bandera != NULL )?0:1;
     $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bool);
     echo "success";
   }
