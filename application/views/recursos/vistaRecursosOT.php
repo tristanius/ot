@@ -63,7 +63,11 @@
 
   <section id="tabla-equipos" class="nodisplay">
     <ul class="col s12 m6 l6">
-      <li><button type="button" class="btn mini-btn light-green black-text" ng-click="showSection('#addEquipo')"  data-icon="N" style="margin-top:0; font-size: 2.1ex"></button> Add. equipo NO siesa / herramienta menor.</li>
+      <li>
+        <button ng-show="validPriv(65)" type="button" class="btn mini-btn light-green black-text" ng-click="showSection('#addEquipo')"
+          data-icon="N" style="margin-top:0; font-size: 2.1ex">
+        </button> Add. equipo NO siesa / herramienta menor.
+      </li>
       <!-- <li><button type="button" class="btn mini-btn light-blue black-text" ng-click="showSection('#findEquipo')" data-icon="C" style="margin-top:0; font-size: 2.1ex"></button> Relacionar equipo siesa.</li> -->
     </ul>
 
