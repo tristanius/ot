@@ -1,9 +1,4 @@
 <div id="add-reporte" class="windowCentered2 row" ng-controller="editReporte">
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $('.sticked').stickyRows();
-      });
-    </script>
     <div class="" ng-init="getDataInfo('<?= site_url('reporte/getRecursos/'.$r->idreporte_diario) ?>');">
       <?php $this->load->view('reportes/edit/duplicar'); ?>
 

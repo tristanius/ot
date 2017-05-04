@@ -15,9 +15,9 @@
         <th colspan="2" style="max-width: 12ex">Turnos</th>
         <th style="max-width: 7ex">Día</th>
         <th style="max-width: 6ex; background: #C5F5F9">H. Ord</th>
-        <th style="max-width: 7ex">Rec. N.</th>
         <th style="max-width: 6ex">H.E.D.</th>
         <th style="max-width: 6ex">H.E.N.</th>
+        <th style="max-width: 7ex">Rec. N.</th>
         <th>Ración</th>
         <th>Hr. <br> Almuer.</th>
         <th colspan="2">G. Viaje</th>
@@ -129,9 +129,9 @@
           </div>
         </td>
         <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
-        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_recargo" ng-init="pr.horas_recargo = parseNumb(pr.horas_recargo)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
         <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_dia" ng-init="pr.horas_extra_dia = parseNumb(pr.horas_extra_dia)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
         <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_noc" ng-init="pr.horas_extra_noc = parseNumb(pr.horas_extra_noc)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
+        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_recargo" ng-init="pr.horas_recargo = parseNumb(pr.horas_recargo)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
         <td>
           <select class="" ng-model="pr.racion" ng-disabled="rd.info.estado == 'CERRADO' ">
             <option value="0">0</option>

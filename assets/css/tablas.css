@@ -94,3 +94,17 @@ section .font8, section .font8 *, section .font8 label, .font8, .font8 * {
 .font11 h5{
   font-size: 1.5rem;
 }
+
+/* sticky */
+table.sticked{
+  /*display: block;*/
+}
+table.sticked thead{
+	/*position: sticky;
+	top: 0px;
+	z-index: 5;*/
+}
+table.sticked thead, table.sticked tbody, table.sticked tfoot {
+  /*display: table;
+  width: 100%;*/
+}
