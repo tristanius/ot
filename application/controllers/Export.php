@@ -142,7 +142,9 @@ class Export extends CI_Controller{
     $rpers = $this->repo->getRecursos($idrepo,"personal");
     $requs = $this->repo->getRecursos($idrepo,"equipos");
     $racts = $this->repo->getRecursos($idrepo,"actividades");
+
     $recursos = new stdClass();
+    $recursos->json_r = json_decode($row->json_r);
     $recursos->personal = $rpers->result();
     $recursos->equipos = $requs->result();
     $recursos->actividades = $racts->result();
@@ -163,6 +165,15 @@ class Export extends CI_Controller{
     $recursos->personal = $post->personal;
     $recursos->equipos = $post->equipos;
     $recursos->actividades = $post->actividades;
+
+    $json_r->observaciones = isset($post->observaciones)?$post->observaciones:$json_r->observaciones;
+    $json_r->elaborador_nombre = isset($post->elaborador_nombre)?$post->elaborador_nombre:'';
+    $json_r->contratista_nombre = isset($post->contratista_nombre)?$post->contratista_nombre:'';
+    $json_r->ecopetrol_nombre = isset($post->ecopetrol_nombre)?$post->ecopetrol_nombre:'';
+    $json_r->elaborador_cargo = isset($post->elaborador_cargo)?$post->elaborador_cargo:'';
+    $json_r->contratista_cargo = isset($post->contratista_carg)?$post->contratista_carg:'';
+    $json_r->ecopetrol_cargo = isset($post->ecopetrol_cargo)?$post->ecopetrol_cargo:'';
+
     $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $html = $this->load->view('reportes/imprimir/reporte_diario',
       array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),

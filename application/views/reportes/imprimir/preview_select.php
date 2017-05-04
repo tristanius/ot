@@ -138,6 +138,46 @@
     </table>
   </div>
 
+  <div class="">
+    <br>
+    <table class="font10 nocenter" cellpadding="0" cellspacing="0" border="1">
+      <thead style="background:#EEE;">
+        <tr>
+          <th>imprimir</th>
+          <th>Observaciones del Cliente</th>
+        </tr>
+      </thead>
+      <tbody class="noMaterialStyles">
+        <tr ng-repeat="obs in recursos.json_r.observaciones">
+          <td> <input type="checkbox" ng-model="obs.print" ng-init="obs.print = false"></td>
+          <td> <p ng-bind="obs.msj"></p> </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table class="font10 nocenter" cellpadding="0" cellspacing="0" border="1">
+      <thead style="background:#EEE">
+        <tr>
+          <th> Elaborado por </th>
+          <th> Representante del contratista</th>
+          <th> Representante del cliente</th>
+        </tr>
+      </thead>
+      <tbody class="">
+        <tr>
+          <td>Nombre: <input type="text" ng-model="recursos.json_r.elaborador_nombre"></td>
+          <td>Nombre: <input type="text" ng-model="recursos.json_r.contratista_nombre"></td>
+          <td>Nombre: <input type="text" ng-model="recursos.json_r.ecopetrol_nombre"></td>
+        </tr>
+        <tr>
+          <td>Cargo: <input type="text" ng-model="recursos.json_r.elaborador_cargo"></td>
+          <td>Cargo: <input type="text" ng-model="recursos.json_r.contratista_cargo"></td>
+          <td>Cargo: <input type="text" ng-model="recursos.json_r.ecopetrol_cargo"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 
   <div class="btnWindow ">
     <button type="button" class="waves-effect waves-light btn mini-btn2" ng-if=" (validPriv(38) || validPriv(45) || validPriv(46) ) "

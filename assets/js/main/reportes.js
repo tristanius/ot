@@ -980,10 +980,10 @@ var editReporte = function($scope, $http, $timeout){
 
 var imprimirRD = function($scope, $http, $timeout){
   $scope.recursos = {};
-  $scope.retorno = { personal:[], equipos:[], actividades:[] };
+  $scope.retorno = { personal:[], equipos:[], actividades:[], observaciones:[] };
 
   $scope.getRecursos = function(link){
-    $scope.retorno = { personal:[], equipos:[], actividades:[] };
+    $scope.retorno = { personal:[], equipos:[], actividades:[], observaciones:[] };
     console.log(link);
     $http.get(link).then(
       function(response){
@@ -1010,6 +1010,20 @@ var imprimirRD = function($scope, $http, $timeout){
       if(val.imprimiractividades)
         $scope.retorno.actividades.push(val);
     });
+    $scope.retorno.observaciones = [];
+    angular.forEach(recursos.json_r.observaciones, function(val, key){
+      if (val.print) {
+        $scope.retorno.observaciones.push(val);
+      }
+    });
+
+    $scope.retorno.elaborador_nombre = $scope.recursos.json_r.elaborador_nombre;
+    $scope.retorno.contratista_nombre = $scope.recursos.json_r.contratista_nombre;
+    $scope.retorno.ecopetrol_nombre = $scope.recursos.json_r.ecopetrol_nombre;
+
+    $scope.retorno.elaborador_cargo = $scope.recursos.json_r.elaborador_cargo;
+    $scope.retorno.contratista_cargo = $scope.recursos.json_r.contratista_cargo;
+    $scope.retorno.ecopetrol_cargo = $scope.recursos.json_r.ecopetrol_cargo;
   }
 
   $scope.printSelected = function(){

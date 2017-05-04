@@ -9,11 +9,12 @@
     <?php foreach ($observaciones as $key => $v): ?>
       <tr>
         <td style="width:50%;"> <p><?= $v->msj ?></p> </td>
-        <td style="width:50%"></td>
+        <td style="width:50%"> </td>
       </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
+<p></p>
 <table class="font9 nocenter" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE">
     <tr>
