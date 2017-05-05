@@ -229,7 +229,7 @@ class Facturacion_db extends CI_Controller{
     return $this->db->select('
       OT.nombre_ot,
       tr.nombre_tarea,
-      IFNULL(tr.sap , OT.numero_sap) AS sap,
+      IF(tr.sap IS NULL, CONTACT(OT.numero_sap), tr.sap) AS sap,
       b.nombre_base,
       if(OT.basica, "BASICA","-") AS ot_basica,
       OT.vereda,
@@ -297,17 +297,19 @@ class Facturacion_db extends CI_Controller{
       ( SELECT  SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN tarea_ot AS tar ON itt.tarea_ot_idtarea_ot = tar.idtarea_ot WHERE tar.OT_idOT = OT.idOT AND itemf_codigo LIKE "1%" ) AS actividad_apu,
       ( SELECT  SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN tarea_ot AS tar ON itt.tarea_ot_idtarea_ot = tar.idtarea_ot WHERE tar.OT_idOT = OT.idOT AND itemf_codigo LIKE "2%" ) AS personal,
       ( SELECT  SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN tarea_ot AS tar ON itt.tarea_ot_idtarea_ot = tar.idtarea_ot WHERE tar.OT_idOT = OT.idOT AND itemf_codigo LIKE "3%" ) AS equipo,
-      regot.enero,
-      regot.febrero,
-      regot.marzo,
-      regot.abril,
-      regot.mayo,
-      regot.junio,
-      regot.julio,
-      regot.agosto,
-      regot.septiembre,
-      regot.noviembre,
-      regot.diciembre,
+      CONCAT("año: ", regot.year) AS anio,
+      if(regot.enero IS NOT NULL, regot.enero, "-") AS enero,
+      if(regot.febrero IS NOT NULL, regot.febrero, "-") AS febrero,
+      if(regot.marzo IS NOT NULL, regot.marzo, "-") AS marzo,
+      if(regot.abril IS NOT NULL, regot.abril, "-") AS abril,
+      if(regot.mayo IS NOT NULL, regot.mayo, "-") AS mayo,
+      if(regot.junio IS NOT NULL, regot.junio, "-") AS junio,
+      if(regot.julio IS NOT NULL, regot.julio, "-") AS julio,
+      if(regot.agosto IS NOT NULL, regot.agosto, "-") AS agosto,
+      if(regot.septiembre IS NOT NULL, regot.septiembre, "-") AS septiembre,
+      if(regot.octubre IS NOT NULL, regot.octubre, "-") AS octubre,
+      if(regot.noviembre IS NOT NULL, regot.noviembre, "-") AS noviembre,
+      if(regot.diciembre IS NOT NULL, regot.diciembre, "-") AS diciembre,
       "" AS total,
       "" AS total_directo_aiu,
       OT.presupuesto_porcent_ini AS porcentaje_utilidad_inicial,
@@ -318,8 +320,8 @@ class Facturacion_db extends CI_Controller{
       ->join('base AS b','b.idbase = OT.base_idbase')
       ->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad')
       ->join('tipo_ot AS tp','tp.idtipo_ot = OT.tipo_ot_idtipo_ot')
-      ->join('registro_mes_ot AS regot', 'regot.OT_idOT = OT.idOT',"LEFT")
-      ->group_by('OT.idOT')->get();
+      ->join('costo_mes_ot AS regot', 'regot.OT_idOT = OT.idOT',"LEFT")
+      ->group_by('IFNULL(regot.idcosto_mes_ot, OT.idOT)')->get();
   }
 
 

@@ -100,9 +100,9 @@ table.sticked{
   /*display: block;*/
 }
 table.sticked thead{
-	/*position: sticky;
+	position: sticky;
 	top: 0px;
-	z-index: 5;*/
+	z-index: 5;
 }
 table.sticked thead, table.sticked tbody, table.sticked tfoot {
   /*display: table;

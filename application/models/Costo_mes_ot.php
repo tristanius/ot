@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Info_ot_db extends CI_Model{
+class Costo_mes_ot extends CI_Model{
   private $meses = array();
 
   public function __construct()

@@ -109,6 +109,18 @@ class Miscelanio_db extends CI_Model {
 		}
 		return $sectores;
 	}
+
+	public function setAllCostosMes()
+	{
+		$this->load->database('ot');
+		$ots = $this->db->get('OT');
+		foreach ($ots->result() as $k => $v) {
+			$rows = $this->db->get_where('costo_mes_ot', array('OT_idOT'=>$v->idOT));
+			if($rows->num_rows() <= 0){
+				$this->db->insert('costo_mes_ot', array('OT_idOT'=>$v->idOT, 'year'=>date('y')));
+			}
+		}
+	}
 }
 
 /* End of file Miscelanio_db.php */

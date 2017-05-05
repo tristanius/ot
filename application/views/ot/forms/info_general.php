@@ -53,7 +53,23 @@
       </div>
     </div>
 
+    <br>
     <section>
+
+        <div class="">
+          <button type="button" class="btn mini-btn" ng-click="add_new_costo_mes_ot = true">+</button> Add. año de costos
+          <div ng-show="add_new_costo_mes_ot" ng-init="add_new_costo_mes_ot = false">
+            <label for="">Año de control de costo:</label>
+            <input type="text" ng-model="costo_year" />
+            <button type="button" name="btn mini-btn2"
+                ng-click="ot.allMeses.push(
+                  {OT_idOT: ot.idOT,year: costo_year, enero:0,febrero:0,marzo:0,abril:0,mayo:0,junio:0,julio:0,agosto:0,septiembre:0,octubre:0,noviembre:0,diciembre:0 }
+                  )">
+                Agregar
+            </button>
+          </div>
+        </div>
+
         <div ng-repeat="meses in ot.allMeses">
           <hr>
           <b>Costo mes a mes: <span ng-bind="meses.year"></span> </b>
