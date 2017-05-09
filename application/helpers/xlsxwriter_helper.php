@@ -25,13 +25,13 @@ function xlsx_export($data, $headers, $file)
   $writer->writeToFile($file);
 }
 
-function xlsx($data, $headers, $file)
+function xlsx($data, $headers, $file, $sheet="sabanaFactura")
 {
   $writer = new XLSXWriter();
   //$writer->writeSheet($data);
-  $writer->writeSheetRow('sabanaFactura', $headers, array('fill'=>'#00BCD4', 'border'=>'left,right,top,bottom', 'font-style'=>'bold'));
+  $writer->writeSheetRow($sheet, $headers, array('fill'=>'#00BCD4', 'border'=>'left,right,top,bottom', 'font-style'=>'bold'));
   foreach($data as $row){
-    $writer->writeSheetRow('sabanaFactura', $row);
+    $writer->writeSheetRow($sheet, $row);
   }
   $writer->writeToFile($file);
 }

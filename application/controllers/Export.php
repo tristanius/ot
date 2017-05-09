@@ -17,9 +17,13 @@ class Export extends CI_Controller{
 
   public function historyRepoByOT($idOT, $nombre_ot)
   {
+    $this->load->helper('xlsxwriter');
+    $this->load->helper('download');
     $this->load->model('reporte_db', 'repo');
     $rows = $this->repo->getHistoryBy($idOT);
-    $this->load->view('miscelanios/history/infoReportes', array('rows'=>$rows, 'nombre_ot'=>$nombre_ot) );
+    xlsx($rows->result_array(), $rows->list_fields(), './uploads/'.$nombre_ot.'.xlsx', 'historial');
+    force_download('./uploads/'.$nombre_ot.'.xlsx',NULL);
+    //$this->load->view('miscelanios/history/infoReportes', array('rows'=>$rows, 'nombre_ot'=>$nombre_ot) );
   }
 
   # ========================================================================
