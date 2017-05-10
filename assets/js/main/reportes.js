@@ -107,6 +107,19 @@ var reportes = function($scope, $http, $timeout) {
       }
     );
   }
+  $scope.setHeader = function(selector1){
+    //$(selector1+' tbody tr#thead1').clone().appendTo(selector1+' thead#thead2');
+    $(selector1).css({ "width": $(selector1+" tbody").outerWidth()+"px" });
+    var widths = [];
+    $(selector1+' tbody tr:last-child th').each(function(indice){
+    	widths[indice] = {w:$(this).outerWidth()};
+    	console.log(widths[indice]);
+    });
+    $( selector1+' thead#thead2 tr:last-child th').each(function(indice){
+    	var cell = widths[indice];
+    	$(this).css( { "width": cell.w+"px" } );
+    });
+  }
 }
 
 // ============================================================================================
@@ -695,7 +708,7 @@ var editReporte = function($scope, $http, $timeout){
   }
 
   // Utilidades
-  $scope.toggleContent = function(tag, clase, section){
+  $scope.toggleContent = function(tag, clase, section, myfun=undefined){
     if(section != undefined){
 			if ($(tag).hasClass(clase)) {
 				$(section).addClass(clase);
@@ -705,6 +718,7 @@ var editReporte = function($scope, $http, $timeout){
 			}
 		}
 		$(tag).toggleClass(clase);
+    if (myfun) { $scope.$parent[myfun]("#personalReporte"); }
   }
   $scope.showContent = function(tag, section){
     $(section).hide();

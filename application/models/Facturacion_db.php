@@ -229,7 +229,7 @@ class Facturacion_db extends CI_Controller{
     return $this->db->select('
       OT.nombre_ot,
       tr.nombre_tarea,
-      IF(tr.sap IS NULL, CONTACT(OT.numero_sap), tr.sap) AS sap,
+      IF(tr.sap IS NULL, CONCAT(OT.numero_sap), tr.sap) AS sap,
       b.nombre_base,
       if(OT.basica, "BASICA","-") AS ot_basica,
       OT.vereda,
@@ -262,6 +262,7 @@ class Facturacion_db extends CI_Controller{
     ->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
     ->join('base AS b','b.idbase = OT.base_idbase')
     ->join('especialidad AS e','e.idespecialidad = OT.especialidad_idespecialidad')
+    ->order_by('OT.idOT')
     ->group_by('tr.idtarea_ot')
     ->get();
   }

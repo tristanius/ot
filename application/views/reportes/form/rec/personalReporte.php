@@ -1,64 +1,76 @@
-<div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>'>
-  <table class="mytabla" ng-hide="isOnPeticion">
-    <thead>
+<div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>' style="max-height:500px; overflow:auto">
+  <table id="personalReporte" class="mytabla sticked" ng-hide="isOnPeticion">
+    <thead id="thead2">
       <tr style="background: #EEE">
         <th></th>
         <th></th>
-        <th>Item</th>
-        <th style="max-width: 14ex">Cédula</th>
-        <th>Nombre Completo</th>
-        <th>Cargo</th>
-        <th style="max-width: 7ex">Estado <br> Trabajador</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
 
-        <th style="background: #F4F9FD ">Fact.</th>
-        <th><small>Impr.</small></th>
+        <th style="background: #F4F9FD "></th>
+        <th></th>
         <th colspan="2" style="max-width: 12ex">Turnos</th>
-        <th style="max-width: 7ex">Día</th>
-        <th style="max-width: 6ex; background: #C5F5F9">H. Ord</th>
-        <th style="max-width: 6ex">H.E.D.</th>
-        <th style="max-width: 6ex">H.E.N.</th>
-        <th style="max-width: 7ex">Rec. N.</th>
-        <th>Ración</th>
-        <th>Hr. <br> Almuer.</th>
+        <th></th>
+        <th style="background: #F4F9FD "></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
         <th colspan="2">G. Viaje</th>
+      </tr>
+
+
+      <tr style="background: #EEE">
+          <th></th>
+          <th>No.</th>
+          <th>Item</th>
+          <th>Cédula</th>
+          <th>Nombre Completo</th>
+          <th>Cargo</th>
+          <th>Estado <br> Trabajador</th>
+          <th style="background: #F4F9FD ">Fact.</th>
+          <th><small>Impr.</small></th>
+          <th class="red lighten-4 inputsSmall">Turno 1</th>
+          <th class="red lighten-4 inputsSmall">Turno 2</th>
+          <th>Día</th>
+          <th style="background: #F4F9FD ">H. Ord</th>
+          <th>H.E.D.</th>
+          <th>H.E.N.</th>
+          <th>Rec. N.</th>
+          <th>Ración</th>
+          <th>Hr. <br> Almuer.</th>
+          <th>R/P</th>
+          <th>Lugar</th>
       </tr>
     </thead>
     <tbody>
-      <tr style="background: #EEE">
-        <td></td>
-        <td>No.</td>
-        <!-- <td>
-          <input type="text"
-              ng-model="personalFilter.indice"
-              ng-change="verificadorNumericoFilter(personalFilter, 'indice',1)"
-              style="width:2em">
-        </td> -->
-
-        <td> <input ng-model="personalFilter.itemc_item" style="width:6ex;"> </td>
-        <td ><input style="max-width: 11ex" type="text" ng-model="personalFilter.identificacion"></td>
-        <td><input type="text" style="max-width: 16ex" ng-model="personalFilter.nombre_completo"></td>
-        <td><input type="text" style="max-width: 16ex" ng-model="personalFilter.descripcion"></td>
-        <td style="max-width: 7ex"></td>
-
-        <td class="noMaterialStyles" style="background: #F4F9FD ">
-          <input type="checkbox"
-              ng-click="changeFilterSelect2(personalFilter, 'facturable')" ng-init="personalFilter.facturable = undefined">
-        </td>
-        <td></td>
-
-        <td class="red lighten-4 inputsSmall" style="text-align:center">Turno 1</td>
-        <td class="red lighten-4 inputsSmall" style="text-align:center">Turno 2</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td> <!-- HO.-->
-
-        <td></td>
-        <td></td>
-        <td>R/P</td>
-        <td>Lugar</td>
+      <tr style="background: #b9dae5">
+          <td></td>
+          <td></td>
+          <td> <input ng-model="personalFilter.itemc_item" style="width:4ex;"> </td>
+          <td><input style="max-width: 7ex" type="text" ng-model="personalFilter.identificacion"></td>
+          <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.nombre_completo"></td>
+          <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.descripcion"></td>
+          <td style="max-width: 7ex"></td>
+          <td class="noMaterialStyles" style="background: #F4F9FD "></td>
+          <td></td>
+          <td style="text-align:center"></td>
+          <td style="text-align:center"></td>
+          <td></td>
+          <td style="background: #F4F9FD "></td>
+          <td></td>
+          <td></td>
+          <td></td> <!-- HO.-->
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
       </tr>
+
       <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}"> <!--  | orderBy: 'itemc_item' -->
         <td ng-init="pr.nomina = parseBool(pr.nomina)">
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista( rd.recursos.personal, pr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>', 'idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
@@ -128,7 +140,7 @@
             <input type="number" min=0 style="border: green 1px solid; width:5ex;" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "  min=0 max=1>
           </div>
         </td>
-        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
+        <td class="inputsSmall" style="background: #F4F9FD "> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
         <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_dia" ng-init="pr.horas_extra_dia = parseNumb(pr.horas_extra_dia)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
         <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_noc" ng-init="pr.horas_extra_noc = parseNumb(pr.horas_extra_noc)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
         <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_recargo" ng-init="pr.horas_recargo = parseNumb(pr.horas_recargo)" ng-readonly="(rd.info.estado == 'CERRADO') || pr.nomina"> </td>
@@ -143,6 +155,29 @@
         <td> <input type="checkbox" ng-model="pr.hr_almuerzo" ng-init="pr.hr_almuerzo = parseBool(pr.hr_almuerzo)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
         <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+      </tr>
+
+      <tr id="thead1" style="background: #EEE; color: #EEE">
+          <th></th>
+          <th>No.</th>
+          <th>Item</th>
+          <th>Cédula</th>
+          <th>Nombre Completo</th>
+          <th>Cargo</th>
+          <th>Estado <br> Trabajador</th>
+          <th>Fact.</th>
+          <th><small>Impr.</small></th>
+          <th>Turno 1</th>
+          <th>Turno 2</th>
+          <th>Día</th>
+          <th>H. Ord</th>
+          <th>H.E.D.</th>
+          <th>H.E.N.</th>
+          <th>Rec. N.</th>
+          <th>Ración</th>
+          <th>Hr. <br> Almuer.</th>
+          <th>R/P</th>
+          <th>Lugar</th>
       </tr>
     </tbody>
   </table>

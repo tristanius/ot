@@ -97,14 +97,19 @@ section .font8, section .font8 *, section .font8 label, .font8, .font8 * {
 
 /* sticky */
 table.sticked{
-  /*display: block;*/
+	border-collapse: collapse;
+	display: block;
+  	width: 100%;
+}
+table.sticked td, table.sticked th{
+	border: 1px solid #999;
 }
 table.sticked thead{
 	position: sticky;
 	top: 0px;
 	z-index: 5;
 }
-table.sticked thead, table.sticked tbody, table.sticked tfoot {
-  /*display: table;
-  width: 100%;*/
+table.sticked thead, table.sticked  tbody,table.sticked tfoot {
+  display: table;
+  width: 100%;
 }
