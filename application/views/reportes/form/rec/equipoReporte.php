@@ -1,49 +1,57 @@
-<div class="noMaterialStyles">
-  <table class="mytabla" ng-hide="isOnPeticion">
-    <thead style="background: #EEE">
+<div class="noMaterialStyles" style="max-height:500px; overflow:auto">
+  <table id="equiposReporte" class="mytabla sticked" ng-hide="isOnPeticion">
+    <thead id="thead2" style="background: #EEE">
       <tr>
-        <th rowspan="2"></th>
-        <th rowspan="2">Item</th>
-        <th rowspan="2" style="background: #F4F9FD ">Fact.</th>
-        <th rowspan="2">Impr.</th>
-        <th rowspan="2">Codigo</th>
-        <th rowspan="2">Ref./AF</th>
-        <th rowspan="2">Equipo</th>
-        <th rowspan="2">Operador / Conductor</th>
-        <th rowspan="2">Cant.</th>
-        <th rowspan="2">UND</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
         <th colspan="2">Horometro</th>
         <th colspan="3">Reporte horas</th>
       </tr>
-      <tr>
+      <tr class="background:#EEE; color:#EEE;">
+        <th></th>
+        <th>Item</th>
+        <th style="background: #F4F9FD ">Fact.</th>
+        <th>Impr.</th>
+        <th>Codigo</th>
+        <th>Ref./AF</th>
+        <th>Equipo</th>
+        <th>Operador / Conductor</th>
+        <th>Cant.</th>
+        <th>UND</th>
         <th>Inicial</th>
         <th>Final</th>
-
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
       </tr>
-
-      <tr>
-        <th></th>
-        <th> <input style="width: 6ex" type="text" ng-model="filterEquipos.itemc_item"> </th>
-        <th></th>
-        <th></th>
-        <th> <input style="width: 7ex" type="text" ng-model="filterEquipos.codigo_siesa"> </th>
-        <th> <input style="width: 8ex" type="text" ng-model="filterEquipos.referencia"> </th>
-        <th> <input style="width: 8ex" type="text" ng-model="filterEquipos.descripcion_equipo"> </th>
-        <th> <input style="width: 8ex" type="text" ng-model="filterEquipos.nombre_operador"> </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-      </tr>
     </thead>
     <tbody>
+
+      <tr style="background: #b9dae5">
+        <td></td>
+        <td> <input style="width: 4ex" type="text" ng-model="filterEquipos.itemc_item"> </td>
+        <td></td>
+        <td></td>
+        <td> <input style="width: 7ex" type="text" ng-model="filterEquipos.codigo_siesa"> </td>
+        <td> <input style="width: 8ex" type="text" ng-model="filterEquipos.referencia"> </td>
+        <td> <input style="width: 8ex" type="text" ng-model="filterEquipos.descripcion_equipo"> </td>
+        <td> <input style="width: 8ex" type="text" ng-model="filterEquipos.nombre_operador"> </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
 
       <tr ng-repeat="eq in rd.recursos.equipos | orderBy: 'itemc_item' | filter: filterEquipos track by $index"  class="{{ (eq.idrecurso_reporte_diario == undefined || eq.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
@@ -81,6 +89,23 @@
         <td class="inputsSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_operacion" ng-init="eq.horas_operacion = parseNumb(eq.horas_operacion)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputsSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_disponible" ng-init="eq.horas_disponible = parseNumb(eq.horas_disponible)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputsSmall noMaterialStyles"> <input type="checkbox" ng-model="eq.varado" ng-init="eq.varado = parseBool(eq.varado)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
+      </tr>
+      <tr id="thead1" style="background:#EEE; color:#EEE;">
+        <th></th>
+        <th>Item</th>
+        <th>Fact.</th>
+        <th>Impr.</th>
+        <th>Codigo</th>
+        <th>Ref./AF</th>
+        <th>Equipo</th>
+        <th>Operador / Conductor</th>
+        <th>Cant.</th>
+        <th>UND</th>
+        <th>Inicial</th>
+        <th>Final</th>
+        <th>OPER.</th>
+        <th>DISP.</th>
+        <th>VAR.</th>
       </tr>
     </tbody>
   </table>

@@ -34,8 +34,8 @@
           <th>Estado <br> Trabajador</th>
           <th style="background: #F4F9FD ">Fact.</th>
           <th><small>Impr.</small></th>
-          <th class="red lighten-4 inputsSmall">Turno 1</th>
-          <th class="red lighten-4 inputsSmall">Turno 2</th>
+          <th class="red lighten-5 inputsSmall">Turno 1</th>
+          <th class="red lighten-5 inputsSmall">Turno 2</th>
           <th>Día</th>
           <th style="background: #F4F9FD ">H. Ord</th>
           <th>H.E.D.</th>
@@ -58,8 +58,8 @@
           <td style="max-width: 7ex"></td>
           <td class="noMaterialStyles" style="background: #F4F9FD "></td>
           <td></td>
-          <td style="text-align:center"></td>
-          <td style="text-align:center"></td>
+          <td style="background: #FCE8E9; text-align:center"></td>
+          <td style="background: #FCE8E9; text-align:center"></td>
           <td></td>
           <td style="background: #F4F9FD "></td>
           <td></td>
@@ -105,7 +105,7 @@
           <input type="checkbox" ng-model="pr.print" ng-init="pr.print = parseBool(pr.print)" ng-readonly="rd.info.estado == 'CERRADO' " />
         </td>
 
-        <td>
+        <td style="background: #FCE8E9">
           <table>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
@@ -120,7 +120,7 @@
           </table>
         </td>
 
-        <td>
+        <td style="background: #FCE8E9">
           <table>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">

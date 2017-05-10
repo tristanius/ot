@@ -718,7 +718,10 @@ var editReporte = function($scope, $http, $timeout){
 			}
 		}
 		$(tag).toggleClass(clase);
-    if (myfun) { $scope.$parent[myfun]("#personalReporte"); }
+    if (myfun) {
+      $scope.$parent[myfun]("#personalReporte");
+      $scope.$parent[myfun]("#equiposReporte");
+    }
   }
   $scope.showContent = function(tag, section){
     $(section).hide();
