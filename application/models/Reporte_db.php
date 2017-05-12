@@ -305,6 +305,7 @@ class Reporte_db extends CI_Model{
       rrd.facturable,
       rrd.print,
       rrd.cantidad,
+      getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) as cantidad_final,
       rrd.hora_inicio,
       rrd.hora_fin,
       rrd.hora_inicio2,

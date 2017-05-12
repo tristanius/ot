@@ -25,12 +25,19 @@ function xlsx_export($data, $headers, $file)
   $writer->writeToFile($file);
 }
 
-function xlsx($data, $headers, $file, $sheet="sabanaFactura")
+function xlsx($data, $headers, $file, $sheet="sabanaFactura", $num_validations=NULL)
 {
   $writer = new XLSXWriter();
   //$writer->writeSheet($data);
   $writer->writeSheetRow($sheet, $headers, array('fill'=>'#00BCD4', 'border'=>'left,right,top,bottom', 'font-style'=>'bold'));
   foreach($data as $row){
+    if ($num_validations!=NULL) {
+      foreach ($num_validations as $key => $val) {
+        if ( isset($row[$val]) ) {
+          $row[$val] = $row[$val]*1;
+        }
+      }
+    }
     $writer->writeSheetRow($sheet, $row);
   }
   $writer->writeToFile($file);
