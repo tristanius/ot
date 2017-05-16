@@ -722,7 +722,7 @@ var editarOT = function($scope, $http, $timeout) {
 		});
 		$scope.showCopiar = false;
 		$scope.ot.tareas.push(tr);
-		$scope.tr = $scope.ot.tareas[ambito.ot.tareas.length];
+		//$scope.tr = $scope.ot.tareas[$scope.ot.tareas.length];
 	}
 	$scope.guardarOT = function(url){
 		//tinyMCE.triggerSave();

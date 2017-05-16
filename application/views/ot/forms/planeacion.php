@@ -15,25 +15,29 @@
 	<hr>
 
 	<fieldset>
-		<div class="selectEnabled">
-			<label class="col m1 right-align"><b style="color:#0D47A1">FECHA INICIO: </b></label>
-			<input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="tr.fecha_inicio"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer" readonly/>
+		<div class="selectEnabled" style="display: inline-block; margin:1ex;">
+				<label class="right-align"><b style="color:#0D47A1">FECHA INICIO: </b>
+				<input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="tr.fecha_inicio"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer" readonly/>
+			</label>
 		</div>
-		<div class="selectEnabled">
-			<label class="col m1 right-align"><b style="color:#0D47A1">FECHA FIN: </b></label>
-			<input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="tr.fecha_fin"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer"  readonly/>
-		</div>
-
-		<div class="selectEnabled">
-			<label class="col m1 right-align"><b style="color:#0D47A1">SAP tarea/Control: </b></label>
-			<input type="text"  ng-model="tr.sap" placeholder=" No. control cambio/ Tarea" />
+		<div class="selectEnabled" style="display: inline-block; margin-right:1ex;">
+				<label class="right-align"><b style="color:#0D47A1">FECHA FIN: </b>
+				<input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="tr.fecha_fin"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer"  readonly/>
+			</label>
 		</div>
 
-		<p class="noMaterialStyles regularForm" ng-if="validPriv(49)">
-			<label for="">Editar tarea:</label>
+		<div class="selectEnabled" style="display: inline-block; margin-right:1ex;">
+				<label class="right-align"><b style="color:#0D47A1">SAP/Control: </b>
+				<input type="text"  ng-model="tr.sap" placeholder=" No. control cambio/ Tarea" />
+			</label>
+		</div>
+
+		<div class="noMaterialStyles regularForm" ng-if="validPriv(49)" style="display: inline-block; margin:1ex;">
+			<label for="" style="color:#0D47A1"> <b>Editar tarea:</b> </label>
 			<input type="checkbox" ng-model="tr.editable">
-		</p>
+		</div>
 
+		<div> <b>{{ tr.nombre_tarea }} :</b> </div>
 
 	</fieldset>
 
