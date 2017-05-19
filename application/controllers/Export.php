@@ -175,7 +175,7 @@ class Export extends CI_Controller{
     $json_r->contratista_nombre = isset($post->contratista_nombre)?$post->contratista_nombre:'';
     $json_r->ecopetrol_nombre = isset($post->ecopetrol_nombre)?$post->ecopetrol_nombre:'';
     $json_r->elaborador_cargo = isset($post->elaborador_cargo)?$post->elaborador_cargo:'';
-    $json_r->contratista_cargo = isset($post->contratista_carg)?$post->contratista_carg:'';
+    $json_r->contratista_cargo = isset($post->contratista_cargo)?$post->contratista_cargo:'';
     $json_r->ecopetrol_cargo = isset($post->ecopetrol_cargo)?$post->ecopetrol_cargo:'';
 
     $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");

@@ -1023,8 +1023,8 @@ var imprimirRD = function($scope, $http, $timeout){
       if(val.imprimir)
         $scope.retorno.equipos.push(val);
     });
-    angular.forEach(recursos.personal, function(val,key){
-      if(val.imprimiractividades)
+    angular.forEach(recursos.actividades, function(val,key){
+      if(val.imprimir)
         $scope.retorno.actividades.push(val);
     });
     $scope.retorno.observaciones = [];

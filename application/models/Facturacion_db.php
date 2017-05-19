@@ -229,7 +229,7 @@ class Facturacion_db extends CI_Controller{
     return $this->db->select('
       OT.nombre_ot,
       tr.nombre_tarea,
-      IF(tr.sap IS NULL, CONCAT(OT.numero_sap), tr.sap) AS sap,
+      tr.sap AS sap,
       b.nombre_base,
       if(OT.basica, "BASICA","-") AS ot_basica,
       OT.vereda,
@@ -262,7 +262,7 @@ class Facturacion_db extends CI_Controller{
     ->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
     ->join('base AS b','b.idbase = OT.base_idbase')
     ->join('especialidad AS e','e.idespecialidad = OT.especialidad_idespecialidad')
-    ->order_by('OT.idOT')
+    ->order_by('tr.idtarea_ot','DESC')
     ->group_by('tr.idtarea_ot')
     ->get();
   }
@@ -274,7 +274,7 @@ class Facturacion_db extends CI_Controller{
       OT.nombre_ot,
       COUNT(tr.idtarea_ot) AS no_tareas,
       OT.estado_sap,
-      if(OT.numero_sap="",tr.sap,OT.numero_sap) AS numero_sap,
+      (SELECT taot.sap FOM WHERE taot.OT_idOT) AS numero_sap,
       if(OT.basica, "BASICA","NO BASICA") AS ot_basica,
       CONCAT( b.idbase, " - ", b.nombre_base ) AS base,
       OT.gerencia,
@@ -322,6 +322,7 @@ class Facturacion_db extends CI_Controller{
       ->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad')
       ->join('tipo_ot AS tp','tp.idtipo_ot = OT.tipo_ot_idtipo_ot')
       ->join('costo_mes_ot AS regot', 'regot.OT_idOT = OT.idOT',"LEFT")
+      ->order_by('tr.idtarea_ot','DESC')
       ->group_by('IFNULL(regot.idcosto_mes_ot, OT.idOT)')->get();
   }
 
