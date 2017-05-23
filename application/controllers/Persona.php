@@ -197,4 +197,11 @@ class Persona extends CI_Controller{
     $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bool);
     echo "success";
   }
+
+  public function setValidacion($val='')
+  {
+    if ($val == 'VALIDADO_HE' || $val ==  'NOMINA' || $val == '') {
+      # code...
+    }
+  }
 }

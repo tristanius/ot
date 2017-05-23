@@ -12,19 +12,41 @@
         </fieldset>
         <fieldset>
           <legend style="color: #BBB; font-size:12px">Filtros opcionales</legend>
-            <span for="">Orden:</span> <input type="text" ng-model="consulta_nom.orden" name="orden" placeholder="Ejemplo: OTATMTPA555-17-18">
-            <span for="">C.O.:</span> <input type="text" ng-model="consulta_nom.base" name="base" placeholder="Ejemplo: 168">
-            <span for="">Estado excluido:</span> <input type="text" ng-model="consulta_nom.estado_exl" ng-init="consulta_nom.estado_exl = 'PENDIENTE, CORREGIR'" ng-readonly="true" name="orden" placeholder="Ejemplo: PENDIENTE">
-            <hr>
-            <span for="">Cédula:</span> <input type="text" ng-model="consulta_nom.identificacion" name="identificacion" placeholder="Ejemplo: 10904455236">
+            <span for="">Orden:</span> <input type="text" ng-model="consulta_nom.orden" name="orden" placeholder="Ejemplo: OTATMTPA555-17-18"> &nbsp;
+            <span for="">C.O.:</span> <input type="text" ng-model="consulta_nom.base" name="base" placeholder="Ejemplo: 168">&nbsp;
+            <span for="">Cédula:</span> <input type="text" ng-model="consulta_nom.identificacion" name="identificacion" placeholder="Ejemplo: 10904455236">&nbsp;
+            <span for="">Estado excluido:</span> <input type="text" ng-model="consulta_nom.estado_exl" ng-init="consulta_nom.estado_exl = 'EN ELABORACION, CORREGIR'" ng-readonly="true" name="orden" placeholder="Ejemplo: PENDIENTE">&nbsp;
         </fieldset>
         <fieldset ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
           <legend style="color: #BBB; font-size:12px">Opciones</legend>
           <button type="button" class="btn mini-btn" ng-click="obtenerPersonal('<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon=","></button>
           <button type="button" class="btn mini-btn green" ng-click="descargarPersonal()" data-icon="&#xe03b;"></button>
-          <button type="button" class="btn mini-btn red" ng-click="bloquearPersonal('<?= site_url('persona/toNomina'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="O"></button>
-          <button type="button" class="btn mini-btn teal darken-2" ng-click="bloquearPersonal('<?= site_url('persona/toNomina/FALSE'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="y"></button>
         </fieldset>
+
+        <div class="row" ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
+          <fieldset class="col m5" ng-if="validPriv(67)">
+            <legend>Validación HE:</legend>
+            <button type="button" class="btn mini-btn teal darken-1"
+                ng-click="bloquearPersonal('<?= site_url('persona/setValidacion'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04c;">
+            </button>
+            <button type="button" class="btn mini-btn red"
+                ng-click="bloquearPersonal('<?= site_url('persona/setValidacion/FALSE'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04d;">
+            </button>
+            <p></p>
+          </fieldset>
+
+          <fieldset class="col m5" ng-if="validPriv(66)">
+              <legend>Nomina:</legend>
+              <button type="button" class="btn mini-btn orange darken-2"
+                  ng-click="bloquearPersonal('<?= site_url('persona/toNomina'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="O">
+              </button>
+              <button type="button" class="btn mini-btn teal darken-2"
+                  ng-click="bloquearPersonal('<?= site_url('persona/toNomina/FALSE'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="y">
+              </button>
+              <p></p>
+          </fieldset>
+
+        </div>
       </div>
     </fieldset>
 

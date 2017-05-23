@@ -22,7 +22,7 @@ class Reporte_db extends CI_Model{
       'linea'=>isset($repo->linea)?$repo->linea:'',
       'sistema_reporte_ecp'=>isset($repo->sistema_reporte_ecp)?$repo->sistema_reporte_ecp:'',
       'estado'=>'ABIERTO',
-      'validado_pyco'=>'PENDIENTE'
+      'validado_pyco'=>'EN ELABORACION'
     );
     $this->db->insert('reporte_diario', $data);
     return $this->db->insert_id();
@@ -53,7 +53,6 @@ class Reporte_db extends CI_Model{
      $data = array(
        'idreporte_diario' => $idrepo,
        'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
-       'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
        'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
        'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
        'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -92,7 +91,6 @@ class Reporte_db extends CI_Model{
     $data = array(
       'idreporte_diario' => $idrepo,
       'cantidad'=> isset($recurso->cantidad)?$recurso->cantidad: '0',
-      'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
       'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
       'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
 	    'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -327,8 +325,8 @@ class Reporte_db extends CI_Model{
       p.identificacion,
       p.nombre_completo,
       e.codigo_siesa,
-      e.referencia,
-      e.descripcion AS equipo
+      if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) AS referencia,
+      if(e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion) AS equipo
       '
     );
     $this->db->from('reporte_diario AS rd');

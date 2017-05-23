@@ -34,6 +34,10 @@
 				</li>
 				<hr>
 
+				<li ng-show="validPriv(66) || validPriv(67)">
+					<a href="#" ng-click="getFromMenu('#MenuAsociaciones','#slideOpciones')" data-icon="&#xe02c;"> Asociaciones</a>
+				</li>
+
 				<li ng-show="validGestion('maestros_ot')">
 					<a href="#" ng-click="getFromMenu('#MenuMaestros','#slideOpciones')" data-icon="&#xe050;">
 					  Maestros

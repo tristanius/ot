@@ -20,6 +20,10 @@
 	      <?= $this->load->view('inicio/Menu/MenuFacturacion', NULL, TRUE); ?>
 	    </div>
 
+			<div id="MenuAsociaciones">
+	      <?= $this->load->view('inicio/Menu/MenuAsociaciones', NULL, TRUE); ?>
+	    </div>
+
 	    <div id="MenuMaestros">
 	    	<?php $this->load->view('inicio/Menu/MenuMaestros') ?>
 	    </div>

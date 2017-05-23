@@ -661,7 +661,7 @@ var editReporte = function($scope, $http, $timeout){
               $scope.tipoGuardado = 0;
               $scope.rd.info.fecha_reporte = $scope.fecha_duplicar;
               $scope.rd.fecha_reporte = $scope.fecha_duplicar;
-              $scope.rd.info.validado_pyco = "PENDIENTE";
+              $scope.rd.info.validado_pyco = "EN ELABORACION";
               $scope.rd.info.estado = "ABIERTO";
               $scope.rd.observaciones_pyco = [];
               $scope.initEstadoDoc();
@@ -970,6 +970,7 @@ var editReporte = function($scope, $http, $timeout){
             $scope.getReportesView($scope.site_url);
           },
           function(response) {
+            console.log(response.data);
             $scope.isOnPeticion = false;
           }
         );
@@ -994,7 +995,7 @@ var editReporte = function($scope, $http, $timeout){
     })
   }
 }
-
+/* -----------------------------------*/
 var imprimirRD = function($scope, $http, $timeout){
   $scope.recursos = {};
   $scope.retorno = { personal:[], equipos:[], actividades:[], observaciones:[] };
