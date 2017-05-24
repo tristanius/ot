@@ -1,6 +1,6 @@
-<div class="noMaterialStyles" style="max-height:500px; overflow:auto">
+<div class="noMaterialStyles" style="max-height:400px; overflow:auto">
   <table id="equiposReporte" class="mytabla sticked" ng-hide="isOnPeticion">
-    <thead id="thead2" style="background: #EEE">
+    <thead id="thead2" style="background: #EEE; box-shadow:0px 0px 4px #333;">
       <tr>
         <th></th>
         <th></th>
