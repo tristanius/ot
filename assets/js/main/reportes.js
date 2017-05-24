@@ -119,6 +119,10 @@ var reportes = function($scope, $http, $timeout) {
     	var cell = widths[indice];
     	$(this).css( { "width": cell.w+"px" } );
     });
+    $(selector1+' tbody tr:last-child th').each(function(indice){
+      var cell = widths[indice];
+    	$(this).css( { "width": cell.w+"px" } );
+    });
   }
 }
 

@@ -35,7 +35,7 @@
 				<hr>
 
 				<li ng-show="validPriv(66) || validPriv(67)">
-					<a href="#" ng-click="getFromMenu('#MenuAsociaciones','#slideOpciones')" data-icon="&#xe02c;"> Asociaciones</a>
+					<a href="#" ng-click="getFromMenu('#MenuAsociaciones','#slideOpciones')" data-icon="&#xe037;"> Asociaciones</a>
 				</li>
 
 				<li ng-show="validGestion('maestros_ot')">

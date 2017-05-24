@@ -27,10 +27,10 @@
           <fieldset class="col m5" ng-if="validPriv(67)">
             <legend>Validación HE:</legend>
             <button type="button" class="btn mini-btn teal darken-1"
-                ng-click="bloquearPersonal('<?= site_url('persona/setValidacion'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04c;">
+                ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04c;">
             </button>
             <button type="button" class="btn mini-btn red"
-                ng-click="bloquearPersonal('<?= site_url('persona/setValidacion/FALSE'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04d;">
+                ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/0'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04d;">
             </button>
             <p></p>
           </fieldset>
@@ -38,10 +38,10 @@
           <fieldset class="col m5" ng-if="validPriv(66)">
               <legend>Nomina:</legend>
               <button type="button" class="btn mini-btn orange darken-2"
-                  ng-click="bloquearPersonal('<?= site_url('persona/toNomina'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="O">
+                  ng-click="bloquearPersonal('<?= site_url('reportepersonal/toNomina/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="O">
               </button>
               <button type="button" class="btn mini-btn teal darken-2"
-                  ng-click="bloquearPersonal('<?= site_url('persona/toNomina/FALSE'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="y">
+                  ng-click="bloquearPersonal('<?= site_url('reportepersonal/toNomina/0'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="y">
               </button>
               <p></p>
           </fieldset>
@@ -80,8 +80,9 @@
             <th>Ración</th>
             <th>Pernocto</th>
             <th>Lugar</th>
-            <th>estado</th>
-            <th>nomina?</th>
+            <th>Estado RD</th>
+            <th>H.E. Valido</th>
+            <th>Nomina?</th>
           </tr>
         </thead>
         <tbody>

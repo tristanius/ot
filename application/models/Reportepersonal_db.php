@@ -141,7 +141,8 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS estado_reporte,
-      if(rrd.nomina, "SI","NO") AS en_nomina
+      if(rrd.validacion, "SI", "NO") AS valido_HE,
+      if(rrd.nomina=1, "SI","NO") AS en_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
     ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
@@ -173,7 +174,7 @@ class Reportepersonal_db extends CI_Model{
       p.nombre_completo,
       itf.itemc_item,
       itf.codigo,
-      if(titc.CL="L", "LEGAL", if(titc.CL="C","CONVENCIONAL", "NO DATA")) AS tipo_item,
+      if(titc.CL="L", "LEG", if(titc.CL="C","CONV", "NO DATA")) AS tipo_item,
       itf.descripcion,
       if(rrd.facturable, "SI", "NO") AS facturable,
       rrd.hora_inicio AS turno1_inicio,
@@ -188,8 +189,9 @@ class Reportepersonal_db extends CI_Model{
       rrd.racion,
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
-      rd.validado_pyco AS validacion,
-      if(rrd.nomina=1, "SI","NO") AS para_nomina
+      rd.validado_pyco As estado_reporte,
+      if(rrd.validacion, "SI", "NO") AS valido_HE,
+      if(rrd.nomina=1, "SI","NO") AS en_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
     ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
@@ -214,13 +216,28 @@ class Reportepersonal_db extends CI_Model{
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera."
     WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
-    $query .= $bandera?" AND rd.validado_pyco IN ('VALIDO','VALIDADO','FIRMADO','CORREGIDO') ":"";
+    $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
     if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
     if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }
     $this->db->query($query);
   }
-
+  public function personalValidation($ini, $fin, $args, $bandera)
+  {
+    $this->load->database('ot');
+    $query = "UPDATE recurso_reporte_diario AS rrd
+    JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
+    JOIN OT ON OT.idOT = rd.OT_idOT
+    JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
+    JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
+    SET rrd.validacion = '".$bandera."'
+    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
+    $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
+    if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
+    if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
+    if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }
+    $this->db->query($query);
+  }
   /// --------------------------------------
 
   public function getPerMes($mes, $year,$laBase)

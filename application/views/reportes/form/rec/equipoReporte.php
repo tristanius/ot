@@ -43,7 +43,7 @@
         <td> <input style="width: 7ex" type="text" ng-model="filterEquipos.codigo_siesa"> </td>
         <td> <input style="width: 8ex" type="text" ng-model="filterEquipos.referencia"> </td>
         <td> <input style="width: 8ex" type="text" ng-model="filterEquipos.descripcion_equipo"> </td>
-        <td> <input style="width: 8ex" type="text" ng-model="filterEquipos.nombre_operador"> </td>
+        <td> <input style="width: 13ex" type="text" ng-model="filterEquipos.nombre_operador"> </td>
         <td></td>
         <td></td>
         <td></td>
