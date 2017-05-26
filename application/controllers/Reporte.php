@@ -273,6 +273,7 @@ class Reporte extends CI_Controller{
   {
     $post = json_decode( file_get_contents("php://input") );
     $validReporte = $this->validarRecursos("retornable", $post);
+    if($post->info->validado_pyco == 'CORREGIR'){ $validReporte->succ = TRUE; }
     if($validReporte->succ){
       $info = $post->info;
       $this->load->model('reporte_db', 'repo');
