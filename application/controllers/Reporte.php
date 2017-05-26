@@ -159,9 +159,12 @@ class Reporte extends CI_Controller{
           if($value->cantidad <= 0 && $value->facturable){
             $value->valid = TRUE;
             $value->msj = "Registro facturable sin cantidad.";
-          }elseif (!$value->valid && !$value->facturable){
+          }elseif ($k=='personal' && !$value->valid && !$value->facturable){
+            $value->valid = FALSE;
+            $value->msj .= " Personal no puede tener el mismo día por dos OT cant = 1.";
+          }elseif ($k=='equipos' && !$value->valid && !$value->facturable){
             $value->valid = TRUE;
-            $value->msj = "El recurso esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
+            $value->msj = "El equipo esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
           }
           $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
           if(!$value->valid){
