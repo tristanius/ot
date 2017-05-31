@@ -37,8 +37,28 @@
 						</select>
 					</td>
 					<td ng-bind="ot.zona"></td>
-					<td ng-bind="ot.nombre_especialidad"></td>
-					<td ng-bind="ot.nombre_tipo_ot"></td>
+					<td>
+						<div ng-show="!validPriv(54)" ng-bind="ot.nombre_especialidad"></div>
+						<select ng-show="validPriv(54)" style="width: 50%" id="especialidad_idespecialidad" ng-model="ot.especialidad_idespecialidad">
+							<option value="">seleccione una opción</option>
+							<?php foreach ($especialidades->result() as $esp) {
+								?>
+								<option value="<?= $esp->idespecialidad ?>"><?= $esp->nombre_especialidad ?></option>
+								<?php
+							} ?>
+						</select>
+					</td>
+					<td>
+						<div ng-show="!validPriv(54)" ng-bind="ot.nombre_tipo_ot"></div>
+						<select ng-show="validPriv(54)" style="width: 50%" id="tipo_ot_idtipo_ot" ng-model="ot.tipo_ot_idtipo_ot">
+							<option value="">seleccione una opción</option>
+							<?php foreach ($tipos_ot->result() as $tp) {
+								?>
+								<option value="<?= $tp->idtipo_ot ?>"><?= $tp->nombre_tipo_ot ?></option>
+								<?php
+							} ?>
+						</select>
+					</td>
 					<td>
 						<input type="text" style="width:10ex;" ng-model="ot.cc_ecp" ><!-- Campo habilitado a todos en PYCO -->
 						<!-- <input type="text" ng-model="ot.cc_ecp" ng-if="validPriv(54)" readonly> -->

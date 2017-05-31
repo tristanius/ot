@@ -41,8 +41,7 @@
 					</td>
 					<td>
 						<select name="" style="width: 50%" id="espacialiad" ng-model="ot.especialidad">
-							<option value="">seleccione una opción</option>}
-							option
+							<option value="">seleccione una opción</option>
 							<?php foreach ($especialidades->result() as $esp) {
 								?>
 								<option value="<?= $esp->idespecialidad ?>"><?= $esp->nombre_especialidad ?></option>
@@ -52,8 +51,7 @@
 					</td>
 					<td>
 						<select name="" style="width: 50%" id="tipo_ot" ng-model="ot.tipo_ot">
-							<option value="">seleccione una opción</option>}
-							option
+							<option value="">seleccione una opción</option>
 							<?php foreach ($tipos_ot->result() as $tp) {
 								?>
 								<option value="<?= $tp->idtipo_ot ?>"><?= $tp->nombre_tipo_ot ?></option>

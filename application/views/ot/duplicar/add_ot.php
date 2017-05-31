@@ -24,16 +24,33 @@
         <input type="text" ng-model="ot.nombre_ot" >
       </td>
       <td>
-        <span ng-show="!validPriv(54)" ng-bind="ot.base_idbase"></span>
-        <select ng-show="validPriv(54)" class="col m7" ng-model="ot.base_idbase" >
+        <select class="col m7" ng-model="ot.base_idbase" >
           <?php foreach ($bases->result() as $key => $base): ?>
             <option value="<?= $base->idbase ?>"><?= $base->idbase." - ". $base->nombre_base ?> </option>
           <?php endforeach; ?>
         </select>
       </td>
       <td ng-bind="ot.zona"></td>
-      <td ng-bind="ot.nombre_especialidad"></td>
-      <td ng-bind="ot.nombre_tipo_ot"></td>
+      <td>
+        <select style="width: 50%" id="especialidad_idespecialidad" ng-model="ot.especialidad_idespecialidad">
+          <option value="">seleccione una opción</option>
+          <?php foreach ($especialidades->result() as $esp) {
+            ?>
+            <option value="<?= $esp->idespecialidad ?>"><?= $esp->nombre_especialidad ?></option>
+            <?php
+          } ?>
+        </select>
+      </td>
+      <td>
+        <select style="width: 50%" id="tipo_ot_idtipo_ot" ng-model="ot.tipo_ot_idtipo_ot">
+          <option value="">seleccione una opción</option>
+          <?php foreach ($tipos_ot->result() as $tp) {
+            ?>
+            <option value="<?= $tp->idtipo_ot ?>"><?= $tp->nombre_tipo_ot ?></option>
+            <?php
+          } ?>
+        </select>
+      </td>
       <td>
         <input type="text" ng-model="ot.cc_ecp" ><!-- Campo habilitado a todos en PYCO
         <input type="text" ng-model="ot.cc_ecp" ng-if="validPriv(54)" readonly> -->
