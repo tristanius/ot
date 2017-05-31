@@ -1,5 +1,5 @@
 <div class="btnWindow">
-    <h5 ng-init="getData('<?= site_url('ot/getData/'.$ot->idOT) ?>')">
+  <h5>
     <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="80px" />
     <?= $titulo_gestion ?>
   </h5>
