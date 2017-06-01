@@ -1,6 +1,5 @@
 <div class="windowCentered2 row" ng-controller="OT">
 	<section class="area" ng-controller="editarOT">
-
 		<div class="btnWindow">
 		    <h5 ng-init="getData('<?= site_url('ot/getData/'.$idot) ?>')">
 					<img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="80px" />

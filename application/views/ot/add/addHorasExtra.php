@@ -21,6 +21,7 @@
               <th>HEFD</th>
               <th>HEFN</th>
               <th>HFR</th>
+              <th><small>incidencia</small></th>
               <th>Valor total</th>
             </tr>
           </thead>
@@ -63,6 +64,9 @@
                   {{ ( ( (it.salario/8)*2.5 ) * it.cantidad_hfr) | currency:'$':0 }}
                 </div>
               </td>
+              <td>
+  							<span ng-bind="it.incidencia" ng-init="it.incidencia = getIncidencia(itv) " style="color:gray"></span>
+  						</td>
               <td <?= $isEdit?'ng-init="calcularHorasExtra(tr)"':'ng-init="it.total = 0"' ?>>
                 {{ it.total | currency:'$':0 }}
               </td>

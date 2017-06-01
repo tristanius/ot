@@ -256,12 +256,14 @@ var OT = function($scope, $http, $timeout){
 				function(response){
 					console.log(response.data);
 					datos = response.data;
+					itv.incidencia = $scope.getIncidencia(itv);
 					itv.cantidad_gv = 1;
 					itv.duracion_gv = 1;
 					itv.alojamiento = parseFloat(datos.alojamiento);
 					itv.transporte = parseFloat(datos.transporte);
 					itv.alimentacion = parseFloat(datos.alimentacion);
 					itv.miscelanios = parseFloat(datos.miscelanios);
+					itv.total_item = ( itv.alojamiento +  itv.transporte +  itv.alimentacion +  itv.miscelanios) * ( itv.cantidad_gv *  itv.duracion_gv) * $scope.strtonum( itv.incidencia);
 				},
 				function(response){
 					alert(JSON.stringify(response.data))
@@ -338,6 +340,7 @@ var OT = function($scope, $http, $timeout){
 		item.total += (item.total_hefd);
 		item.total += (item.total_hefn);
 		item.total += (item.total_hfr);
+		item.incidencia = $scope.getIncidencia(item);
 		item.total = Math.round( (item.total * $scope.getIncidencia(item) ) * item.cantidad_he );
 	}
 	$scope.subtotal_he = function(item, base, porcentaje, cantidad, tipo){

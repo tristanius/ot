@@ -39,17 +39,17 @@
 						</td>
 						<td> <input type="number" ng-model="itv.cantidad_gv" ng-change="itv.cantidad_gv = strtonum(itv.cantidad_gv)" style="width:7ex" name="name" value=""> </td>
 						<td> <input type="number" ng-model="itv.duracion_gv" ng-change="itv.duracion_gv = strtonum(itv.duracion_gv)" style="width:7ex" name="name" value=""> </td>
-						<td> <input type="number" ng-model="itv.alojamiento" ng-change="itv.alojamiento = strtonum(itv.alojamiento)" value=""> {{ itv.alojamiento | currency:'$':0 }}</td>
-						<td> <input type="number" ng-model="itv.alimentacion" ng-change="itv.alimentacion = strtonum(itv.alimentacion)" value="">{{ itv.alimentacion | currency:'$':0 }}</td>
-						<td> <input type="number" ng-model="itv.transporte" ng-change="itv.transporte = strtonum(itv.transporte)" value="">{{ itv.transporte | currency:'$':0 }}</td>
-						<td> <input type="number" ng-model="itv.miscelanios" ng-change="itv.miscelanios = strtonum(itv.miscelanios)" value=""> {{ itv.miscelanios | currency:'$':0 }}</td>
+						<td> <input type="number" ng-model="itv.alojamiento" ng-change="itv.alojamiento = strtonum(itv.alojamiento)" style="max-width:15ex" > {{ itv.alojamiento | currency:'$':0 }}</td>
+						<td> <input type="number" ng-model="itv.alimentacion" ng-change="itv.alimentacion = strtonum(itv.alimentacion)" style="max-width:15ex" >{{ itv.alimentacion | currency:'$':0 }}</td>
+						<td> <input type="number" ng-model="itv.transporte" ng-change="itv.transporte = strtonum(itv.transporte)" style="max-width:15ex" >{{ itv.transporte | currency:'$':0 }}</td>
+						<td> <input type="number" ng-model="itv.miscelanios" ng-change="itv.miscelanios = strtonum(itv.miscelanios)" style="max-width:15ex" > {{ itv.miscelanios | currency:'$':0 }}</td>
 						<td>
 							<input type="text" style="width:7ex" ng-model="itv.incidencia" ng-init="itv.incidencia = getIncidencia(itv) "  disabled="">
 						</td>
-						<td> {{ ( (itv.alojamiento + itv.transporte + itv.alimentacion + itv.miscelanios) * (itv.cantidad_gv * itv.duracion_gv) * strtonum(itv.incidencia) ) | currency:'$':0 }}</td>
+						<td ng-bind="itv.total_item | currency:'$':0" ng-init="calcularTotalItem(itv)"></td>
 					</tr>
 					<tr>
-						<td colspan="11">
+						<td colspan="12">
 							Total G.V.: {{ tr.json_viaticos.valor_viaticos | currency:'$':0 }}
 						</td>
 					</tr>
