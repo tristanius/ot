@@ -37,7 +37,7 @@ var OT = function($scope, $http, $timeout){
 					}
 					console.log(response.data);
 				},
-				function(response){		alert('Algo ha salido mal al cargar informacion de la OT');		}
+				function(response){		alert('Algo ha salido mal al cargar informacion de la OT');		console.log(response.data);}
 			);
 	}
 	$scope.getIncidencia = function(itv){

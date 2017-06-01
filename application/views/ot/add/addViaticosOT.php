@@ -11,6 +11,7 @@
 					<tr>
 						<th></th>
 						<th>Item</th>
+						<th><small>conv/Leg</small></th>
 						<th>Descripción</th>
 						<th>Destino</th>
 						<th>cant.</th>
@@ -29,6 +30,9 @@
 							<button type="button" class="btn red mini-btn2" ng-click="unset_elemt(tr.json_viaticos.json_viaticos, itv)" >x</button>
 						</td>
 						<td>{{itv.itemc_item}}</td>
+						<td>
+							<span ng-bind="itv.CL"></span>
+						</td>
 						<td>{{itv.descripcion}}</td>
 						<td>
 							<select name="itv" ng-model="itv.destino" ng-change="applyViatico(itv, '<?= site_url('miscelanio/getTarifaGV') ?>')">

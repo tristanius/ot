@@ -21,7 +21,8 @@
               <th>HEFD</th>
               <th>HEFN</th>
               <th>HFR</th>
-              <th><small>incidencia</small></th>
+              <th>Conv/Leg</th>
+              <th><small>% Inc.</small></th>
               <th>Valor total</th>
             </tr>
           </thead>
@@ -65,7 +66,10 @@
                 </div>
               </td>
               <td>
-  							<span ng-bind="it.incidencia" ng-init="it.incidencia = getIncidencia(itv) " style="color:gray"></span>
+                <span ng-bind="it.CL"></span>
+              </td>
+              <td>
+  							<span ng-bind="it.incidencia" ng-init="it.incidencia = getIncidencia(it) " style="color:gray"></span>
   						</td>
               <td <?= $isEdit?'ng-init="calcularHorasExtra(tr)"':'ng-init="it.total = 0"' ?>>
                 {{ it.total | currency:'$':0 }}

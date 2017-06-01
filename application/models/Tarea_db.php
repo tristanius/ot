@@ -108,10 +108,13 @@ class Tarea_db extends CI_Model{
         tarif.salario,
         tar.responsables,
         tar.requisitos_documentales,
-        tar.editable
+        tar.editable,
+        titc.CL
         ');
     $this->db->from('item_tarea_ot AS itt');
     $this->db->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf');
+    $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc');
+    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
     $this->db->join('tarifa AS tarif','tarif.itemf_iditemf = itf.iditemf');
     $this->db->join('tarea_ot AS tar', 'tar.idtarea_ot = itt.tarea_ot_idtarea_ot');
     $this->db->where('tarif.estado_tarifa', TRUE); // CORREGIR ESTO !!!!!!!!!!!!!
