@@ -576,41 +576,16 @@ var editReporte = function($scope, $http, $timeout){
   $scope.tipoGuardado = 1;
   $scope.listStatus = [];
 
-  $scope.getEstadoDoc = [];
-
-  $scope.getEstadosDoc = function(data){
-    $scope.estados_doc = data;
+  $scope.appyEstadoDoc = function(new_estado, new_validacion){
+    $scope.myestado_doc = new_estado;
+    $scope.myvalidacion_doc = new_validacion;
   }
-
-  $scope.initEstadoDoc = function() {
-    angular.forEach($scope.estados_doc, function(v, k){
-      if(v.nombre_validacion_doc == $scope.rd.info.validado_pyco && v.estado_doc == $scope.rd.info.estado ){
-        $scope.myestado_doc = v;
-      }
-    });
-  	if($scope.rd.info.validado_pyco != 'CORREGIR'){
-  		$(".corregirrd").hide();
-  	}
-  }
-
-  $scope.appyEstadoDoc = function(validacion_selecionada){
-  	if($scope.rd.info.validado_pyco == 'CORREGIR'){
-  		$(".corregirrd").hide();
-  	}
-    var value = '';
-    angular.forEach($scope.estados_doc, function(v,k){
-      if (validacion_selecionada == v.idvalidacion_doc){
-        value = v;
-      }
-    });
-    $scope.myestado_doc = value;
-    $scope.rd.info.estado = value.estado_doc;
-    $scope.rd.info.validado_pyco = value.nombre_validacion_doc;
-
-    $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+value.nombre_validacion_doc);
-    /* if(value.nombre_validacion_doc == "CORREGIDO"){
-      $http.post($scope.$parent.site_url+"/sesion/sendMail2",{msj: " El reporte <b>"+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+value.nombre_validacion_doc+" </b>. "});
-    } */
+  $scope.aplicarEstado = function(new_estado, new_validacion){
+      $scope.rd.info.estado = new_estado;
+      $scope.rd.info.validado_pyco = new_validacion;
+      $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion);
+      $scope.myvalidacion_doc = undefined;
+      $scope.myestado_doc = undefined;
   }
 
   $scope.getDataInfo = function(link){
@@ -629,7 +604,6 @@ var editReporte = function($scope, $http, $timeout){
           $scope.rd.recursos.personal = response.data.personal;
           $scope.rd.recursos.equipos = response.data.equipos;
           $scope.rd.recursos.actividades = response.data.actividades;
-          $scope.initEstadoDoc();
         },
         function(response){
           console.log(response.data);
@@ -668,7 +642,6 @@ var editReporte = function($scope, $http, $timeout){
               $scope.rd.info.validado_pyco = "EN ELABORACION";
               $scope.rd.info.estado = "ABIERTO";
               $scope.rd.observaciones_pyco = [];
-              $scope.initEstadoDoc();
               $scope.borrarIDs();
               alert('Reporte duplicado listo para guardar en fecha '+$scope.fecha_duplicar);
               $('#duplicar').toggleClass('nodisplay');

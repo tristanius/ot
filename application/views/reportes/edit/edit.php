@@ -85,18 +85,12 @@
               </td>
               <td>
                 <div class="row regularForm" >
-                  <div class="col s6 m3 l2">
+                  <div class="col s12 m4 l3">
                     ( <span style="color:#4CAF50" ng-bind="rd.info.validado_pyco"></span> )
                   </div>
-                  <span ng-if="validPriv(38)">
-                    <div ng-if="myestado_doc.indicador_validacion == 'elaborador' " class="col s6 m3 l2">Aplicar estado: </div>
-                  	<div ng-if="myestado_doc.indicador_validacion == 'elaborador' " class="col s6 m4 l4">
-                  	  <select class="" ng-model="selected_validacion_doc2">
-                    		<option ng-if="myestado_doc.anterior_validacion_doc != null" value="{{ myestado_doc.anterior_validacion_doc }}">{{myestado_doc.anterior_label}}</option>
-                    		<option ng-if="myestado_doc.siguiente_validacion_doc != null" value="{{ myestado_doc.siguiente_validacion_doc }}">{{myestado_doc.siguiente_label}}</option>
-                  	  </select>
-                    	<button type="button" class="btn mini-btn corregirrd" ng-if="selected_validacion_doc2" ng-click="appyEstadoDoc(selected_validacion_doc2)">Aplicar.</button>
-                  	</div>
+                  <span ng-if="validPriv(38)" class="col s12 m4 l3 end">
+                    <button type="button" class="" ng-if="rd.info.validado_pyco == 'EN ELABORACION'" ng-click="aplicarEstado('CERRADO','ELABORADO')">ELABORADO</button>
+                    <button type="button" class="" ng-if="rd.info.validado_pyco.search('CORREGIR') >= 0" ng-click="aplicarEstado('CERRADO','CORREGIDO')">CORREGIDO</button>
                   </span>
                 </div>
               </td>

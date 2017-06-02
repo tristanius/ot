@@ -1,40 +1,32 @@
 <div class="noMaterialStyles" ng-init='getEstadosDoc(<?= json_encode($estados) ?>)'>
-  <div class="row">
-    <b class="col s3 m3 l2">Estado validacion PYCO: <span style="color:#4CAF50" ng-bind="rd.info.validado_pyco"></span> </b>
+  <div class="row" ng-if="myvalidacion_doc">
+    <b>Estado validacion por aplicar: <span style="color:#874d08" ng-bind="myvalidacion_doc"></span> </b>
+    <button type="button" ng-click="aplicarEstado(myestado_doc, myvalidacion_doc)" class="">Aplicar</button>
   </div>
-  <hr>
+  <br>
 
-  <div class="row" ng-if="myestado_doc.indicador_validacion == 'validador' ">
-	   <div class="col s2 m2 l1">Nueva Validacion PYCO: </div>
-
-    <div class="col s4 m3 l2" ng-show="validPriv(45)">
-      <select class="" ng-model="selected_validacion_doc">
-        <option ng-if="myestado_doc.anterior_validacion_doc != null" value="{{ myestado_doc.anterior_validacion_doc }}">{{myestado_doc.anterior_label}}</option>
-        <option ng-if="myestado_doc.siguiente_validacion_doc != null" value="{{ myestado_doc.siguiente_validacion_doc }}">{{myestado_doc.siguiente_label}}</option>
-      </select>
-    </div>
-
-    <button type="button" class="col s3 m2 l1 btn mini-btn" ng-if="selected_validacion_doc" ng-click="appyEstadoDoc(selected_validacion_doc)">Aplicar val.</button>
-  </div>
-
-  <div class="row"  ng-if="myestado_doc.indicador_validacion == 'facturador' " >
-	   <div class="col s2 m2 l1">Validación FACT: </div>
-
-    <div class="col s4 m3 l2" ng-show="validPriv(46)">
-      <select class="" ng-model="selected_validacion_doc3">
-        <option ng-if="myestado_doc.anterior_validacion_doc != null" value="{{ myestado_doc.anterior_validacion_doc }}">{{myestado_doc.anterior_label}}</option>
-        <option ng-if="myestado_doc.siguiente_validacion_doc != null" value="{{ myestado_doc.siguiente_validacion_doc }}">{{myestado_doc.siguiente_label}}</option>
-      </select>
-    </div>
-
-    <button type="button" class="col s3 m2 l1 btn mini-btn" ng-if="selected_validacion_doc3" ng-click="appyEstadoDoc(selected_validacion_doc3)">Aplicar val.</button>
-  </div>
+  <section class="row">
+    <fieldset class="col l3 m3 s12" ng-if="validPriv(45) && (rd.info.validado_pyco == 'ELABORADO' || rd.info.validado_pyco == 'CORREGIDO')">
+        <legend>Validación PYCO</legend>
+        <button type="button" class="btn mini-btn2 green darken-1" ng-click="appyEstadoDoc('CERRADO','VALIDO')" ng-disabled="!validPriv(45)">Valido</button>
+        <button type="button" class="btn mini-btn2 orange darken-4" ng-click="appyEstadoDoc('ABIERTO','CORREGIR')" ng-disabled="!validPriv(45)">Corregir</button>
+    </fieldset>
+    <fieldset class="col l3 m3 s12" ng-if="validPriv(50) && (rd.info.validado_pyco == 'VALIDO' || rd.info.validado_pyco == 'CORREGIDO')">
+        <legend>Validación Costos</legend>
+        <button type="button" class="btn mini-btn2 orange darken-4" ng-click="appyEstadoDoc('CERRADO','CORREGIR HE')" ng-disabled="!validPriv(50)">corregir HE</button>
+        <button type="button" class="btn mini-btn2 orange darken-4" ng-click="appyEstadoDoc('CERRADO','CORREGIR VIATICOS')" ng-disabled="!validPriv(50)">Corregir Viaticos</button>
+    </fieldset>
+    <fieldset class="col l3 m3 s12" ng-if="validPriv(70)">
+        <legend>Validación Facturación</legend>
+        <button type="button" class="btn mini-btn2 green darken-1" ng-click="appyEstadoDoc('CERRADO','FIRMADO')" ng-disabled="!validPriv(70)">Firmado</button>
+    </fieldset>
+  </section>
 
   <hr>
 
   <section>
   	<div class="">
-  	  <label for="">Add. Observación PYCO</label>
+  	  <label for="">Add. Observación de validación:</label>
   	  <textarea ng-model="obspyco"></textarea>
   	  <button type="button" class="btn" ng-click="addObservacion2(obspyco)"> Add. </button>
   	</div>
