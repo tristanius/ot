@@ -15,7 +15,11 @@
             <span for="">Orden:</span> <input type="text" ng-model="consulta_nom.orden" name="orden" placeholder="Ejemplo: OTATMTPA555-17-18"> &nbsp;
             <span for="">C.O.:</span> <input type="text" ng-model="consulta_nom.base" name="base" placeholder="Ejemplo: 168">&nbsp;
             <span for="">Cédula:</span> <input type="text" ng-model="consulta_nom.identificacion" name="identificacion" placeholder="Ejemplo: 10904455236">&nbsp;
-            <span for="">Estado excluido:</span> <input type="text" ng-model="consulta_nom.estado_exl" ng-init="consulta_nom.estado_exl = 'EN ELABORACION, CORREGIR'" ng-readonly="true" name="orden" placeholder="Ejemplo: PENDIENTE">&nbsp;
+            <span for="">Estado excluido:</span> <input type="text" ng-model="consulta_nom.estado_exl" ng-init="consulta_nom.estado_exl = 'EN ELABORACION, CORREGIR'" ng-readonly="true" name="orden">&nbsp;
+            <div class="">
+              <br />
+              <span for="">Usuario que aplica:</span> <input type="text" ng-model="consulta_nom.idusuario" ng-init="consulta_nom.idusuario = log.nombre_usuario+'-'+log.idusuario" ng-readonly="true">&nbsp;
+            </div>
         </fieldset>
         <fieldset ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
           <legend style="color: #BBB; font-size:12px">Opciones</legend>
@@ -54,7 +58,7 @@
 
     <br><br>
 
-    <div class="font9">
+    <div class="font9" style="overflow:auto">
       <table class="mytabla">
         <thead>
           <tr>
@@ -82,7 +86,9 @@
             <th>Lugar</th>
             <th>Estado RD</th>
             <th>H.E. Valido</th>
+            <th>H.E. Por:</th>
             <th>Nomina?</th>
+            <th>Nom. por:</th>
           </tr>
         </thead>
         <tbody>

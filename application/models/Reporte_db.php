@@ -53,6 +53,7 @@ class Reporte_db extends CI_Model{
      $data = array(
        'idreporte_diario' => $idrepo,
        'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
+       'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
        'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
        'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
        'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -91,6 +92,7 @@ class Reporte_db extends CI_Model{
     $data = array(
       'idreporte_diario' => $idrepo,
       'cantidad'=> isset($recurso->cantidad)?$recurso->cantidad: '0',
+      'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
       'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
       'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
 	    'print'=> isset($recurso->print)?$recurso->print:TRUE,

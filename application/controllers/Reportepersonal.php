@@ -67,30 +67,34 @@ class Reportepersonal extends CI_Controller{
   #=========================================================================================
   # Validar horas extra y viaticos
 
-  public function toNomina($bandera=NULL)
-  {
-    $post = json_decode(file_get_contents("php://input"));
-    $this->load->model('reportepersonal_db', 'rper');
-    $args = array();
-    if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
-    if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
-    if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
-    $bool = ( isset($bandera) && $bandera != NULL )?0:1;
-    $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bool);
-    echo "success";
-  }
-
-  public function setValidacion($b=0)
+  public function toNomina($b=NULL)
   {
     if ($b==1 || $b==0) {
-      $bool = $b;
       $post = json_decode(file_get_contents("php://input"));
       $this->load->model('reportepersonal_db', 'rper');
       $args = array();
       if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
       if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
       if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
-      $this->rper->personalValidation($post->fecha_inicio, $post->fecha_hasta, $args, $bool);
+      $bool = $b?1:0;
+      $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario);
+      echo "success";
+    }else{
+      echo 'failed';
+    }
+  }
+
+  public function setValidacion($b=0)
+  {
+    if ($b==1 || $b==0) {
+      $bool = $b?1:0;
+      $post = json_decode(file_get_contents("php://input"));
+      $this->load->model('reportepersonal_db', 'rper');
+      $args = array();
+      if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
+      if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
+      if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
+      $this->rper->personalValidation($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario);
       echo "success";
     }else{
       echo 'failed';

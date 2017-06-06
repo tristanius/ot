@@ -141,7 +141,7 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS estado_reporte,
-      if(rrd.validacion, "SI", "NO") AS valido_HE,
+      if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
       if(rrd.nomina=1, "SI","NO") AS en_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
@@ -190,8 +190,10 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco As estado_reporte,
-      if(rrd.validacion, "SI", "NO") AS valido_HE,
-      if(rrd.nomina=1, "SI","NO") AS en_nomina
+      if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
+      rrd.usuario_validacion_he,
+      if(rrd.nomina=1, "SI","NO") AS en_nomina,
+      rrd.usuario_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
     ->join("itemf AS itf","itf.iditemf = rrd.itemf_iditemf")
@@ -206,7 +208,7 @@ class Reportepersonal_db extends CI_Model{
     ->get();
   }
 
-  public function personalNomina($ini, $fin, $args, $bandera)
+  public function personalNomina($ini, $fin, $args, $bandera, $usuario)
   {
     $this->load->database('ot');
     $query = "UPDATE recurso_reporte_diario AS rrd
@@ -214,7 +216,7 @@ class Reportepersonal_db extends CI_Model{
     JOIN OT ON OT.idOT = rd.OT_idOT
     JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
-    SET rrd.nomina = ".$bandera."
+    SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
     $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
@@ -222,7 +224,7 @@ class Reportepersonal_db extends CI_Model{
     if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }
     $this->db->query($query);
   }
-  public function personalValidation($ini, $fin, $args, $bandera)
+  public function personalValidation($ini, $fin, $args, $bandera, $usuario)
   {
     $this->load->database('ot');
     $query = "UPDATE recurso_reporte_diario AS rrd
@@ -230,7 +232,7 @@ class Reportepersonal_db extends CI_Model{
     JOIN OT ON OT.idOT = rd.OT_idOT
     JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
-    SET rrd.validacion = '".$bandera."'
+    SET rrd.validacion_he = ".$bandera.", rrd.usuario_validacion_he = '".$usuario."'
     WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
     $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }

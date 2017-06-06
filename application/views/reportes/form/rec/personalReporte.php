@@ -71,9 +71,9 @@
           <td></td>
       </tr>
 
-      <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}"> <!--  | orderBy: 'itemc_item' -->
+      <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion==1 || pr.nomina==1)?'background:#cccccc':''; }}"> <!--  | orderBy: 'itemc_item' -->
         <td>
-          <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista( rd.recursos.personal, pr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>', 'idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
+          <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista( rd.recursos.personal, pr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>', 'idrecurso_reporte_diario')" ng-show="rd.info.validado_pyco != 'EN ELABORACION' "> x </button>
         </td>
         <td>
             <span ng-bind="pr.ind" ng-init="pr.ind = ($index+1)"></span>
@@ -153,8 +153,8 @@
           </select>
         </td>
         <td> <input type="checkbox" ng-model="pr.hr_almuerzo" ng-init="pr.hr_almuerzo = parseBool(pr.hr_almuerzo)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
-        <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
+        <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
       </tr>
 
       <tr id="thead1" style="background: #EEE; color: #EEE">
