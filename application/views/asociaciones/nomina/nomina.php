@@ -1,3 +1,9 @@
+<style media="screen">
+  #tr-filter input{
+    min-width: 5ex;
+    width: 75%;
+  }
+</style>
 <div ng-controller="consulta">
   <h5>Aseguramiento externo de personal reportado</h5>
   <div class="row" ng-controller="consulta_nom">
@@ -62,6 +68,7 @@
       <table class="mytabla">
         <thead>
           <tr>
+            <th></th>
             <th>Orden</th>
             <th>CO</th>
             <th>Fecha reporte</th>
@@ -81,19 +88,67 @@
             <th>HEN</th>
             <th>RN</th>
             <th>FESTIVO?</th>
-            <th>Ración</th>
-            <th>Pernocto</th>
-            <th>Lugar</th>
             <th>Estado RD</th>
             <th>H.E. Valido</th>
             <th>H.E. Por:</th>
-            <th>Nomina?</th>
+            <th>Nomina</th>
             <th>Nom. por:</th>
           </tr>
+          <!--<tr id="tr-filter" class="noMaterialStyles">
+            <th> <input type="checkbox" ng-model="per.selected" ng-init="filterper.selected = true"> </th>
+            <th> <input type="text" ng-model="filterper.Orden"> </th>
+            <th> <input type="text" ng-model="filterper.CO"> </th>
+            <th> <input type="text" ng-model="filterper.fecha_reporte"> </th>
+            <th> <input type="text" ng-model="filterper.identificacion"> </th>
+            <th> <input type="text" ng-model="filterper.nombre_completo"> </th>
+            <th> <input type="text" ng-model="filterper.itemc_item"> </th>
+            <th> <input type="text" ng-model="filterper.codigo"> </th>
+            <th> <input type="text" ng-model="filterper.tipo_item"> </th>
+            <th> <input type="text" ng-model="filterper.descripcion"> </th>
+            <th> <input type="text" ng-model="filterper.facturable"> </th>
+            <th> <input type="text" ng-model="filterper.turno1_inicio"> </th>
+            <th> <input type="text" ng-model="filterper.turno1_fin"> </th>
+            <th> <input type="text" ng-model="filterper.turno2_inicio"> </th>
+            <th> <input type="text" ng-model="filterper.turno2_fin"> </th>
+            <th> <input type="text" ng-model="filterper.horas_ordinarias"> </th>
+            <th> <input type="text" ng-model="filterper.horas_extra_dia"> </th>
+            <th> <input type="text" ng-model="filterper.horas_extra_noc"> </th>
+            <th> <input type="text" ng-model="filterper.horas_recargo"> </th>
+            <th> <input type="text" ng-model="filterper.festivo"> </th>
+            <th> <input type="text" ng-model="filterper.estado_reporte"> </th>
+            <th> <input type="text" ng-model="filterper.valido_HE"> </th>
+            <th> <input type="text" ng-model="filterper.usuario_validacion_he"> </th>
+            <th> <input type="text" ng-model="filterper.en_nomina"> </th>
+            <th> <input type="text" ng-model="filterper.usuario_nomina"> </th>
+          </tr>-->
         </thead>
         <tbody>
-          <tr ng-repeat="per in personal | startFrom:currentPage*pageSize | limitTo:pageSize">
-            <td ng-repeat="field in per"> <span  ng-bind="field"></span> </td>
+          <tr ng-repeat="per in personal | startFrom:currentPage*pageSize | limitTo:pageSize ">
+            <td class="noMaterialStyles"> <input type="checkbox" ng-model="per.selected" ng-init="per.selected = true"> </td>
+            <td ng-bind="per.Orden"></td>
+            <td ng-bind="per.CO"></td>
+            <td ng-bind="per.fecha_reporte"></td>
+            <td ng-bind="per.identificacion"></td>
+            <td ng-bind="per.nombre_completo"></td>
+            <td ng-bind="per.itemc_item"></td>
+            <td ng-bind="per.codigo"></td>
+            <td ng-bind="per.tipo_item"></td>
+            <td ng-bind="per.descripcion"></td>
+            <td ng-bind="per.facturable"></td>
+            <td ng-bind="per.turno1_inicio"></td>
+            <td ng-bind="per.turno1_fin"></td>
+            <td ng-bind="per.turno2_inicio"></td>
+            <td ng-bind="per.turno2_fin"></td>
+            <td ng-bind="per.horas_ordinarias"></td>
+            <td ng-bind="per.horas_extra_dia"></td>
+            <td ng-bind="per.horas_extra_noc"></td>
+            <td ng-bind="per.horas_recargo"></td>
+            <td ng-bind="per.festivo"></td>
+            <td ng-bind="per.estado_reporte"></td>
+            <td ng-bind="per.valido_HE"></td>
+            <td ng-bind="per.usuario_validacion_he"></td>
+            <td ng-bind="per.en_nomina"></td>
+            <td ng-bind="per.usuario_nomina"></td>
           </tr>
         </tbody>
       </table>

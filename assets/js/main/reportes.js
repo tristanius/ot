@@ -113,7 +113,6 @@ var reportes = function($scope, $http, $timeout) {
     var widths = [];
     $(selector1+' tbody tr:last-child th').each(function(indice){
     	widths[indice] = {w:$(this).outerWidth()};
-    	console.log(widths[indice]);
     });
     $( selector1+' thead#thead2 tr:last-child th').each(function(indice){
     	var cell = widths[indice];

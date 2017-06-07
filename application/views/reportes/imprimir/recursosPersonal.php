@@ -51,12 +51,12 @@
 			  <td><?= $v->unidad ?></td>
 
         <td>
-          <div  ><?= $v->hora_inicio ?></div>
-          <div  ><?= ($v->hora_fin == 0)?'-':$v->hora_fin; ?></div>
+          <div><?= $v->hora_inicio ?></div>
+          <div><?= ($v->hora_fin == 0 && $v->hora_fin != '00:00')?'-':$v->hora_fin; ?></div>
         </td>
         <td>
-         <div  ><?= ($v->hora_inicio2 == 0)?'-':$v->hora_inicio2; ?></div>
-         <div  ><?= $v->hora_fin2 ?></div>
+         <div><?= ($v->hora_inicio2 == 0 && $v->hora_inicio2 != '00:00')?'-':$v->hora_inicio2; ?></div>
+         <div><?= $v->hora_fin2 ?></div>
        </td>
 
 			  <td><?= ($v->cantidad == 0)?'-':$v->cantidad*1; ?></td>
