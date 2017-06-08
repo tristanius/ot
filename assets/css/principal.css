@@ -254,7 +254,7 @@ input[type=date][readonly="readonly"], input[type=datetime]:disabled, input[type
 input[type=datetime-local]:disabled, input[type=datetime-local][readonly="readonly"], input[type=tel]:disabled, input[type=tel][readonly="readonly"],
 input[type=number]:disabled, input[type=number][readonly="readonly"], input[type=search]:disabled, input[type=search][readonly="readonly"],
 textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"]{
-  color: #999; 
+  color: #999;
 }
 /* ---------------------- */
 .ventanaItems{
@@ -264,7 +264,7 @@ textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="
   width: 95%;
   background: #FFF;
   box-shadow: 0px 0px 15px 3px; #444;
-  z-index: 3;
+  z-index: 6;
   height: 90%;
   overflow: auto;
 }

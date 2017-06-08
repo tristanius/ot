@@ -9,7 +9,7 @@ class Reporte_db extends CI_Model{
     //Codeigniter : Write Less Do More
   }
 
-  public function add($repo)
+  public function add($repo, $usuario)
   {
     $this->load->database('ot');
     $data = array(
@@ -22,7 +22,8 @@ class Reporte_db extends CI_Model{
       'linea'=>isset($repo->linea)?$repo->linea:'',
       'sistema_reporte_ecp'=>isset($repo->sistema_reporte_ecp)?$repo->sistema_reporte_ecp:'',
       'estado'=>'ABIERTO',
-      'validado_pyco'=>'EN ELABORACION'
+      'validado_pyco'=>'EN ELABORACION',
+      'usuario_creacion'=>$usuario
     );
     $this->db->insert('reporte_diario', $data);
     return $this->db->insert_id();

@@ -65,7 +65,7 @@ class Reporte extends CI_Controller{
         $recusos = $post->recursos;
         $this->repo->init_transact();
         // Insertamos el reporte y devolvemos el ID
-        $idrepo = $this->repo->add($post->info);
+        $idrepo = $this->repo->add($post->info, $post->log->nombre_usuario);
         $this->load->helper('log');
         if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $idrepo, 'reporte_diario', 'reporte_diario '.$post->info->fecha_reporte." de ".$post->info->nombre_ot.' creado', date('Y-m-d H:i:s') );	}
         //Recorremos los arregos de recursos

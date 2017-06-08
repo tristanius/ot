@@ -658,6 +658,7 @@ var editReporte = function($scope, $http, $timeout){
   $scope.dupeInNomina = function(lista){
     angular.forEach(lista, function(v,k){
       v.nomina = false;
+      v.validacion_he = false;
     });
   }
 
