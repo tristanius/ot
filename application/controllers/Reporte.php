@@ -15,13 +15,20 @@ class Reporte extends CI_Controller{
   # add
   public function addvalid($idOT, $fecha)
   {
-    $post = json_decode( file_get_contents("php://input") );
-    $this->load->model('reporte_db', 'repo');
-    $rows = $this->repo->getBy($idOT, $fecha);
-    if($rows->num_rows() > 0){
-      echo 'invalid';
-    }else{
-      echo 'valid';
+    $date1=date_create($fecha);
+    $date2=date_create(date('Y-m-d H:i:s'));
+    $diff=$date1->diff($date2);
+    if($diff->y == 0 && $diff->m == 0 && $diff->d < 10){
+      $post = json_decode( file_get_contents("php://input") );
+      $this->load->model('reporte_db', 'repo');
+      $rows = $this->repo->getBy($idOT, $fecha);
+      if($rows->num_rows() > 0){
+        echo 'invalid';
+      }else{
+        echo 'valid';
+      }
+    }else {
+      echo "toolong";
     }
   }
   # form add reporte
@@ -133,7 +140,7 @@ class Reporte extends CI_Controller{
     $this->load->database('ot');
     $data = array(
       '32128', '32129', '32006', '32007', '32008', '32009', '32010', '31001', '32013', '31016', '31017', '31018', '32107', '32108', '32109', '31028', '31029', '32154', '32155',
-      '31026','31027','32152','32153','32222', '32223', '32224','32225'
+      '31026','31027','32152','32153','32222', '32223', '32224','32225','32112'
     );
     foreach ($data as $value) {
       if ($value == $val->codigo) {
@@ -316,6 +323,7 @@ class Reporte extends CI_Controller{
     $this->load->model('reporte_db', 'repo');
     $this->repo->init_transact();
     $this->repo->update($post);
+    $response = new stdClass();
     if($this->repo->end_transact() != FALSE){
       $response->success = 'success';
     }else{
@@ -333,6 +341,24 @@ class Reporte extends CI_Controller{
         //actualizar
         $this->repo->editRecursoRepo($rec, $idr);
       }
+    }
+  }
+
+
+  public function updateEstado()
+  {
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->model(array('reporte_db'=>'repo'));
+    $this->repo->init_transact();
+    $this->repo->updateEstado($post->idreporte_diario, $post->estado, $post->validado_pyco, date('Y-m-d H:i:s'), NULL);
+    $response = new stdClass();
+    if($this->repo->end_transact() != FALSE){
+      $response->success = 'success';
+      $response->mensaje_log = 'Reporte actualizado correctamente. '.date('Y-m-d H:i:s');
+      echo json_encode($response);
+    }else{
+      $response->success = 'failed';
+      echo json_encode($response);
     }
   }
 

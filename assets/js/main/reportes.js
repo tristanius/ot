@@ -250,6 +250,8 @@ var listOTReportes = function($scope, $http, $timeout){
           var link = url+'/'+$scope.consulta.idOT+'/'+$scope.rd.fecha_selected;
           $scope.enlaceGetReporte = link;
           $scope.$parent.getAjaxWindowLocal(link, '#ventanaReporte', '#ventanaReporteOCulta');
+        }else if (response.data == 'toolong') {
+          alert('Fecha fuera de los rangos permitidos. No se permite afectar los cortes de reportes.');
         }
       },
       function(response) {
@@ -580,11 +582,25 @@ var editReporte = function($scope, $http, $timeout){
     $scope.myvalidacion_doc = new_validacion;
   }
   $scope.aplicarEstado = function(new_estado, new_validacion){
-      $scope.rd.info.estado = new_estado;
-      $scope.rd.info.validado_pyco = new_validacion;
-      $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion);
-      $scope.myvalidacion_doc = undefined;
-      $scope.myestado_doc = undefined;
+      $http.post($scope.site_url+'/reporte/updateEstado', { estado: new_estado, validado_pyco: new_validacion, idreporte_diario: $scope.rd.idreporte_diario }).then(
+        function(response){
+          if (response.data.success == 'success') {
+            $scope.rd.info.estado = new_estado;
+            $scope.rd.info.validado_pyco = new_validacion;
+            $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion);
+            $scope.myvalidacion_doc = undefined;
+            $scope.myestado_doc = undefined;
+            $scope.mensaje_log = response.data.mensaje_log;
+            $scope.mensaje_log_color = 'light-green lighten-5';
+          }else{
+            alert('algo ha salido mal');
+            console.log(response.data);
+          }
+        },
+        function(response) {
+          alert('Imposible conectar');
+        }
+      );
   }
 
   $scope.getDataInfo = function(link){
@@ -645,6 +661,8 @@ var editReporte = function($scope, $http, $timeout){
               alert('Reporte duplicado listo para guardar en fecha '+$scope.fecha_duplicar);
               $('#duplicar').toggleClass('nodisplay');
               $scope.dupeInNomina($scope.rd.recursos.personal);
+            }else if (response.data == 'toolong') {
+              alert('Fecha fuera de los rangos permitidos. No se permite afectar los cortes de reportes.');
             }else{
               alert('Proceso en revisión, intenta más tarde'+response.data)
             }

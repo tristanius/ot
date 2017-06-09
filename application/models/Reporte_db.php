@@ -9,7 +9,7 @@ class Reporte_db extends CI_Model{
     //Codeigniter : Write Less Do More
   }
 
-  public function add($repo, $usuario)
+  public function add($repo, $usuario=NULL)
   {
     $this->load->database('ot');
     $data = array(
@@ -46,6 +46,13 @@ class Reporte_db extends CI_Model{
       'observaciones_pyco'=>isset($repo->observaciones_pyco)?json_encode($repo->observaciones_pyco):'',
     );
     $this->db->update('reporte_diario', $data, 'idreporte_diario = '.$repo->idreporte_diario);
+  }
+
+  # Actualiar el estado de un reporte
+  public function updateEstado($idreporte_diario, $estado, $validacion, $fecha=NULL, $usuari=NULLo)
+  {
+    $this->load->database('ot');
+    $this->db->update('reporte_diario', array('estado'=>$estado, 'validado_pyco'=>$validacion), 'idreporte_diario = '.$idreporte_diario);
   }
 
   # Insertar un recurso a un reporte con unas cantidades

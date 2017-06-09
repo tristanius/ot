@@ -1,4 +1,4 @@
-<section id="duplicar" class="nodisplay" style="background: rgba(42, 40, 51, 0.6); width:100%; height:100%; position: absolute; z-index: 5;padding:2em">
+<section id="duplicar" class="nodisplay" style="background: rgba(42, 40, 51, 0.6); width:100%; height:100%; position: absolute; z-index: 6;padding:2em">
   <div class="noMaterialStyles row" style="position:relative; padding:2em; background:#FFF">
     <b class="col s4 m3 l3">Fecha a duplicar: (AÑO-MES-DIA)</b>
     <input type="text" class="datepicker limitdate noMaterialStyles col s4 m3 l3" ng-model="fecha_duplicar" ng-init=""  >
@@ -10,6 +10,7 @@
 <script type="text/javascript">
   $( '.datepicker.limitdate' ).datepicker(
     {
+      minDate:'-7D',
       maxDate: '+5D',
       monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
@@ -18,7 +19,7 @@
       dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
       dateFormat: 'yy-mm-dd',
       changeMonth: true,
-      changeYear: true 
+      changeYear: true
     }
   )
 </script>

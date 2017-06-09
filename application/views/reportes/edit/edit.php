@@ -8,6 +8,9 @@
           <button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindowLocal('#ventanaReporte', enlaceGetReporte)">Salir</button>
           <button type="button" class="waves-effect waves-light btn" ng-click="formDuplicar()">Duplicar</button>
           <img ng-if="validPriv(56)" src="<?= base_url('assets/img/info.png') ?>" width="15" ng-click="getLogMovimientos( '<?= site_url('miscelanio/getLog') ?>' , <?= $r->idreporte_diario ?>, 'reporte_diario')">
+
+          <small class=""> Documento creado por: <?= $r->usuario_creacion ?> </small>
+
         </div>
       </section>
       <h5 class="center-align" style="border:1px solid #2196F3;  padding:2px;"> Reporte Diario (producción): <?= $r->nombre_ot ?> </h5>
@@ -110,20 +113,21 @@
       <br>
 
 
-	  <div>
-		<section>
-			<div class="" ng-repeat="obsp in rd.observaciones_pyco track by $index">
-			  <hr>
-			  Observación <span ng-bind="obsp.fecha"></span> | ( <span ng-bind="obsp.usuario"></span> ):
-			  <p style="padding:1ex; border:1px solid #CCC; margin:1px;" ng-bind="obsp.msj"></p>
-			</div>
-		</section>
-	  </div>
-	  <br>
+  	  <div>
+    		<section>
+    			<div class="" ng-repeat="obsp in rd.observaciones_pyco track by $index">
+    			  <hr>
+    			  Observación <span ng-bind="obsp.fecha"></span> | ( <span ng-bind="obsp.usuario"></span> ):
+    			  <p style="padding:1ex; border:1px solid #CCC; margin:1px;" ng-bind="obsp.msj"></p>
+    			</div>
+    		</section>
+  	  </div>
+
+      <p ng-class="mensaje_log_color" ng-bind="mensaje_log"></p>
 
       <div class="btnWindow">
 
-        <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-if=" (validPriv(38) || validPriv(45) || validPriv(46) ) "
+        <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
             ng-click="guardarRD('<?= site_url('reporte/insert') ?>', '<?= site_url('reporte/update') ?>')">
           <b data-icon="&#xe015;"></b> Guardar
         </button>
