@@ -127,6 +127,8 @@
 
       <div class="btnWindow">
 
+        <button type="button" ng-if="!validPriv(38) && (validPriv(45) || validPriv(46))" ng-click="guardarestado()" class="waves-effect waves-light btn blue mini-btn2">Guardar estado</button>
+
         <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
             ng-click="guardarRD('<?= site_url('reporte/insert') ?>', '<?= site_url('reporte/update') ?>')">
           <b data-icon="&#xe015;"></b> Guardar

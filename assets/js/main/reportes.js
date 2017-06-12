@@ -582,25 +582,30 @@ var editReporte = function($scope, $http, $timeout){
     $scope.myvalidacion_doc = new_validacion;
   }
   $scope.aplicarEstado = function(new_estado, new_validacion){
-      $http.post($scope.site_url+'/reporte/updateEstado', { estado: new_estado, validado_pyco: new_validacion, idreporte_diario: $scope.rd.idreporte_diario }).then(
-        function(response){
-          if (response.data.success == 'success') {
-            $scope.rd.info.estado = new_estado;
-            $scope.rd.info.validado_pyco = new_validacion;
-            $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion);
-            $scope.myvalidacion_doc = undefined;
-            $scope.myestado_doc = undefined;
-            $scope.mensaje_log = response.data.mensaje_log;
-            $scope.mensaje_log_color = 'light-green lighten-5';
-          }else{
-            alert('algo ha salido mal');
-            console.log(response.data);
-          }
-        },
-        function(response) {
-          alert('Imposible conectar');
+      $scope.rd.info.estado = new_estado;
+      $scope.rd.info.validado_pyco = new_validacion;
+  }
+  $scope.guardarestado = function() {
+    new_estado = $scope.rd.info.estado;
+    new_validacion = $scope.rd.info.validado_pyco;
+    $http.post($scope.site_url+'/reporte/updateEstado', { estado: new_estado, validado_pyco: new_validacion, idreporte_diario: $scope.rd.idreporte_diario }).then(
+      function(response){
+        if (response.data.success == 'success') {
+          $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion);
+          $scope.myvalidacion_doc = undefined;
+          $scope.myestado_doc = undefined;
+          $scope.mensaje_log = response.data.mensaje_log;
+          $scope.mensaje_log_color = 'light-green lighten-5';
+          $scope.getReportesView($scope.site_url);
+        }else{
+          alert('algo ha salido mal');
+          console.log(response.data);
         }
-      );
+      },
+      function(response) {
+        alert('Imposible conectar');
+      }
+    );
   }
 
   $scope.getDataInfo = function(link){
