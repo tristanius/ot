@@ -18,7 +18,7 @@
 					<th>Especialidad</th>
 					<th>Tipo OT</th>
 					<th>C.C. ECP</th>
-					<th>Estado SAP</th>
+					<th>Clasificacion</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -64,7 +64,13 @@
 						<input type="text"  style="width:10ex;" ng-model="ot.cc_ecp" ><!-- Campo habilitado a todos en PYCO
 						<input type="text" ng-model="ot.cc_ecp" ng-if="validPriv(54)" readonly> -->
 					</td>
-					<td> <input type="text" style="width:10ex;" ng-model="ot.estado_sap"> </td>
+					<td>
+						<select style="width:10ex;" ng-model="ot.clasificacion_ot">
+							<?php foreach ($clasificacion_ot as $cl): ?>
+								<option value="<?= $cl ?>"><?= $cl ?></option>
+							<?php endforeach; ?>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td>
@@ -75,7 +81,7 @@
 						<input type="text" ng-model="ot.ccosto" ng-if="validPriv(54)" readonly> -->
 					</td>
 					<td class="noMaterialStyles regularForm">Orden Basica: <input type="checkbox" ng-model="ot.basica"  ng-false-value="'0'"  ng-true-value="'1'"/></td>
-					<td colspan="3">
+					<td colspan="4">
 						Valor OT: <span ng-bind="ot.valor_ot | currency"></span>
 					</td>
 				</tr>
@@ -85,7 +91,7 @@
 				<tr>
 					<th>Gerencia</th>
 					<th>Sistemas ECP</th>
-					<th colspan="4"></th>
+					<th colspan="5"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -106,7 +112,7 @@
 							<option value="POR">POR</option>
 						</select>
 					</td>
-					<td colspan="4"></td>
+					<td colspan="5"></td>
 				</tr>
 			</tbody>
 		</table>

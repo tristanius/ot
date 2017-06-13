@@ -2,6 +2,12 @@
 
 class Ot extends CI_Controller {
 
+	private $clasificacion_ot = array(
+		"APIQUE",	"ATENTADO",	"AMINISTRATIVA",	"CIVIL",	"CRATER",	"DEFORMIMETRO",	"DRENAJE",
+		"EGOS",	"ELE. VARIABLE",	"ILICITA",	"INSPECCION",	"INS. VARIABLE", "INTEGRIDAD",	"INYECCION", "VALVULAS",
+		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA"
+	);
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -56,6 +62,7 @@ class Ot extends CI_Controller {
 				"especialidades"=>$especialidades,
 				"tarifagv"=>$tarifagv,
 				'sectores'=>$sectores,
+				'clasificacion_ot'=>$this->clasificacion_ot,
 				"titulo_gestion"=>"Agregar una nueva Orden de Trabajo:",
 				'isEdit'=>FALSE
 			)
@@ -303,6 +310,7 @@ class Ot extends CI_Controller {
 			'depars'=>$depars,
 			'tipos_ot'=>$tipos_ot,
 			'especialidades'=>$especialidades,
+			'clasificacion_ot'=>$this->clasificacion_ot,
 			'sectores'=>$sectores,
 			'tarifagv'=>$tarifagv,
 			'isEdit'=>TRUE,

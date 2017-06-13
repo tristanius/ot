@@ -19,13 +19,17 @@ class Reporte extends CI_Controller{
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
     if($diff->y == 0 && $diff->m == 0 && $diff->d < 10){
-      $post = json_decode( file_get_contents("php://input") );
-      $this->load->model('reporte_db', 'repo');
-      $rows = $this->repo->getBy($idOT, $fecha);
-      if($rows->num_rows() > 0){
-        echo 'invalid';
+      if (date('2017-05-11') <= date($fecha)) {
+        echo 'toolong';
       }else{
-        echo 'valid';
+        $post = json_decode( file_get_contents("php://input") );
+        $this->load->model('reporte_db', 'repo');
+        $rows = $this->repo->getBy($idOT, $fecha);
+        if($rows->num_rows() > 0){
+          echo 'invalid';
+        }else{
+          echo 'valid';
+        }
       }
     }else {
       echo "toolong";
