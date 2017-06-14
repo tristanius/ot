@@ -17,9 +17,9 @@ class Ot_db extends CI_Model {
 	// Registrar una nueva OT.
 	public function add(
 		$nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad, $justificacion,
-		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $sap, $gerencia, $departamento_ecp, $estado_doc,
+		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $clasificacion_ot, $gerencia, $departamento_ecp, $estado_doc,
 		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
-		$fecha_creacion_cc=NULL,  $basica = NULL, $estado_sap = NULL
+		$fecha_creacion_cc=NULL,  $basica = NULL
 	){
 		$this->load->database('ot');
 		$data = array(
@@ -39,7 +39,7 @@ class Ot_db extends CI_Model {
 			"vereda"=>$vereda,
 			"cc_ecp"=>$cc_ecp,
 			'json'=>$json,
-			'numero_sap'=>$sap,
+			'clasificacion_ot'=>$clasificacion_ot,
 			'gerencia'=>$gerencia,
 			'departamento_ecp'=>$departamento_ecp,
 			'estado_doc'=>$estado_doc,
@@ -51,8 +51,7 @@ class Ot_db extends CI_Model {
 			"presupuesto_fecha_fin"=>$presupuesto_fecha_fin,
 			"presupuesto_porcent_fin"=>$presupuesto_porcent_fin,
 			"fecha_creacion_cc"=>$fecha_creacion_cc,
-			"basica" =>$basica,
-			"estado_sap"=>$estado_sap
+			"basica" =>$basica
 		);
 		$this->db->insert('OT', $data);
 		return $this->db->insert_id();
@@ -60,9 +59,9 @@ class Ot_db extends CI_Model {
 	//Editar daos info de una OT.
 	public function update(
 		$idot, $nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad,
-		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $sap, $gerencia, $departamento_ecp, $estado_doc,
+		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $clasificacion_ot, $gerencia, $departamento_ecp, $estado_doc,
 		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
-		$fecha_creacion_cc=NULL, $basica = NULL, $estado_sap=NULL
+		$fecha_creacion_cc=NULL, $basica = NULL
 	) {
 		$this->load->database('ot');
 		$data = array(
@@ -82,7 +81,7 @@ class Ot_db extends CI_Model {
 			"vereda"=>$vereda,
 			'cc_ecp'=>$cc_ecp,
 			'json'=>$json,
-			'numero_sap'=>$sap,
+			'clasificacion_ot'=>$clasificacion_ot,
 			'gerencia'=>$gerencia,
 			'departamento_ecp'=>$departamento_ecp,
 			'estado_doc'=>$estado_doc,
@@ -94,8 +93,7 @@ class Ot_db extends CI_Model {
 			"presupuesto_fecha_fin"=>$presupuesto_fecha_fin,
 			"presupuesto_porcent_fin"=>$presupuesto_porcent_fin,
 			"fecha_creacion_cc"=>$fecha_creacion_cc,
-			"basica" =>$basica,
-			"estado_sap"=>$estado_sap
+			"basica" =>$basica
 		);
 		return $this->db->update('OT', $data, "idOT =".$idot);
 	}

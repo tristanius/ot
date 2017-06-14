@@ -511,6 +511,17 @@ var OT = function($scope, $http, $timeout){
 			 };
 		}
 	}
+	// ACUMULADOR PARA OBJETOS
+	$scope.acumularAObj = function(propiedad, obj, val){
+		obj[propiedad] = obj[propiedad]*1+val*1;
+		return obj;
+	}
+
+	$scope.acumularMeses = function(meses){
+		meses.total = meses.enero*1+meses.febrero*1+meses.marzo*1+meses.abril*1+meses.mayo*1+meses.junio*1;
+		meses.total += meses.julio*1+meses.agosto*1+meses.septiembre*1+meses.octubre*1+meses.noviembre*1+meses.diciembre*1;
+	}
+
 }
 
 // ====================================================================================================

@@ -76,52 +76,55 @@
           <div class="row">
             <div class="col l2 m4 s6">
               <label style="display:block" for="">enero</label>
-              <input type="text" ng-model="meses.enero">
+              <input type="text" ng-model="meses.enero" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">febrero</label>
-              <input type="text" ng-model="meses.febrero">
+              <input type="text" ng-model="meses.febrero" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">marzo</label>
-              <input type="text" ng-model="meses.marzo">
+              <input type="text" ng-model="meses.marzo" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">abril</label>
-              <input type="text" ng-model="meses.abril">
+              <input type="text" ng-model="meses.abril" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">mayo</label>
-              <input type="text" ng-model="meses.mayo">
+              <input type="text" ng-model="meses.mayo" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">junio</label>
-              <input type="text" ng-model="meses.junio">
+              <input type="text" ng-model="meses.junio" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">julio</label>
-              <input type="text" ng-model="meses.julio">
+              <input type="text" ng-model="meses.julio" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">agosto</label>
-              <input type="text" ng-model="meses.agosto">
+              <input type="text" ng-model="meses.agosto" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">septiembre</label>
-              <input type="text" ng-model="meses.septiembre">
+              <input type="text" ng-model="meses.septiembre" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">octubre</label>
-              <input type="text" ng-model="meses.octubre">
+              <input type="text" ng-model="meses.octubre" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">noviembre</label>
-              <input type="text" ng-model="meses.noviembre">
+              <input type="text" ng-model="meses.noviembre" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
             <div class="col l2 m4 s6">
               <label style="display:block" for="">diciembre</label>
-              <input type="text" ng-model="meses.diciembre">
+              <input type="text" ng-model="meses.diciembre" ng-change="acumularMeses(meses)" ng-init="acumularMeses(meses)">
             </div>
+
+            <b>Total: <span ng-bind="meses.total"></span></b>
+
           </div>
         </div>
     </section>

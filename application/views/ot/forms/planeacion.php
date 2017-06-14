@@ -26,9 +26,27 @@
 			</label>
 		</div>
 
-		<div class="selectEnabled" style="display: inline-block; margin-right:1ex;">
-				<label class="right-align"><b style="color:#0D47A1">SAP/Control: </b>
+		<div class="selectEnabled">
+			<label class="right-align"><b style="color:#0D47A1">SAP/Control: </b>
 				<input type="text"  ng-model="tr.sap" placeholder=" No. control cambio/ Tarea" />
+			</label>
+			<label class="right-align"><b style="color:#0D47A1">Tipo: </b>
+				<input type="text"  ng-model="tr.clase_sap" placeholder="" />
+			</label>
+			<label class="right-align"><b style="color:#0D47A1">Clase: </b>
+				<input type="text"  ng-model="tr.tipo_sap" placeholder="" />
+			</label>
+		</div>
+
+		<div class="selectEnabled">
+			<label class="right-align"><b style="color:#0D47A1">SAP para pago: </b>
+				<input type="text"  ng-model="tr.sap_pago" placeholder=" # SAP para pago" />
+			</label>
+			<label class="right-align"><b style="color:#0D47A1">Tipo: </b>
+				<input type="text"  ng-model="tr.clase_sap_pago" placeholder="" />
+			</label>
+			<label class="right-align"><b style="color:#0D47A1">clase: </b>
+				<input type="text"  ng-model="tr.tipo_sap_pago" placeholder="" />
 			</label>
 		</div>
 

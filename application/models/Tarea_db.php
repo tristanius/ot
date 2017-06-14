@@ -30,7 +30,8 @@ class Tarea_db extends CI_Model{
     $json_indirectos, $json_viaticos, $json_horas_extra,
     $json_reembolsables, $json_racion, $json_recursos,
     $responsables, $requisitos_documentales,
-    $OT_idOT, $sap, $editable)
+    $OT_idOT, $sap,$clase_sap, $tipo_sap, 
+    $sap_pago, $clase_sap_pago, $tipo_sap_pago,  $editable)
   {
     $data = array(
       'nombre_tarea'=>$nombre_tarea_ot,
@@ -48,6 +49,11 @@ class Tarea_db extends CI_Model{
       'responsables'=>$responsables,
       'requisitos_documentales'=>$requisitos_documentales,
       'sap'=>$sap,
+      "clase_sap"=>$clase_sap,
+      "tipo_sap"=>$tipo_sap,
+      'sap_pago'=>$sap_pago,
+      "clase_sap_pago"=>$clase_sap_pago,
+      "tipo_sap_pago"=>$tipo_sap_pago,
       'editable'=>$editable
     );
     $this->db->insert('tarea_ot', $data);
@@ -55,8 +61,16 @@ class Tarea_db extends CI_Model{
   }
 
   //Actualiza una tarea de una Ot
-  public function update($idtarea_ot, $nombre_tarea_ot, $fecha_inicio, $fecha_fin, $valor_recursos, $valor_tarea_ot,
-      $json_indirectos, $json_viaticos, $json_horas_extra, $json_reembolsables, $json_racion, $json_recursos, $responsables, $requisitos_documentales, $OT_idOT, $sap, $editable)
+  public function update(
+    $idtarea_ot, $nombre_tarea_ot, 
+    $fecha_inicio, $fecha_fin, 
+    $valor_recursos, $valor_tarea_ot,
+    $json_indirectos, $json_viaticos, 
+    $json_horas_extra, $json_reembolsables, 
+    $json_racion, $json_recursos, $responsables, 
+    $requisitos_documentales, $OT_idOT, 
+    $sap, $clase_sap, $tipo_sap, $sap_pago,
+    $clase_sap_pago, $tipo_sap_pago, $editable)
   {
     $data = array(
       'nombre_tarea'=>$nombre_tarea_ot,
@@ -74,6 +88,11 @@ class Tarea_db extends CI_Model{
       'requisitos_documentales'=>$requisitos_documentales,
       'OT_idOT'=>$OT_idOT,
       'sap'=>$sap,
+      "clase_sap"=>$clase_sap,
+      "tipo_sap"=>$tipo_sap,
+      'sap_pago'=>$sap_pago,
+      "clase_sap_pago"=>$clase_sap_pago,
+      "tipo_sap_pago"=>$tipo_sap_pago,
       'editable'=>$editable
     );
     return $this->db->update('tarea_ot', $data, 'idtarea_ot = '.$idtarea_ot);

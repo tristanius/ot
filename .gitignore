@@ -1,8 +1,8 @@
 /nbproject/private/
 /application/controllers/Sesion.*
 /application/controllers/Validator.*
-/application/config/database.*
-/application/config/config.*
+/application/config/*
 /uploads/
 /uploads/*
 /application/helpers/dompdf/lib/fonts/*
+application/config/*

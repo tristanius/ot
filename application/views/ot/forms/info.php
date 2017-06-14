@@ -1,9 +1,3 @@
-  <div class="col l6 s12 row">
-    <label class="col m2 right-align" ><b>Numero SAP:</b></label>
-    <input class="col m7" type="text" ng-model="ot.numero_sap" placeholder="No. SAP" />
-  </div>
-
-  <br class="clear-left">
   <hr style="border:1px solid #33c633">
   <br>
 

@@ -116,7 +116,7 @@ class Ot extends CI_Controller {
 						isset($orden->vereda)?$orden->vereda:NULL,
 						isset($orden->cc_ecp)?$orden->cc_ecp:NULL,
 						isset($orden->json)?json_encode($orden->json):'{"p1":false,"p2":false,"p3":false,"p4":false,"p5":false}',
-						isset($orden->numero_sap)?$orden->numero_sap:NULL,
+						isset($orden->clasificacion_ot)?$orden->clasificacion_ot:NULL,
 						isset($orden->gerencia)?$orden->gerencia:NULL,
 						isset($orden->departamento_ecp)?$orden->departamento_ecp:NULL,
 						isset($orden->estado_doc)?$orden->estado_doc:NULL,
@@ -128,8 +128,7 @@ class Ot extends CI_Controller {
 						isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 						isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 						isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-						isset($orden->basica)?$orden->basica:FALSE,
-						isset($orden->estado_sap)?$orden->estado_sap:FALSE
+						isset($orden->basica)?$orden->basica:FALSE
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s') );	}
@@ -174,10 +173,15 @@ class Ot extends CI_Controller {
 				json_encode($tar->json_reembolsables),
 				'',
 				json_encode($tar->json_recursos),
-	      isset($tar->responsables)?json_encode($tar->responsables):'{}',
-	      isset($tar->requisitos_documentales)?json_encode($tar->requisitos_documentales):'{}',
+			    isset($tar->responsables)?json_encode($tar->responsables):'{}',
+			    isset($tar->requisitos_documentales)?json_encode($tar->requisitos_documentales):'{}',
 				$idot,
 				isset($tar->sap)?$tar->sap:NULL,
+				isset($tr->clase_sap)?$tr->clase_sap:NULL,
+				isset($tr->tipo_sap)?$tr->tipo_sap:NULL,
+				isset($tr->sap_pago)?$tr->sap_pago:NULL,
+				isset($tr->clase_sap_pago)?$tr->clase_sap_pago:NULL,
+				isset($tr->tipo_sap_pago)?$tr->tipo_sap_pago:NULL,
 				isset($tr->editable)?TRUE:TRUE
 			);
 	}
@@ -345,7 +349,7 @@ class Ot extends CI_Controller {
 				$orden->vereda,
 				isset($orden->cc_ecp)?$orden->cc_ecp:NULL,
 				isset( $orden->json )?json_encode($orden->json):'{"p1":false,"p2":false,"p3":false,"p4":false,"p5":false}',
-				isset($orden->numero_sap)?$orden->numero_sap:NULL,
+				isset($orden->clasificacion_ot)?$orden->clasificacion_ot:NULL,
 				isset($orden->gerencia)?$orden->gerencia:NULL,
 				isset($orden->departamento_ecp)?$orden->departamento_ecp:NULL,
 				isset($orden->estado_doc)?$orden->estado_doc:NULL,
@@ -357,8 +361,7 @@ class Ot extends CI_Controller {
 				isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 				isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 				isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-				isset($orden->basica)?$orden->basica:FALSE,
-				isset($orden->estado_sap)?$orden->estado_sap:FALSE
+				isset($orden->basica)?$orden->basica:FALSE
 			);
 
 		$this->inf_ot->saveAllMeses($orden->allMeses);
@@ -411,6 +414,11 @@ class Ot extends CI_Controller {
 	      isset($tr->requisitos_documentales)?json_encode($tr->requisitos_documentales):NULL,
 				$tr->OT_idOT,
 				isset($tr->sap)?$tr->sap:NULL,
+				isset($tr->clase_sap)?$tr->clase_sap:NULL,
+				isset($tr->tipo_sap)?$tr->tipo_sap:NULL,
+				isset($tr->sap_pago)?$tr->sap_pago:NULL,
+				isset($tr->clase_sap_pago)?$tr->clase_sap_pago:NULL,
+				isset($tr->tipo_sap_pago)?$tr->tipo_sap_pago:NULL,
 				isset($tr->editable)?$tr->editable:NULL
 			);
 	}
