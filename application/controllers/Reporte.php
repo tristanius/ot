@@ -19,7 +19,7 @@ class Reporte extends CI_Controller{
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
     if($diff->y == 0 && $diff->m == 0 && $diff->d < 10){
-      if (date('2017-05-11') <= date($fecha)) {
+      if (date('2017-05-13') <= date($fecha)) {
         echo 'toolong';
       }else{
         $post = json_decode( file_get_contents("php://input") );

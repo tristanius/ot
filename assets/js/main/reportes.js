@@ -591,9 +591,10 @@ var editReporte = function($scope, $http, $timeout){
     $http.post($scope.site_url+'/reporte/updateEstado', { estado: new_estado, validado_pyco: new_validacion, idreporte_diario: $scope.rd.idreporte_diario }).then(
       function(response){
         if (response.data.success == 'success') {
-          $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion);
+          $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion, 'RD ELABORADO');
           $scope.myvalidacion_doc = undefined;
           $scope.myestado_doc = undefined;
+          // REEMPLADO DE VENTANA EMERGENTE 
           $scope.mensaje_log = response.data.mensaje_log;
           $scope.mensaje_log_color = 'light-green lighten-5';
           $scope.getReportesView($scope.site_url);

@@ -255,7 +255,12 @@ class Reporte_db extends CI_Model{
         '
         rd.*,
         OT.nombre_ot,
-        rd.fecha_registro AS fecha_estado_elaborado
+        rd.fecha_registro,
+        (SELECT lm.fecha
+        FROM log_movimiento AS lm
+        WHERE lm.referencia = "RD ELABORADO"
+        AND lm.idregistro = rd.idreporte_diario
+        AND lm.tabla = "reporte_diario") AS fecha_estado_elaborado
         '
       )->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
   }

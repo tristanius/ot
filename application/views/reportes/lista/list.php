@@ -4,7 +4,7 @@
     <span>Año: <input type="number" style="width:8ex" ng-model="filtroReportes.year" ng-init="filtroReportes.year = <?= date('Y') ?> "></span>
     <span>
       Mes:
-      <select class="" ng-model="filtroReportes.mes">
+      <select class="" ng-model="filtroReportes.mes" ng-init="filtroReportes.mes = '-<?= date('m') ?>-'">
         <option value="">Todo</option>
         <?php for ($i=1; $i<=12; $i++): ?>
           <option value="-<?= ($i<10?0:'').$i ?>-"><?= $i ?></option>
@@ -25,7 +25,8 @@
         <th>Gestionar</th>
         <th colspan="2">PDF reporte</th>
         <th><small>T.L.</small></th>
-        <th>F. Creación</th>
+        <th><small>F. creación</small></th>
+        <th><small>F. Elaborado</small></th>
       </tr>
     </thead>
     <tbody>
@@ -60,7 +61,8 @@
         <td>
           <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>
         </td>
-        <td> <span ng-if="rd.fecha_estado_elaborado" ng-bind="rd.fecha_estado_elaborado"></span> <span ng-if="!rd.fecha_estado_elaborado && rd.validado_pyco != 'PENDIENTE' " ng-bind="rd.fecha_registro"></span></td>
+        <td> <small class="font10" ng-bind="rd.fecha_registro"></small> </td>
+        <td> <small class="font10" ng-if="rd.fecha_estado_elaborado" ng-bind="rd.fecha_estado_elaborado"></small></td>
       </tr>
     </tbody>
   </table>

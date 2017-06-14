@@ -80,7 +80,17 @@ class Miscelanio extends CI_Controller {
 	{
 		$post = json_decode( file_get_contents("php://input") );
 		$this->load->helper('log');
-		if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $post->idregistro, $post->tabla, $post->referencia, date('Y-m-d H:i:s') );	}
+		if (isset($post->log)) {
+			addLog(
+				$post->log->idusuario,
+				$post->log->nombre_usuario,
+				$post->idregistro,
+				$post->tabla,
+				$post->descripcion,
+				date('Y-m-d H:i:s'),
+				isset($post->nota)?$post->nota:NULL
+			);
+		}
 		echo 'Registro agregado';
 	}
 	#============================================================================================

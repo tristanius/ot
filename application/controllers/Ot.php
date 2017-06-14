@@ -131,7 +131,7 @@ class Ot extends CI_Controller {
 						isset($orden->basica)?$orden->basica:FALSE
 					);
 				$this->load->helper('log');
-				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s') );	}
+				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s'), 'OT CREADA' );	}
 				#-----------------------
 				#Adicionar tarea nueva
 				$this->load->model('Tarea_db','tarea');
@@ -367,7 +367,7 @@ class Ot extends CI_Controller {
 		$this->inf_ot->saveAllMeses($orden->allMeses);
 
 		$this->load->helper('log');
-		if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $orden->idOT, 'OT', 'Orden '.$orden->nombre_ot.' modificada', date('Y-m-d H:i:s') );	}
+		if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $orden->idOT, 'OT', 'Orden '.$orden->nombre_ot.' modificada', date('Y-m-d H:i:s'), 'OT ACTUALIZADA' );	}
 
 		foreach($orden->tareas as $tr){
 			if(isset($tr->idtarea_ot) &&  $tr->idtarea_ot != 0 ){

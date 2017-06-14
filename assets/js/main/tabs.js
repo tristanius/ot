@@ -258,10 +258,10 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     )
   }
 
-  $scope.addLog = function(mytabla, myidregistro, myreferencia){
+  $scope.addLog = function(mytabla, myidregistro, mydescripcion, nota=''){
     $http.post(
       $scope.site_url+'/miscelanio/addLog',
-      {tabla:mytabla, idregistro: myidregistro, referencia: myreferencia, log: $scope.log }
+      {tabla:mytabla, idregistro: myidregistro, descripcion: mydescripcion, log: $scope.log, referencia:nota}
     ).then(
       function(response){
         console.log(response.data);
