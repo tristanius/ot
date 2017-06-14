@@ -260,7 +260,7 @@ class Reporte_db extends CI_Model{
         FROM log_movimiento AS lm
         WHERE lm.referencia = "RD ELABORADO"
         AND lm.idregistro = rd.idreporte_diario
-        AND lm.tabla = "reporte_diario") AS fecha_estado_elaborado
+        AND lm.tabla = "reporte_diario" GROUP BY lm.referencia) AS fecha_estado_elaborado
         '
       )->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
   }
