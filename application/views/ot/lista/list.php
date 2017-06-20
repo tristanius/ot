@@ -14,7 +14,7 @@
 					<tr style="background:#D7F1F4">
 		    		<td></td>
 		    		<td><input type="text" ng-model="filtro.nombre_ot" placeholder="Filtro " =""></td>
-		    		<td></td>
+		    		<td><input type="text" ng-model="filtro.fecha_creacion"> </td>
 		    		<td></td>
 		    		<td><input type="text" ng-model="filtro.nombre_especialidad" placeholder="Filtro " =""></td>
 		    		<td><input type="text" ng-model="filtro.nombre_tipo_ot" placeholder="Filtro " =""></td>
@@ -24,7 +24,7 @@
 		    </thead>
 		    <tbody>
 		        <tr ng-repeat="ot in ots | filter: filtro | orderBy: 'idOT' "> <!--  | orderBy: 'nombre_ot' -->
-		          <td ng-bind="ot.base_idbase"></td>
+		          <td> <strong ng-bind="ot.base_idbase"></strong></td>
 		          <td style="text-align:center"> <b ng-bind="ot.nombre_ot"></b> </td>
 		          <td ng-bind="ot.fecha_creacion"></td>
 		          <td ng-bind="ot.num_tareas"></td>

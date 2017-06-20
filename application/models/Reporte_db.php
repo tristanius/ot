@@ -14,7 +14,6 @@ class Reporte_db extends CI_Model{
     $this->load->database('ot');
     $data = array(
       'fecha_reporte' => $repo->fecha_reporte,
-      'valido'=> FALSE,
       'festivo'=>$repo->festivo,
       'OT_idOT'=>$repo->idOT,
       'json_r'=>json_encode($repo),
@@ -32,9 +31,9 @@ class Reporte_db extends CI_Model{
   # Actualizar|
   public function update($repo)
   {
+    $this->load->database('ot');
     $data = array(
       'fecha_reporte' => isset($repo->fecha)?($repo->fecha != $repo->info->fecha_reporte? $repo->info->fecha_reporte:  $repo->fecha):$repo->info->fecha_reporte,
-      'valido'=> FALSE,
       'festivo'=>$repo->info->festivo,
       'OT_idOT'=>$repo->info->idOT,
       'json_r'=>json_encode($repo->info),
@@ -46,6 +45,7 @@ class Reporte_db extends CI_Model{
       'observaciones_pyco'=>isset($repo->observaciones_pyco)?json_encode($repo->observaciones_pyco):'',
     );
     $this->db->update('reporte_diario', $data, 'idreporte_diario = '.$repo->idreporte_diario);
+    return ( $this->db->affected_rows() > 0 )?TRUE:FALSE;
   }
 
   # Actualiar el estado de un reporte
@@ -132,6 +132,7 @@ class Reporte_db extends CI_Model{
       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
+    return ($this->db->affected_rows() > 0)?TRUE:FALSE;
   }
   public function recursoRepoFecha($idRecOt, $fecha)
   {
@@ -256,11 +257,13 @@ class Reporte_db extends CI_Model{
         rd.*,
         OT.nombre_ot,
         rd.fecha_registro,
-        (SELECT lm.fecha
-        FROM log_movimiento AS lm
-        WHERE lm.referencia = "RD ELABORADO"
-        AND lm.idregistro = rd.idreporte_diario
-        AND lm.tabla = "reporte_diario" GROUP BY lm.referencia) AS fecha_estado_elaborado
+        (
+          SELECT lm.fecha
+          FROM log_movimiento AS lm
+          WHERE lm.referencia = "RD ELABORADO"
+          AND lm.idregistro = rd.idreporte_diario
+          AND lm.tabla = "reporte_diario" GROUP BY lm.referencia
+        ) AS fecha_estado_elaborado
         '
       )->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
   }

@@ -9,17 +9,23 @@
 
     <div class="row" style="margin:2px; padding:2px; border:1px solid #999;border-radius:7px;">
 
-      <div class="col m7 row noMaterialStyles">
-        <label style="color: #332" class="col m5 right-align">Consulta OTs, centro de operación (base):</label>
-        <select ng-model="consulta.base" class="col m5" ng-init="consulta.base = '169'" style="height:4ex;">
+      <div class="col m3 row noMaterialStyles">
+        <label style="color: #332" class="col m5 right-align">Orden (aprox.):</label>
+        <input type="text" ng-model="consulta.indicio_nombre_ot">
+      </div>
+      <div class="col m4 row noMaterialStyles">
+        <label style="color: #332" class="col m5 right-align">C.O. (base):</label>
+        <select ng-model="consulta.base" class="col m5" style="height:4ex;">
+          <option value="">Sin selección</option>
           <?php foreach ($bases->result() as $b): ?>
             <option value="<?= $b->idbase ?>"><?= $b->idbase." - ".$b->nombre_base ?></option>
           <?php endforeach; ?>
         </select>
-        <div class="col m1">
-          <button type="button" class="btn mini-btn" data-icon="," style="margin-top:0;"
-            ng-click="findOTsByBase('<?= site_url('ot/getByBase') ?>')"></button>
-        </div>
+      </div>
+
+      <div class="col m1">
+        <button type="button" class="btn mini-btn" data-icon="," style="margin-top:0;"
+          ng-click="findOTsByBase('<?= site_url('ot/getBy') ?>')"></button>
       </div>
 
     </div>

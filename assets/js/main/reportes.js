@@ -594,7 +594,7 @@ var editReporte = function($scope, $http, $timeout){
           $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion, 'RD ELABORADO');
           $scope.myvalidacion_doc = undefined;
           $scope.myestado_doc = undefined;
-          // REEMPLADO DE VENTANA EMERGENTE 
+          // REEMPLADO DE VENTANA EMERGENTE
           $scope.mensaje_log = response.data.mensaje_log;
           $scope.mensaje_log_color = 'light-green lighten-5';
           $scope.getReportesView($scope.site_url);
@@ -685,11 +685,9 @@ var editReporte = function($scope, $http, $timeout){
       v.validacion_he = false;
     });
   }
-
   //Busque de equipos no relacionados
   $scope.consultaEquiposOT = {};
   $scope.resultEquiposBusqueda = [];
-
   $scope.buscarEquiposBy = function(link){
     console.log(link)
     $http.post(link, {
@@ -707,7 +705,6 @@ var editReporte = function($scope, $http, $timeout){
       }
     );
   }
-
   // Utilidades
   $scope.toggleContent = function(tag, clase, section, myfun=undefined){
     if(section != undefined){
@@ -952,7 +949,9 @@ var editReporte = function($scope, $http, $timeout){
             $scope.rd.recursos.equipos = [];
             $scope.rd.recursos.actividades = [];
             if(response.data.success == 'success'){
-              alert("reporte guardado correctamente");
+              // REEMPLADO DE VENTANA EMERGENTE
+              $scope.mensaje_log = response.data.msj;
+              $scope.mensaje_log_color = 'light-green lighten-5';
               if($scope.tipoGuardado == 0){
                 $scope.tipoGuardado = 1;
                 $scope.rd.idreporte_diario = response.data.idreporte_diario;

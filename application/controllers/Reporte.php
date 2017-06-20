@@ -19,7 +19,7 @@ class Reporte extends CI_Controller{
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
     if($diff->y == 0 && $diff->m == 0 && $diff->d < 10){
-      if (date('2017-05-13') <= date($fecha)) {
+      if( date($fecha) <= date('2017-05-13')  ) {
         echo 'toolong';
       }else{
         $post = json_decode( file_get_contents("php://input") );
@@ -283,25 +283,33 @@ class Reporte extends CI_Controller{
   public function update($value='')
   {
     $post = json_decode( file_get_contents("php://input") );
+    $cambios = new stdClass();
     $validReporte = $this->validarRecursos("retornable", $post);
+
     if($post->info->validado_pyco == 'CORREGIR'){ $validReporte->succ = TRUE; }
     if($validReporte->succ){
       $info = $post->info;
       $this->load->model('reporte_db', 'repo');
       $this->repo->init_transact();
-      $this->repo->update($post);
+      if( $this->repo->update($post) ){
+        $cambios->info = $post->info;
+        $cambios->info->observaciones = NULL;
+      }
+      $cambios->actividades = $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
+      $cambios->personal = $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
+      $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
 
       $this->load->helper('log');
-      if (isset($post->log)) {	addLog($post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' modificado', date('Y-m-d H:i:s') );	}
-
-      $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
-      $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
-      $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
+      if (isset($post->log)) {
+        $msj = 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' modificado';
+        addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
+      }
 
       if($this->repo->end_transact() != FALSE){
         $response = new stdClass();
         $response->success = 'success';
         $var = $this->getRecursoData($post->idreporte_diario);
+        $response->msj = 'Guardado correctamente. '.date('Y-m-d H:i:s');
         $response->personal = $var->personal;
         $response->equipos = $var->equipos;
         $response->actividades = $var->actividades;
@@ -337,15 +345,18 @@ class Reporte extends CI_Controller{
 
   public function actualizarRecursos($recursos, $idr, $fecha_reporte)
   {
+    $cambios = array();
     foreach ($recursos as $key => $rec) {
       if( !isset($rec->idrecurso_reporte_diario) ){
-        // insertar
         $this->repo->addRecursoRepo($rec, $idr);
+        array_push($cambios, $rec);
       }else{
-        //actualizar
-        $this->repo->editRecursoRepo($rec, $idr);
+        if ( $this->repo->editRecursoRepo($rec, $idr) ) {
+          array_push($cambios, $rec);
+        }
       }
     }
+    return $cambios;
   }
 
 

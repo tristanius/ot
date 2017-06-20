@@ -94,7 +94,7 @@ class Reportepersonal extends CI_Controller{
       if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
       if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
       if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
-      $this->rper->personalValidation($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario);
+      $this->rper->personalValidation($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario.'-'.date('Y-m-d H:i:s'));
       echo "success";
     }else{
       echo 'failed';

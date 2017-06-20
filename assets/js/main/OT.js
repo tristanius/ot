@@ -531,14 +531,16 @@ var listaOT = function($scope, $http, $timeout){
 	$scope.linkLista = '';
 	$scope.consulta = {};
 	$scope.findOTsByBase = function(url){
-		var mybase = $scope.consulta.base;
-		$scope.linkLista = url+'/'+mybase;
-		$http.post($scope.linkLista, {}).then(
-				function(response) {
-					$scope.ots = response.data;
-				},
-				function(response){}
-			);
+		if($scope.consulta.indicio_nombre_ot || $scope.consulta.base){
+			$http.post(url, $scope.consulta ).then(
+					function(response) {
+						$scope.ots = response.data;
+					},
+					function(response){}
+				);
+		}else {
+			alert('No se han agregado parametros de busqueda')
+		}
 	}
 }
 // ====================================================================================================
@@ -770,7 +772,7 @@ var editarOT = function($scope, $http, $timeout) {
 				},
 				function(response) {
 					$scope.isOnPeticion = false;
-					console.log(response);
+					console.log(response.data);
 				}
 			);
 		}
