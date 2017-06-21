@@ -211,7 +211,6 @@ var listOTReportes = function($scope, $http, $timeout){
             $scope.ot.selected = true;
             $scope.listaReportes = undefined;
             $scope.listaReportes = response.data;
-            console.log(response.data)
           },
           function(response) {
             alert(response.data)
@@ -582,8 +581,11 @@ var editReporte = function($scope, $http, $timeout){
     $scope.myvalidacion_doc = new_validacion;
   }
   $scope.aplicarEstado = function(new_estado, new_validacion){
-      $scope.rd.info.estado = new_estado;
-      $scope.rd.info.validado_pyco = new_validacion;
+    var myfecha = new Date();
+    $scope.rd.info.estado = new_estado;
+    $scope.rd.info.validado_pyco = new_validacion;// REEMPLADO DE VENTANA EMERGENTE
+    $scope.mensaje_log = "Estado aplicado "+new_validacion+" - "+myfecha.toLocaleString()+". A la espera de evento de guardado.";
+    $scope.mensaje_log_color = 'yellow accent-1';
   }
   $scope.guardarestado = function() {
     new_estado = $scope.rd.info.estado;
@@ -613,7 +615,6 @@ var editReporte = function($scope, $http, $timeout){
     $http.post(link, {})
       .then(
         function(response){
-          console.log(response.data);
           $scope.rd.info = response.data.info;
           $scope.rd.info.estado = response.data.estado;
           $scope.rd.info.validado_pyco = response.data.validado_pyco;
@@ -737,7 +738,7 @@ var editReporte = function($scope, $http, $timeout){
           $scope.personalOT = response.data.personal;
           $scope.equiposOT = response.data.equipo;
           $scope.actividadesOT = response.data.actividad;
-          console.log(response.data);
+          //console.log(response.data);
         },
         function(response){
           alert("Problemas a la cargar los datos de los formularios, por favor cierra la ventana y vuelve a ingresar.")
@@ -813,7 +814,6 @@ var editReporte = function($scope, $http, $timeout){
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(){
     angular.forEach($scope.actividadesOT, function(val, key){
-      console.log(val);
       if(val.add
         &&
         (

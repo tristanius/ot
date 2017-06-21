@@ -147,7 +147,7 @@ class Reporte_db extends CI_Model{
         ->where('rrd.idrecurso_reporte_diario',$id)->where('rd.fecha_reporte',$fecha)->get();
   }
 
-  public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL)
+  public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL, $facturable = NULL)
   {
     $this->load->database('ot');
     $this->db->select('OT.nombre_ot');
@@ -159,6 +159,9 @@ class Reporte_db extends CI_Model{
     $this->db->where('rd.fecha_reporte',$fecha);
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT <>', $idOT);
+    }
+    if (isset($facturable)) {
+      $this->db->where('rrd.facturable', $facturable);
     }
     if ( $tipo=='equipos' ) {
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo');
@@ -227,13 +230,13 @@ class Reporte_db extends CI_Model{
     }elseif ($tipo == 'actividades') {
       $this->db->select("
         (
-        SELECT SUM(mrrd.cantidad) AS cant
-        FROM reporte_diario AS mrd
-        JOIN recurso_reporte_diario AS mrrd ON mrd.idreporte_diario = mrrd.idreporte_diario
-        WHERE mrd.OT_idOT = rd.OT_idOT
-        AND mrrd.itemf_iditemf = rrd.itemf_iditemf
-        AND mrd.fecha_reporte < rd.fecha_reporte
-        AND mrrd.idsector_item_tarea = rrd.idsector_item_tarea
+          SELECT SUM(mrrd.cantidad) AS cant
+          FROM reporte_diario AS mrd
+          JOIN recurso_reporte_diario AS mrrd ON mrd.idreporte_diario = mrrd.idreporte_diario
+          WHERE mrd.OT_idOT = rd.OT_idOT
+          AND mrrd.itemf_iditemf = rrd.itemf_iditemf
+          AND mrd.fecha_reporte < rd.fecha_reporte
+          AND mrrd.idsector_item_tarea = rrd.idsector_item_tarea
         ) AS acumulado,
         sec.nombre_sector_item AS nom_sector,
       ");

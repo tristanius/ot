@@ -25,8 +25,8 @@
         <td ng-bind="act.descripcion"></td>
         <td ng-bind="act.unidad"></td>
         <td class="inputsSmall"> <input type="number" min=0 step=0.1 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td ng-init="act.acumulado  = getCantidadSum('<?= site_url('reporte/getCantidadSum/') ?>', rd.info.fecha_reporte, act, rd.info.idOT )" >
-          <span ng-bind="(parseNumb(act.acumulado) + parseNumb(act.cantidad)) | number:5"></span>
+        <td g-init="act.acumulado?act.acumulado:0;">
+          <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
         </td>
     </tbody>
   </table>

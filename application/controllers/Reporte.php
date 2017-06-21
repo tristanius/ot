@@ -130,10 +130,16 @@ class Reporte extends CI_Controller{
     }
     $val->valid = TRUE;
     if (!$this->exceptionValidarRecurso($val)) {
-      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
-      if($rows->num_rows() > 0){
+      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
+      if($rows->num_rows() > 0){ // SI ESTA CANT > 1 Y FACTURABLE
         $val->valid = FALSE;
         $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result());
+      }else { // SI ESTA CANT > 1 Y NO FACTURABLE
+        $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
+        if ($rows->num_rows() > 0) {
+          $val->valid = TRUE;
+          $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result());
+        }
       }
     }
     return $val;
@@ -169,13 +175,13 @@ class Reporte extends CI_Controller{
           $value =  $this->validarRecurso( $post->fecha, $value, $k, $post->idOT );
           if($value->cantidad <= 0 && $value->facturable){
             $value->valid = TRUE;
-            $value->msj = "Registro facturable sin cantidad.";
+            $value->msj = "Este registro es facturable sin cantidad.";
           }elseif ($k=='personal' && !$value->valid && !$value->facturable){
             $value->valid = FALSE;
             $value->msj .= " Personal no puede tener el mismo día por dos OT cant = 1.";
           }elseif ($k=='equipos' && !$value->valid && !$value->facturable){
             $value->valid = TRUE;
-            $value->msj = "El equipo esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
+            $value->msj .= " El equipo esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
           }
           $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
           if(!$value->valid){
