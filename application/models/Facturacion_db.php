@@ -273,7 +273,7 @@ class Facturacion_db extends CI_Controller{
       '
       OT.nombre_ot,
       COUNT(tr.idtarea_ot) AS no_tareas,
-      OT.estado_sap,
+      OT.clasificacion_ot,
       (SELECT taot.sap FROM tarea_ot AS taot WHERE taot.OT_idOT = OT.idOT GROUP BY taot.OT_idOT) AS numero_sap,
       if(OT.basica, "BASICA","NO BASICA") AS ot_basica,
       CONCAT( b.idbase, " - ", b.nombre_base ) AS base,
@@ -313,7 +313,7 @@ class Facturacion_db extends CI_Controller{
       if(regot.octubre IS NOT NULL, regot.octubre, "-") AS octubre,
       if(regot.noviembre IS NOT NULL, regot.noviembre, "-") AS noviembre,
       if(regot.diciembre IS NOT NULL, regot.diciembre, "-") AS diciembre,
-      "" AS total,
+      if(regot.total IS NOT NULL, regot.total, "-") AS total,
       "" AS total_directo_aiu,
       OT.presupuesto_porcent_ini AS porcentaje_utilidad_inicial,
       OT.presupuesto_porcent_fin AS porcentaje_utilidad_fin

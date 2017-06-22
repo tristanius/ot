@@ -32,17 +32,19 @@
         <fieldset ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
           <legend style="color: #BBB; font-size:12px">Opciones</legend>
           <button type="button" class="btn mini-btn" ng-click="obtenerPersonal('<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon=","></button>
-          <button type="button" class="btn mini-btn green" ng-click="descargarPersonal()" data-icon="&#xe03b;"></button>
+          <button type="button" class="btn mini-btn green" ng-click="clickeableLink('<?= site_url('reportepersonal/form_tiempoLaboradoGeneral') ?>', $event, 'Tiempo Laborado');" data-icon="&#xe03b;"></button>
         </fieldset>
 
         <div class="row" ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
           <fieldset class="col m5" ng-if="validPriv(67)">
             <legend>Validación HE:</legend>
             <button type="button" class="btn mini-btn teal darken-1"
-                ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04c;">
+                ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" >
+                Validar <span data-icon="&#xe04c;"></span>
             </button>
             <button type="button" class="btn mini-btn red"
-                ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/0'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="&#xe04d;">
+                ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/0'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" >
+                Invalidar <span data-icon="&#xe04d;"></span>
             </button>
             <p></p>
           </fieldset>
@@ -50,10 +52,12 @@
           <fieldset class="col m5" ng-if="validPriv(66)">
               <legend>Nomina:</legend>
               <button type="button" class="btn mini-btn orange darken-2"
-                  ng-click="bloquearPersonal('<?= site_url('reportepersonal/toNomina/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="O">
+                  ng-click="bloquearPersonal('<?= site_url('reportepersonal/toNomina/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" >
+                  Bloquear <span data-icon="O"></span>
               </button>
               <button type="button" class="btn mini-btn teal darken-2"
-                  ng-click="bloquearPersonal('<?= site_url('reportepersonal/toNomina/0'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" data-icon="y">
+                  ng-click="bloquearPersonal('<?= site_url('reportepersonal/toNomina/0'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" >
+                  Devolver <span data-icon="y"></span>
               </button>
               <p></p>
           </fieldset>

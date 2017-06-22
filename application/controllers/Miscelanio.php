@@ -73,7 +73,11 @@ class Miscelanio extends CI_Controller {
 	{
 		$post = json_decode( file_get_contents("php://input") );
 		$this->load->database('ot');
-		$log = $this->db->select('idlog_movimiento, idregistro, tabla, idusuario, nombre_usuario, movimiento, fecha, referencia')->from('log_movimiento')->where('idregistro'=>$post->idregistro)->where('tabla'=>$post->tabla) );
+		$log = $this->db->select('idlog_movimiento, idregistro, tabla, idusuario, nombre_usuario, movimiento, fecha, referencia')
+			->from('log_movimiento')
+			->where('idregistro',$post->idregistro)
+			->where('tabla',$post->tabla)
+			->get();
 		$this->load->view('login/log', array('log'=>$log));
 	}
 	public function addLog()

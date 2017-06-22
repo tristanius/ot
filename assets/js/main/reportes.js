@@ -575,6 +575,7 @@ var editReporte = function($scope, $http, $timeout){
   $scope.fecha_duplicar = '';
   $scope.tipoGuardado = 1;
   $scope.listStatus = [];
+  $scope.spinner = true;
 
   $scope.appyEstadoDoc = function(new_estado, new_validacion){
     $scope.myestado_doc = new_estado;
@@ -626,6 +627,7 @@ var editReporte = function($scope, $http, $timeout){
           $scope.rd.recursos.personal = response.data.personal;
           $scope.rd.recursos.equipos = response.data.equipos;
           $scope.rd.recursos.actividades = response.data.actividades;
+          $scope.spinner = false;
         },
         function(response){
           console.log(response.data);
@@ -939,12 +941,14 @@ var editReporte = function($scope, $http, $timeout){
       alert('No hay recurso agregados');
     }else{
       $scope.isOnPeticion = true;
+      $scope.spinner = true;
         $http.post(
           url,
           data
         ).then(
           function(response){
             $scope.isOnPeticion = false;
+            $scope.spinner = false;
             $scope.rd.recursos.personal = [];
             $scope.rd.recursos.equipos = [];
             $scope.rd.recursos.actividades = [];
@@ -966,11 +970,11 @@ var editReporte = function($scope, $http, $timeout){
               $scope.rd.recursos.actividades = response.data.actividades;
               $scope.booleanCorrection();
             });
-            //$('#guardar_reporte').hide();
             $scope.getReportesView($scope.site_url);
           },
           function(response) {
             console.log(response.data);
+            $scope.spinner = false;
             $scope.isOnPeticion = false;
           }
         );

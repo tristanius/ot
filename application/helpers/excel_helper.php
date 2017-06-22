@@ -12,6 +12,17 @@ function readExcel($archivo='')
 	return $sheetData; // OJO ->toArray(null,true,true,true);
 }
 
+function getDateExcel($fecha){
+	//return date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP( $fecha ));
+	if( strpos($fecha,'-') != FALSE ){
+		return date( 'Y-m-d', strtotime( $fecha ) );
+	}elseif ( strpos($fecha,',') != FALSE ) {
+		return date( 'Y-m-d', strtotime( $fecha ) );
+	}else {
+		return ($fecha - 25569) * 86400;
+	}
+}
+
 function readExcelAlltypes($archivo='', $dataOnly=FALSE)
 {
 	include 'PHPExcel/PHPExcel/IOFactory.php';

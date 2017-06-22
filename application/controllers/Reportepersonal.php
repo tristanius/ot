@@ -77,7 +77,7 @@ class Reportepersonal extends CI_Controller{
       if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
       if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
       $bool = $b?1:0;
-      $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario);
+      $this->rper->personalNomina($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario.'-'.date('Y-m-d H:i'));
       echo "success";
     }else{
       echo 'failed';
@@ -94,7 +94,7 @@ class Reportepersonal extends CI_Controller{
       if(isset($post->base) && $post->base != ''){ $args['base'] = $post->base; }
       if(isset($post->orden) && $post->orden != ''){ $args['orden'] = trim( $post->orden ); }
       if(isset($post->identificacion) && $post->identificacion != ''){ $args['identificacion'] = $post->identificacion; }
-      $this->rper->personalValidation($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario.'-'.date('Y-m-d H:i:s'));
+      $this->rper->personalValidation($post->fecha_inicio, $post->fecha_hasta, $args, $bool, $post->idusuario.'-'.date('Y-m-d H:i'));
       echo "success";
     }else{
       echo 'failed';
@@ -131,24 +131,35 @@ class Reportepersonal extends CI_Controller{
     if (!file_exists($carpeta)) { mkdir($carpeta, 0777, true);  }
   }
 
-  private function leerValidacionHorario($ruta){
+  public function leerValidacionHorario($ruta="nomina/22062017/cargue.xlsx"){
     $rows = $this->leerExcel($ruta);
     $noValid = array();
+    $fastFeed = '';
     $this->load->model('reportepersonal_db', 'rper');
     $this->rper->init_transact();
     foreach ($rows as $key => $fila){
-      $orden = $fila['A'];
-      $base = $fila['B'];
-      $fecha = NULL;
-      if( strpos($fila['C']) != FALSE ){
-        $fecha = date( 'Y-m-d', strtotime( $file['C'] ) );
-      }else {
-        $fecha = ($fila['C'] - 25569) * 86400;
+      if ( strtolower( $fila['A'] ) != 'orden') {
+        $orden = $fila['A'];
+        $base = $fila['B'];
+        $fecha = getDateExcel($fila['C']);
+        $cc = $fila['D'];
+        $affect = $this->rper->personalNominaUnoAUno($fecha, $orden, $cc, TRUE, $this->input->post('usuario').date('Y-m-d h:i'));
+        if ($affect>0) {
+          $fila['C'] = $fecha." Asociada";
+          $fila['F']="Registro asociado";
+        }else {
+          $fila['C'] = $fecha." NO Asociada";
+          $fila['F']="No asociado";
+        }
       }
-      $cc = $fila['D'];
-      $this->rper->personalNominaUnoAUno($fecha, $orden, $cc, TRUE, $this->input->post('usuario'));
+      array_push($noValid, $fila);
     }
-    $this->rper->end_transact();
+    if($this->rper->end_transact()){
+      $html = $this->load->view('miscelanios/reporteCargaXLS',array("filas"=>$noValid),TRUE);
+      $this->load->view('miscelanios/resultadoUpdateMaestro', array("html"=>$html));
+    }else{
+      echo "Fallo al insertar registros";
+    }
   }
 
   # Llama al helper para leer un xlsx y devuelve una coleccion PHP

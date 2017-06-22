@@ -3,7 +3,7 @@
 class Ot extends CI_Controller {
 
 	private $clasificacion_ot = array(
-		"APIQUE",	"ATENTADO",	"AMINISTRATIVA",	"CIVIL",	"CRATER",	"DEFORMIMETRO",	"DRENAJE",
+		"APIQUE",	"ATENTADO",	"ADMINISTRATIVA",	"CIVIL",	"CRATER",	"DEFORMIMETRO",	"DRENAJE",
 		"EGOS",	"ELE. VARIABLE",	"ILICITA",	"INSPECCION",	"INS. VARIABLE", "INTEGRIDAD",	"INYECCION", "VALVULAS",
 		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA"
 	);
@@ -177,12 +177,12 @@ class Ot extends CI_Controller {
 			    isset($tar->requisitos_documentales)?json_encode($tar->requisitos_documentales):'{}',
 				$idot,
 				isset($tar->sap)?$tar->sap:NULL,
-				isset($tr->clase_sap)?$tr->clase_sap:NULL,
-				isset($tr->tipo_sap)?$tr->tipo_sap:NULL,
-				isset($tr->sap_pago)?$tr->sap_pago:NULL,
-				isset($tr->clase_sap_pago)?$tr->clase_sap_pago:NULL,
-				isset($tr->tipo_sap_pago)?$tr->tipo_sap_pago:NULL,
-				isset($tr->editable)?TRUE:TRUE
+				isset($tar->clase_sap)?$tar->clase_sap:NULL,
+				isset($tar->tipo_sap)?$tar->tipo_sap:NULL,
+				isset($tar->sap_pago)?$tar->sap_pago:NULL,
+				isset($tar->clase_sap_pago)?$tar->clase_sap_pago:NULL,
+				isset($tar->tipo_sap_pago)?$tar->tipo_sap_pago:NULL,
+				isset($tar->editable)?TRUE:TRUE
 			);
 	}
 

@@ -15,6 +15,9 @@
       </section>
       <h5 class="center-align" style="border:1px solid #2196F3;  padding:2px;"> Reporte Diario (producción): <?= $r->nombre_ot ?> </h5>
 
+
+      <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
+
       <style>
         button.btn, button.mini-btn2{
           margin-top: 0;
@@ -124,6 +127,8 @@
   	  </div>
 
       <p ng-class="mensaje_log_color" ng-bind="mensaje_log"></p>
+
+      <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
       <div class="btnWindow">
 

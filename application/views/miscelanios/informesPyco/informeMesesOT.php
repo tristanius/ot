@@ -22,7 +22,7 @@
               <td> <?= isset($r->pyco)?$r->pyco:" "; ?> </td>
             <?php elseif($k == "ing_residente" || $k == "facturador"): ?>
               <td> <?= isset($r->$k)?$r->$k:" "; ?></td>
-            <?php elseif($i>=25 && $i<=41): ?>
+            <?php elseif($i>=25 && $i<=43): ?>
               <td> <?= number_format($v*1,2) ?></td>
             <?php else: ?>
               <td><?= $v ?></td>

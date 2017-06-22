@@ -225,7 +225,7 @@ class Reportepersonal_db extends CI_Model{
     $this->db->query($query);
   }
 
-  public function personalNominaUnoAUno($fecha, $ot, $identificacion,$badera, $usuario )
+  public function personalNominaUnoAUno($fecha, $ot, $identificacion, $bandera, $usuario )
   {
     $this->load->database('ot');
     $query = "UPDATE recurso_reporte_diario AS rrd
@@ -233,10 +233,10 @@ class Reportepersonal_db extends CI_Model{
       JOIN OT ON OT.idOT = rd.OT_idOT
       JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
       JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
-    SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."-".date('Y-m-d')."'
+    SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE rd.fecha_reporte = '".$fecha."'
     AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO')
-    AND OT.nombre_ot = '".$OT."'
+    AND OT.nombre_ot = '".trim($ot)."'
     AND r.persona_identificacion = '".$identificacion."' ";
     $this->db->query($query);
     return $this->db->affected_rows();

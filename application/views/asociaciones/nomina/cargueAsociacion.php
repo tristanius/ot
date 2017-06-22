@@ -9,6 +9,7 @@
 		<br>
 		Estructura del cargue de personal (Formato libro de excel ó .xlsx):
 		<small>Se debe respetar las columnas en blanco</small>
+		<br>
 		<img style="border:2px solid #999; max-width:1200px" src="<?= base_url('assets/img/carguepersonalAsociacion.png'); ?>" alt="" />
 		<br>
 
