@@ -64,7 +64,7 @@ var personalUp = function($scope, $http, $timeout) {
         autoSubmit: false,
         fileName:"myfile",
         dynamicFormData: function(){
-          var data ={'test':'test'}
+          var data ={'test':'test', usuario:$scope.$parent.log.nombre_usuario}
           return data;
         },
         onSuccess: function(file, data){

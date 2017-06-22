@@ -121,10 +121,9 @@ class Recurso_db extends CI_Model{
 		$this->load->database('ot');
 		$status = $this->db->trans_status();
 		if ($status === FALSE){
-		        $this->db->trans_rollback();
-		}
-		else{
-		        $this->db->trans_commit();
+      $this->db->trans_rollback();
+		}else{
+      $this->db->trans_commit();
 		}
 		return $status;
 	}

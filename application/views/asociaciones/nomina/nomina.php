@@ -10,6 +10,8 @@
 
     <fieldset>
       <legend>Busqueda de personal: </legend>
+      <button type="button" class="btn green mini-btn2" ng-click="getAjaxWindow('<?= site_url('reportepersonal/formCargueValidacionHorario'); ?>',$event, '')" data-icon="&#xe030;"> Vía cargue</button>
+      <br><br>
       <div class="noMaterialStyles regularForm">
         <fieldset>
           <legend style="color: #BBB; font-size:12px">filtros Obligatorios</legend>

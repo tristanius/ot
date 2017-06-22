@@ -80,7 +80,7 @@
         </td>
         <!-- <td ng-click="cambiarValorObjeto(pr,'clase','green lighten-5')" ng-bind="pr.indice" ng-init="pr.indice = ($index + 1)"></td> -->
 
-        <td ng-init="pr.edit_he = ( (pr.validacion_he==1 || pr.nomina==1) || (rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR HE') )?false:true;">
+        <td>
           <div class="valign-wrapper">
             <span ng-if="pr.valid != undefined && !pr.valid" class="valign red-text text-darken-2" ng-click="mensaje(pr.msj)"  style="font-size:3ex" data-icon="f"></span>
             <span ng-if="pr.valid != undefined && pr.valid && pr.msj != '' " class="valign orange accent-1" ng-click="mensaje(pr.msj)" style="font-size:2ex" data-icon="&#xe03d;"></span>
@@ -109,12 +109,12 @@
           <table>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_inicio" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="(!pr.edit_he)" placeholder="Hora Ini" required  />
+                <input ng-model="pr.hora_inicio" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Ini" required  />
               </td>
             </tr>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_fin" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="(!pr.edit_he)" placeholder="Hora Fin" required  />
+                <input ng-model="pr.hora_fin" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Fin" required  />
               </td>
             </tr>
           </table>
@@ -124,12 +124,12 @@
           <table>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_inicio2" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="(!pr.edit_he)" placeholder="Hora Ini" required  />
+                <input ng-model="pr.hora_inicio2" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Ini" required  />
               </td>
             </tr>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_fin2" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="(!pr.edit_he)" placeholder="Hora Fin" required  />
+                <input ng-model="pr.hora_fin2" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Fin" required  />
               </td>
             </tr>
           </table>
@@ -140,10 +140,10 @@
             <input type="number" style="border: green 1px solid; width:5ex;" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "  min=0 max=1>
           </div>
         </td>
-        <td class="inputsSmall" style="background: #F4F9FD "> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="(!pr.edit_he)"> </td>
-        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_dia" ng-init="pr.horas_extra_dia = parseNumb(pr.horas_extra_dia)" ng-readonly="(!pr.edit_he)"> </td>
-        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_noc" ng-init="pr.horas_extra_noc = parseNumb(pr.horas_extra_noc)" ng-readonly="(!pr.edit_he)"> </td>
-        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_recargo" ng-init="pr.horas_recargo = parseNumb(pr.horas_recargo)" ng-readonly="(!pr.edit_he)"> </td>
+        <td class="inputsSmall" style="background: #F4F9FD "> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true"> </td>
+        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_dia" ng-init="pr.horas_extra_dia = parseNumb(pr.horas_extra_dia)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true"> </td>
+        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_extra_noc" ng-init="pr.horas_extra_noc = parseNumb(pr.horas_extra_noc)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true"> </td>
+        <td class="inputsSmall"> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_recargo" ng-init="pr.horas_recargo = parseNumb(pr.horas_recargo)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true"> </td>
         <td>
           <select class="" ng-model="pr.racion" ng-disabled="rd.info.estado == 'CERRADO' ">
             <option value="0">0</option>

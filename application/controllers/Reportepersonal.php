@@ -101,6 +101,63 @@ class Reportepersonal extends CI_Controller{
     }
   }
 
+  #CARGUE PERSONAL PARA ESTADO EN NOMINA
+  public function formCargueValidacionHorario()
+  {
+    $this->load->view('asociaciones/nomina/cargueAsociacion');
+  }
+
+  public function uploadValidacionHorario($subcarpeta='nomina')
+  {
+    $carpeta = "/".$subcarpeta."/".date("dmY")."/";
+    $dir = "./uploads".$carpeta;
+    $this->crear_directorio("./uploads/".$subcarpeta."/");
+    $this->crear_directorio($dir);
+    //config:
+    $config['upload_path']    = $dir;
+    $config['allowed_types']  = 'xls|xlsx|xlsm';
+    //$this->recorrerFilasMaestro($subcarpeta, $carpeta.$dataup['file_name']);
+    $this->load->library('upload', $config);
+    if ($this->upload->do_upload('myfile')) {
+      $dataup = $this->upload->data();
+      $this->leerValidacionHorario($carpeta.$dataup['file_name']);
+    }else{
+      echo  $this->upload->display_errors();
+    }
+  }
+
+  public function crear_directorio($carpeta)
+  {
+    if (!file_exists($carpeta)) { mkdir($carpeta, 0777, true);  }
+  }
+
+  private function leerValidacionHorario($ruta){
+    $rows = $this->leerExcel($ruta);
+    $noValid = array();
+    $this->load->model('reportepersonal_db', 'rper');
+    $this->rper->init_transact();
+    foreach ($rows as $key => $fila){
+      $orden = $fila['A'];
+      $base = $fila['B'];
+      $fecha = NULL;
+      if( strpos($fila['C']) != FALSE ){
+        $fecha = date( 'Y-m-d', strtotime( $file['C'] ) );
+      }else {
+        $fecha = ($fila['C'] - 25569) * 86400;
+      }
+      $cc = $fila['D'];
+      $this->rper->personalNominaUnoAUno($fecha, $orden, $cc, TRUE, $this->input->post('usuario'));
+    }
+    $this->rper->end_transact();
+  }
+
+  # Llama al helper para leer un xlsx y devuelve una coleccion PHP
+  private function leerExcel($ruta)
+  {
+    $this->load->helper('excel');
+    return readExcel($ruta)->toArray(null,true,true,true);
+  }
+
   #=========================================================================================
   # dias laborados del mes
 
