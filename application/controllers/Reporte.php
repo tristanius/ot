@@ -136,7 +136,7 @@ class Reporte extends CI_Controller{
         $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result());
       }else { // SI ESTA CANT > 1 Y NO FACTURABLE
         $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
-        if ($rows->num_rows() > 0) {
+        if ($rows->num_rows() > 0 ) {
           $val->valid = TRUE;
           $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result());
         }
@@ -176,10 +176,10 @@ class Reporte extends CI_Controller{
           if($value->cantidad <= 0 && $value->facturable){
             $value->valid = TRUE;
             $value->msj = "Este registro es facturable sin cantidad.";
-          }elseif ($k=='personal' && !$value->valid && !$value->facturable){
-            $value->valid = FALSE;
+          }elseif ($k=='personal' && !$value->valid && (!$value->facturable || $value->cantidad == 0 ) ){
+            $value->valid = TRUE;
             $value->msj .= " Personal no puede tener el mismo día por dos OT cant = 1.";
-          }elseif ($k=='equipos' && !$value->valid && !$value->facturable){
+          }elseif ($k=='equipos' && !$value->valid && !$value->facturable ){
             $value->valid = TRUE;
             $value->msj .= " El equipo esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
           }

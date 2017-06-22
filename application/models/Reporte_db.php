@@ -138,13 +138,13 @@ class Reporte_db extends CI_Model{
   {
     $this->load->database('ot');
     return $this->db->from('recurso_reporte_diario AS rrd')
-        ->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario')->where('rrd.idrecurso_ot',$idRecOt)->where('rd.fecha_reporte',$fecha)->get();
+        ->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario')->where('rrd.idrecurso_ot',$idRecOt)->where('rd.fecha_reporte',$fecha)->order_by('rrd.idrecurso_reporte_diario', 'DESC')->get();
   }
   public function recursoRepoFechaID($id, $fecha)
   {
     $this->load->database('ot');
     return $this->db->from('recurso_reporte_diario AS rrd')->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario')
-        ->where('rrd.idrecurso_reporte_diario',$id)->where('rd.fecha_reporte',$fecha)->get();
+        ->where('rrd.idrecurso_reporte_diario',$id)->where('rd.fecha_reporte',$fecha)->order_by('rrd.idrecurso_reporte_diario', 'DESC')->get();
   }
 
   public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL, $facturable = NULL)
@@ -248,6 +248,7 @@ class Reporte_db extends CI_Model{
     //$this->db->order_by('rrd.facturable', 'desc');
     if ($tipo != 'actividades') {
       $this->db->order_by('titc.idtipo_itemc', 'desc');
+      $this->db->order_by('rrd.idrecurso_reporte_diario', 'desc');
     }
     return $this->db->get();
   }
