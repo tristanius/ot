@@ -18,15 +18,11 @@ class Reportepersonal extends CI_Controller{
     $post = json_decode( file_get_contents("php://input") );
     $this->load->model('Reportepersonal_db', 'repoper');
     $rows = $this->repoper->getBy($idOT, $idReporte);
-    if($rows->num_rows() > 0){
-      echo 'invalid';
-    }else{
-      $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
-      $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
-      $this->load->view('miscelanios/reportepersonal/reportepersonal',
-        array('elpersonal'=>$rowsPersonas,'laOT'=>$rowOT,'nodownload'=>false)
-      );
-    }
+    $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
+    $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
+    $this->load->view('miscelanios/reportepersonal/reportepersonal',
+      array('elpersonal'=>$rowsPersonas,'laOT'=>$rowOT,'nodownload'=>false)
+    );
   }
 
   public function form_tiempoLaboradoGeneral()

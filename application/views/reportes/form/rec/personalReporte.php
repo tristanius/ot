@@ -92,7 +92,7 @@
         <td style="max-width: 25ex" ng-click="cambiarValorObjeto(pr,'clase','green lighten-5')"> <b ng-bind="pr.nombre_completo"></b> </td>
         <td style="max-width: 25ex"> <span ng-bind="pr.descripcion"></span> </td>
         <td class="regularForm">
-          <select style="max-width: 10ex" ng-model="pr.idestado_labor" ng-change="getStatusLaboral(pr.idestado_labor, pr)" ng-disabled="rd.info.estado == 'CERRADO'">
+          <select style="max-width: 10ex" ng-model="pr.idestado_labor" ng-change="getStatusLaboral(pr.idestado_labor, pr)" ng-disabled="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true">
             <option ng-repeat="st in listStatus" value="{{st.idestado_labor}}">{{st.descripcion_estado_labor}}</option>
           </select>
         </td>

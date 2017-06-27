@@ -133,12 +133,12 @@ class Reporte extends CI_Controller{
       $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
       if($rows->num_rows() > 0){ // SI ESTA CANT > 1 Y FACTURABLE
         $val->valid = FALSE;
-        $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result());
+        $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result()).' - '.$this->db->last_query();
       }else { // SI ESTA CANT > 1 Y NO FACTURABLE
         $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
         if ($rows->num_rows() > 0 ) {
           $val->valid = TRUE;
-          $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result());
+          $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result()).' - '.$this->db->last_query();
         }
       }
     }

@@ -959,10 +959,13 @@ var editReporte = function($scope, $http, $timeout){
               if($scope.tipoGuardado == 0){
                 $scope.tipoGuardado = 1;
                 $scope.rd.idreporte_diario = response.data.idreporte_diario;
+                console.log( response.data );
               }
             }else{
                 alert("¡Oh Nooo! "+response.data.msj);
-                console.log(response.data);
+                $scope.mensaje_log = response.data.msj;
+                $scope.mensaje_log_color = 'red darken-1';
+                console.log( response.data );
             }
             $timeout(function() {
               $scope.rd.recursos.personal = response.data.personal;
