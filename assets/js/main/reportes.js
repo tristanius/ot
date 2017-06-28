@@ -591,7 +591,9 @@ var editReporte = function($scope, $http, $timeout){
   $scope.guardarestado = function() {
     new_estado = $scope.rd.info.estado;
     new_validacion = $scope.rd.info.validado_pyco;
-    $http.post($scope.site_url+'/reporte/updateEstado', { estado: new_estado, validado_pyco: new_validacion, idreporte_diario: $scope.rd.idreporte_diario }).then(
+    $http.post($scope.site_url+'/reporte/updateEstado',
+      { estado: new_estado, validado_pyco: new_validacion, observaciones_pyco: $scope.rd.observaciones_pyco, idreporte_diario: $scope.rd.idreporte_diario }
+    ).then(
       function(response){
         if (response.data.success == 'success') {
           $scope.$parent.addLog('reporte_diario', $scope.rd.idreporte_diario, 'Reporte diario: '+$scope.rd.fecha_reporte+' de OT:'+$scope.rd.nombre_ot+' Cambio de estado: '+new_validacion, 'RD ELABORADO');

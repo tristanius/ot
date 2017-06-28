@@ -133,12 +133,12 @@ class Reporte extends CI_Controller{
       $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
       if($rows->num_rows() > 0){ // SI ESTA CANT > 1 Y FACTURABLE
         $val->valid = FALSE;
-        $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result()).' - '.$this->db->last_query();
+        $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result());
       }else { // SI ESTA CANT > 1 Y NO FACTURABLE
         $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
         if ($rows->num_rows() > 0 ) {
           $val->valid = TRUE;
-          $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result()).' - '.$this->db->last_query();
+          $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result());
         }
       }
     }
@@ -291,12 +291,17 @@ class Reporte extends CI_Controller{
     $post = json_decode( file_get_contents("php://input") );
     $cambios = new stdClass();
     $validReporte = $this->validarRecursos("retornable", $post);
-
     if($post->info->validado_pyco == 'CORREGIR'){ $validReporte->succ = TRUE; }
     if($validReporte->succ){
       $info = $post->info;
       $this->load->model('reporte_db', 'repo');
       $this->repo->init_transact();
+
+      $this->load->helper('log');
+      $no_affected = $this->repo->updateEstado($post->idreporte_diario, $post->info->estado, $post->info->validado_pyco, date('Y-m-d H:i:s'), NULL);
+      if($no_affected > 0)
+        addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Cambio de estado a : '.$post->info->validado_pyco, date('Y-m-d H:i:s'), NULL, NULL);
+
       if( $this->repo->update($post) ){
         $cambios->info = $post->info;
         $cambios->info->observaciones = NULL;
@@ -304,10 +309,8 @@ class Reporte extends CI_Controller{
       $cambios->actividades = $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
       $cambios->personal = $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
       $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
-
-      $this->load->helper('log');
       if (isset($post->log)) {
-        $msj = 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' modificado';
+        $msj = 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
       }
 

@@ -53,6 +53,7 @@ class Reporte_db extends CI_Model{
   {
     $this->load->database('ot');
     $this->db->update('reporte_diario', array('estado'=>$estado, 'validado_pyco'=>$validacion), 'idreporte_diario = '.$idreporte_diario);
+    return $this->db->affected_rows();
   }
 
   # Insertar un recurso a un reporte con unas cantidades
