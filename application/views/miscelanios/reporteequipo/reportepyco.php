@@ -50,8 +50,7 @@ if(!$nodownload){
       <th>VALOR OPERATIVO</th>
       <th>STAND BY</th>
       <th>VALOR STAND</th>
-      <th>HR/KM inicial</th>
-      <th>HR/KM Final</th>
+      <th>HR/KM</th>
     </tr>
   </thead>
   <tbody>
