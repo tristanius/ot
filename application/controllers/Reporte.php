@@ -176,7 +176,7 @@ class Reporte extends CI_Controller{
           if($value->cantidad <= 0 && $value->facturable){
             $value->valid = TRUE;
             $value->msj = "Este registro es facturable sin cantidad.";
-          }elseif ($k=='personal' && !$value->valid && (!$value->facturable || $value->cantidad == 0 ) ){
+          }elseif ($k=='personal' && !$value->valid && $value->cantidad == 0 ){
             $value->valid = TRUE;
             $value->msj .= " Personal no puede tener cantidades que crucen fechas y lugares el mismo día.";
           }elseif ($k=='equipos' && !$value->valid && !$value->facturable ){

@@ -50,6 +50,8 @@ if(!$nodownload){
       <th>VALOR OPERATIVO</th>
       <th>STAND BY</th>
       <th>VALOR STAND</th>
+      <th>HR/KM inicial</th>
+      <th>HR/KM Final</th>
     </tr>
   </thead>
   <tbody>
@@ -67,7 +69,7 @@ if(!$nodownload){
                     echo '<td class="centrar">'.$v.'</td>';
                     break;
                   default :
-                    echo '<td>'.$v.'</td>';
+                    echo '<td> '.$v.' </td>';
                 }
               endforeach;
             ?>

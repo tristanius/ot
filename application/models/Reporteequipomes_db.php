@@ -157,7 +157,8 @@ class Reporteequipomes_db extends CI_Model{
         if(horas_operacion>0,1,"") as horas,
         "" as valor_horas,
         if(horas_disponible>0 and horas_operacion=0,1,"") as disponible,
-        "" as valor_disponible
+        "" as valor_disponible,
+        CONCAT(rrd.horometro_ini, "-", rrd.horometro_fin)
         from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,equipo e, itemf i, itemc c
         where fecha_reporte between "'.$fechai.'" and "'.$fechaf.'" '.$tmp_base.' and
         rd.idreporte_diario=rrd.idreporte_diario and
