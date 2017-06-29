@@ -24,7 +24,8 @@ class Ot extends CI_Controller {
 		$this->load->model(array('ot_db'=>'ot'));
 		$base = (isset($post->base) && $post->base != '')?$post->base:NULL;
 		$nom = (isset($post->indicio_nombre_ot) && $post->indicio_nombre_ot != '')?$post->indicio_nombre_ot:NULL;
-		$ots = $this->ot->getAllOTs($base, $nom);
+		$estado = (isset($post->estado) && $post->estado !="" )?$post->estado:NULL;
+		$ots = $this->ot->getAllOTs($base, $nom, $estado);
 		echo json_encode($ots->result());
 	}
 

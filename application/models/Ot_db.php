@@ -118,7 +118,7 @@ class Ot_db extends CI_Model {
 
 	}
 	//Obtener un listado de todas las OT
-	public function getAllOTs($base = NULL, $nom = NULL){
+	public function getAllOTs($base = NULL, $nom = NULL, $estado = NULL){
 		$this->load->database('ot');
 		$this->db->select('OT.*, esp.*, b.*, tp.*, (SELECT count(tr.idtarea_ot) FROM tarea_ot AS tr WHERE tr.OT_idOT = OT.idOT) AS num_tareas');
 		$this->db->from('OT');
@@ -130,6 +130,9 @@ class Ot_db extends CI_Model {
 		}
 		if (isset($nom)) {
 			$this->db->like('OT.nombre_ot', $nom);
+		}
+		if (isset($estado)) {
+			$this->db->where('OT.estado_doc', $estado);
 		}
 		return $this->db->get();
 	}

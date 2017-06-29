@@ -165,8 +165,12 @@ var listOTReportes = function($scope, $http, $timeout){
 
   $scope.getOTs= function(url){
     console.log(url+"/"+$scope.consulta.base);
-    if ( ($scope.consulta.base != undefined && $scope.consulta.base != '' ) || ( $scope.consulta.indicio_nombre_ot != undefined && $scope.consulta.indicio_nombre_ot != '' ) ) {
-      $http.post(url+"/", {indicio_nombre_ot: $scope.consulta.indicio_nombre_ot, base: $scope.consulta.base})
+    if (
+      ($scope.consulta.base != undefined && $scope.consulta.base != '' ) ||
+      ($scope.consulta.indicio_nombre_ot != undefined && $scope.consulta.indicio_nombre_ot != '' ) ||
+      ($scope.consulta.estado != undefined && $scope.consulta.estado != '' )
+    ) {
+      $http.post(url+"/", $scope.consulta)
       .then(
         function(response){
           $scope.myOts = response.data;
@@ -174,7 +178,7 @@ var listOTReportes = function($scope, $http, $timeout){
           if(response.data.length == 0 || response.data[0] == undefined){alert('No hay OT activas para esta parametro de busqueda')}
           else{
             $scope.myOts = response.data;
-            $("#seleccionar-ot").toggleClass('nodisplay');
+            $("#seleccionar-ot").removeClass('nodisplay');
           }
         },
         function(response){alert('nodata')}
@@ -188,7 +192,7 @@ var listOTReportes = function($scope, $http, $timeout){
     $scope.consulta.idOT = ot.idOT;
     $scope.consulta.nombre_ot = ot.nombre_ot;
     $scope.setloader = true;
-    $("#seleccionar-ot").toggleClass('nodisplay');
+    $("#seleccionar-ot").addClass('nodisplay');
     $('#historialByOT').removeClass('nodisplay');
     $scope.getReportesView(site_url);
   }

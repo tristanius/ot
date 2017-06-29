@@ -34,7 +34,7 @@
 		          <td>
 		            <button type="button" class="btn mini-btn" name="button" data-icon="&#xe03e;"  ng-click="getAjaxWindow('<?= site_url('ot/edit') ?>/'+ot.idOT, $event, 'Editar OT');"></button>
 
-								<button type="button" class="btn blue mini-btn" ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" data-icon="'"></button>
+								<button type="button" class="btn blue mini-btn" ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"></button>
 
 								<!-- <button class="btn mini-btn red" ng-click="deleteOT('<?= site_url('ot/delete') ?>/', ot.idOT)" > X </button> -->
 		          </td>

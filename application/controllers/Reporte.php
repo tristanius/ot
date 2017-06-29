@@ -178,7 +178,7 @@ class Reporte extends CI_Controller{
             $value->msj = "Este registro es facturable sin cantidad.";
           }elseif ($k=='personal' && !$value->valid && (!$value->facturable || $value->cantidad == 0 ) ){
             $value->valid = TRUE;
-            $value->msj .= " Personal no puede tener el mismo día por dos OT cant = 1.";
+            $value->msj .= " Personal no puede tener cantidades que crucen fechas y lugares el mismo día.";
           }elseif ($k=='equipos' && !$value->valid && !$value->facturable ){
             $value->valid = TRUE;
             $value->msj .= " El equipo esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
@@ -300,7 +300,7 @@ class Reporte extends CI_Controller{
       $this->load->helper('log');
       $no_affected = $this->repo->updateEstado($post->idreporte_diario, $post->info->estado, $post->info->validado_pyco, date('Y-m-d H:i:s'), NULL);
       if($no_affected > 0)
-        addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Cambio de estado a : '.$post->info->validado_pyco, date('Y-m-d H:i:s'), NULL, NULL);
+        addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' Cambio de estado a : '.$post->info->validado_pyco, date('Y-m-d H:i:s'), NULL, NULL);
 
       if( $this->repo->update($post) ){
         $cambios->info = $post->info;

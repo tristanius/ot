@@ -8,6 +8,7 @@
           <th>Seleccionar</th>
           <th>Base</th>
           <th>Nombre de OT</th>
+          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
@@ -16,8 +17,8 @@
             <button type="button" class="btn mini-btn2" ng-click="seleccionarOT(ot, '<?= site_url() ?>')" data-icon="w"> Sel.</button>
           </td>
           <td ng-bind="ot.base_idbase"></td>
-          <td ng-bind="ot.nombre_ot">
-          </td>
+          <td ng-bind="ot.nombre_ot"></td>
+          <td ng-bind="ot.estado_doc"></td>
         </tr>
       </tbody>
     </table>

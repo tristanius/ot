@@ -7,18 +7,28 @@
         <div class="col l12 regularForm row">
           <fieldset style="padding:1ex;">
             <h6><b>Consulta de orden de trabajo a reportar:</b></h6>
-            <div class="noMaterialStyles row col l3 m5 s12">
+            <div class="noMaterialStyles row col l3 m4 s12">
               <b class="col l3 m4 s4">No. OT:</b>
               <input class="col l8 m8 s8" type="text" ng-model="consulta.indicio_nombre_ot" style="padding: 5px;" placeholder="Ej: 350-16">
             </div>
 
-            <div class="noMaterialStyles row col l3 m5 s12">
+            <div class="noMaterialStyles row col l3 m4 s12">
               <b class="col l3 m4 s4">Base:</b>
               <select ng-model="consulta.base" class="col l8 m8 s8" style="height:4ex;">
                 <option value="">No Seleccionado</option>
                 <?php foreach ($bases->result() as $b): ?>
                   <option value="<?= $b->idbase ?>"><?= $b->idbase." - ".$b->nombre_base ?></option>
                 <?php endforeach; ?>
+              </select>
+            </div>
+
+            <div class="noMaterialStyles row col l3 m4 s12">
+              <b class="col l3 m4 s4">Estado:</b>
+              <select ng-model="consulta.estado" class="col l8 m8 s8" style="height:4ex;">
+                <option value="">No Seleccionado</option>
+                <option value="POR EJECUTAR">POR EJECUTAR</option>
+                <option value="ACTIVA">ACTIVA</option>
+                <option value="FINALIZÓ">FINALIZÓ</option>
               </select>
             </div>
 
