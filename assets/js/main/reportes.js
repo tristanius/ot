@@ -669,7 +669,7 @@ var editReporte = function($scope, $http, $timeout){
               $scope.tipoGuardado = 0;
               $scope.rd.info.fecha_reporte = $scope.fecha_duplicar;
               $scope.rd.fecha_reporte = $scope.fecha_duplicar;
-              $scope.rd.info.validado_pyco = "EN ELABORACION";
+              $scope.rd.info.validado_pyco = "PENDIENTE";
               $scope.rd.info.estado = "ABIERTO";
               $scope.rd.observaciones_pyco = [];
               $scope.borrarIDs();

@@ -95,7 +95,7 @@
                     ( <span style="color:#4CAF50" ng-bind="rd.info.validado_pyco"></span> )
                   </div>
                   <span ng-if="validPriv(38)" class="col s12 m4 l3 end">
-                    <button type="button" class="" ng-if="rd.info.validado_pyco == 'EN ELABORACION'" ng-click="aplicarEstado('CERRADO','ACTUALIZADO')">ELABORADO</button>
+                    <button type="button" class="" ng-if="rd.info.validado_pyco == 'PENDIENTE'" ng-click="aplicarEstado('CERRADO','ELABORADO')">ELABORADO</button>
                     <button type="button" class="" ng-if="rd.info.validado_pyco.search('CORREGIR') >= 0" ng-click="aplicarEstado('CERRADO','CORREGIDO')">CORREGIDO</button>
                   </span>
                 </div>

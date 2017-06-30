@@ -24,7 +24,7 @@
   <br>
 
   <section class="row">
-    <fieldset class="col l3 m3 s12" ng-if="validPriv(45) && (rd.info.validado_pyco == 'ACTUALIZADO' || rd.info.validado_pyco == 'CORREGIDO')">
+    <fieldset class="col l3 m3 s12" ng-if="validPriv(45) && ( (rd.info.validado_pyco == 'ACTUALIZADO' || rd.info.validado_pyco == 'ELABORADO') || rd.info.validado_pyco == 'CORREGIDO')">
         <legend>Validación PYCO</legend>
         <button type="button" class="btn mini-btn2 btn-boder-success" ng-click="appyEstadoDoc('CERRADO','VALIDO')" ng-disabled="!validPriv(45)">Valido</button>
         <button type="button" class="btn mini-btn2 btn-boder-warning" ng-click="appyEstadoDoc('ABIERTO','CORREGIR')" ng-disabled="!validPriv(45)">Corregir</button>

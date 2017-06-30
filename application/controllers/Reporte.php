@@ -300,7 +300,7 @@ class Reporte extends CI_Controller{
       $this->load->helper('log');
       $no_affected = $this->repo->updateEstado($post->idreporte_diario, $post->info->estado, $post->info->validado_pyco, date('Y-m-d H:i:s'), NULL);
       if($no_affected > 0)
-        addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' Cambio de estado a : '.$post->info->validado_pyco, date('Y-m-d H:i:s'), NULL, NULL);
+        addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', 'Reporte '.$post->fecha." de ".$post->info->nombre_ot.' Cambio de estado a : '.$post->info->validado_pyco, date('Y-m-d H:i:s'), NULL, 'RD '.$post->info->validado_pyco);
 
       if( $this->repo->update($post) ){
         $cambios->info = $post->info;

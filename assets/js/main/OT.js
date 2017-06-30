@@ -531,12 +531,12 @@ var listaOT = function($scope, $http, $timeout){
 	$scope.linkLista = '';
 	$scope.consulta = {};
 	$scope.findOTsByBase = function(url){
-		if($scope.consulta.indicio_nombre_ot || $scope.consulta.base){
+		if($scope.consulta.indicio_nombre_ot || $scope.consulta.base || $scope.consulta.estado){
 			$http.post(url, $scope.consulta ).then(
 					function(response) {
 						$scope.ots = response.data;
 					},
-					function(response){}
+					function(response){ console.log(response.data) }
 				);
 		}else {
 			alert('No se han agregado parametros de busqueda')

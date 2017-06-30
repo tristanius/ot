@@ -21,7 +21,7 @@ class Reporte_db extends CI_Model{
       'linea'=>isset($repo->linea)?$repo->linea:'',
       'sistema_reporte_ecp'=>isset($repo->sistema_reporte_ecp)?$repo->sistema_reporte_ecp:'',
       'estado'=>'ABIERTO',
-      'validado_pyco'=>'EN ELABORACION',
+      'validado_pyco'=>'PENDIENTE',
       'usuario_creacion'=>$usuario
     );
     $this->db->insert('reporte_diario', $data);

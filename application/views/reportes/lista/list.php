@@ -12,7 +12,7 @@
       </select>
     </span>
     <span> Día: <input type="text" ng-if="filtroReportes.mes" style="width:8ex" ng-model="filtroReportes.dia"></span>
-    <span ng-if="!filtroReportes.mes" ng-init="filtroReportes.dia = ''"></span>
+    <span ng-if="validPriv(68)" ng-init="filtroReportes.estado = 'VALIDO'"></span>
   </div>
   <table class="mytabla font11 striped">
     <thead>
@@ -26,7 +26,6 @@
         <th colspan="2">PDF reporte</th>
         <th><small>T.L.</small></th>
         <th><small>F. creación</small></th>
-        <th><small>F. Elaborado</small></th>
       </tr>
     </thead>
     <tbody>
@@ -62,7 +61,6 @@
           <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>
         </td>
         <td> <small class="font10" ng-bind="rd.fecha_registro"></small> </td>
-        <td> <small class="font10" ng-if="rd.fecha_estado_elaborado" ng-bind="rd.fecha_estado_elaborado"></small></td>
       </tr>
     </tbody>
   </table>
