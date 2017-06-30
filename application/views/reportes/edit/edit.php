@@ -75,7 +75,8 @@
               </td>
               <td>
                 <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#info', 'nodisplay', '.mypanel > div')" data-icon="&#xe021;"> Detalles Reporte</button>
-                <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#recursosOT', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Tiempo/Recursos</button>
+                <button type="button" ng-if="!validPriv(38) || !validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#preview_reporte', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Recursos</button>
+                <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#recursosOT', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Tiempo/Recursos</button>
                 <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
                 <button type="button" ng-show="validPriv(45)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')">Validaciones</button>
@@ -108,6 +109,7 @@
 
       <div class="mypanel">
         <div id="info" class="font11"> <?php $this->load->view('reportes/form/info'); ?> </div>
+        <div id="preview_reporte" class="font11 nodisplay"> <?php $this->load->view('reportes/form/preview_reporte'); ?> </div>
         <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('ot'=>$r, 'un_equipos'=>$un_equipos, 'item_equipos'=>$item_equipos, 'estados_labor'=>$estados_labor)); ?> </div>
         <div id="firmas" class="font11 nodisplay"> <?php $this->load->view('reportes/form/firmas'); ?> </div>
         <div id="observacion" class="font11 nodisplay"> <?php $this->load->view('reportes/form/observaciones'); ?> </div>

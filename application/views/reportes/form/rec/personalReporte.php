@@ -1,5 +1,5 @@
 <div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>' style="max-height:400px; overflow:auto">
-  <table id="personalReporte" class="mytabla sticked" ng-hide="isOnPeticion">
+  <table id="personalReporte" class="mytabla" ng-hide="isOnPeticion"> <!-- class: sticked -->
     <thead id="thead2" style="box-shadow:0px 0px 4px #333;">
       <tr style="background: #EEE">
         <th></th>

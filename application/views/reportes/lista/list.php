@@ -12,7 +12,7 @@
       </select>
     </span>
     <span> Día: <input type="text" ng-if="filtroReportes.mes" style="width:8ex" ng-model="filtroReportes.dia"></span>
-    <span ng-if="validPriv(68)" ng-init="filtroReportes.estado = 'VALIDO'"></span>
+    <span ng-if="!validPriv(68)"> <span ng-init="filtroReportes.validado_pyco = (!validPriv(68)?'VALIDO':'')"></span> Usuario de validación externa</span>
   </div>
   <table class="mytabla font11 striped">
     <thead>
@@ -29,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="rd in listaReportes | filter:{ 'fecha_reporte': ( filtroReportes.year+filtroReportes.mes+filtroReportes.dia ) } | orderBy: 'fecha_reporte' ">
+      <tr ng-repeat="rd in listaReportes | filter:{ 'fecha_reporte': ( filtroReportes.year+filtroReportes.mes+filtroReportes.dia ), 'validado_pyco':filtroReportes.validado_pyco } | orderBy: 'fecha_reporte' ">
         <td>
           <button
             ng-show="validPriv(53) && rd.estado == 'ABIERTO' && ( rd.validado_pyco == 'EN ELABORACION' || rd.validado_pyco == 'PENDIENTE' ) "
