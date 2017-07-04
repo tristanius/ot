@@ -43,9 +43,31 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->library('session');
 		if($this->session->userdata("isess")){
+			$this->permisos_visualizacion();
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+	public function permisos_visualizacion()
+	{
+		$this->load->library('session');
+		$this->load->database('ot');
+		$idbase = $this->session->userdata('base_idbase');
+		$row = $this->db->from('base')->where( 'idbase', $idbase )->get()->row();
+		$data = array(
+			'sector' => $row->sector,
+			'idsector' => $row->idsector
+		);
+		if ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
+			$data['bases'] = $this->db->from('base')->where( 'idsector', $row->idsector )->get()->result();
+		}elseif ($this->session->userdata('tipo_visualizacion') == 'base' ) {
+			$data['bases'] = $this->db->from('base')->where( 'idsector', $idbase )->get()->result();
+		}elseif ($this->session->userdata('tipo_visualizacion') == 'general' ){
+			$data['bases'] = $this->db->get('base')->result();
+		}
+		$this->session->set_userdata($data);
+		$this->db->close();
 	}
 
 	public function corregirHoras($v1, $v2, $ot=NULL)

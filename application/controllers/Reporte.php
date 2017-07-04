@@ -20,7 +20,7 @@ class Reporte extends CI_Controller{
     $diff=$date1->diff($date2);
     if($diff->y == 0 && $diff->m == 0 && $diff->d < 10){
       if( date('Y-m-d',strtotime($fecha)) <= date('2017-06-29')  ) {
-        echo 'toolong '.$;
+        echo 'toolong';
       }else{
         $post = json_decode( file_get_contents("php://input") );
         $this->load->model('reporte_db', 'repo');
@@ -215,13 +215,11 @@ class Reporte extends CI_Controller{
 
   #=============================================================================================================
   # LISTADO DE REPORTES POR ORDEN
-  public function listado($value='')
+  public function listado($tipo=NULL,  $sector=NULL)
   {
-    $this->load->model('Ot_db');
-    $data = array(
-      "bases" => $this->Ot_db->getBases()
-    );
-    $this->load->view('reportes/lista/getReportesByOT', $data);
+    $this->load->model('ot_db');
+    $data = array( "bases" => $this->ot_db->getBases($tipo, $sector) );
+    $this->load->view( 'reportes/lista/getReportesByOT', $data );
   }
 
   public function getReportesByOT()

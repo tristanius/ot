@@ -139,7 +139,7 @@
     <table class="font10 nocenter" cellpadding="0" cellspacing="0" border="1">
       <thead style="background:#EEE;">
         <tr>
-          <th>Observaciones del Cliente</th>
+          <th>Observaciones:</th>
         </tr>
       </thead>
       <tbody class="noMaterialStyles">

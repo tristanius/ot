@@ -3,7 +3,6 @@
 
     <div class="row">
       <h5 class="center-align">Manejo de reportes diarios:</h5>
-
         <div class="col l12 regularForm row">
           <fieldset style="padding:1ex;">
             <h6><b>Consulta de orden de trabajo a reportar:</b></h6>
@@ -16,9 +15,7 @@
               <b class="col l3 m4 s4">Base:</b>
               <select ng-model="consulta.base" class="col l8 m8 s8" style="height:4ex;">
                 <option value="">No Seleccionado</option>
-                <?php foreach ($bases->result() as $b): ?>
-                  <option value="<?= $b->idbase ?>"><?= $b->idbase." - ".$b->nombre_base ?></option>
-                <?php endforeach; ?>
+                <option ng-repeat="b in log.bases" value="{{b.idbase}}"> {{b.idbase + " - " + b.nombre_base }} </option>
               </select>
             </div>
 
@@ -74,7 +71,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-if="validPriv(38)">
       <hr clas="hr-termo">
 
       <div class="row col l12" ng-show="ot.selected" ng-init="ot.selected = false">

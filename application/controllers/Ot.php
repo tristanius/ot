@@ -212,11 +212,12 @@ class Ot extends CI_Controller {
 	}
 	#=============================================================================
 	# LISTAR ORDENES
-	public function listOT($value=''){
-		$this->load->database('ot');
-		$bases = $this->db->get('base');
-		$this->load->view('ot/lista/listOT', array('bases'=>$bases));
+	public function listOT($tipo=NULL,  $sector=NULL){
+		$this->load->model('ot_db');
+		$bases = $this->ot_db->getBases($tipo, $sector);
+		$this->load->view('ot/lista/listOT', array( 'bases' => $bases ) );
 	}
+
 	#=============================================================================
 	# Generar OT impresión
 	public function imprimirOT($id, $idtr)

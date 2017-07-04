@@ -9,10 +9,18 @@ class Ot_db extends CI_Model {
 		parent::__construct();
 	}
 
-	public function getBases($value='')
+	public function getBases( $tipo=NULL,  $sector=NULL )
 	{
 		$this->load->database('ot');
-		return $this->db->get('base');
+		$bases = NULL;
+		if ( isset($tipo) && $tipo == 'departamento') {
+			$bases = $this->db->from('base')->where('idsector', $sector )->get();
+		}elseif (isset($tipo) && $tipo == 'co') {
+			$bases = $this->db->from('base')->where('nombre_base', $sector )->get();
+		} else {
+			$bases = $this->db->get('base');
+		}
+		return $bases;
 	}
 	// Registrar una nueva OT.
 	public function add(
