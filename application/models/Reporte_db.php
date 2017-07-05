@@ -309,7 +309,7 @@ class Reporte_db extends CI_Model{
   }
   # =====================================================================================
   # Obtener historial de la OT
-  public function getHistoryBy($idOT=NULL)
+  public function getHistoryBy($idOT=NULL, $production = NULL)
   {
     $this->load->database('ot');
     $this->db->select(
@@ -362,6 +362,12 @@ class Reporte_db extends CI_Model{
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT', $idOT);
+    }
+    if (isset($production)) {
+      $this->db->group_start();
+        $this->db->where('rrd.facturable', TRUE);
+        $this->db->or_where('rrd.print', TRUE);
+      $this->db->group_end();
     }
     $this->db->order_by('rd.fecha_reporte','ASC');
     $this->db->order_by('rd.idreporte_diario','ASC');

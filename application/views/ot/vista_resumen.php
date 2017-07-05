@@ -24,6 +24,7 @@
       <?php
         $tipo_itemc = "";
         $acumulado_tipo = 0;
+        $acumulado_general = 0;
         $numrows = $items->num_rows();
         $ind = 0 ;
       ?>
@@ -32,7 +33,7 @@
           <?php if ( $ind!=0 && $tipo_itemc != $v->tipo_itemc): ?>
             <tr>
               <th colspan="12" style="text-align:right">SubTotal de <?= $tipo_itemc ?>:</th>
-              <th>$ <?= number_format($acumulado_tipo) ?></th>
+              <th style="text-align: right">$ <?= number_format($acumulado_tipo) ?></th>
             </tr>
           <?php endif; ?>
 
@@ -48,7 +49,7 @@
           ?>
 
           <tr style="<?= ( $v->cant_ejecutada > ($v->cantidad_planeada) )?'background:#F95E5E; color:#FFF':''; ?>">
-            <td> <?= $ind." ".$numrows ?></td>
+            <td> </td>
             <td><?= $v->nombre_ot ?></td>
             <td><?= $v->codigo ?></td>
             <td><?= $v->itemc_item ?></td>
@@ -60,21 +61,26 @@
             <td>$ <?= number_format( ( $v->facturable? ( $v->tarifa * $v->cantidad_planeada ) :0 ), 2 ) ?></td>
             <td style="border:1px green solid; <?= !$v->facturable?'background:#EEE; color:#999':''; ?>"> <?= number_format($v->cant_ejecutada, 2) ?></td>
             <td style="border:1px #777 solid; <?= $v->facturable?'background:#EEE; color:#999':''; ?> "> <?= number_format($v->cant_ejecutada_nofact, 2) ?></td>
-            <td>$ <?= $v->facturable?number_format($v->cant_ejecutada*$v->tarifa):0; ?></td>
+            <td style="text-align: right">$ <?= $v->facturable?number_format($v->cant_ejecutada*$v->tarifa):0; ?></td>
           </tr>
 
           <?php
           $acumulado_tipo += $v->facturable?$v->cant_ejecutada*$v->tarifa:0;
+          $acumulado_general += $v->facturable?$v->cant_ejecutada*$v->tarifa:0;
           $ind ++;
           ?>
 
           <?php if ( $ind == $numrows): ?>
             <tr>
               <th colspan="12" style="text-align:right">SubTotal <?= $tipo_itemc ?>:</th>
-              <th>$ <?= number_format($acumulado_tipo) ?></th>
+              <th style="text-align: right">$ <?= number_format($acumulado_tipo) ?></th>
             </tr>
           <?php endif; ?>
       <?php endforeach; ?>
+      <tr>
+        <th style="text-align: right" colspan="12">Total</th>
+        <th style="text-align: right">$ <?= number_format($acumulado_general) ?></th>
+      </tr>
     </tbody>
   </table>
 

@@ -53,12 +53,13 @@
         </td>
         <td>
           <button class="btn light-blue mini-btn2"
+              ng-if="validPriv(68)"
               ng-click="getReporte('<?= site_url('export/vwPrintSelection')?>/'+rd.OT_idOT+'/'+rd.idreporte_diario,  '#ventanaReporte', '#ventanaReporteOCulta');"
               data-icon="&#xe036;">
           </button>
         </td>
         <td>
-          <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>
+          <a class="btn cyan mini-btn2" ng-if="validPriv(68)" ng-href="<?= site_url('reportepersonal/tiempolaborado')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}" target="_blank" data-icon="&#xe048;">  </a>
         </td>
         <td> <small class="font10" ng-bind="rd.fecha_registro"></small> </td>
       </tr>

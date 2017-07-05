@@ -135,14 +135,19 @@
   </div>
 
   <div class="">
+    <style>
+      table#observaciones td{
+        padding: 5px;
+      }
+    </style>
     <br>
-    <table class="font10 nocenter" cellpadding="0" cellspacing="0" border="1">
+    <table id="observaciones" class="mytabla font10 nocenter noMaterialStyles" style="border-collapse:collapse;">
       <thead style="background:#EEE;">
         <tr>
           <th>Observaciones del contratista:</th>
         </tr>
       </thead>
-      <tbody class="noMaterialStyles">
+      <tbody>
         <tr ng-repeat="obs in rd.info.observaciones">
           <td> <div ng-bind="obs.msj"></div> </td>
         </tr>

@@ -15,12 +15,13 @@ class Export extends CI_Controller{
 
   }
 
-  public function historyRepoByOT($idOT, $nombre_ot)
+  public function historyRepoByOT($idOT, $nombre_ot, $fact=NULL)
   {
     $this->load->helper('xlsxwriter');
     $this->load->helper('download');
     $this->load->model('reporte_db', 'repo');
-    $rows = $this->repo->getHistoryBy($idOT);
+    $production = ( isset($fact) && $fact==1 )?TRUE:NULL;
+    $rows = $this->repo->getHistoryBy($idOT, $production);
     xlsx($rows->result_array(), $rows->list_fields(), './uploads/'.$nombre_ot.'.xlsx', 'historial', array('cantidad_final'));
     force_download('./uploads/'.$nombre_ot.'.xlsx',NULL);
     //$this->load->view('miscelanios/history/infoReportes', array('rows'=>$rows, 'nombre_ot'=>$nombre_ot) );

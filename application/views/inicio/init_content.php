@@ -1,6 +1,7 @@
 
 	    <div class="row" style="display:block">
 	    	<h4>Sistema de Información y Control operativo</h4>
+				<h5>S.I.C.O. App</h5>
 	      <img src="<?= base_url('assets/img/ot.png') ?>" alt="" style="max-width:500px" />
 	    </div>
 
