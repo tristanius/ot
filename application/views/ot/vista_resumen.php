@@ -5,6 +5,7 @@
   <table style="font-size: 10px;" class="mytabla">
     <thead>
       <tr>
+        <th></th>
         <th>Orden</th>
         <th>Codigo</th>
         <th>Item</th>
@@ -20,22 +21,34 @@
       </tr>
     </thead>
     <tbody>
-      <?php $tipo_itemc = ""; $acumulado_tipo = 0; ?>
+      <?php
+        $tipo_itemc = "";
+        $acumulado_tipo = 0;
+        $numrows = $items->num_rows();
+        $ind = 0 ;
+      ?>
       <?php foreach ($items->result() as $k => $v): ?>
           <!-- contenido de la condicion -->
+          <?php if ( $ind!=0 && $tipo_itemc != $v->tipo_itemc): ?>
+            <tr>
+              <th colspan="12" style="text-align:right">SubTotal:</th>
+              <th>$ <?= number_format($acumulado_tipo) ?></th>
+            </tr>
+          <?php endif; ?>
+
           <?php if ($tipo_itemc != $v->tipo_itemc){ ?>
-          <!-- contenido de la condicion -->
-            <td colspan="10"><?= $v->tipo_itemc ?></td>
-            <td>SubTotal:</td>
-            <td></td>
-          </tr>
-          <!-- fin contenido de la condicion -->
-          <?php
-          $tipo_itemc = $v->tipo_itemc;
+            <tr>
+              <th colspan="13"><?= $v->tipo_itemc ?></th>
+            </tr>
+            <!-- fin contenido de la condicion -->
+            <?php
+            $tipo_itemc = $v->tipo_itemc;
+            $acumulado_tipo = 0;
           }
           ?>
 
           <tr style="<?= ( $v->cant_ejecutada > ($v->cantidad_planeada) )?'background:#F95E5E; color:#FFF':''; ?>">
+            <td> <?= $ind." ".$numrows ?></td>
             <td><?= $v->nombre_ot ?></td>
             <td><?= $v->codigo ?></td>
             <td><?= $v->itemc_item ?></td>
@@ -50,7 +63,17 @@
             <td>$ <?= $v->facturable?number_format($v->cant_ejecutada*$v->tarifa):0; ?></td>
           </tr>
 
-          <?php $acumulado_tipo += $v->facturable?$v->cant_ejecutada*$v->tarifa:0; ?>
+          <?php
+          $acumulado_tipo += $v->facturable?$v->cant_ejecutada*$v->tarifa:0;
+          $ind ++;
+          ?>
+
+          <?php if ( $ind == $numrows): ?>
+            <tr>
+              <th colspan="12" style="text-align:right">SubTotal:</th>
+              <th>$ <?= number_format($acumulado_tipo) ?></th>
+            </tr>
+          <?php endif; ?>
       <?php endforeach; ?>
     </tbody>
   </table>
