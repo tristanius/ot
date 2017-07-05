@@ -31,14 +31,14 @@
           <!-- contenido de la condicion -->
           <?php if ( $ind!=0 && $tipo_itemc != $v->tipo_itemc): ?>
             <tr>
-              <th colspan="12" style="text-align:right">SubTotal:</th>
+              <th colspan="12" style="text-align:right">SubTotal de <?= $tipo_itemc ?>:</th>
               <th>$ <?= number_format($acumulado_tipo) ?></th>
             </tr>
           <?php endif; ?>
 
           <?php if ($tipo_itemc != $v->tipo_itemc){ ?>
             <tr>
-              <th colspan="13"><?= $v->tipo_itemc ?></th>
+              <th style="background: #F4FBFC" colspan="13"><?= $v->tipo_itemc ?></th>
             </tr>
             <!-- fin contenido de la condicion -->
             <?php
@@ -70,7 +70,7 @@
 
           <?php if ( $ind == $numrows): ?>
             <tr>
-              <th colspan="12" style="text-align:right">SubTotal:</th>
+              <th colspan="12" style="text-align:right">SubTotal <?= $tipo_itemc ?>:</th>
               <th>$ <?= number_format($acumulado_tipo) ?></th>
             </tr>
           <?php endif; ?>
