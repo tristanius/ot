@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div class="row" ng-if="validPriv(38)">
+    <div class="row">
       <hr clas="hr-termo">
 
       <div class="row col l12" ng-show="ot.selected" ng-init="ot.selected = false">
@@ -79,7 +79,7 @@
           <div class="col l9">
             <?php $this->load->view('reportes/lista/list'); ?>
           </div>
-          <div class="col l3" ng-include="calendarLink" ng-controller="calendar"> </div>
+          <div ng-if="validPriv(38)" class="col l3" ng-include="calendarLink" ng-controller="calendar"> </div>
         </div>
       </div>
 

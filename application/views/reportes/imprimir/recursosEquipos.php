@@ -8,7 +8,7 @@
         <th rowspan="2">Operador / Conductor</th>
         <th rowspan="2">Cant.</th>
         <th rowspan="2">UND</th>
-        <th colspan="2">Horometro</th>
+        <th colspan="2">Horometro / <br> Kilometraje</th>
         <th colspan="3">Reporte horas</th>
       </tr>
       <tr>

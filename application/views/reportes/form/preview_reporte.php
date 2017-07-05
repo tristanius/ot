@@ -32,14 +32,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="p in rd.recursos.personal"> <!-- ng-if="p.facturable == '1' " -->
+        <tr ng-repeat="p in rd.recursos.personal" ng-if="p.facturable || p.print"> <!-- ng-if="p.facturable == '1' " -->
   			  <td>{{p.identificacion}}</td>
   			  <td style="min-width:30%">{{p.nombre_completo}}</td>
   			  <td>{{p.itemc_item}}</td>
   			  <td style="min-width:30%">{{ ((p.CL == "L")? p.descripcion_item : p.descripcion) }} </td>
   			  <td>{{p.CL}}</td>
   			  <td>{{ p.BO }} </td>
-          <td>{{ p.facturable?"SI":"NO" }} </td>
+          <td style='background:#F4FBFC'>{{ p.facturable?"SI":"NO" }} </td>
   			  <td>{{ p.unidad }}</td>
           <td>
             <div>{{ p.hora_inicio }}</div>
@@ -77,7 +77,7 @@
           <th rowspan="2">Operador / Conductor</th>
           <th rowspan="2">Cant.</th>
           <th rowspan="2">UND</th>
-          <th colspan="2">Horometro</th>
+          <th colspan="2">Horometro / <br> Kilometraje</th>
           <th colspan="3">Reporte horas</th>
         </tr>
         <tr>
@@ -139,12 +139,12 @@
     <table class="font10 nocenter" cellpadding="0" cellspacing="0" border="1">
       <thead style="background:#EEE;">
         <tr>
-          <th>Observaciones:</th>
+          <th>Observaciones del contratista:</th>
         </tr>
       </thead>
       <tbody class="noMaterialStyles">
         <tr ng-repeat="obs in rd.info.observaciones">
-          <td> <p ng-bind="obs.msj"></p> </td>
+          <td> <div ng-bind="obs.msj"></div> </td>
         </tr>
       </tbody>
     </table>

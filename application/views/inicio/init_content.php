@@ -1,7 +1,7 @@
 
-	    <div class="" style="display:block">
-	    	<h4>Aplicación web para Ordenes de Trabajo</h4>
-	      	<img src="<?= base_url('assets/img/ot.png') ?>" alt="" style="max-width:500px" />
+	    <div class="row" style="display:block">
+	    	<h4>Sistema de Información y Control operativo</h4>
+	      <img src="<?= base_url('assets/img/ot.png') ?>" alt="" style="max-width:500px" />
 	    </div>
 
 			<div id="MenuOT">

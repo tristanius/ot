@@ -324,6 +324,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		return $this->db->select('
+				titc.descripcion AS tipo_itemc,
 				OT.idOT,
 				OT.nombre_ot,
 				tr.nombre_tarea,
@@ -363,6 +364,7 @@ class Ot_db extends CI_Model {
 			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
 			->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf')
 			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
+			->join('tipo_itemc AS titc', 'titc.idtipo_itemc = itc.idtipo_itemc')
 			->where('OT.idOT',$idOt)
 			->group_by('itf.codigo')
 			->group_by('itt.facturable')

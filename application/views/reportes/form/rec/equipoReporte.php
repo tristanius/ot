@@ -12,7 +12,7 @@
         <th></th>
         <th></th>
         <th></th>
-        <th colspan="2">Horometro</th>
+        <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
       </tr>
       <tr class="background:#EEE; color:#EEE;">
