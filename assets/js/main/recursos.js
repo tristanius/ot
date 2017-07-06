@@ -6,6 +6,7 @@ var recursosOT = function($scope, $http, $timeout){
       personal:[],
       equipo:[]
   }
+  $scope.seleccionar_ot = false;
 
   $scope.addEquipo = {};
   $scope.itemsOT = [];
@@ -20,7 +21,7 @@ var recursosOT = function($scope, $http, $timeout){
         if(response.data.length == 0 || response.data[0] == undefined){alert('No hay OT activas para esta parametro de busqueda')}
         else{
           $scope.myOts = response.data;
-          $("fieldset #seleccionar-ot").removeClass('nodisplay');
+          $scope.seleccionar_ot = true;
         }
       },
       function(response){alert('nodata')}
@@ -32,7 +33,7 @@ var recursosOT = function($scope, $http, $timeout){
     $scope.consulta.nombre_ot = ot.nombre_ot;
     $scope.getRecursoOT(ot);
     $("#ot-recursos").removeClass('nodisplay')
-    $("fieldset #seleccionar-ot").addClass('nodisplay');
+    $scope.seleccionar_ot = false;
   }
 
   $scope.getRecursoOT = function(ot){
