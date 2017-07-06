@@ -135,22 +135,27 @@ var listOTReportes = function($scope, $http, $timeout){
   $scope.listaReportes = [];
   $scope.setloader = false;
   $scope.enlaceGetReporte= '';
+  $scope.seleccionar_ot = false;
+  $scope.historialByOT = false;
 
   $scope.delReporte = function(url, id){
-    $http.post( url+'/'+id, {} ).then(
-      function(response){
-        if(response.data == "success"){
-          alert("proceso exitoso, por favor dale a ver reportes para refrescar la pagina.");
-        }else {
+    var ok = confirm("Confirma que desea borrar este elemento?");
+    if(ok){
+      $http.post( url+'/'+id, {} ).then(
+        function(response){
+          if(response.data == "success"){
+            alert("proceso exitoso, por favor dale a ver reportes para refrescar la pagina.");
+          }else {
+            alert("Algo salio mal");
+            console.log(response.data);
+          }
+        },
+        function(response){
           alert("Algo salio mal");
           console.log(response.data);
         }
-      },
-      function(response){
-        alert("Algo salio mal");
-        console.log(response.data);
-      }
-    );
+      );
+    }
   }
 
   $scope.initBase = function(url ,base){
@@ -178,7 +183,8 @@ var listOTReportes = function($scope, $http, $timeout){
           if(response.data.length == 0 || response.data[0] == undefined){alert('No hay OT activas para esta parametro de busqueda')}
           else{
             $scope.myOts = response.data;
-            $("#seleccionar-ot").removeClass('nodisplay');
+            $scope.seleccionar_ot = true;
+            $scope.historialByOT = false;
           }
         },
         function(response){alert('nodata')}
@@ -192,8 +198,8 @@ var listOTReportes = function($scope, $http, $timeout){
     $scope.consulta.idOT = ot.idOT;
     $scope.consulta.nombre_ot = ot.nombre_ot;
     $scope.setloader = true;
-    $("#seleccionar-ot").addClass('nodisplay');
-    $('#historialByOT').removeClass('nodisplay');
+    $scope.seleccionar_ot = false;
+    $scope.historialByOT = true;
     $scope.getReportesView(site_url);
   }
 

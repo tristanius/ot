@@ -1,4 +1,4 @@
-<section id="seleccionar-ot" class="nodisplay col s12 m12 l12" style="background:#FAFAFA; max-heigth: 230px; overflow: auto">
+<section id="seleccionar_ot" ng-show="seleccionar_ot" class="col s12 m12 l12" style="background:#FAFAFA; max-heigth: 230px; overflow: auto">
   <h6>Seleciona la OT buscada:</h6>
   <hr>
   <div class="">

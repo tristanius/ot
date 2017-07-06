@@ -646,6 +646,7 @@ class Ot extends CI_Controller {
 		foreach ($trs->result() as $key => $value) {
 			$this->delete_tarea($value->idtarea_ot);
 		}
+		$this->del_costo_mes($idOT);
 		$this->db->delete('OT', array('idOT'=>$idOT));
 		echo "success";
 	}
@@ -660,6 +661,12 @@ class Ot extends CI_Controller {
 		$this->load->database('ot');
 		$this->db->delete('item_tarea_ot', array('iditem_tarea_ot'=>$id));
 		echo 'success';
+	}
+
+	public function del_costo_mes($id)
+	{
+		$this->load->database('ot');
+		$this->db->delete('costo_mes_ot', array('OT_idOT'=>$id) );
 	}
 }
 /* End of file Ot.php */

@@ -1,6 +1,6 @@
 	<div>
 		<section class="row">
-			<h5>Meastros de OT/Reportes diarios</h5>
+			<h5>Maestros de OT/Reportes diarios</h5>
 
 			<div class="col l2" ng-show="validPriv(41)">
 				<a href="#" ng-click="clickeableLink('<?= site_url('recurso/recursosOT') ?>', $event, 'Recursos de OT');" class="btn-panel" style="width:100%">

@@ -50,7 +50,7 @@
             <!-- <select class="col s5 l5" ng-model="consulta.ot" style="height:4ex;">
               <option ng-repeat="ot in myOts" value="{{ot.idOT}}">{{ot.nombre_ot}}</option>
             </select> -->
-            <div id="historialByOT" class="nodisplay">
+            <div ng-show="historialByOT">
               <button type="button" class="btn mini-btn" style="margin:0px;" ng-click="getReportesView('<?= site_url() ?>')"> Actualizar </button>
 
               <a target="_blank" ng-if="validPriv(68)" ng-href="<?= site_url('export/historyRepoByOT') ?>/{{consulta.idOT}}/{{consulta.nombre_ot}}" class="btn mini-btn" style="margin:0px;">historial Prod.</a>
