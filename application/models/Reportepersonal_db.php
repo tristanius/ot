@@ -217,7 +217,8 @@ class Reportepersonal_db extends CI_Model{
     JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
-    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
+    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )
+    AND rrd.nomina = ".($bandera?0:1)." ";
     $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
     if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
@@ -237,6 +238,7 @@ class Reportepersonal_db extends CI_Model{
     WHERE rd.fecha_reporte = '".$fecha."'
     AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO')
     AND OT.nombre_ot = '".trim($ot)."'
+    AND rrd.nomina = ".($bandera?0:1)."
     AND r.persona_identificacion = '".$identificacion."' ";
     $this->db->query($query);
     return $this->db->affected_rows();
@@ -251,7 +253,8 @@ class Reportepersonal_db extends CI_Model{
     JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.validacion_he = ".$bandera.", rrd.usuario_validacion_he = '".$usuario."'
-    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )";
+    WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )
+    AND rrd.validacion_he = ".($bandera?0:1);
     $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
     if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
