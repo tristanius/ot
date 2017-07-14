@@ -48,7 +48,7 @@
           }
           ?>
 
-          <tr style="<?= ( $v->cant_ejecutada > ($v->cantidad_planeada) )?'background:#F95E5E; color:#FFF':''; ?>">
+          <tr style="<?= ( ( $v->facturable?$v->cant_ejecutada:$v->cant_ejecutada_nofact ) > ($v->cantidad_planeada) )?'background:#F95E5E; color:#FFF':''; ?>">
             <td> </td>
             <td><?= $v->nombre_ot ?></td>
             <td><?= $v->codigo ?></td>
