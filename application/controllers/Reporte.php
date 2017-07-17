@@ -120,26 +120,13 @@ class Reporte extends CI_Controller{
   # valida si un Recurso ya esta registrado en una fecha dada, TRUE si se puede insertar y FALSE si ya existe en esa fecha
   public function validarRecurso($fecha, $val, $conjunto, $idOT)
   {
-    switch ($conjunto) {
-      case 'equipos':
-        $identificacion = $val->codigo_siesa;
-        break;
-      default:
-        $identificacion = $val->identificacion;
-        break;
-    }
+    $identificacion = ( $conjunto == "equipos" )? $val->codigo_siesa: $val->identificacion;
     $val->valid = TRUE;
-    if (!$this->exceptionValidarRecurso($val)) {
-      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
-      if($rows->num_rows() > 0){ // SI ESTA CANT > 1 Y FACTURABLE
-        $val->valid = FALSE;
-        $val->msj .= 'Ya esta reportado en un reporte de esta fecha como facturable y cantidad >= 1. '.json_encode($rows->result());
-      }else { // SI ESTA CANT > 1 Y NO FACTURABLE
-        $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
-        if ($rows->num_rows() > 0 ) {
-          $val->valid = TRUE;
-          $val->msj .= 'Ya esta reportado en un reporte de esta fecha como cantidad >= 1. '.json_encode($rows->result());
-        }
+    if ( !$this->exceptionValidarRecurso($val) ) { // SI NO ESTA DENTRO DE LAS EXCEPCIONES
+      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
+      if( $rows->num_rows() > 0){ // SI ESTA CANT > 1
+          $val->valid = FALSE;
+          $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
       }
     }
     return $val;
@@ -150,7 +137,7 @@ class Reporte extends CI_Controller{
     $this->load->database('ot');
     $data = array(
       '32128', '32129', '32006', '32007', '32008', '32009', '32010', '31001', '32013', '31016', '31017', '31018', '32107', '32108', '32109', '32154', '32155',
-      '31026','31027','32152','32153','32222', '32223', '32224','32225','32112'
+      '31026', '31027', '32152', '32153', '32222', '32223', '32224','32225','32112'
     );
     foreach ($data as $value) {
       if ($value == $val->codigo) {
@@ -172,18 +159,14 @@ class Reporte extends CI_Controller{
       if($k!='actividades'){
         foreach ($v as $key => $value) {
           $value->msj = '';
+          $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
           $value =  $this->validarRecurso( $post->fecha, $value, $k, $post->idOT );
           if($value->cantidad <= 0 && $value->facturable){
             $value->valid = TRUE;
             $value->msj = "Este registro es facturable sin cantidad.";
           }elseif ($k=='personal' && !$value->valid && $value->cantidad == 0 ){
             $value->valid = TRUE;
-            $value->msj .= " Personal no puede tener cantidades que crucen fechas y lugares el mismo día.";
-          }elseif ($k=='equipos' && !$value->valid && !$value->facturable ){
-            $value->valid = TRUE;
-            $value->msj .= " El equipo esta reportado en otra Orden pero al no ser facturable en este reporte no se impide el guardado.";
           }
-          $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
           if(!$value->valid){
             $post->succ = FALSE;
           }
@@ -455,7 +438,7 @@ class Reporte extends CI_Controller{
     }
   }
 
-  public function eliminarReporte($idreporte_diario)
+  public function deleteReporte($idreporte_diario)
   {
     $this->load->database('ot');
     $this->db->delete('recurso_reporte_diario', array('idreporte_diario' => $idreporte_diario) );

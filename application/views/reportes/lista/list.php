@@ -32,9 +32,9 @@
       <tr ng-repeat="rd in listaReportes | filter:{ 'fecha_reporte': ( filtroReportes.year+filtroReportes.mes+filtroReportes.dia ), 'validado_pyco':filtroReportes.validado_pyco } | orderBy: 'fecha_reporte' ">
         <td>
           <button
-            ng-show=" ( validPriv(53) && (  rd.estado == 'ABIERTO' && rd.validado_pyco != 'CORREGIR' ) ) || validPriv(70) "
+            ng-show=" ( validPriv(53) && (  rd.estado == 'ABIERTO' && rd.validado_pyco == 'PENDIENTE' ) ) || validPriv(70) "
             class="btn mini-btn2 red"
-            ng-click=" delReporte('<?= site_url('reporte/eliminarReporte')?>', rd.idreporte_diario )"
+            ng-click=" delReporte('<?= site_url('reporte/deleteReporte')?>', rd.idreporte_diario )"
             target="_blank">
             X
           </button>
