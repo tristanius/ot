@@ -131,7 +131,7 @@ class Reporte extends CI_Controller{
           $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
       }elseif ($rows2->num_rows() > 0) {
         if($conjunto == "equipos"){
-          val->valid = FALSE;
+          $val->valid = FALSE;
           $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo como NO facturable. ".json_encode($rows->result());
         }else{
           val->valid = TRUE;
