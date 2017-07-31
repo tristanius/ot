@@ -19,7 +19,7 @@ class Reporte extends CI_Controller{
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
     if($diff->y == 0 && $diff->m == 0 && $diff->d < 10){
-      if( date( 'Y-m-d', strtotime($fecha) ) <= date( 'Y-m-d', strtotime('2017-07-09') )  ) {
+      if( date( 'Y-m-d', strtotime($fecha) ) <= date( 'Y-m-d', strtotime('2017-07-23') )  ) {
         echo 'toolong';
       }else{
         $post = json_decode( file_get_contents("php://input") );
@@ -171,9 +171,9 @@ class Reporte extends CI_Controller{
           $value->msj = '';
           $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
           $value =  $this->validarRecurso( $post->fecha, $value, $k, $post->idOT );
-          if($value->cantidad <= 0 && $value->facturable){
+          if($value->cantidad <= 0 && !$value->facturable){
             $value->valid = TRUE;
-            $value->msj = "Este registro es facturable sin cantidad.";
+            $value->msj = "Este registro NO es facturable y sin cantidad.";
           }elseif ($k=='personal' && !$value->valid && $value->cantidad == 0 ){
             $value->valid = TRUE;
           }
