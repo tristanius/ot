@@ -131,12 +131,10 @@
       <p ng-class="mensaje_log_color" ng-bind="mensaje_log"></p>
 
       <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
-      <div class="">
-        <button type="button" class="light-green lighten-5 waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)" style="color:#444"
-            ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')">
-          <b data-icon="&#xe015;"></b> Validar
-        </button>
-      </div>
+      <button type="button" class="light-green waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)" style="color:#444"
+        ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')">
+        <b data-icon="&#xe015;"></b> Validar
+      </button>
 
       <div class="btnWindow">
 
