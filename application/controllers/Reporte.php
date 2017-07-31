@@ -122,11 +122,21 @@ class Reporte extends CI_Controller{
   {
     $identificacion = ( $conjunto == "equipos" )? $val->codigo_siesa: $val->identificacion;
     $val->valid = TRUE;
+    $rows = array();
     if ( !$this->exceptionValidarRecurso($val) ) { // SI NO ESTA DENTRO DE LAS EXCEPCIONES
-      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
+      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
+      $rows2 = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
       if( $rows->num_rows() > 0){ // SI ESTA CANT > 1
           $val->valid = FALSE;
           $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
+      }elseif ($rows2->num_rows() > 0) {
+        if($conjunto == "equipos"){
+          val->valid = FALSE;
+          $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo como NO facturable. ".json_encode($rows->result());
+        }else{
+          val->valid = TRUE;
+          $val->msj = "CUIDADO! El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
+        }
       }
     }
     return $val;
