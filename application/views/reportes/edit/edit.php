@@ -132,7 +132,7 @@
 
       <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
       <div class="">
-        <button id="guardar_reporte" type="button" class="light-green lighten-5 waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
+        <button type="button" class="light-green lighten-5 waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)" style="color:#444"
             ng-click="validarRecursos('<?= site_url('reporte/validarRecursos/post') ?>')">
           <b data-icon="&#xe015;"></b> Validar
         </button>
