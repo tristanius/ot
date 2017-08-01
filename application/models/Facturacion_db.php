@@ -33,7 +33,16 @@ class Facturacion_db extends CI_Controller{
       rd.fecha_reporte,
       rd.festivo,
       OT.nombre_ot AS No_OT,
-      OT.numero_sap,
+      IFNULL(
+        (
+          SELECT mytr.sap
+          FROM tarea_ot AS mytr
+          WHERE OT.idOT = mytr.OT_idOT
+          AND rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin
+          ORDER BY mytr.idtarea_ot DESC
+          LIMIT 1
+        ), ""
+      ) as numero_sap,
       "" as tarea,
       "" as control_cambio,
       OT.cc_ecp as centro_costo,
@@ -43,6 +52,7 @@ class Facturacion_db extends CI_Controller{
       p.identificacion as cedula,
       p.nombre_completo,
       itf.itemc_item as item,
+      tr.codigo_vinculado as item_sap,
       itc.descripcion,
       if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
       if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
