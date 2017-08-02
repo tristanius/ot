@@ -21,7 +21,7 @@ class Facturacion_db extends CI_Controller{
       if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
       "MA0032887" as contrato,
       OT.gerencia as gerencia,
-      "" as departamento,
+      bs.departamento_ecp as nombre_departamento,
       OT.departamento_ecp as departamento_ecp,
       bs.sector as sector,
       bs.nombre_base as base,
