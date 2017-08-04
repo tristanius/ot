@@ -27,7 +27,7 @@ class Ot_db extends CI_Model {
 		$nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad, $justificacion,
 		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $clasificacion_ot, $gerencia, $departamento_ecp, $estado_doc,
 		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
-		$fecha_creacion_cc=NULL,  $basica = NULL
+		$fecha_creacion_cc=NULL,  $basica = NULL, $nombre_departamento_ecp=NULL
 	){
 		$this->load->database('ot');
 		$data = array(
@@ -69,7 +69,7 @@ class Ot_db extends CI_Model {
 		$idot, $nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad,
 		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $clasificacion_ot, $gerencia, $departamento_ecp, $estado_doc,
 		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
-		$fecha_creacion_cc=NULL, $basica = NULL
+		$fecha_creacion_cc=NULL, $basica = NULL, $nombre_departamento_ecp=NULL
 	) {
 		$this->load->database('ot');
 		$data = array(
