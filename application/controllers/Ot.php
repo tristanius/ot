@@ -7,6 +7,9 @@ class Ot extends CI_Controller {
 		"EGOS",	"ELE. VARIABLE",	"ILICITA",	"INSPECCION",	"INS. VARIABLE", "INTEGRIDAD",	"INYECCION", "VALVULAS",
 		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA", "MTTO. VIAS", "PRELIMINARES REP.", "URPC"
 	);
+	private $nombre_departamento_ecp = array(
+		'PCL'=>'Oriente', 'PFL'=>'Fluvial', 'POR'=>'Magdalena', 'PNO'=>'Caribe', 'OBC'=>'Bicentenario'
+	);
 
 	public function __construct()
 	{
@@ -120,6 +123,7 @@ class Ot extends CI_Controller {
 						isset($orden->clasificacion_ot)?$orden->clasificacion_ot:NULL,
 						isset($orden->gerencia)?$orden->gerencia:NULL,
 						isset($orden->departamento_ecp)?$orden->departamento_ecp:NULL,
+						isset($orden->departamento_ecp)?$this->nombre_departamento_ecp[$orden->departamento_ecp]:NULL,
 						isset($orden->estado_doc)?$orden->estado_doc:NULL,
 						isset($orden->ot_legalizada)?$orden->ot_legalizada:NULL,
 						isset($orden->fecha_inicio)?$orden->fecha_inicio:NULL,
@@ -354,6 +358,7 @@ class Ot extends CI_Controller {
 				isset($orden->clasificacion_ot)?$orden->clasificacion_ot:NULL,
 				isset($orden->gerencia)?$orden->gerencia:NULL,
 				isset($orden->departamento_ecp)?$orden->departamento_ecp:NULL,
+				isset($orden->departamento_ecp)?$this->nombre_departamento_ecp[$orden->departamento_ecp]:NULL,
 				isset($orden->estado_doc)?$orden->estado_doc:NULL,
 				isset($orden->ot_legalizada)?$orden->ot_legalizada:NULL,
 				isset($orden->fecha_inicio)?$orden->fecha_inicio:NULL,
