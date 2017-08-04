@@ -25,7 +25,7 @@ class MigracionRepote extends CI_Controller{
   #==============================================================================#
   public function formRecursosReporte($value='')
   {
-
+    $this->load->view('asociaciones/');
   }
 
   public function loadRecursosreporte($value='')

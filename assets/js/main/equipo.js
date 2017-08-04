@@ -32,6 +32,7 @@ var lista_equipos = function($scope, $http, $timeout)
       function(response){
           $scope.equs = response.data;
           $scope.cargandoConsulta = false;
+          //console.log(response.data);
       },
       function(response){
         alert(response.data);
