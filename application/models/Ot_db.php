@@ -50,7 +50,7 @@ class Ot_db extends CI_Model {
 			'clasificacion_ot'=>$clasificacion_ot,
 			'gerencia'=>$gerencia,
 			'departamento_ecp'=>$departamento_ecp,
-			'nombre_departamento_ecp'=>$nombre_departamento_ecp
+			'nombre_departamento_ecp'=>$nombre_departamento_ecp,
 			'estado_doc'=>$estado_doc,
 			"ot_legalizada"=>$ot_legalizada,
 			"fecha_inicio"=>$fecha_inicio,
@@ -93,7 +93,7 @@ class Ot_db extends CI_Model {
 			'clasificacion_ot'=>$clasificacion_ot,
 			'gerencia'=>$gerencia,
 			'departamento_ecp'=>$departamento_ecp,
-			'nombre_departamento_ecp'=>$nombre_departamento_ecp
+			'nombre_departamento_ecp'=>$nombre_departamento_ecp,
 			'estado_doc'=>$estado_doc,
 			"ot_legalizada"=>$ot_legalizada,
 			"fecha_inicio"=>$fecha_inicio,
