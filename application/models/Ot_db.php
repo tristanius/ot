@@ -25,7 +25,7 @@ class Ot_db extends CI_Model {
 	// Registrar una nueva OT.
 	public function add(
 		$nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad, $justificacion,
-		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $clasificacion_ot, $gerencia, $departamento_ecp, $estado_doc,
+		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $clasificacion_ot, $gerencia, $departamento_ecp, $nombre_departamento_ecp=NULL, $estado_doc,
 		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
 		$fecha_creacion_cc=NULL,  $basica = NULL, $nombre_departamento_ecp=NULL
 	){
@@ -50,6 +50,7 @@ class Ot_db extends CI_Model {
 			'clasificacion_ot'=>$clasificacion_ot,
 			'gerencia'=>$gerencia,
 			'departamento_ecp'=>$departamento_ecp,
+			'nombre_departamento_ecp'=>$nombre_departamento_ecp
 			'estado_doc'=>$estado_doc,
 			"ot_legalizada"=>$ot_legalizada,
 			"fecha_inicio"=>$fecha_inicio,
@@ -67,9 +68,9 @@ class Ot_db extends CI_Model {
 	//Editar daos info de una OT.
 	public function update(
 		$idot, $nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad,
-		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $clasificacion_ot, $gerencia, $departamento_ecp, $estado_doc,
-		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
-		$fecha_creacion_cc=NULL, $basica = NULL, $nombre_departamento_ecp=NULL
+		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $clasificacion_ot, $gerencia, $departamento_ecp, $nombre_departamento_ecp=NULL,
+		$estado_doc, $ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin,
+		$presupuesto_porcent_fin,	$fecha_creacion_cc=NULL, $basica = NULL
 	) {
 		$this->load->database('ot');
 		$data = array(
@@ -92,6 +93,7 @@ class Ot_db extends CI_Model {
 			'clasificacion_ot'=>$clasificacion_ot,
 			'gerencia'=>$gerencia,
 			'departamento_ecp'=>$departamento_ecp,
+			'nombre_departamento_ecp'=>$nombre_departamento_ecp
 			'estado_doc'=>$estado_doc,
 			"ot_legalizada"=>$ot_legalizada,
 			"fecha_inicio"=>$fecha_inicio,
