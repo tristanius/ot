@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MigracionRepote extends CI_Controller{
+class MigracionReporte extends CI_Controller{
 
   public function __construct()
   {
@@ -25,7 +25,7 @@ class MigracionRepote extends CI_Controller{
   #==============================================================================#
   public function formRecursosReporte($value='')
   {
-    $this->load->view('asociaciones/');
+    $this->load->view('asociaciones\tranferenciaRecursos\form_tranferir_recursos');
   }
 
   public function loadRecursosreporte($value='')

@@ -56,6 +56,7 @@
     <script src="<?= base_url('assets/js/main/recursos.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/tarifa.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/factura.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/main/migracion_recursos.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/tabs.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
 
     <meta charset="utf-8">

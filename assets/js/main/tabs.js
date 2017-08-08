@@ -334,6 +334,10 @@ app.controller("consulta_nom",function($scope, $http, $timeout){
   consulta_nom($scope, $http, $timeout);
 });
 
+app.controller("migracion_recursos",function($scope, $http, $timeout){
+  migracion_recursos($scope, $http, $timeout);
+});
+
 app.controller("factura",function($scope, $http, $timeout){
   factura($scope, $http, $timeout);
 });
