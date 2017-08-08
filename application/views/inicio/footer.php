@@ -5,7 +5,7 @@
   <div class="footer-copyright black-text" style="height: auto;">
     <div class="container" style="line-height: normal;">
     	<p>
-    		© 2016 Copyright Termotecnica Coindustrial. - Cúcuta.
+    		© 2016-<?= date('Y') ?> Copyright Termotecnica Coindustrial. - Cúcuta.
     	</p>
     	<small><a href="#">Desarrollado por: Dpto. de T.I.C.</a></small>
     </div>

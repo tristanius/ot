@@ -5,7 +5,7 @@
       <div class="regularForm noMaterialStyles">
         <label>Buscar:</label>
         <input type="text" ng-model="buscarOT">
-        <button type="button" class="btn  mini-btn" data-icon=","></button>
+        <button type="button" class="btn  mini-btn" data-icon="," ng-click="getOts('<?= site_url('ot/getBy') ?>')"></button>
       </div>
 
       <table class="mytabla">
@@ -30,9 +30,37 @@
 
   <div class="">
 
-    <h5 style="text-align:center">Trenferir recursos reportados a nuevo centro de costos</h5>
+    <h5 style="text-align:center">Transferir recursos reportados a nuevo centro de costos</h5>
 
-    <fieldset>
+    <div style="border:1px solid #999; padding:1ex;">
+      <button type="button" class="btn mini-btn"><span data-icon="i"></span> Origen</button>
+      <button type="button" class="btn mini-btn"><span data-icon=","></span> Destino</button>
+      &nbsp;
+      <button type="button" class="btn mini-btn"><span data-icon="&#xe030;"></span> Cargue</button>
+    </div>
+
+    <div class="" style="box-shadow: 0 0 10px inset; min-height:200px; padding: 5px">
+      <table class="mytabla font10">
+          <thead>
+            <tr>
+              <th>No. Recurso</th>
+              <th>Tipo</th>
+              <th>Item</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+
+    <fieldset class="nodisplay">
       <div class="noMaterialStyles regularForm row">
           <div class="col m3">
             <label>Orden origen:</label>
