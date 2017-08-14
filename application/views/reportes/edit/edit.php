@@ -79,7 +79,7 @@
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#recursosOT', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Tiempo/Recursos</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
-                <button type="button" ng-show="validPriv(45)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')">Validaciones</button>
+                <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')">Validaciones</button>
               </td>
             </tr>
             <tr class="noMaterialStyles">
