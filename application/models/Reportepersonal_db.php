@@ -236,7 +236,7 @@ class Reportepersonal_db extends CI_Model{
       JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE rd.fecha_reporte = '".$fecha."'
-    AND rd.validado_pyco IN ('ACTUALIZADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO')
+    AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO' ,'VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO')
     AND OT.nombre_ot = '".trim($ot)."'
     AND rrd.nomina = ".($bandera?0:1)."
     AND r.persona_identificacion = '".$identificacion."' ";

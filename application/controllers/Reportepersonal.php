@@ -141,10 +141,10 @@ class Reportepersonal extends CI_Controller{
         $cc = $fila['D'];
         $affect = $this->rper->personalNominaUnoAUno($fecha, $orden, $cc, TRUE, $this->input->post('usuario').date('Y-m-d h:i'));
         if ($affect>0) {
-          $fila['C'] = $fecha." Asociada";
+          $fila['C'] = $fecha;
           $fila['F']="Registro asociado";
         }else {
-          $fila['C'] = $fecha." NO Asociada";
+          $fila['C'] = $fecha;
           $fila['F']="No asociado";
         }
       }
