@@ -1,56 +1,39 @@
 <section ng-controller="migracion_recursos">
 
-  <div id="VantanaSelecionMigracion" class="VentanaContainer nodisplay row">
-    <fieldset class="windowCentered row">
-      <div class="regularForm noMaterialStyles">
-        <label>Buscar:</label>
-        <input type="text" ng-model="buscarOT">
-        <button type="button" class="btn  mini-btn" data-icon="," ng-click="getOts('<?= site_url('ot/getBy') ?>')"></button>
-      </div>
-
-      <table class="mytabla">
-        <caption>Resultados, por favor seleccione uno</caption>
-        <thead>
-          <tr>
-            <th>Orden</th>
-            <th>C.O.</th>
-            <th>Selecc.</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </fieldset>
-  </div>
-
   <div class="">
 
     <h5 style="text-align:center">Transferir recursos reportados a nuevo centro de costos</h5>
 
     <div style="border:1px solid #999; padding:1ex;">
-      <button type="button" class="btn mini-btn"><span data-icon="i"></span> Origen</button>
-      <button type="button" class="btn mini-btn"><span data-icon=","></span> Destino</button>
-      &nbsp;
-      <button type="button" class="btn mini-btn"><span data-icon="&#xe030;"></span> Cargue</button>
+      <button type="button" class="btn mini-btn" ng-click="cargaTraslado=true">
+        <span data-icon="&#xe030;"></span> Cargue vía xlsx
+      </button>
     </div>
 
-    <div class="" style="box-shadow: 0 0 10px inset; min-height:200px; padding: 5px">
+    <div class="" ng-show="cargaTraslado">
+      <?php $this->load->view('asociaciones\tranferenciaRecursos\cargueMigracionRecursos'); ?>
+    </div>
+
+    <div ng-show="!cargaTraslado" style="box-shadow: 0 0 10px inset; min-height:200px; padding: 5px">
       <table class="mytabla font10">
           <thead>
             <tr>
-              <th>No. Recurso</th>
-              <th>Tipo</th>
-              <th>Item</th>
+              <th>ID recurso reportado</th>
+              <th>Origen</th>
+              <th>Destino</th>
               <th>Fecha</th>
+              <th>Item</th>
+              <th>Tipo</th>
+              <th>Codigo siesa</th>
+              <th>Cedula</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>

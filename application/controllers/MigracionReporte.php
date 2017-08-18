@@ -27,6 +27,10 @@ class MigracionReporte extends CI_Controller{
   {
     $this->load->view('asociaciones\tranferenciaRecursos\form_tranferir_recursos');
   }
+  public function cargueMigracionRecursos($value='')
+  {
+    $this->load->view('asociaciones\tranferenciaRecursos\cargueMigracionRecursos');
+  }
 
   public function loadRecursosreporte($value='')
   {

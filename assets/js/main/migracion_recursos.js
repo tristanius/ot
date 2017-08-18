@@ -1,24 +1,33 @@
 var migracion_recursos = function($scope, $http, $timeout){
-  $scope.ot_origen = {idOT:undefined, nombre_ot:'', base_idbase:''}
-  $scope.ot_destino = {idOT:undefined, nombre_ot:'', base_idbase:''}
-  $scope.ot_seleccionada = undefined;
+  $scope.$parent.resultadosTraslado = [];
 
-  $scope.ventanaMigrarSeleccionOT = function(model, ventana){
-    $scope.ot_seleccionada = model;
-    $('#'+ventana).removeClass('nodisplay');
-  }
-
-  $scope.searchOT = function(link){
-    $http.post(link, { nombre_ot_buscado: $scope.nombre_ot_buscado })
-    .then(
-      function(response){
-        $scope.listado_busqueda = response.data;
+  $scope.cargaTraslado = false;
+  $scope.initAdjunto = function(ruta) {
+    $scope.adjunto = $("#fileuploader").uploadFile({
+      url:ruta,
+      autoSubmit: false,
+      fileName:"myfile",
+      dynamicFormData: function(){
+        var data ={'movimiento':'Cargue de traslado de recursos', usuario:$scope.$parent.log.nombre_usuario}
+        return data;
       },
-      function(response){
-        alert("Algo ha salido mal");
-        console.log(response.data);
+      onSuccess: function(file, data){
+        $scope.resultadosTraslado = data;
+        //console.log(JSON.stringify(data));
+        //$scope.cerrarWindow();
+        //$scope.refreshTabs();
+        $scope.cargaTraslado = false;
+        $scope.cerrarWindow();
+      },
+      onError: function(files,status,errMsg,pd){
+        alert(JSON.stringify(errMsg));
+        $scope.cargaTraslado = false;
       }
-    );
+    });
+  }
+  $scope.IniciarUploadAdjunto = function(){
+    $scope.cargaTraslado = true;
+    $scope.adjunto.startUpload();
   }
 
 }
