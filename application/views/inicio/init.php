@@ -34,7 +34,7 @@
 				</li>
 				<hr>
 
-				<li ng-show="validPriv(66) || validPriv(67)">
+				<li ng-show="validPriv(66) || validPriv(67) || validPriv(55)">
 					<a href="#" ng-click="getFromMenu('#MenuAsociaciones','#slideOpciones')" data-icon="&#xe037;"> Asociaciones</a>
 				</li>
 
