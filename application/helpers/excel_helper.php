@@ -34,7 +34,13 @@ function readExcelAlltypes($archivo='', $dataOnly=FALSE)
 	#var_dump($sheetData);
 }
 
-function ubicarCabeceras($row, $cabeceras){	}
+function leerExcel($archivo){
+	include 'PHPExcel/PHPExcel/IOFactory.php';
+	$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+	$objPHPExcel = $objReader->load($archivo);
+	$sheetData = $objPHPExcel->getActiveSheet();
+	return $sheetData;
+}
 
 function informeFacturacion($datos, $cabeceras ){
 	date_default_timezone_set('America/Bogota');

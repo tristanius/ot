@@ -4,7 +4,7 @@
 
     <h5 style="text-align:center">Transferir recursos reportados a nuevo centro de costos</h5>
 
-    <div style="border:1px solid #999; padding:1ex;">
+    <div style="border:1px solid #999; padding:1ex;" ng-show="!cargaTraslado">
       <button type="button" class="btn mini-btn" ng-click="cargaTraslado=true">
         <span data-icon="&#xe030;"></span> Cargue vía xlsx
       </button>
@@ -18,26 +18,27 @@
       <table class="mytabla font10">
           <thead>
             <tr>
-              <th>ID recurso reportado</th>
               <th>Origen</th>
               <th>Destino</th>
-              <th>Fecha</th>
+              <th>fecha r.</th>
+              <th>tipo</th>
               <th>Item</th>
-              <th>Tipo</th>
-              <th>Codigo siesa</th>
-              <th>Cedula</th>
+              <th>C.C.</th>
+              <th>Cod. siesa</th>
+              <th>resultado</th>
+
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tr ng-repeat="d in resultadosTraslado">
+              <td ng-bind="d.A"></td>
+              <td ng-bind="d.B"></td>
+              <td ng-bind="d.C"></td>
+              <td ng-bind="d.D"></td>
+              <td ng-bind="d.E"></td>
+              <td ng-bind="d.F"></td>
+              <td ng-bind="d.H"></td>
+              <td ng-bind="d.J"></td>
             </tr>
           </tbody>
       </table>

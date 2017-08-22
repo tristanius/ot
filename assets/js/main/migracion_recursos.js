@@ -1,19 +1,19 @@
 var migracion_recursos = function($scope, $http, $timeout){
-  $scope.$parent.resultadosTraslado = [];
+  $scope.resultadosTraslado = [];
 
   $scope.cargaTraslado = false;
   $scope.initAdjunto = function(ruta) {
     $scope.adjunto = $("#fileuploader").uploadFile({
       url:ruta,
       autoSubmit: false,
-      fileName:"myfile",
+      fileName:"cargue",
       dynamicFormData: function(){
         var data ={'movimiento':'Cargue de traslado de recursos', usuario:$scope.$parent.log.nombre_usuario}
         return data;
       },
       onSuccess: function(file, data){
-        $scope.resultadosTraslado = data;
-        //console.log(JSON.stringify(data));
+        $scope.resultadosTraslado = JSON.parse(data);
+        console.log(data);
         //$scope.cerrarWindow();
         //$scope.refreshTabs();
         $scope.cargaTraslado = false;

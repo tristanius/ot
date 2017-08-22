@@ -1,8 +1,8 @@
 <div class="row">
 	<section class="area">
-    <h4>Carga de personal para asociar a normina</h4>
+    <h4>Carga de personal a transferir</h4>
 
-    <div class="" ng-init="initAdjunto('<?= site_url("MigracionReporte/uploadTraferenciaRecursos") ?>')">
+    <div class="" ng-init="initAdjunto('<?= site_url("MigracionReporte/uploadRecursosreporte") ?>')">
       <div id="fileuploader">Archivo</div>
     </div>
 
