@@ -122,7 +122,7 @@ class MigracionReporte extends CI_Controller{
         'Traslado de recurso desde '.$row['A'].$row['C'].' '.$row['B'].$row['C'],
         date('Y-m-d H:i:s'),
         'Traslado de recursos',
-        'OT_idOT')
+        'OT_idOT'.$rd_ant)
       return 'recurso transferido';
     }
     return 'imposible transferir recurso';
