@@ -8,7 +8,7 @@ var migracion_recursos = function($scope, $http, $timeout){
       autoSubmit: false,
       fileName:"cargue",
       dynamicFormData: function(){
-        var data ={'movimiento':'Cargue de traslado de recursos', usuario:$scope.$parent.log.nombre_usuario}
+        var data ={movimiento:'Cargue de traslado de recursos', id:$scope.$parent.log.idusuario, usuario:$scope.$parent.log.nombre_usuario}
         return data;
       },
       onSuccess: function(file, data){

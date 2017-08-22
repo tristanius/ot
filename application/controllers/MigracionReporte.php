@@ -37,6 +37,8 @@ class MigracionReporte extends CI_Controller{
 
   public function uploadRecursosreporte($value='')
   {
+    $iduser = $this->input->post('idusuario');
+    $user = $this->input->post('usuario');
     $this->crear_directorio("./uploads/migracionrecursos/");
     $config['upload_path'] = './uploads/migracionrecursos/';
     $config['allowed_types']  = 'xls|xlsx|xlsm';
@@ -48,7 +50,7 @@ class MigracionReporte extends CI_Controller{
     }else{
       $data = $this->upload->data();
       $data = $this->leerExcel('./uploads/migracionrecursos/'.$data['file_name']);
-      $this->validarMigracion($data);
+      $this->validarMigracion($data, array('idusuario'=>$iduser, 'nombre_usuario'=>$user));
     }
   }
 
@@ -69,7 +71,7 @@ class MigracionReporte extends CI_Controller{
     return leerExcel($ruta)->toArray(null,true,true,true);
   }
 
-  private function validarMigracion($data)
+  private function validarMigracion($data, $user_arr)
   {
     $this->load->model('MigracionReporte_db', 'mrepo');
     $this->mrepo->init_transact();
@@ -92,7 +94,7 @@ class MigracionReporte extends CI_Controller{
             $rd = $this->mrepo->getReporte($ot->nombre_ot, $row['C'])->row();
           }
           // movimiento de recurso
-          $row['J'] = $this->moverRecursoReporte($row, $ot, $repo_origen->row(), $rd);
+          $row['J'] = $this->moverRecursoReporte($row, $ot, $repo_origen->row(), $rd, $user_arr);
         }else{
           $row['J'] = $row['C'].' - Reporte origen no existente';
         }
@@ -101,16 +103,26 @@ class MigracionReporte extends CI_Controller{
       }
       array_push($response, $row);
     }
-    $this->mrepo->end_transact();
+    $status = $this->mrepo->end_transact();
     echo json_encode($response);
   }
 
-  private function moverRecursoReporte($row, $ot, $rd_ant, $rd)
+  private function moverRecursoReporte($row, $ot, $rd_ant, $rd, $user_arr)
   {
+    $this->load->helper('log');
     $rec = $this->getMoverRecursoReporte($row, $ot, $rd_ant, $rd);
     if( isset($rec) && $rec != NULL && $rec->num_rows() >0 ){
       $r = $rec->row();
       $this->mrepo->moverRecurso($r->idrecurso_reporte_diario, $rd->idreporte_diario);
+      addlog(
+        $user_arr['idusuario'],
+        $user_arr('nombre_usuario'),
+        $r->idrecurso_reporte_diario,
+        'recurso_reporte_diario',
+        'Traslado de recurso desde '.$row['A'].$row['C'].' '.$row['B'].$row['C'],
+        date('Y-m-d H:i:s'),
+        'Traslado de recursos',
+        'OT_idOT')
       return 'recurso transferido';
     }
     return 'imposible transferir recurso';
