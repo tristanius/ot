@@ -10,7 +10,7 @@
 
     <fieldset>
       <legend>Busqueda de personal: </legend>
-      <button type="button" class="btn green mini-btn2" ng-click="getAjaxWindow('<?= site_url('reportepersonal/formCargueValidacionHorario'); ?>',$event, '')" data-icon="&#xe030;"> Vía cargue</button>
+      <button ng-if="validPriv(66)" type="button" class="btn green mini-btn2" ng-click="getAjaxWindow('<?= site_url('reportepersonal/formCargueValidacionHorario'); ?>',$event, '')" data-icon="&#xe030;"> Vía cargue</button>
       <br><br>
       <div class="noMaterialStyles regularForm">
         <fieldset>

@@ -11,7 +11,7 @@
     </div>
 
     <div class="" ng-show="cargaTraslado">
-      <?php $this->load->view('asociaciones/transferenciaRecursos/cargueMigracionRecursos'); ?>
+      <?php $this->load->view('asociaciones/transferencia_recursos/cargueMigracionRecursos'); ?>
     </div>
 
     <div ng-show="!cargaTraslado" style="box-shadow: 0 0 10px inset; min-height:200px; padding: 5px">
