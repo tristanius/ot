@@ -10,7 +10,7 @@
 
   <div class="col l2" ng-show="validPriv(66)">
     <a href="#" class="btn-panel" style="width:100%" ng-click="clickeableLink('<?= site_url('MigracionReporte/formRecursosReporte') ?>', $event, 'Personal asociado');">
-      <h3 class="center-align" data-icon="V"></h3>
+      <h3 class="center-align" data-icon="|"></h3>
       <p class="center-align">Movimientos de recusos reportados a C.C.</p>
     </a>
   </div>
