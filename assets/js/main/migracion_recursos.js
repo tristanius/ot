@@ -16,7 +16,7 @@ var migracion_recursos = function($scope, $http, $timeout){
         console.log(data);
         //$scope.cerrarWindow();
         //$scope.refreshTabs();
-        $scope.cargaTraslado = false;
+        $scope.cargaTraslado=false;
         $scope.cerrarWindow();
       },
       onError: function(files,status,errMsg,pd){

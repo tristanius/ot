@@ -1,6 +1,6 @@
 <div class="row">
 	<section class="area">
-    <h4>Carga de personal a transferir</h4>
+		<hr>
 
     <div class="" ng-init="initAdjunto('<?= site_url("MigracionReporte/uploadRecursosreporte") ?>')">
       <div id="fileuploader">Archivo</div>
