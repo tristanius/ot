@@ -301,7 +301,7 @@ class Reporte extends CI_Controller{
       $cambios->personal = $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
       $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
       if (isset($post->log)) {
-        $msj = 'Reporte diario '.$post->fecha." de ".$post->info->nombre_ot.' actualizado.';
+        $msj = 'Reporte diario '.$post->fecha." de ".$post->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
       }
 

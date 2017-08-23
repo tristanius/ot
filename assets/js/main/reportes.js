@@ -628,12 +628,11 @@ var editReporte = function($scope, $http, $timeout){
     $http.post(link, {})
       .then(
         function(response){
-          response.data.info.idOT = $scope.rd.info.idOT;
-          response.data.info.fecha_reporte = $scope.rd.fecha_reporte;
-          response.data.info.ccosto = $scope.rd.info.ccosto;
-          response.data.info.estado = $scope.rd.info.estado;
-          response.data.info.validado_pyco = $scope.rd.info.validado_pyco;
           $scope.rd.info = response.data.info;
+          // reasiganaciones
+          response.data.info.idOT = $scope.rd.idOT;
+          response.data.info.festivo = $scope.rd.festivo;
+          response.data.info.fecha_reporte = $scope.rd.fecha_reporte;
           $scope.rd.info.estado = response.data.estado;
           $scope.rd.info.validado_pyco = response.data.validado_pyco;
           if(response.data.observaciones_pyco != null || response.data.observaciones_pyco != undefined){
@@ -891,8 +890,10 @@ var editReporte = function($scope, $http, $timeout){
         $http.post(
           url,
           {
-            idOT: $scope.rd.info.idOT,
-            fecha: $scope.rd.info.fecha_reporte,
+            idOT: $scope.rd.idOT,
+            nombre_ot: $scope.rd.nombre_ot,
+            festivo: $scope.rd.festivo,
+            fecha: $scope.rd.fecha_reporte,
             recursos: $scope.rd.recursos,
             info: $scope.rd.info
           }
