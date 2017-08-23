@@ -628,6 +628,10 @@ var editReporte = function($scope, $http, $timeout){
     $http.post(link, {})
       .then(
         function(response){
+          response.data.info.idOT = $scope.rd.info.idOT;
+          response.data.info.ccosto = $scope.rd.info.ccosto;
+          response.data.info.estado = $scope.rd.info.estado;
+          response.data.info.validado_pyco = $scope.rd.info.validado_pyco;
           $scope.rd.info = response.data.info;
           $scope.rd.info.estado = response.data.estado;
           $scope.rd.info.validado_pyco = response.data.validado_pyco;
