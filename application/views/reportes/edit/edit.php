@@ -43,7 +43,7 @@
       <form class="hidden" action="#">
         <input type="hidden" ng-model="rd.idreporte_diario" ng-init="rd.idreporte_diario = '<?= $r->idreporte_diario ?>' ">
         <input type="hidden" ng-model="rd.idbase" ng-init="rd.idbase = '<?= $r->base_idbase ?>' ">
-        <input type="hidden" ng-model="rd.info.idOT" ng-init="rd.info.idOT = '<?= $r->idOT ?>'">
+        <input type="hidden" ng-model="rd.idOT" ng-init="rd.idOT = '<?= $r->idOT ?>'">
         <input type="hidden" ng-model="rd.info.ccosto" ng-init="rd.info.ccosto = '<?= $r->ccosto ?>'">
         <input type="hidden" ng-model="rd.festivo" ng-init="rd.festivo = '<?= $r->ccosto ?>'">
         <input type="hidden" ng-model="rd.nombre_ot" ng-init="rd.nombre_ot = '<?= $r->nombre_ot ?> '">

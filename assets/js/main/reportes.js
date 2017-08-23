@@ -936,7 +936,9 @@ var editReporte = function($scope, $http, $timeout){
   // Guardar reporte
   $scope.guardarRD = function(link, link2) {
     var data = {
-      idOT: $scope.rd.info.idOT,
+      idOT: $scope.rd.idOT,
+      nombre_ot: $scope.rd.nombre_ot,
+      festivo: $scope.rd.festivo,
       fecha: $scope.rd.fecha_reporte,
       recursos: $scope.rd.recursos,
       info: $scope.rd.info,
