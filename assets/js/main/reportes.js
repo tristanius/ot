@@ -631,7 +631,7 @@ var editReporte = function($scope, $http, $timeout){
           $scope.rd.info = response.data.info;
           // reasiganaciones
           response.data.info.idOT = $scope.rd.idOT;
-          response.data.info.festivo = $scope.rd.festivo;
+          //response.data.info.festivo = $scope.rd.festivo?true:false;
           response.data.info.fecha_reporte = $scope.rd.fecha_reporte;
           $scope.rd.info.estado = response.data.estado;
           $scope.rd.info.validado_pyco = response.data.validado_pyco;
