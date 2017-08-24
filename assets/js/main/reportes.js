@@ -482,6 +482,7 @@ var addReporte = function($scope, $http, $timeout) {
           {
             idOT: $scope.rd.info.idOT,
             fecha: $scope.rd.info.fecha_reporte,
+            festivo:$scope.rd.info.festivo,
             recursos: $scope.rd.recursos,
             info: $scope.rd.info
           }
@@ -526,6 +527,7 @@ var addReporte = function($scope, $http, $timeout) {
           {
             idOT: $scope.rd.info.idOT,
             fecha: $scope.rd.info.fecha_reporte,
+            festivo: $scope.rd.info.festivo,
             recursos: $scope.rd.recursos,
             info: $scope.rd.info,
             log: $scope.$parent.log

@@ -126,15 +126,14 @@ class Reporte extends CI_Controller{
     if ( !$this->exceptionValidarRecurso($val) ) { // SI NO ESTA DENTRO DE LAS EXCEPCIONES
       $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
       $rows2 = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
-      if( $rows->num_rows() > 0){ // SI ESTA CANT > 1
+      if( $rows->num_rows() > 0){ // SI ESTA CANT > 1 y FACTURABLE
           $val->valid = FALSE;
           $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
-      }elseif ($rows2->num_rows() > 0) {
+      }elseif ($rows2->num_rows() > 0 && $val->cantidad > 0) { // CANTIDAD MAYOR QUE 0 Y NO FACTURABLE
         if($conjunto == "equipos"){
           $val->valid = FALSE;
           $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo como NO facturable. ".json_encode($rows->result());
         }else{
-          $val->valid = TRUE;
           $val->msj = "CUIDADO! El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
         }
       }
