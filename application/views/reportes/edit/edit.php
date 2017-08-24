@@ -45,7 +45,7 @@
         <input type="hidden" ng-model="rd.idbase" ng-init="rd.idbase = '<?= $r->base_idbase ?>' ">
         <input type="hidden" ng-model="rd.idOT" ng-init="rd.idOT = '<?= $r->idOT ?>'">
         <input type="hidden" ng-model="rd.info.ccosto" ng-init="rd.info.ccosto = '<?= $r->ccosto ?>'">
-        <input type="hidden" ng-model="rd.festivo" ng-init="rd.festivo = '<?= $r->festivo ?>'">
+        <input type="hidden" ng-model="rd.festivo" ng-init="rd.festivo = <?= $r->festivo ?>">
         <input type="hidden" ng-model="rd.nombre_ot" ng-init="rd.nombre_ot = '<?= $r->nombre_ot ?> '">
         <input type="hidden" ng-model="rd.info.estado" ng-init="rd.estado = '<?= $r->estado ?> '">
         <input type="hidden" ng-model="rd.info.validado_pyco" ng-init="rd.validado_pyco = '<?= $r->validado_pyco ?> '">
