@@ -123,6 +123,12 @@ class Reporte extends CI_Controller{
     $identificacion = ( $conjunto == "equipos" )? $val->codigo_siesa: $val->identificacion;
     $val->valid = TRUE;
     $rows = array();
+    /*
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    Corregir: lista de excepciones no debe ser exluyente de coincidencia de reportes.
+    Corregir: la cantidad del item a validar se debe validar no en este metodo sino en el de nivel superior (REVISAR PRIMERO)
+    Corregir: Optimizar en funcion de rendimiento y no reproceso.
+    */
     if ( !$this->exceptionValidarRecurso($val) ) { // SI NO ESTA DENTRO DE LAS EXCEPCIONES
       $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
       $rows2 = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
@@ -167,6 +173,10 @@ class Reporte extends CI_Controller{
     foreach ($post->recursos as $k => $v) {
       if($k!='actividades'){
         foreach ($v as $key => $value) {
+          /*
+          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          Corregir: revisar primero las cantidades y estado facturable antes de ir a validar los items.
+          */
           $value->msj = '';
           $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
           $value =  $this->validarRecurso( $post->fecha, $value, $k, $post->idOT );
