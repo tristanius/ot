@@ -504,7 +504,14 @@ var addReporte = function($scope, $http, $timeout) {
         );
     }
   }
-  $scope.addObservacion = function(){$scope.rd.info.observaciones.push({msj:''})}
+  $scope.addObservacion = function(tipo){
+    var f = new Date();
+    if (tipo=='proveedor') {
+      $scope.rd.info.observaciones.push( { msj:'', tipo:'proveedor', fecha: f.toLocaleString() } );
+    }else{
+      $scope.rd.info.observaciones_cliente.push( { msj:'', tipo:'cliente', fecha: f.toLocaleString() } );
+    }
+  }
 
   $scope.getStatusLaboral = function(idstst, per){
     var adicion = false;
@@ -916,7 +923,14 @@ var editReporte = function($scope, $http, $timeout){
         );
     }
   }
-  $scope.addObservacion = function(){ $scope.rd.info.observaciones.push({msj:''}) }
+  $scope.addObservacion = function(tipo){
+    var f = new Date();
+    if (tipo=='proveedor') {
+      $scope.rd.info.observaciones.push( {msj:'', tipo:'proveedor', fecha: f.toLocaleString()} );
+    }else{
+      $scope.rd.info.observaciones_cliente.push( {msj:'', tipo:'cliente', fecha: f.toLocaleString()} );
+    }
+  }
   $scope.addObservacion2 = function(obspyco){
     var f = new Date();
     var data = {
