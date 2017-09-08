@@ -30,7 +30,7 @@ class Tarea_db extends CI_Model{
     $json_indirectos, $json_viaticos, $json_horas_extra,
     $json_reembolsables, $json_racion, $json_recursos,
     $responsables, $requisitos_documentales,
-    $OT_idOT, $sap,$clase_sap, $tipo_sap, 
+    $OT_idOT, $sap,$clase_sap, $tipo_sap,
     $sap_pago, $clase_sap_pago, $tipo_sap_pago,  $editable)
   {
     $data = array(
@@ -62,13 +62,13 @@ class Tarea_db extends CI_Model{
 
   //Actualiza una tarea de una Ot
   public function update(
-    $idtarea_ot, $nombre_tarea_ot, 
-    $fecha_inicio, $fecha_fin, 
+    $idtarea_ot, $nombre_tarea_ot,
+    $fecha_inicio, $fecha_fin,
     $valor_recursos, $valor_tarea_ot,
-    $json_indirectos, $json_viaticos, 
-    $json_horas_extra, $json_reembolsables, 
-    $json_racion, $json_recursos, $responsables, 
-    $requisitos_documentales, $OT_idOT, 
+    $json_indirectos, $json_viaticos,
+    $json_horas_extra, $json_reembolsables,
+    $json_racion, $json_recursos, $responsables,
+    $requisitos_documentales, $OT_idOT,
     $sap, $clase_sap, $tipo_sap, $sap_pago,
     $clase_sap_pago, $tipo_sap_pago, $editable)
   {
@@ -262,6 +262,12 @@ class Tarea_db extends CI_Model{
     ->group_by('itf.codigo')
     ->order_by('itf.codigo','ASC')
     ->get();
+  }
+
+  public function getTareasByOT($idOT)
+  {
+    $this->load->database('ot');
+    return $this->db->from('tarea_ot')->where('OT_idOT',$idOT)->get();
   }
 
 }

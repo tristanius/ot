@@ -98,4 +98,35 @@ class Consulta extends CI_Controller{
     );
   }
 
+  public function get_informe_cierre_OT($nombre_ot=NULL, $co=NULL)
+  {
+    // consultar:
+    $this->load->model(array('ot_db'=>'ot', 'tarea_db'=>'tar'));
+    $ots = $this->ot->getInfoGeneral($nombre_ot, $co);
+    $myots = array();
+    foreach ($ots->result_array() as $k => $ot) {
+      $tareas = $this->tar->getTareasByOT($ot['idOT']);
+      $row = 1;
+      $rows = $tareas->num_rows();
+      foreach ($tareas->result() as $i => $tr) {
+        $ot['resumen_tareas'] .= $tr->nombre_tarea.' del '.$tr->fecha_inicio.' al '.$tr->fecha_fin.' por valor de $'.number_format($tr->valor_recursos,2);
+        if($row <  $rows ){
+          $ot['resumen_tareas'] .= ' - ';
+        }
+        $row++;
+      }
+      $ot['fecha_inicio_plan'] = 25569 + ( strtotime( $ot['fecha_inicio_plan'] ) / 86400 );
+      $ot['fecha_fin_plan'] = 25569 + ( strtotime( $ot['fecha_fin_plan'] ) / 86400 );
+      $ot['fecha_inicio'] = 25569 + ( strtotime( $ot['fecha_inicio'] ) / 86400 );
+      $ot['fecha_fin'] = 25569 + ( strtotime( $ot['fecha_fin'] ) / 86400 );
+      $ot['valor_costo_directo'] = number_format($ot['valor_costo_directo'],2);
+      array_push($myots, $ot);
+    }
+    // generar:
+    $this->load->helper('xlsxwriter');
+    $this->load->helper('download');
+    xlsx($myots, $ots->list_fields(), './uploads/InformeCierre.xlsx','hoja1',NULL);
+    force_download('./uploads/InformeCierre.xlsx',NULL);
+  }
+
 }

@@ -393,6 +393,36 @@ class Ot_db extends CI_Model {
 		}
 		return $status;
 	}
+
+	# ===================================================================================
+	# informe de cierre
+	public function getInfoGeneral($nombre_ot=NULL, $co=NULL)
+	{
+		$this->load->database('ot');
+		$this->db->select("
+						ot.idOT,
+						ot.nombre_ot,
+						'' AS resumen_tareas,
+						(SELECT GROUP_CONCAT(tarea_ot.sap SEPARATOR ',' ) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT) AS SAP,
+						b.nombre_base,
+						ot.vereda,
+						ot.actividad,
+						( SELECT MAX(tarea_ot.fecha_inicio) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS fecha_inicio_plan,
+						( SELECT MAX(tarea_ot.fecha_fin) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS fecha_fin_plan,
+						ot.fecha_inicio,
+						ot.fecha_fin,
+						( SELECT SUM(tarea_ot.valor_recursos) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS valor_costo_directo
+					")->from('OT AS OT')
+					->join('base AS b', 'b.idbase = ot.base_idbase');
+		if (isset($nombre_ot)) {
+			$this->db->where('nombre_ot', $nombre_ot);
+		}
+		if(isset($co)){
+			$this->db->where('base_idbase', $co);
+		}
+		$this->db->order_by('ot.idOT', 'asc');
+		return $this->db->get();
+	}
 }
 /* End of file Ot_db.php */
 /* Location: ./application/models/Ot_db.php */
