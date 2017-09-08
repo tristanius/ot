@@ -412,7 +412,7 @@ class Ot_db extends CI_Model {
 						ot.fecha_inicio,
 						ot.fecha_fin,
 						( SELECT SUM(tarea_ot.valor_recursos) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS valor_costo_directo
-					")->from('OT AS OT')
+					")->from('OT AS ot')
 					->join('base AS b', 'b.idbase = ot.base_idbase');
 		if (isset($nombre_ot)) {
 			$this->db->where('nombre_ot', $nombre_ot);
