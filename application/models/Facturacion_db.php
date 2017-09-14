@@ -239,7 +239,10 @@ class Facturacion_db extends CI_Controller{
     return $this->db->select('
       OT.nombre_ot,
       tr.nombre_tarea,
-      tr.sap AS sap,
+      tr.sap AS sap_mes,
+      tr.clase_sap,
+      tr.sap_pago AS sap_principal,
+      tr.clase_sap_pago AS clase_sap_principal,
       b.nombre_base,
       if(OT.basica, "BASICA","-") AS ot_basica,
       OT.vereda,

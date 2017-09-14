@@ -407,7 +407,7 @@ class Ot_db extends CI_Model {
 						b.nombre_base,
 						ot.vereda,
 						ot.actividad,
-						( SELECT MAX(tarea_ot.fecha_inicio) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS fecha_inicio_plan,
+						( SELECT MIN(tarea_ot.fecha_inicio) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS fecha_inicio_plan,
 						( SELECT MAX(tarea_ot.fecha_fin) FROM tarea_ot WHERE tarea_ot.OT_idOT = ot.idOT ) AS fecha_fin_plan,
 						ot.fecha_inicio,
 						ot.fecha_fin,
