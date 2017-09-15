@@ -34,7 +34,7 @@ class Reporte_db extends CI_Model{
     $this->load->database('ot');
     $data = array(
       'fecha_reporte' => isset($repo->fecha)?$repo->fecha:$repo->info->fecha_reporte,
-      'festivo'=>$repo->info->festivo,
+      'festivo'=>isset($repo->info->festivo)?$repo->info->festivo:$repo->festivo,
       'OT_idOT'=>$repo->idOT,
       'json_r'=>json_encode($repo->info),
       'municipio'=>isset($repo->info->municipio)?$repo->info->municipio:'',
