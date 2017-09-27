@@ -350,6 +350,10 @@ app.controller("imprimirRD", function($scope, $http, $timeout){
   imprimirRD($scope, $http, $timeout);
 });
 
+app.controller("cargue_historico", function($scope, $http, $timeout){
+  cargue_historico($scope, $http, $timeout);
+});
+
 
 //let's make a startFrom filter
 app.filter('startFrom', function() {

@@ -4,6 +4,7 @@ use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Common\Type;
 use Box\Spout\Writer\Style\StyleBuilder;
 use Box\Spout\Writer\Style\Color;
+use Box\Spout\Reader\ReaderFactory;
 
 function genHojaCalculo($datos, $cabeceras , $filePath = './uploads/informeFacturacion.xlsx' ){
   $writer = WriterFactory::create(Type::XLSX); // for XLSX files
@@ -37,4 +38,23 @@ function genHojaCalculo($datos, $cabeceras , $filePath = './uploads/informeFactu
 
   $writer->close();
 
+}
+
+
+function readXlsx($path='', $method=NULL)
+{
+  $reader = ReaderFactory::create(Type::XLSX);
+  $reader->open($path);
+  $sheets = array();
+  $i=0;
+  foreach ($reader->getSheetIterator() as $sheet) {
+      $i++;
+      $j=0;
+      foreach ($sheet->getRowIterator() as $row) {
+        $j++;
+      }
+      array_push($sheets, array( 'sheet' =>$i , 'rows'=>$j ) );
+  }
+  $reader->close();
+  return $sheets;
 }

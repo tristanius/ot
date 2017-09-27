@@ -52,23 +52,9 @@
 			</div>
 
 			<div class="col l2">
-				<a href="#" ng-click="clickeableLink('<?= site_url('miscelanio/crud/especialidad') ?>', $event, 'Especialidades');" class="btn-panel" style="width:100%">
-					<h3 class="center-align" data-icon="S"></h3>
-					<p class="center-align"> Especialidades de OT </p>
-				</a>
-			</div>
-
-			<div class="col l2">
-				<a href="#" ng-click="clickeableLink('<?= site_url('miscelanio/crud/tipo_ot') ?>', $event, 'Tipo OT');" class="btn-panel" style="width:100%">
-					<h3 class="center-align" data-icon="z"></h3>
-					<p class="center-align"> Tipo OT </p>
-				</a>
-			</div>
-
-			<div class="col l2">
-				<a href="#" class="btn-panel teal darken-3 white-text" style="width:100%">
-					<h3 class="center-align" data-icon="*"></h3>
-					<p class="center-align">ITEM contrato.</p>
+				<a href="#" ng-click="clickeableLink('<?= site_url('facturacion/cargue_historico/') ?>', $event, 'Cargue de historico');" class="btn-panel" style="width:100%">
+					<h4 class="center-align" data-icon="">X</h4>
+					<p class="center-align"> Historicio de facturación </p>
 				</a>
 			</div>
 
