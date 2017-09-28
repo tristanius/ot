@@ -42,12 +42,13 @@ var cargue_historico =  function($scope, $http, $timeout){
   }
 
   $scope.leerData = function(lnk){
-    console.log('cargando...');
+    console.log('cargando...'+ new Date().toUTCString() );
     $http.post(lnk, {
         path:$scope.resultado_cargue.return
       }).then(
         function(response) {
           console.log(response.data);
+          console.log('cargando...'+ new Date().toUTCString() );
         },
         function(response) {
           console.log(response.data);

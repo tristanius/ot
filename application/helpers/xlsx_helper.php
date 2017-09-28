@@ -43,18 +43,23 @@ function genHojaCalculo($datos, $cabeceras , $filePath = './uploads/informeFactu
 
 function readXlsx($path='', $method=NULL)
 {
+  $init = date("Y-m-d H:i:s");
   $reader = ReaderFactory::create(Type::XLSX);
   $reader->open($path);
   $sheets = array();
   $i=0;
+  $opened = date("Y-m-d H:i:s");
   foreach ($reader->getSheetIterator() as $sheet) {
       $i++;
       $j=0;
       foreach ($sheet->getRowIterator() as $row) {
         $j++;
+        echo $j."<br>";
+        if($j > 100000)
+          break;
       }
-      array_push($sheets, array( 'sheet' =>$i , 'rows'=>$j ) );
   }
+  array_push($sheets, array( 'sheet' =>$i , 'rows'=>$j, 'ini'=>$init, 'opened'=>$opened, 'end'=>date('Y-m-d H:i:s') ) );
   $reader->close();
   return $sheets;
 }

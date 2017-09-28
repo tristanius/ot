@@ -7,7 +7,7 @@
   </b>
   <ul>
     <ol> 1. El formato debe ser un libro de excel xlsx o libro excel 2007 o superior</ol>
-    <ol> 2. Trata que carga archivo no tenga mas de 50mil registros</ol>
+    <ol> 2. Trata que carga archivo no tenga mas de 100mil registros</ol>
     <ol> 3. Evita completamente tener mas de dos hojas en el mismo archivo de excel </ol>
   </ul>
 

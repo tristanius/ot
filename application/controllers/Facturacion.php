@@ -49,6 +49,13 @@ class Facturacion extends CI_Controller{
     print_r( readXlsx(FCPATH.$post->path,NULL) );
   }
 
+  public function read_data_from2()
+  {
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->helper('xlsx');
+    print_r( readXlsx(FCPATH."uploads/cargue_historico/historico_fact10.xlsx",NULL) );
+  }
+
   public function loadRow($row)
   {
 
