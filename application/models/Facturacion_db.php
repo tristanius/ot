@@ -341,5 +341,20 @@ class Facturacion_db extends CI_Controller{
       ->group_by('IFNULL(regot.idcosto_mes_ot, OT.idOT)')->get();
   }
 
+  // ------------------------------------------------------------------------------
+  // SABANA DE FACTURACION HISTORICA Y ACTUAL
+  // ------------------------------------------------------------------------------
+  public function fieldSabanaFacturacion($value='')
+  {
+    $this->load->database('ot');
+    return$this->db->list_fields('sabana_facturacion');
+  }
+  public function setRowSabana($data)
+  {
+    $this->load->database('ot');
+    $this->db->insert('sabana_facturacion', $data);
+    return $this->db->insert_id();
+  }
+
 
 }

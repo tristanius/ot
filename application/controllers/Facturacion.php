@@ -46,20 +46,46 @@ class Facturacion extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
-    print_r( readXlsx(FCPATH.$post->path,NULL) );
+    $sheets = readXlsx(FCPATH.$post->path,NULL);
+    $i=0;
+    foreach ($sheets as $key => $sheet) {
+      $i++;
+      $j=0;
+      foreach ($sheet->getRowIterator() as $row) {
+        $this->setRowSabana( $row );
+        $j++;
+        if($j > 100000)
+          break;
+      }
+    }
   }
+
 
   public function read_data_from2()
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
-    print_r( readXlsx(FCPATH."uploads/cargue_historico/historico_fact10.xlsx",NULL) );
+    readXlsx(FCPATH."uploads/cargue_historico/prueba.xlsx", $this, 'setRowSabana');
+    echo "Finalizado";
   }
 
-  public function loadRow($row)
+  public function setRowSabana($row)
   {
-
+    $this->load->model('Facturacion_db', 'fac');
+    $headers = $this->fac->fieldSabanaFacturacion();
+    $data = array();
+    foreach ($headers as $key => $value) {
+      if ($value == 'fecha_reporte') {
+        $data[$value] = $row[$key]->format('Y-m-d');
+        echo " ".$data[$value]." ";
+      }else{
+        $data[$value] = $row[$key];
+      }
+    }
+    $this->fac->setRowSabana($data);
   }
+
+
 
   public function crear_directorio($carpeta)
   {
