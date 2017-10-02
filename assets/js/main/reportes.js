@@ -221,6 +221,7 @@ var listOTReportes = function($scope, $http, $timeout){
             $scope.ot.selected = true;
             $scope.listaReportes = undefined;
             $scope.listaReportes = response.data;
+            console.log(response.data);
           },
           function(response) {
             alert(response.data)
