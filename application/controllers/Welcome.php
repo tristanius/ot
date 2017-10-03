@@ -149,6 +149,7 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->model('Facturacion_db','fac');
 		$this->fac->informeFacturacion('2017-10-01','2017-10-15');
+		$this->load->database('ot');
 		echo $this->db->last_query();
 	}
 }
