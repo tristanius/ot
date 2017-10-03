@@ -148,9 +148,108 @@ class Welcome extends CI_Controller {
 	public function mytest()
 	{
 		$this->load->database('ot');
-		$this->db->save_queries = TRUE;
-		$this->load->model('Facturacion_db','fac');
-		$this->fac->informeFacturacion('2017-10-01','2017-10-15');
+		$this->db->query('
+    SELECT
+          year(rd.fecha_reporte) as año,
+          month(rd.fecha_reporte) as mes,
+          if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
+          "MA0032887" as contrato,
+          OT.gerencia as gerencia,
+          OT.nombre_departamento_ecp as nombre_departamento,
+          OT.departamento_ecp as departamento_ecp,
+          bs.sector as sector,
+          bs.nombre_base as base,
+          OT.base_idbase as CO,
+          tp.nombre_tipo_ot as tipo_mtto,
+          sp.nombre_especialidad as especialidad,
+          itf.codigo,
+          titc.grupo_mayor AS UN,
+          rd.fecha_reporte,
+          rd.festivo,
+          OT.nombre_ot AS No_OT,
+          IFNULL(
+            (
+              SELECT mytr.sap
+              FROM tarea_ot AS mytr
+              WHERE OT.idOT = mytr.OT_idOT
+              AND rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin
+              ORDER BY mytr.idtarea_ot DESC
+              LIMIT 1
+            ), ""
+          ) as numero_sap,
+          "" as tarea,
+          "" as control_cambio,
+          OT.cc_ecp as centro_costo,
+          "" as cuenta_mayor,
+          "" as sistema,
+          OT.abscisa as pk,
+          p.identificacion as cedula,
+          p.nombre_completo,
+          itf.itemc_item as item,
+          tr.codigo_vinculado as item_sap,
+          itc.descripcion,
+          if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
+          if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
+          titc.descripcion as clasifica_deta,
+          if(rrd.facturable,"SI","NO") AS facturable,
+          rrd.cantidad AS cant_und,
+          tr.tarifa,
+          itf.unidad,
+          if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad), 0) as cantidad_total,
+          if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) * tr.tarifa, 0) as valor_subtotal,
+          if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr. tarifa, 0.18), 0) as a,
+          if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.01), 0) as i,
+          if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.04), 0) as u,
+          if(rrd.facturable, getTotal(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.23), 0) as total,
+          OT.locacion as lugar,
+          OT.municipio,
+          OT.zona,
+          e.referencia as placa_equipo,
+          rrd.horas_operacion,
+          rrd.horas_disponible,
+          e.codigo_siesa,
+          e.referencia,
+          rrd.nombre_operador,
+          rrd.hora_inicio AS tr1_entrada,
+          rrd.hora_fin AS tr1_salida,
+          rrd.hora_inicio2 AS tr2_entrada,
+          rrd.hora_fin2 AS tr2_salida,
+          if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
+          if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
+          if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
+          if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
+          if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
+          if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
+          if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
+          if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
+          rrd.racion,
+          rrd.gasto_viaje_pr AS pernocto,
+          rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
+          rd.validado_pyco AS estado_reporte
+      FROM reporte_diario AS rd
+      JOIN OT ON OT.idOT = rd.OT_idOT
+      JOIN base AS bs On bs.idbase = OT.base_idbase
+      JOIN especialidad AS sp ON sp.idespecialidad = OT.especialidad_idespecialidad
+      JOIN tipo_ot as tp ON OT.tipo_ot_idtipo_ot = tp.idtipo_ot
+      JOIN recurso_reporte_diario AS rrd ON rrd.idreporte_diario = rd.idreporte_diario
+      JOIN itemf AS itf ON itf.iditemf = rrd.itemf_iditemf
+      JOIN itemc AS itc ON itc.iditemc = itf.itemc_iditemc
+      JOIN tipo_itemc AS titc ON titc.idtipo_itemc = itc.idtipo_itemc
+      JOIN tarifa AS tr ON tr.itemf_iditemf = itf.iditemf
+      LEFT JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
+      LEFT JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
+      LEFT JOIN persona AS p ON p.identificacion = r.persona_identificacion
+      LEFT JOIN equipo AS e ON e.idequipo = r.equipo_idequipo
+      WHERE rd.fecha_reporte BETWEEN "2017-10-01" AND "2017-10-03"
+      AND tr.idtarifa = (
+          SELECT mytar.idtarifa
+          FROM tarifa AS mytar
+          JOIN vigencia_tarifas AS vig ON vig.idvigencia_tarifas = mytar.idvigencia_tarifas
+          WHERE mytar.itemf_iditemf = tr.itemf_iditemf
+          AND rd.fecha_reporte >= vig.fecha_inicio_vigencia
+          ORDER BY mytar.idvigencia_tarifas DESC
+          LIMIT 1
+      )');
 		echo $this->db->last_query();
 	}
 }

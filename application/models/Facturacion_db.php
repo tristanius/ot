@@ -111,7 +111,6 @@ class Facturacion_db extends CI_Controller{
     $this->db->join('tipo_ot as tp', 'OT.tipo_ot_idtipo_ot = tp.idtipo_ot','LEFT');
     $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT');
     $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
-    $this->db->join('vigencia_tarifas AS vtarf', 'vtarf.idvigencia_tarifas = tr.idvigencia_tarifas');
 
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT', $idOT);
@@ -123,14 +122,14 @@ class Facturacion_db extends CI_Controller{
       $this->db->where_in('bs.idbase', $bases);
     }
     $this->db->where('tr.idtarifa = (
-      SELECT mytar.idtarifa
-      FROM tarifa AS mytar
-      JOIN vigencia_tarifas AS vig ON vig.idvigencia_tarifas = mytar.idvigencia_tarifas
-      WHERE mytar.itemf_iditemf = tr.itemf_iditemf
-      AND rd.fecha_reporte >= vig.fecha_inicio_vigencia
-      ORDER BY mytar.idvigencia_tarifas DESC
-      LIMIT 1
-      )');
+        SELECT mytar.idtarifa
+        FROM tarifa AS mytar
+        JOIN vigencia_tarifas AS vig ON vig.idvigencia_tarifas = mytar.idvigencia_tarifas
+        WHERE mytar.itemf_iditemf = tr.itemf_iditemf
+        AND rd.fecha_reporte >= vig.fecha_inicio_vigencia
+        ORDER BY mytar.idvigencia_tarifas DESC
+        LIMIT 1
+    )');
     $this->db->order_by('rd.fecha_reporte','ASC');
     $this->db->order_by('rd.idreporte_diario','ASC');
     return $this->db->get();
