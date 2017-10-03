@@ -148,7 +148,7 @@ class Welcome extends CI_Controller {
 	public function mytest()
 	{
 		$this->load->database('ot');
-		$this->db->query('
+		$rows = $this->db->query('
     SELECT
           year(rd.fecha_reporte) as año,
           month(rd.fecha_reporte) as mes,
@@ -250,6 +250,11 @@ class Welcome extends CI_Controller {
           ORDER BY mytar.idvigencia_tarifas DESC
           LIMIT 1
       )');
-		echo $this->db->last_query();
+			$this->load->helper('xlsxwriter');
+	    $this->load->helper('download');
+	    $this->load->model('facturacion_db', 'repo');
+	    write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
+	    //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
+	    force_download('./uploads/informeProduccion.xlsx',NULL);
 	}
 }
