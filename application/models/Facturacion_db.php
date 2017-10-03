@@ -122,11 +122,11 @@ class Facturacion_db extends CI_Controller{
     if (isset($bases) && sizeof($bases) > 0) {
       $this->db->where_in('bs.idbase', $bases);
     }
-    $this->db->where('vtarf.idvigencia_tarifas = (
+    $this->db->where('tr.idtarifa = (
       SELECT mytar.idtarifa
       FROM tarifa AS mytar
       JOIN vigencia_tarifas AS vig ON vig.idvigencia_tarifas = mytar.idvigencia_tarifas
-      WHERE mytar.itemf_iditemf = t.itemf_iditemf
+      WHERE mytar.itemf_iditemf = tr.itemf_iditemf
       AND rd.fecha_reporte >= vig.fecha_inicio_vigencia
       ORDER BY mytar.idvigencia_tarifas DESC
       LIMIT 1
