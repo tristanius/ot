@@ -148,7 +148,7 @@ class Welcome extends CI_Controller {
 	public function mytest()
 	{
 		$this->load->database('ot');
-		$this->EE->db->save_queries = TRUE;
+		$this->db->save_queries = TRUE;
 		$this->load->model('Facturacion_db','fac');
 		$this->fac->informeFacturacion('2017-10-01','2017-10-15');
 		echo $this->db->last_query();
