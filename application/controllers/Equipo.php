@@ -123,7 +123,7 @@ class Equipo extends CI_Controller{
 
   public function cargarEquiposOT($activeSheet)
   {
-    $this->load->model(array('equipo_db'=>'equ'));
+    $this->load->model(array('equipo_db'=>'equ', 'item_db'=>'item'));
     $this->equ->init_transact();
     $response = array();
     foreach ($activeSheet as $key => $val) {
@@ -132,7 +132,7 @@ class Equipo extends CI_Controller{
   			if($equipos->num_rows() > 0){
   				$equipo = $equipos->row();
   				$ots = $this->equ->getField('nombre_ot LIKE "%'.$val['B'].'%"', 'idOT', 'OT');
-  				$its = $this->equ->getField('itemc_item LIKE "'.$val['C'].'"', 'iditemf, codigo', 'itemf');
+  				$its = $this->item->getItemfByvigencia( 'itf.itemc_item', $val['C'] );
 
   				if($ots->num_rows() > 0 ){
   					if($its->num_rows() > 0 ){

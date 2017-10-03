@@ -135,8 +135,10 @@ class Tarea_db extends CI_Model{
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc');
     $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
     $this->db->join('tarifa AS tarif','tarif.itemf_iditemf = itf.iditemf');
+    $this->db->join('vigencia_tarifas AS v','v.idvigencia_tarifas = tarif.idvigencia_tarifas');
     $this->db->join('tarea_ot AS tar', 'tar.idtarea_ot = itt.tarea_ot_idtarea_ot');
     $this->db->where('tarif.estado_tarifa', TRUE); // CORREGIR ESTO !!!!!!!!!!!!!
+    $this->db->where('v.estado', TRUE); 
     $this->db->where('itf.tipo',$tipo);
     $this->db->where('itt.tarea_ot_idtarea_ot',$idtarea);
     return $this->db->get();

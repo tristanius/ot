@@ -230,7 +230,7 @@ class Item_db extends CI_Model {
 		->join('base AS b', 'b.idbase = OT.base_idbase')
 		->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT ')
 		->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
-		->join('itemf AS itf','itf.codigo = itt.itemf_codigo')
+		->join('itemf AS itf','itf.iditemf = itt.itemf_iditemf')
 		->where('tr.fecha_inicio BETWEEN "'.$obj->fecha_i.'" AND "'.$obj->fecha_f.'" ')
 		->order_by('OT.base_idbase','ASC')
 		->group_by('OT.idOT');
@@ -310,7 +310,18 @@ class Item_db extends CI_Model {
 	public function getItemfBy($campo, $valorB, $tabla)
 	{
 		$this->load->database('ot');
-		return $this->db->get_where($tabla, array($campo=>$valorB));
+		return $this->db->get_where($tabla, array($campo=>$valorB,));
+	}
+
+	public function getItemfByvigencia($field,$val)
+	{
+		$this->load->database('ot');
+		return $this->db->select('itf.*')->from('itemf AS itf')
+							->join('tarifa AS tr','tr.itemf_iditemf = itf.iditemf')
+							->join('vigencia_tarifas AS v', 'v.idvigencia_tarifas = tr.idvigencia_tarifas')
+							->where('v.estado',TRUE)
+							->where($field, $val)
+							->get();
 	}
 
 }
