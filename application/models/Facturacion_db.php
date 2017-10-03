@@ -94,7 +94,6 @@ class Facturacion_db extends CI_Controller{
       rd.validado_pyco AS estado_reporte
       '
     );
-    //if(itf.unidad="hr",if((rrd.horas_operacion-4)>0,rrd.horas_operacion,4) ,if(rrd.horas_operacion=0,(itc.hrdisp/itc.basedisp),1)) as cantidad_total,
     $this->db->from('reporte_diario AS rd');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario','LEFT');
 
