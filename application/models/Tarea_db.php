@@ -137,10 +137,15 @@ class Tarea_db extends CI_Model{
     $this->db->join('tarifa AS tarif','tarif.itemf_iditemf = itf.iditemf');
     $this->db->join('vigencia_tarifas AS v','v.idvigencia_tarifas = tarif.idvigencia_tarifas');
     $this->db->join('tarea_ot AS tar', 'tar.idtarea_ot = itt.tarea_ot_idtarea_ot');
-    $this->db->where('tarif.estado_tarifa', TRUE); // CORREGIR ESTO !!!!!!!!!!!!!
-    $this->db->where('v.estado', TRUE); 
     $this->db->where('itf.tipo',$tipo);
+    $this->db->where("AND tarif.idvigencia_tarifas = (
+    SELECT v.idvigencia_tarifas
+    FROM vigencia_tarifas AS v
+    WHERE v.fecha_fin_vigencia < tar.fecha_inicio
+    ORDER BY v.idvigencia_tarifas DESC
+    LIMIT 1)");
     $this->db->where('itt.tarea_ot_idtarea_ot',$idtarea);
+    $this->db->limit('item');
     return $this->db->get();
   }
 
