@@ -124,7 +124,6 @@ class Tarea_db extends CI_Model{
         itt.idsector_item_tarea,
         tar.OT_idOT AS idot,
         itt.tarifa,
-        tarif.salario,
         tar.responsables,
         tar.requisitos_documentales,
         tar.editable,
@@ -135,14 +134,16 @@ class Tarea_db extends CI_Model{
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc');
     $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
     $this->db->join('tarifa AS tarif','tarif.itemf_iditemf = itf.iditemf');
+    $this->db->join('vigencia_tarifas AS vg','vg.idvigencia_tarifas = tarif.idvigencia_tarifas');
     $this->db->join('tarea_ot AS tar', 'tar.idtarea_ot = itt.tarea_ot_idtarea_ot');
     $this->db->where('itf.tipo',$tipo);
-    $this->db->where("AND tarif.idvigencia_tarifas = (
-    SELECT v.idvigencia_tarifas
-    FROM vigencia_tarifas AS v
-    WHERE v.fecha_fin_vigencia < tar.fecha_inicio
-    ORDER BY v.idvigencia_tarifas DESC
-    LIMIT 1)");
+    $this->db->where("vg.idvigencia_tarifas = (
+      SELECT v.idvigencia_tarifas
+      FROM vigencia_tarifas AS v
+      WHERE v.fecha_fin_vigencia >= tar.fecha_inicio
+      AND v.fecha_inicio_vigencia <= tar.fecha_fin
+      ORDER BY v.idvigencia_tarifas DESC
+      LIMIT 1)");
     $this->db->where('itt.tarea_ot_idtarea_ot',$idtarea);
     return $this->db->get();
   }
