@@ -13,10 +13,20 @@
   <section id="tabla-personal" class="nodisplay">
     <div class="row">
       <ul class="col s12 m7 l7">
-        <li><button type="button" class="btn mini-btn indigo lighten-2 black-text" data-icon="&#xe045;" ng-click="showSection('#findPersonal')" style="margin-top:0; font-size: 2.1ex"></button> Agregar personal basico de otra OT.</li>
+        <li>
+          <button type="button" class="btn mini-btn indigo lighten-2 black-text" data-icon="&#xe045;"
+            ng-click="enableViewRelacion('findPersonal', true, 'addPersonaExterno')" style="margin-top:0; font-size: 2.1ex"></button> Agregar personal basico de otra OT.
+        </li>
+        <li>
+          <button type="button" class="btn mini-btn lighten-2 black-text" data-icon="&#xe045;"
+            ng-click="enableViewRelacion('addPersonaExterno', true, 'findPersonal')" style="margin-top:0; font-size: 2.1ex"></button> Agregar personal <b>externo</b>.
+        </li>
       </ul>
-      <div id="findPersonal" class="col s12 m12 l12 nodisplay" style="background:#FAFAFA; padding:4px; border:1px solid #999;">
+      <div ng-show="findPersonal"  class="col s12 m12 l12 " style="background:#FAFAFA; padding:4px; border:1px solid #999;">
         <?php $this->load->view('recursos/finders/personal'); ?>
+      </div>
+      <div ng-show="addPersonaExterno" class="col s12 m12 l12 " style="background:#FAFAFA; padding:4px; border:1px solid #999;">
+        <?php $this->load->view('recursos/finders/addPersonalExterno'); ?>
       </div>
     </div>
 
@@ -28,6 +38,8 @@
           <th>Nombre completo</th>
           <th>Cargo</th>
           <th>Descripcion cargo</th>
+          <th>Asignacion como: </th>
+          <th>Propio? </th>
         </tr>
         <tr>
           <th></th>
@@ -35,10 +47,12 @@
           <th><input type="text" ng-model="filterPer.nombre_completo"></th>
           <th><input type="text" ng-model="filterPer.itemc_item"></th>
           <th><input type="text" ng-model="filterPer.descripcion"></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="p in recursosOT.personal | filter: filterPer | orderBy:'nombre_completo'">
+        <tr ng-repeat="p in recursosOT.personal | filter: filterPer | orderBy:'nombre_completo'" style="{{ p.propietario_recurso==true?'':'background: #ffc46d' }}">
           <td>
             <button
             type="button"
@@ -50,13 +64,16 @@
           <td ng-bind="p.nombre_completo"></td>
           <td ng-bind="p.itemc_item"></td>
           <td ng-bind="p.descripcion"></td>
+          <td ng-bind="p.propietario_observacion"></td>
+          <td ng-bind="p.propietario_recurso==1?'SI':'NO'"></td>
         </tr>
       </tbody>
     </table>
   </section>
 
-  <br>
-  <!-- --------------------------------------------------------------------------------- -->
+  <hr>
+
+  <!------------------------- EQUIPOS ------------------------------------------->
   <ul>
     <li>Equipos: <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-equipos')"></button></li>
   </ul>
@@ -87,6 +104,8 @@
           <th>Descripción equipo</th>
           <th>Item</th>
           <th>Desc. Item</th>
+          <th>Asinado como:</th>
+          <th>propio?</th>
         </tr>
         <tr>
           <th><input type="text" ng-model="filterEq.codigo_siesa"></th>
@@ -94,15 +113,19 @@
           <th><input type="text" ng-model="filterEq.descripcion_equipo"></th>
           <th><input type="text" ng-model="filterEq.itemc_item"></th>
           <th><input type="text" ng-model="filterEq.descripcion"></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'">
+        <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'" style="{{ e.propietario_recurso==true?'':'background: #ffc46d' }}">
           <td ng-bind="e.codigo_siesa"></td>
           <td ng-bind="e.referencia"></td>
           <td ng-bind="e.descripcion_equipo"></td>
           <td ng-bind="e.itemc_item"></td>
           <td ng-bind="e.descripcion"></td>
+          <td ng-bind="e.propietario_observacion"></td>
+          <td ng-bind="e.propietario_recurso"></td>
         </tr>
       </tbody>
     </table>

@@ -6,6 +6,8 @@ var recursosOT = function($scope, $http, $timeout){
       personal:[],
       equipo:[]
   }
+  $scope.findPersonal = false;
+  $scope.addPersonaExterno = false;
   $scope.seleccionar_ot = false;
 
   $scope.addEquipo = {};
@@ -50,8 +52,28 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
+  $scope.enableViewRelacion = function(viewModel, status, optionDisable){
+    $scope[viewModel] = status;
+    if(optionDisable){$scope[optionDisable] = !status;}
+  }
+
   $scope.showSection = function(tag){
     $(tag).toggleClass('nodisplay');
+  }
+
+  $scope.addPersonalOT =  function(pers, lnk){
+    $http.post(lnk, pers).then(
+      function(response){
+        alert('Agregado con exito. '+response.data);
+        $("fieldset #seleccionar-ot").toggleClass('nodisplay');
+        //$("#ot-recursos").addClass('nodisplay');
+        $scope.getRecursoOT($scope.consulta.ot);
+      },
+      function(response){
+        console.log(response.data);
+        alert('Algo ha fallado');
+      }
+    );
   }
 
   $scope.addEquipoTempOT = function(eq, url){
@@ -64,13 +86,15 @@ var recursosOT = function($scope, $http, $timeout){
         iditemf: $scope.myitemf_eq.iditemf,
         tipo:'equipo',
         codigo_temporal:eq.codigo_temporal,
-        descripcion_temporal: eq.descripcion_temporal
+        descripcion_temporal: eq.descripcion_temporal,
+        propietario_recurso: eq.propietario_recurso,
+        propietario_observacion: eq.propietario_observacion
       }
     ).then(
       function(response){
         alert('Agregado con exito. '+response.data);
         $("fieldset #seleccionar-ot").toggleClass('nodisplay');
-        $("#ot-recursos").addClass('nodisplay');
+        //$("#ot-recursos").addClass('nodisplay');
         $scope.getRecursoOT($scope.consulta.ot);
       },
       function(response){
@@ -97,17 +121,20 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
-  $scope.relacionarRecursosOT = function(url,mytipo,item){
+  $scope.relacionarRecursosOT = function(url,mytipo,item,view){
     $http.post(url, {
       idrecurso: item.idrecurso,
       tipo: mytipo,
       iditemf: item.itemf.iditemf,
       codigo: item.itemf.codigo,
-      idOT: $scope.consulta.idOT
+      idOT: $scope.consulta.idOT,
+      propietario_recurso: item.propietario_recurso,
+      propietario_observacion: item.propietario_observacion
     }).then(
       function(response){
         console.log(response.data);
         $scope.getRecursoOT($scope.consulta.ot);
+        view = false;
       },
       function(response){
         console.log(response.data);

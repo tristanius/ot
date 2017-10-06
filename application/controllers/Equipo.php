@@ -127,7 +127,11 @@ class Equipo extends CI_Controller{
     $this->equ->init_transact();
     $response = array();
     foreach ($activeSheet as $key => $val) {
-  		if(isset($val['E']) && $val['E'] != '' ){
+      if ($val['A'] == 'comentario' && $val['B'] == 'orden') {
+        // ignorado
+      }elseif ( $val['G']!='propio' && $val['G']!='externo') {
+        $val['A'] = 'No se ha especificado correctamente si es propio o externo (minusculas)';
+      }elseif(isset($val['E']) && $val['E'] != '' ){
   			$equipos = $this->equ->searchBy('0'.$val['E'].'-0');
   			if($equipos->num_rows() > 0){
   				$equipo = $equipos->row();
@@ -141,7 +145,7 @@ class Equipo extends CI_Controller{
 
               $rows = $this->equ->getEquipoPlan( $ot->idOT, $it->codigo);
               if ($rows->num_rows() > 0) {
-                if(!$this->equ->existeRecursoOT($equipo->idequipo, $ot->idOT, $it->iditemf)){
+                if( !$this->equ->existeRecursoOT($equipo->idequipo, $ot->idOT, $it->iditemf) ){
     						  $equipo->equipo_idequipo = $equipo->idequipo;
     						  $equipo->nombre_ot = $val['B'];
     						  $equipo->fecha_ingreso = date("Y-m-d");
@@ -151,6 +155,8 @@ class Equipo extends CI_Controller{
     						  $equipo->OT_idOT = $ot->idOT;
     						  $equipo->itemf_codigo = $it->codigo;
     						  $equipo->itemf_iditemf = $it->iditemf;
+                  $equipo->propietario_recurso = $val['G']=='propio'?true:false;
+                  $equipo->propietario_observacion = $val['F'];
     						  // Crear el recurso
     						  $id = $this->equ->setEquipoRecurso($equipo);
     						  // Crear el recurso OT

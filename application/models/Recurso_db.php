@@ -27,7 +27,7 @@ class Recurso_db extends CI_Model{
     return $this->db->insert_id();
   }
 
-  public function addRecursoOT($idrecurso, $ot, $itemf, $estado, $validado, $tipo, $cod_temp=NULL, $desc_temp=NULL)
+  public function addRecursoOT($idrecurso, $ot, $itemf, $estado, $validado, $tipo, $cod_temp=NULL, $desc_temp=NULL, $propietario_recurso, $propietario_observacion)
   {
     $this->load->database('ot');
     $data = array(
@@ -39,7 +39,9 @@ class Recurso_db extends CI_Model{
       'validado' => $validado,
       'tipo' => $tipo,
       'codigo_temporal'=>$cod_temp,
-      'descripcion_temporal'=>$desc_temp
+      'descripcion_temporal'=>$desc_temp,
+      'propietario_recurso'=>$propietario_recurso,
+      'propietario_observacion'=>$propietario_observacion
     );
     $this->db->insert('recurso_ot', $data);
     return $this->db->insert_id();
@@ -52,7 +54,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad'
+        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion,'
       )->from('recurso_ot AS rot')
       ->join('recurso AS r', 'rot.recurso_idrecurso = r.idrecurso')
       ->join('itemf AS itf', 'rot.itemf_iditemf = itf.iditemf')
@@ -69,7 +71,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, rot.codigo_temporal, rot.descripcion_temporal, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        e.idequipo, e.ccosto, e.un, e.desc_un, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad,
+        e.idequipo, e.ccosto, e.un, e.desc_un, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion,
         IFNULL( e.descripcion, rot.descripcion_temporal ) AS descripcion_equipo,
         IFNULL( e.codigo_siesa, rot.codigo_temporal ) AS codigo_siesa,
         IFNULL( e.referencia, "Temporal" ) AS referencia

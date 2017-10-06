@@ -51,6 +51,8 @@ if(!$nodownload){
       <th>STAND BY</th>
       <th>VALOR STAND</th>
       <th>HR/KM</th>
+      <th>ASINADO COMO</th>
+      <th>PROPIO</th>
     </tr>
   </thead>
   <tbody>

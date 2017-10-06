@@ -82,7 +82,9 @@ class Equipo_db extends CI_Model{
         'validado'=>TRUE,
         'recurso_idrecurso'=>$id,
         'OT_idOT'=>$equipo->OT_idOT,
-        'tipo' => 'equipo'
+        'tipo' => 'equipo',
+        'propietario_recurso' => $equipo->propietario_recurso,
+        'propietario_observacion' => $equipo->propietario_observacion
       );
       $this->db->insert('recurso_ot', $data);
       return $this->db->insert_id();

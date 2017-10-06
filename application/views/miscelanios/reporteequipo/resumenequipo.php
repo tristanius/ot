@@ -46,6 +46,8 @@ if(!$nodownload){
       }
       ?>
       <th class="thT">TOTAL MES</th>
+      <th>ASINADO COMO</th>
+      <th>PROPIO</th>
       </tr>
   </thead>
       <tbody>
@@ -107,7 +109,7 @@ if(!$nodownload){
                           echo ($v>0)?'D':'';
                         }
                     }elseif ($k>='d01' and $k<='d31'){
-                        $v = $v * 1; 
+                        $v = $v * 1;
                         $v = is_float($v)?number_format($v,2):number_format($v);
                         echo  ($v>0)?'<b>'.$v.'</b>':'';
                     }else{

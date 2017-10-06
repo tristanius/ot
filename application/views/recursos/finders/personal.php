@@ -36,7 +36,7 @@
           </select>
         </td>
         <td>
-          <button type="button" class="btn mini-btn" style="overflow:visible; max-height:9ex" ng-click="relacionarRecursosOT('<?= site_url('recurso/relacionarRecursosOT') ?>', 'persona', p)">
+          <button type="button" class="btn mini-btn" style="overflow:visible; max-height:9ex" ng-click="relacionarRecursosOT('<?= site_url('recurso/relacionarRecursosOT') ?>', 'persona', p, findPersonal)">
             Add. a {{ consulta.nombre_ot }}
           </button>
         </td>

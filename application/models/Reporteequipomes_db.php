@@ -122,7 +122,9 @@ class Reporteequipomes_db extends CI_Model{
         sum(varado*(1-abs(sign(day(fecha_reporte)-28)))) as v28,
         sum(varado*(1-abs(sign(day(fecha_reporte)-29)))) as v29,
         sum(varado*(1-abs(sign(day(fecha_reporte)-30)))) as v30,
-        sum(varado*(1-abs(sign(day(fecha_reporte)-31)))) as v31
+        sum(varado*(1-abs(sign(day(fecha_reporte)-31)))) as v31,
+        rot.propietario_observacion AS asignado_como,
+        rot.propietario_recurso AS propio
         from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,equipo e
         where fecha_reporte between "'.$fechai.'" and "'.$fechaf.'" '.$tmp_base.' and
         rd.idreporte_diario=rrd.idreporte_diario and
@@ -158,7 +160,9 @@ class Reporteequipomes_db extends CI_Model{
         "" as valor_horas,
         if(horas_disponible>0 and horas_operacion=0,1,"") as disponible,
         "" as valor_disponible,
-        CONCAT(rrd.horometro_ini, "-", rrd.horometro_fin)
+        CONCAT(rrd.horometro_ini, "-", rrd.horometro_fin),
+        rot.propietario_observacion AS asignado_como,
+        rot.propietario_recurso AS propio
         from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,equipo e, itemf i, itemc c
         where fecha_reporte between "'.$fechai.'" and "'.$fechaf.'" '.$tmp_base.' and
         rd.idreporte_diario=rrd.idreporte_diario and
@@ -171,7 +175,6 @@ class Reporteequipomes_db extends CI_Model{
         c.iditemc=i.itemc_iditemc
         order by e.codigo_siesa,fecha_reporte
       '
-
     );
 
   }

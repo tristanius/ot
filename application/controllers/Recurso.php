@@ -39,7 +39,7 @@ class Recurso extends CI_Controller{
   public function addRecursoOT(){
     $post = json_decode( file_get_contents('php://input') );
     $this->load->model('recurso_db', 'recdb');
-    $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal);
+    $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion);
     echo "success";
   }
 
@@ -60,7 +60,7 @@ class Recurso extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->model(array('recurso_db'=>'rec'));
-    $id = $this->rec->addRecursoOT($post->idrecurso, $post, $post, TRUE, TRUE, $post->tipo, NULL, NULL);
+    $id = $this->rec->addRecursoOT($post->idrecurso, $post, $post, TRUE, TRUE, $post->tipo, NULL, NULL, $post->propietario_recurso, $post->propietario_observacion);
     echo 'success';
   }
   # =============================================================================
@@ -109,7 +109,7 @@ class Recurso extends CI_Controller{
     $noValid = array();
     foreach ($rows as $key => $cell) {
       if ($process == 'personal') {
-        if($cell['B'] != 'Id C.O.' || $cell['C'] != 'Empleado'){
+        if($cell['A']!= 'Comentario' && $cell['B'] != 'Id C.O.' && $cell['C'] != 'Empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
           $items = $this->item->getItemfByvigencia( 'itf.codigo', $cell['G'] );
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
@@ -173,14 +173,17 @@ class Recurso extends CI_Controller{
       $obj->nombre_completo = $row['D'];
       $obj->fecha_registro = date('Y-m-d');
       $this->per->addObj($obj);
-      $row['A'] = 'Agregado persona - ';
+      $row['A'] = 'Agregada persona - ';
     }
-    if( $this->per->existePersona( $row['C'] ) ){
+    if( $row['K'] != 'propio' && $row['K'] != 'externo') {
+      $row['A'] = 'No se ha especificado correctamente si es propio o externo (minusculas)';
+    }elseif( $this->per->existePersona( $row['C'] ) ){
       $recursos = $this->per->getRecursoOT($row["C"], $ot->idOT, $itemf->iditemf);
       if ($recursos->num_rows() < 1) { //si no existe el recurso add
         $this->load->model('recurso_db','recurso');
+        $propietario_recurso = $row['K']=='propio'?true:false;
         $id = $this->recurso->add($row['H'], date('Y-m-d'), $row["F"], $row['E'], $row['I'], $row['C'], 'persona');
-        $this->recurso->addRecursoOT($id, $ot, $itemf, TRUE, TRUE, 'persona');
+        $this->recurso->addRecursoOT($id, $ot, $itemf, TRUE, TRUE, 'persona', NULL, NULL,  $propietario_recurso, $row['J']);
         $row['A'] = $row['A'].'Agregado Recurso';
       }else{
         $row['A'] = 'Registro ya existente';
