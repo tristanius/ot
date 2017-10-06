@@ -11,7 +11,7 @@
 		<br>
 		<img style="border:2px solid #999; max-width:800px" src="<?= base_url('assets/img/cargueequiposOT.png'); ?>" alt="" />
 		<br>
-
+		<a href="<?= base_url('uploads/plantillas/equiposOT.xlsx') ?>" class="btn waves-effect waves-light padding1ex">Plantilla</a>
 		<section id="resultado" style="overflow:auto; max-height: 200px;">
 
 		</section>

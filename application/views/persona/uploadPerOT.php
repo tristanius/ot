@@ -11,6 +11,7 @@
 		<small>Se debe respetar las columnas en blanco</small>
 		<img style="border:2px solid #999; width:100%; max-width:1200px" src="<?= base_url('assets/img/carguepersonal.png'); ?>" alt="" />
 		<br>
+		<a href="<?= base_url('uploads/plantillas/personalOT.xlsx') ?>" class="btn waves-effect waves-light padding1ex">Plantilla</a>
 
 		<section id="resultado" style="overflow:auto; max-height: 200px;">
 

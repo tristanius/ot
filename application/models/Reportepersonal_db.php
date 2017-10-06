@@ -141,6 +141,8 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS estado_reporte,
+      rot.propietario_observacion AS asignado_como,
+      IF(rot.propietario_recurso,"SI","NO") AS propio,
       if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
       if(rrd.nomina=1, "SI","NO") AS en_nomina
       '
