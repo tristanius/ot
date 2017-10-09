@@ -54,7 +54,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion,'
+        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion'
       )->from('recurso_ot AS rot')
       ->join('recurso AS r', 'rot.recurso_idrecurso = r.idrecurso')
       ->join('itemf AS itf', 'rot.itemf_iditemf = itf.iditemf')

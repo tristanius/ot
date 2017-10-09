@@ -25,6 +25,7 @@
             <th>Item</th>
             <th>Cod. cargo</th>
             <th>Cargo</th>
+            <th>Asignación</th>
           </tr>
         </thead>
         <tbody>
@@ -41,8 +42,9 @@
             <td><input type="text" ng-model="fil_pOT.itemc_item" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_pOT.codigo" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_pOT.descripcion" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_pOT.propietario_observacion" placeholder="filtrar"></td>
           </tr>
-          <tr ng-repeat="p in personalOT | filter: fil_pOT | orderBy: 'nombre_completo'">
+          <tr ng-repeat="p in personalOT | filter: fil_pOT | orderBy: 'nombre_completo'" style="{{ p.propietario_recurso==true?'':'background: #ffc46d' }}">
             <td class="noMaterialStyles"> <input type="checkbox" ng-model="p.add" ng-click="setSelecteState(p.add)"> </td>
             <td ng-bind="p.identificacion"></td>
             <td ng-bind="p.nombre_completo"></td>
@@ -50,6 +52,7 @@
             <td ng-bind="p.itemc_item"></td>
             <td ng-bind="p.codigo"></td>
             <td ng-bind="p.descripcion"></td>
+            <td ng-bind="p.propietario_observacion"></td>
           </tr>
         </tbody>
       </table>

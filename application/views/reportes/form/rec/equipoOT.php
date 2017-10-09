@@ -13,77 +13,6 @@
       <br>
     </div>
 
-    <div id="AddEquiposOtSection" class="sectionsEquiposRD nodisplay noMaterialStyles" style="border:2px solid #999; padding:2ex;">
-      <fieldset class="row">
-        <h4>Busca y relaciona equipos a esta OT para poder reportarlos</h4>
-        <div class="col s6 m6 row">
-          <label class="col s3 m4">Cod. siesa: </label>
-          <input class="col s4 m4" type="text" ng-model="consultaEquiposOT.codigo_siesa">
-        </div>
-
-        <div class="col s6 m6 row">
-          <label class="col s3 m4">Referencia: </label>
-          <input class="col s4 m4" type="text" ng-model="consultaEquiposOT.referencia">
-        </div>
-
-        <div class="col s6 m6 row">
-          <label class="col s3 m4">Descripcion: </label>
-          <input class="col s4 m4" type="text" ng-model="consultaEquiposOT.descripcion">
-        </div>
-
-        <div class="col s6 m6 row">
-          <label class="col s4 m4">Unidad de negocio: </label>
-          <select class="col s4 m4" ng-model="consultaEquiposOT.un">
-            <option value="">Sin seleccion</option>
-            <?php foreach ($un_equipos->result() as $value): ?>
-              <option value="<?= $value->un ?>"> <?= $value->desc_un ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="col s6 m6 row">
-          <button type="button" class="btn mini-btn" ng-click="buscarEquiposBy('<?= site_url('equipo/findBy') ?>')">Buscar</button>
-        </div>
-      </fieldset>
-
-
-      <table class="mytabla">
-        <thead>
-          <tr>
-            <th>Cod. Siesa</th>
-            <th>Referencia</th>
-            <th>Descripción</th>
-            <th></th>
-            <th>Unidad negocio</th>
-            <th>Opcion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td> <input type="text" ng-model="filterResultEquiposBusqueda.codigo_siesa" value=""> </td>
-            <td> <input type="text" ng-model="filterResultEquiposBusqueda.referencia" value=""> </td>
-            <td> <input type="text" ng-model="filterResultEquiposBusqueda.descripcion" value=""> </td>
-            <td> <input type="text" ng-model="filterResultEquiposBusqueda.desc_un" value=""> </td>
-            <td></td>
-          </tr>
-          <tr ng-repeat="it in resultEquiposBusqueda | filter: filterResultEquiposBusqueda">
-            <td ng-bind="it.codigo_siesa"></td>
-            <td ng-bind="it.referencia"></td>
-            <td ng-bind="it.descripcion"></td>
-            <td>
-                <select ng-model="it.item" name="">
-                  <?php foreach ($item_equipos as $ite): ?>
-                    <option value="<?= $ite->iditemf ?>"><?= $ite->itemc_item." - ".$ite->descripcion ?></value>
-                  <?php endforeach; ?>
-                </select>
-            </td>
-            <td ng-bind="it.desc_un"></td>
-            <td><button type="button" ng-click="relacionarEquipoAOt(it, '<?= site_url('equipo/relacionarEquipo') ?>')"> Add. </button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
     <div id="AddEquiposReporteSection" class="sectionsEquiposRD " style="overflow:auto">
       <h4>Equipos por agregar al reporte</h4>
       <table class="mytabla">
@@ -95,12 +24,13 @@
             <th>Descripción</th>
             <th>item</th>
             <th>Unidad negocio</th>
+            <th>Asignacion</th>
           </tr>
           <tr>
             <th class="noMaterialStyles">
               Todos <input type="checkbox" ng-click="selectionAll(equiposOT, 'add');">
             </th>
-            <th colspan="5">
+            <th colspan="6">
 
             </th>
           </tr>
@@ -118,14 +48,16 @@
             <td><input type="text" ng-model="fil_eOT.descripcion" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_eOT.itemc_item" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_eOT.unidad_negocio" placeholder="filtrar"></td>
+            <td></td>
           </tr>
-          <tr ng-repeat="e in equiposOT | filter: fil_eOT | orderBy: 'itemc_item' ">
+          <tr ng-repeat="e in equiposOT | filter: fil_eOT | orderBy: 'itemc_item' " style="{{ e.propietario_recurso==true?'':'background: #ffc46d' }}">
             <td class="noMaterialStyles"> <input type="checkbox" ng-model="e.add" ng-click="setSelecteState(e.add)"> </td>
             <td ng-bind="e.codigo_siesa"></td>
             <td ng-bind="e.referencia"></td>
             <td ng-bind="e.descripcion"></td>
             <td ng-bind="e.itemc_item"></td>
             <td ng-bind="e.unidad_negocio"></td>
+            <td ng-bind="e.propietario_observacion"></td>
           </tr>
         </tbody>
       </table>

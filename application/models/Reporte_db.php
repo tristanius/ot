@@ -206,7 +206,7 @@ class Reporte_db extends CI_Model{
 
   public function getRecursos($idrepo, $tipo){
     $this->load->database('ot');
-    $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item');
+    $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item, rot.propietario_recurso, rot.propietario_observacion');
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
     $this->db->join('itemf AS itf', 'rrd.itemf_iditemf = itf.iditemf', 'LEFT');
@@ -253,7 +253,7 @@ class Reporte_db extends CI_Model{
     }
     return $this->db->get();
   }
-
+  // Listado de reoportes de una OT
   public function listaBy($idOT)
   {
     $this->load->database('ot');
