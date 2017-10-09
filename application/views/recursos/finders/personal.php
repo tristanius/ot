@@ -9,7 +9,7 @@
     <input class="col s5 m4 l3" type="text" ng-model="myconsulta.nombre_ot">
     <br class="clear-left">
     <button type="button" style="margin:0" data-icon="," ng-click="findRecursoOT('<?= site_url('recurso/finby') ?>', 'persona', myconsulta, 'relacionPersonal')"></button>
-    <button type="button" style="margin:0" ng-click="showSection('#findPersonal')" data-icon="&#xe036;"></button>
+    <button type="button" style="margin:0" ng-click="enableViewRelacion('', true, 'findPersonal')" data-icon="&#xe036;"></button>
   </div>
 
   <br>

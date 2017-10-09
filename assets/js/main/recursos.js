@@ -53,7 +53,7 @@ var recursosOT = function($scope, $http, $timeout){
   }
 
   $scope.enableViewRelacion = function(viewModel, status, optionDisable){
-    $scope[viewModel] = status;
+    if(viewModel){$scope[viewModel] = status;}
     if(optionDisable){$scope[optionDisable] = !status;}
   }
 
