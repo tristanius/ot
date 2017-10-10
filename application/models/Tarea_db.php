@@ -141,7 +141,7 @@ class Tarea_db extends CI_Model{
       SELECT v.idvigencia_tarifas
       FROM vigencia_tarifas AS v
       WHERE v.fecha_fin_vigencia >= tar.fecha_inicio
-      AND v.fecha_inicio_vigencia <= tar.fecha_fin
+      AND v.fecha_inicio_vigencia <= tar.fecha_inicio
       ORDER BY v.idvigencia_tarifas DESC
       LIMIT 1)");
     $this->db->where('itt.tarea_ot_idtarea_ot',$idtarea);

@@ -12,7 +12,7 @@ class Export extends CI_Controller{
 
   function index()
   {
-    $this->load->view('reportes/imprimir_pma/reporte');
+    $this->load->view('reportes/imprimir_pma/reporte_pma');
   }
 
   public function historyRepoByOT($idOT, $nombre_ot, $fact=NULL)
