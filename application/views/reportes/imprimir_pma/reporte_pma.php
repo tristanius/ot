@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utp-8" />
 		<style>
 			body{
 				font-family:Arial;
@@ -25,7 +25,7 @@
 				table-layout: fixed;
 			}
 
-			tfoot td{ 
+			tfoot td{
 				border: 0px solid black;
 			}
 
@@ -49,7 +49,7 @@
 			}
 		</style>
 	</head>
-	<body>		
+	<body>
 		<table border="1">
 		  	<thead>
 				<tr>
@@ -97,14 +97,14 @@
 				</tr>
 				<tr>
 					<th colspan="2" rowspan="2">CODIGO</th>
-					<th colspan="1" rowspan="2">CÉDULA</th>
+					<th colspan="1" rowspan="2">Cï¿½DULA</th>
 					<th colspan="6" rowspan="2">NOMBRE</th>
 					<th colspan="3" rowspan="2">CARGO</th>
 					<th colspan="1" rowspan="2">BASE</th>
 					<th colspan="2">Personal</th>
 					<th colspan="4" >REPORTE DE TIEMPO LABORADO</th>
 					<th colspan="1" rowspan="2">THA (S/N)</th>
-					<th colspan="1" rowspan="2">RACIÓN</th>
+					<th colspan="1" rowspan="2">RACIï¿½N</th>
 					<th colspan="5">VIATICOS</th>
 					<th colspan="1" rowspan="2">&nbsp;</th>
 					<th colspan="8" rowspan="2">FIRMA DEL TRABAJADOR</th>
@@ -121,14 +121,14 @@
 		  	</thead>
 		  	<tbody>
 			<script>
-			for (i = 0; i < 16; i++) { 
+			for (i = 0; i < 16; i++) {
 			    document.write("<tr><td colspan='2'></td><td colspan='1'></td><td colspan='6'></td><td colspan='3'></td><td colspan='1'></td><td></td><td></td><td colspan='2'></td>				<td colspan='2'></td><td colspan='1'></td><td colspan='1'></td><td></td>	<td></td>	<td colspan='3'></td><td colspan='1'>&nbsp;</td><td colspan='8'></td></tr>	");
-			}	
-			</script>	  
+			}
+			</script>
 		 	</tbody>
 				<tfoot>
 				<tr>
-					<td colspan="3">Bas: Básico</td>
+					<td colspan="3">Bas: Bï¿½sico</td>
 					<td colspan="1"></td>
 					<td colspan="6">I: Incapacidad </td>
 					<td colspan="3">HI: Hora de inicio</td>
@@ -173,10 +173,10 @@
 			</thead>
 			<tbody>
 				<script>
-				for (i = 0; i < 13; i++) { 
+				for (i = 0; i < 13; i++) {
 				    document.write("<tr><td colspan='2'></td><td colspan='6'></td><td colspan='1'></td><td colspan='1'></td><td colspan='1'></td><td colspan='1'></td><td colspan='1'></td><td colspan='2'></td><td colspan='2'></td><td colspan='2'></td><td colspan='2'></td><td colspan='8'></td><td colspan='2'></td><td colspan='2'></td><td colspan='2'></td></tr>");
-				}	
-				</script>	  
+				}
+				</script>
 			</tbody>
 		</table>
 
@@ -201,7 +201,7 @@
 					<th>&nbsp;</th>
 					<th>de</th>
 					<th>&nbsp;</th>
-				</tr>	
+				</tr>
 				<tr class="trLimpia"></tr>
 			</thead>
 			<tbody>
@@ -251,7 +251,7 @@
 					<td colspan="3" id="centrar">CANTIDAD ACUMULADA</td>
 				</tr>
 				<tr>
-					<td colspan="13">REPARACIÓN</td>
+					<td colspan="13">REPARACIï¿½N</td>
 					<td colspan="2"></td>
 					<td colspan="13"></td>
 					<td colspan="2"></td>
@@ -352,12 +352,12 @@
 			</tbody>
 			<tfoot>
 			<tr>
-				<td colspan="36" id="centrar">Con la firma del presente formato el trabajador reconoce haber sido notificado previamente  en los términos de ley de las horas ordinarias  y horas extras (cuando se aplique) acá reportadas.</td>
+				<td colspan="36" id="centrar">Con la firma del presente formato el trabajador reconoce haber sido notificado previamente  en los tï¿½rminos de ley de las horas ordinarias  y horas extras (cuando se aplique) acï¿½ reportadas.</td>
 			</tr>
 			<tr>
-				<td colspan="36" id="centrar">Nota de propiedad: Los derechos de propiedad intelectual sobre este documento y su contenido le pertenecen exclusivamente al CONSORCIO PIPELINE MAINTENANCE ALLIANCE (PMA). Por lo tanto, queda estrictamente prohibido el uso, divulgación, distribución, reproducción, modificación y/o alteración de los mencionados derechos, con fines distintos a los previstos en este documento, sin la autorización previa y escrita del consorcio. 		</td>
+				<td colspan="36" id="centrar">Nota de propiedad: Los derechos de propiedad intelectual sobre este documento y su contenido le pertenecen exclusivamente al CONSORCIO PIPELINE MAINTENANCE ALLIANCE (PMA). Por lo tanto, queda estrictamente prohibido el uso, divulgaciï¿½n, distribuciï¿½n, reproducciï¿½n, modificaciï¿½n y/o alteraciï¿½n de los mencionados derechos, con fines distintos a los previstos en este documento, sin la autorizaciï¿½n previa y escrita del consorcio. 		</td>
 			</tr>
-			</tfoot>	
+			</tfoot>
 		</table>
 	</body>
 </html>
