@@ -12,7 +12,7 @@ class Export extends CI_Controller{
 
   function index()
   {
-    $this->load->view('reportes/imprimir_pma/reporte');
+
   }
 
   public function historyRepoByOT($idOT, $nombre_ot, $fact=NULL)
@@ -111,6 +111,18 @@ class Export extends CI_Controller{
       TRUE);
     doPDF($html, 'Reporte-'.$row->nombre_ot);
     //echo $html;
+  }
+
+  public function rd_pma($idOT, $idrepo)
+  {
+    $this->load->model('reporte_db', 'repo');
+    $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
+    $json_r = json_decode($row->json_r);
+    $recursos = new stdClass();
+    $recursos->personal = $this->repo->getRecursos($idrepo,"personal")->result();
+    $recursos->equipos = $this->repo->getRecursos($idrepo,"equipos")->result();
+    $recursos->actividades = $this->repo->getRecursos($idrepo,"actividades")->result();
+    $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos ) );
   }
 
   public function reportePDFHTML($idOT, $idrepo)

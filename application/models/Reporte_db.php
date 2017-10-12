@@ -348,8 +348,10 @@ class Reporte_db extends CI_Model{
       p.identificacion,
       p.nombre_completo,
       e.codigo_siesa,
-      if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) AS referencia,
-      if(e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion) AS equipo
+      if( e.referencia IS NULL, rot.codigo_temporal, e.referencia ) AS referencia,
+      if( e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion ) AS equipo,
+      rot.propietario_observacion AS asignado_a,
+      IF( rot.propietario_recurso, "SI", "NO" ) AS propio
       '
     );
     $this->db->from('reporte_diario AS rd');
