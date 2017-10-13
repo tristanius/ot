@@ -11,7 +11,7 @@
       </tr>
       <tr>
         <th rowspan="3" colspan="6"></th>
-        <th colspan="29" class="f16">REPORTE DIARIO OT</th>
+        <th colspan="29" class="f16">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
       </tr>
       <tr>
         <th colspan="29" class="f16">&nbsp;</th>
@@ -27,9 +27,9 @@
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th colspan="4">FECHA:</th><th colspan="10"></th>
+        <th colspan="4">FECHA:</th><th colspan="10"> <?= date('d/m/Y', strtotime( $r->fecha_reporte ) ) ?> </th>
         <th>&nbsp;</th>
-        <th colspan="4">FESTIVO:</th><th colspan="7"></th>
+        <th colspan="4">FESTIVO:</th><th colspan="7"> <?= $r->festivo?"SI":"NO"; ?> </th>
         <th>&nbsp;</th>
         <th colspan="2">ESPECIALIDAD:</th><th colspan="6"></th>
       </tr>

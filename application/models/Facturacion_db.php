@@ -80,6 +80,7 @@ class Facturacion_db extends CI_Controller{
       rrd.hora_fin AS tr1_salida,
       rrd.hora_inicio2 AS tr2_entrada,
       rrd.hora_fin2 AS tr2_salida,
+      rrd.hr_almuerzo,
       if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
       if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
       if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
@@ -91,7 +92,8 @@ class Facturacion_db extends CI_Controller{
       rrd.racion,
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
-      rd.validado_pyco AS estado_reporte
+      rd.validado_pyco AS estado_reporte,
+      rot.propietario_observacion AS asignacion
       '
     );
     $this->db->from('reporte_diario AS rd');

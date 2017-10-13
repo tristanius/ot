@@ -115,6 +115,8 @@ class Export extends CI_Controller{
 
   public function rd_pma($idOT, $idrepo)
   {
+    setlocale(LC_ALL,"es_ES"); 
+    $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
     $json_r = json_decode($row->json_r);
@@ -122,7 +124,7 @@ class Export extends CI_Controller{
     $recursos->personal = $this->repo->getRecursos($idrepo,"personal")->result();
     $recursos->equipos = $this->repo->getRecursos($idrepo,"equipos")->result();
     $recursos->actividades = $this->repo->getRecursos($idrepo,"actividades")->result();
-    $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos ) );
+    $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r ) );
   }
 
   public function reportePDFHTML($idOT, $idrepo)
