@@ -45,5 +45,28 @@
         <td colspan="2"> <?= !isset( $r["a"] )?" - ":$r['a']->acumulado+($r['a']->cantidad*1) ?> </td>
       </tr>
     <?php endforeach; ?>
+    <?php
+    for ($i=0; $i <= (7-sizeof($equipos)); $i++) {
+    ?>
+      <tr>
+        <td colspan="2"></td>
+        <td colspan="6"></td>
+        <td colspan="1"></td>
+        <td colspan="1"></td>
+        <td colspan="1"></td>
+        <td colspan="1"></td>
+        <td colspan="1"></td>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
+        <td colspan="8"></td>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
+        <td colspan="2"></td>
+      </tr>
+    <?php
+    }
+    ?>
   </tbody>
 </table>

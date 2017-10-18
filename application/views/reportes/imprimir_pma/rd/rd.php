@@ -12,5 +12,7 @@
     $this->load->view('reportes/imprimir_pma/rd/personal', array( 'personal'=>$recursos->personal ) ); //, array('personal' => $recusos->personal  ) );
     $this->load->view('reportes/imprimir_pma/rd/equipos_apu', array( 'equipos' => $recursos->equipos, 'apu'=>$recursos->actividades ) ); //, array('equipos' => $recursos->equipos, 'apu'=>$recursos->apu  ) );
     ?>
+    <br>
+    <?php $this->load->view("reportes/imprimir_pma/rd/pagina1"); ?>
   </body>
 </html>

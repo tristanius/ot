@@ -9,7 +9,7 @@
         font-size: 9px;
         min-height: 25px;
         height:20px;
-        width: 10em;
+        min-width: 10em;
     }
     tr{
       height:20px;
@@ -46,6 +46,10 @@
     }
     .f16{
       font-size: 16px;
+    }
+    table#header th, table#header td, table#personal th, table#personal td{
+      text-align: center;
+      vertical-align: middle;
     }
   </style>
   <title>Reporte Diario</title>
