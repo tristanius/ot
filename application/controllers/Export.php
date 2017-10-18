@@ -115,7 +115,7 @@ class Export extends CI_Controller{
 
   public function rd_pma($idOT, $idrepo)
   {
-    setlocale(LC_ALL,"es_ES"); 
+    setlocale(LC_ALL,"es_ES");
     $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
@@ -210,7 +210,18 @@ class Export extends CI_Controller{
     return substr($value, 0, 2);
   }
 
-  #=================================================================================
+  # =================================================================================
+  public function resumenOt($idOT)
+  {
+    $this->load->model('ot_db', 'ot');
+		$resumen = $this->ot->resumenOT($idOT);
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="ResumenOT.xls"');
+    header('Cache-Control: max-age=0');
+		$this->load->view('ot/table_resumen', array('items'=>$resumen, 'idOT'=>$idOT) );
+  }
+
+  # =================================================================================
 
   public function testXLSX($value='')
   {

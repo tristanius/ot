@@ -624,7 +624,7 @@ class Ot extends CI_Controller {
 	{
 		$this->load->model('ot_db', 'ot');
 		$resumen = $this->ot->resumenOT($idOT);
-		$this->load->view('ot/vista_resumen', array('items'=>$resumen) );
+		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT) );
 		//$items = $this->ot->getResumenCantItems($idOT);
 		//echo $this->load->view('ot/forms/consolidado', array('items'=>$items), TRUE );
 	}
@@ -633,7 +633,7 @@ class Ot extends CI_Controller {
 	{
 		$this->load->model('ot_db', 'ot');
 		$resumen = $this->ot->resumenOT($idOT);
-		$this->load->view('ot/vista_resumen', array('items'=>$resumen) );
+		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT ) );
 	}
 	# ===============================================================================
 	// Informes de PYCO en excel

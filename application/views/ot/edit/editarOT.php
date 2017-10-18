@@ -201,7 +201,8 @@
 				<?php $this->load->view('ot/forms/info_general') ?>
 			</div>
 
-			<div id="resumenItems" class="nodisplay"></div>
+			<div id="resumenItems" class="nodisplay">
+			</div>
 
 		</div>
 		<br>

@@ -143,7 +143,6 @@ class Recurso extends CI_Controller{
   }
   # ------------------------------------------------------------------
   # AUXILIARES:
-
   # crear un subdirectorio
   public function crear_directorio($carpeta)
   {
