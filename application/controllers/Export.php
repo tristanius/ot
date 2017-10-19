@@ -124,7 +124,11 @@ class Export extends CI_Controller{
     $recursos->personal = $this->repo->getRecursos($idrepo,"personal")->result();
     $recursos->equipos = $this->repo->getRecursos($idrepo,"equipos")->result();
     $recursos->actividades = $this->repo->getRecursos($idrepo,"actividades")->result();
-    $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r ) );
+    $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+    //echo $vw;
+    //$vw = $this->load->view('reportes/imprimir_pma/test','',TRUE);
+    $this->load->helper('pdf');
+    doPDF($vw, 'Reporte', NULL, TRUE);
   }
 
   public function reportePDFHTML($idOT, $idrepo)

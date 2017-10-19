@@ -1,7 +1,9 @@
 <?php
-  header('Content-Type: application/vnd.ms-excel');
-  header('Content-Disposition: attachment;filename="prueba.xls"');
-  header('Cache-Control: max-age=0');
+  if($export==TRUE){
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="prueba.xls"');
+    header('Cache-Control: max-age=0');
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,6 +15,8 @@
     $this->load->view('reportes/imprimir_pma/rd/equipos_apu', array( 'equipos' => $recursos->equipos, 'apu'=>$recursos->actividades ) ); //, array('equipos' => $recursos->equipos, 'apu'=>$recursos->apu  ) );
     ?>
     <br>
-    <?php $this->load->view("reportes/imprimir_pma/rd/pagina1"); ?>
+    <?php
+    $this->load->view('reportes/imprimir_pma/rd/info_adicional');
+    ?>
   </body>
 </html>

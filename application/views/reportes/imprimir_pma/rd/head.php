@@ -4,25 +4,21 @@
   <style>
     body{
       font-family:Arial;
+      max-width: 100%;
+      font-size: 8px;
     }
-    th,td{
-        font-size: 9px;
-        min-height: 25px;
-        height:20px;
-        min-width: 10em;
-    }
-    tr{
-      height:20px;
+    td, th{
+      min-height: 10px;
     }
     table, th, td {
-        border-collapse: collapse;
+      border: 1px solid #333;
     }
     .sinborde{
         border: 0px solid black;
     }
     table {
       width: 100%;
-      table-layout: fixed;
+      border-collapse: collapse;
     }
 
     tfoot td{

@@ -1,6 +1,6 @@
+<br>
 <table border="1">
   <thead>
-    <tr class="trLimpia"></tr>
     <tr>
       <th colspan="19">EQUIPO</th>
       <th colspan="16">ACTIVIDAD DE MANTENIMIENTO</th>

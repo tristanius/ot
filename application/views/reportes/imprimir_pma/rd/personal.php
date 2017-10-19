@@ -1,6 +1,6 @@
+<br>
 <table border="1" id="personal">
   <thead>
-    <tr class="trLimpia"></tr>
     <tr>
       <th colspan="35">DATOS DEL PERSONAL, HORARIO TRABAJADO, RACIONES Y VIATICOS</th>
     </tr>
