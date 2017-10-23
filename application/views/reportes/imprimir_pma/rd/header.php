@@ -13,10 +13,10 @@
         <th rowspan="3" colspan="3">
           <img src="<?= base_url('assets/img/pma.png') ?>" style="width:25ex">
         </th>
-        <th colspan="32" class="f16 center">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
+        <th colspan="32" class="f16 centrar">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
       </tr>
       <tr>
-        <td colspan="32" class="center" >
+        <td colspan="32" class="centrar" >
           <small>
             EJECUCION DE OBRAS Y TRABAJOS DE MANTENIMIENTO DE SISTEMAS DE TRANSPORTE DE HIDROCARBUROS DURANTE LAS VIGENCIAS 2013 AL 2018- ZONA SUR
             CONTRATO NO. MA-0032889 Y SU ADICIONAL NO. 1 DE ECOPETROL Y EL CONTRATO DE CENIT NO. 8000002840

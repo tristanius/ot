@@ -2,9 +2,9 @@
 <tr><td colspan="35"></td></tr>
 <tr><td colspan="35"></td></tr>
 <tr>
-  <th colspan="3">TIEMPO EFECTIVO MTTO</th>
-  <th colspan="17">TIEMPO EFECTIVO DE INTERVENSION EN EL SISTEMA</th>
-  <th colspan="15">TIEMPO NO EFECTIVO</th>
+  <th colspan="3" class="centrar">TIEMPO EFECTIVO MTTO</th>
+  <th colspan="17" class="centrar">TIEMPO EFECTIVO DE INTERVENSION EN EL SISTEMA</th>
+  <th colspan="15" class="centrar">TIEMPO NO EFECTIVO</th>
 </tr>
 <tr>
   <td colspan="1"> No. personas </td>
