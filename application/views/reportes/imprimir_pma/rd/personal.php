@@ -50,7 +50,7 @@
       </tr>
     <?php endforeach; ?>
     <?php
-      for ($i=0; $i <= ( 12-sizeof($personal) ) ; $i++) {
+      for ($i=0; $i <= ( 11-sizeof($personal) ) ; $i++) {
       ?>
       <tr>
         <td colspan="2" rowspan="2" ></td>
