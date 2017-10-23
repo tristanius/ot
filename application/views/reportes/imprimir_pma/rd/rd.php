@@ -13,9 +13,9 @@
     if ( isset($pdf) ) {
       $font = $fontMetrics->get_font("Helvetica");
       $size = 7;
-      $y = $pdf->get_height() - 25;
+      $y = $pdf->get_height() - 20;
       $x = 30;//$pdf->get_width() - 15 - $fontMetrics->get_text_width("1/1", $font, $size);
-      $pdf->page_text($x, $y, " Pagina {PAGE_NUM} de {PAGE_COUNT} ", $font, $size);
+      $pdf->page_text($x, $y, " Pagina {PAGE_NUM} de {PAGE_COUNT} - SICO App ", $font, $size);
     }
     </script>
     <?php

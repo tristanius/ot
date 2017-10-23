@@ -13,7 +13,7 @@
         <th rowspan="3" colspan="3">
           <img src="<?= base_url('assets/img/pma.png') ?>" style="width:25ex">
         </th>
-        <th colspan="32" class="f16">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
+        <th colspan="32" class="f16 center">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
       </tr>
       <tr>
         <td colspan="32" class="center" >

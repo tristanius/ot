@@ -4,7 +4,7 @@
   <style>
     @page {
       margin: 30px;
-      margin-top: 100px;
+      margin-top: 90px;
     }
     #cabecera{
       position: fixed;
