@@ -9,6 +9,15 @@
 <html>
   <?php $this->load->view('reportes/imprimir_pma/rd/head'); ?>
   <body>
+    <script type="text/php">
+    if ( isset($pdf) ) {
+      $font = $fontMetrics->get_font("Helvetica");
+      $size = 7;
+      $y = $pdf->get_height() - 25;
+      $x = 30;//$pdf->get_width() - 15 - $fontMetrics->get_text_width("1/1", $font, $size);
+      $pdf->page_text($x, $y, " Pagina {PAGE_NUM} de {PAGE_COUNT} ", $font, $size);
+    }
+    </script>
     <?php
     $this->load->view('reportes/imprimir_pma/rd/header', array('r'=>$r, 'json_r'=>$json_r) );
     $this->load->view('reportes/imprimir_pma/rd/personal', array( 'personal'=>$recursos->personal ) ); //, array('personal' => $recusos->personal  ) );
