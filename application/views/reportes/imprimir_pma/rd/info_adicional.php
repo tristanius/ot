@@ -25,6 +25,67 @@
       <td colspan="26"></td>
     </tr>
     <?php $this->load->view('reportes/imprimir_pma/rd/info_actividad', array('title'=>'ACTIVIDAD 1', 'data'=>NULL ) ); ?>
+    <tr>
+      <td colspan="13" id="centrar"><b>ILICITOS</b></td>
+      <td colspan="22" id="centrar"><b>CANTIDADES DE OBRAS EJECUTADAS</b></td>
+    </tr>
+    <tr>
+      <td colspan="13">
+        <table class="sinborde">
+        <tr>
+          <td class="sinborde">EXTENSION:</td>
+          <td></td>
+          <td class="sinborde">DIAMETRO</td>
+          <td></td>
+          <td class="sinborde">LONGITUD</td>
+          <td></td>
+          <td class="sinborde">MATERIAL</td>
+          <td></td>
+        </tr>
+        </table>
+      </td>
+      <td colspan="2" id="centrar">ITEM</td>
+      <td colspan="12" id="centrar">DESCRIPCIÓN ACTIVIDAD DE MANTENIMIENTO</td>
+      <td colspan="2" id="centrar">UNIDAD</td>
+      <td colspan="3" id="centrar">CANTIDAD DIA</td>
+      <td colspan="3" id="centrar">CANTIDAD ACUMULADA</td>
+    </tr>
+    <tr>
+      <td colspan="13">REPARACIÓN</td>
+      <td colspan="2"></td>
+      <td colspan="12"></td>
+      <td colspan="2"></td>
+      <td colspan="3"></td>
+      <td colspan="3"></td>
+    </tr>
+    <tr>
+      <td colspan="6">COORDENADAS GPS</td>
+      <td colspan="5">ANILLO CIRCUNFERENCIAL</td><td colspan="2"></td>
+      <td colspan="2"></td>
+      <td colspan="12"></td>
+      <td colspan="2"></td>
+      <td colspan="3"></td>
+      <td colspan="3"></td>
+    </tr>
+    <tr>
+      <td colspan="6">NORTE (N):</td>
+      <td colspan="5">CAMBIO TRAMO</td><td colspan="2"></td>
+      <td colspan="2"></td>
+      <td colspan="12"></td>
+      <td colspan="2"></td>
+      <td colspan="3"></td>
+      <td colspan="3"></td>
+    </tr>
+    <tr>
+      <td colspan="6">ESTE (W):</td>
+      <td colspan="5">RETIRO DE GRAPA</td><td colspan="2"></td>
+      <td colspan="2"></td>
+      <td colspan="12"></td>
+      <td colspan="2"></td>
+      <td colspan="3"></td>
+      <td colspan="3"></td>
+    </tr>
+    
     <?php $this->load->view('reportes/imprimir_pma/rd/info_actividad', array('title'=>'ACTIVIDAD 2', 'data'=>NULL ) ); ?>
     <tr>
       <td colspan="13" id="centrar"><b>ILICITOS</b></td>
