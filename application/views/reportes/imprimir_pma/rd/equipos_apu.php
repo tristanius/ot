@@ -46,7 +46,7 @@
       </tr>
     <?php endforeach; ?>
     <?php
-    for ($i=0; $i <= (7-sizeof($equipos)); $i++) {
+    for ($i=0; $i <= (11-sizeof($equipos)); $i++) {
     ?>
       <tr>
         <td colspan="2"></td>
