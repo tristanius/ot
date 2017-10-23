@@ -1,6 +1,4 @@
-<tr><td colspan="35"><?= $title ?></td></tr>
-<tr><td colspan="35"></td></tr>
-<tr><td colspan="35"></td></tr>
+<tr><th colspan="35"  class="centrar"><?= $title ?></th></tr>
 <tr><td colspan="35"></td></tr>
 <tr><td colspan="35"></td></tr>
 <tr>

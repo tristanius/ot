@@ -16,7 +16,7 @@
     ?>
     <br>
     <?php
-    $this->load->view('reportes/imprimir_pma/rd/info_adicional');
+    $this->load->view('reportes/imprimir_pma/rd/info_adicional', array('json_r'=>$json_r));
     ?>
   </body>
 </html>

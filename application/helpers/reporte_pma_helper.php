@@ -24,3 +24,32 @@ function combinarEquiposReporte($equipos, $apu)
   }
   return $rows;
 }
+
+function getFechaLarga($fecha)
+{
+  $meses = array(
+    1 => 'Enero',
+    2 => 'Febrero',
+    3 => 'Marzo',
+    4 => 'Abril',
+    5 => 'Mayo',
+    6 => 'Junio',
+    7 => 'Julio',
+    8 => 'Agosto',
+    9 => 'Septiembre',
+    10 => 'Octubre',
+    11 => 'Noviembre',
+    12 => 'Diciembre',
+  );
+  $diasSem = array(
+    0=>'Domingo',
+    1=>'Lunes',
+    2=>'Martes',
+    3=>'Miercoles',
+    4=>'Jueves',
+    5=>'Viernes',
+    6=>'Sabado'
+  );
+  $time = strtotime($fecha);
+  return $diasSem[ date('w', $time) ].', '.date('d', $time).' de '.$meses[ date('n', $time) ].' del año '.date('Y', $time);
+}

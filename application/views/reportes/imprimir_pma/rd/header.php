@@ -1,4 +1,4 @@
-<table border="1" id="header">
+<table border="1" id="cabecera">
     <thead>
       <tr style="display:none">
         <?php
@@ -16,10 +16,12 @@
         <th colspan="32" class="f16">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
       </tr>
       <tr>
-        <th colspan="32" class="f16">
-          EJECUCION DE OBRAS Y TRABAJOS DE MANTENIMIENTO DE SISTEMAS DE TRANSPORTE DE HIDROCARBUROS DURANTE LAS VIGENCIAS 2013 AL 2018- ZONA SUR
-          CONTRATO NO. MA-0032889 Y SU ADICIONAL NO. 1 DE ECOPETROL Y EL CONTRATO DE CENIT NO. 8000002840
-        </th>
+        <td colspan="32" class="center" >
+          <small>
+            EJECUCION DE OBRAS Y TRABAJOS DE MANTENIMIENTO DE SISTEMAS DE TRANSPORTE DE HIDROCARBUROS DURANTE LAS VIGENCIAS 2013 AL 2018- ZONA SUR
+            CONTRATO NO. MA-0032889 Y SU ADICIONAL NO. 1 DE ECOPETROL Y EL CONTRATO DE CENIT NO. 8000002840
+          </small>
+        </td>
       </tr>
       <tr>
         <th colspan="3">CODIGO</th>
@@ -32,9 +34,12 @@
         <th>&nbsp;</th>
       </tr>
   </thead>
+</table>
+
+<table border="1" style="text-align: center">
   <tbody>
     <tr>
-      <th colspan="4">FECHA:</th><td colspan="10"> <?= date('d/m/Y', strtotime( $r->fecha_reporte ) ) ?> </td>
+      <th colspan="4">FECHA:</th><td colspan="10"> <?= getFechaLarga( $r->fecha_reporte )  ?> </td>
       <th>&nbsp;</th>
       <th colspan="4">FESTIVO:</th><td colspan="7"> <?= $r->festivo?"SI":"NO"; ?> </td>
       <th>&nbsp;</th>

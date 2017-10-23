@@ -128,7 +128,7 @@ class Export extends CI_Controller{
     //echo $vw;
     //$vw = $this->load->view('reportes/imprimir_pma/test','',TRUE);
     $this->load->helper('pdf');
-    doPDF($vw, 'Reporte', NULL, TRUE);
+    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
   }
 
   public function reportePDFHTML($idOT, $idrepo)

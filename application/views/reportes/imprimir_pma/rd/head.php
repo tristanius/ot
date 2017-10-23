@@ -2,13 +2,22 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html" />
   <style>
+    @page {
+      margin: 30px;
+      margin-top: 100px;
+    }
+    #cabecera{
+      position: fixed;
+      top: -60px;
+    }
+    .page_break { page-break-before: always; }
     body{
       font-family:Arial;
       max-width: 100%;
       font-size: 8px;
     }
     td, th{
-      min-height: 10px;
+      height: 10px
     }
     table, th, td {
       border: 1px solid #333;
@@ -25,7 +34,7 @@
       border: 0px solid black;
     }
 
-    #centrar {
+    #centrar, .centrar {
       text-align: center;
     }
 
