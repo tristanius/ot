@@ -11,14 +11,14 @@
     <ol> 3. Evita completamente tener mas de dos hojas en el mismo archivo de excel </ol>
   </ul>
 
-  <fieldset class="" ng-init="initAdjunto('<?= site_url("Facturacion/upload_cague_historico") ?>')">
+  <fieldset class="" ng-init="initAdjunto('<?= site_url("historicoFacturacion/upload_cague_historico") ?>')">
     <div id="fileHistorico"> Archivo </div>
     <br>
     <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="IniciarUploadAdjunto()">1. Subir archivo</button>
   </fieldset>
   <fieldset class="">
     <legend>Datos y Validaciones</legend>
-    <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="leerData('<?= site_url("facturacion/read_data_from") ?>')">2. leer informació carga</button>
+    <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from") ?>')">2. leer informació carga</button>
   </fieldset>
 
 </section>

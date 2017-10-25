@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Facturacion extends CI_Controller{
+class HistoricoFacturacion extends CI_Controller{
 
   public function __construct()
   {
@@ -53,6 +53,7 @@ class Facturacion extends CI_Controller{
       $j=0;
       foreach ($sheet->getRowIterator() as $row) {
         $this->setRowSabana( $row );
+        echo "<br>";
         $j++;
         if($j > 100000)
           break;
@@ -65,7 +66,7 @@ class Facturacion extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
-    readXlsx(FCPATH."uploads/cargue_historico/prueba.xlsx", $this, 'setRowSabana');
+    readXlsx(FCPATH."uploads/cargue_historico/historico_fact.xlsx", $this, 'setRowSabana');
     echo "Finalizado";
   }
 

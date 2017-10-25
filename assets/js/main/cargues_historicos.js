@@ -48,7 +48,7 @@ var cargue_historico =  function($scope, $http, $timeout){
       }).then(
         function(response) {
           console.log(response.data);
-          console.log('cargando...'+ new Date().toUTCString() );
+          console.log('Cerrando...'+ new Date().toUTCString() );
         },
         function(response) {
           console.log(response.data);
