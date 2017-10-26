@@ -41,7 +41,7 @@ class HistoricoFacturacion extends CI_Controller{
 
     echo json_encode($ret);
   }
-
+  // Metodo para lectura del archivo
   public function read_data_from()
   {
     $post = json_decode( file_get_contents('php://input') );
@@ -53,46 +53,102 @@ class HistoricoFacturacion extends CI_Controller{
       $j=0;
       foreach ($sheet->getRowIterator() as $row) {
         $this->setRowSabana( $row );
-        echo "<br>";
         $j++;
         if($j > 100000)
           break;
       }
     }
   }
-
-
+  // TEST
   public function read_data_from2()
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
-    readXlsx(FCPATH."uploads/cargue_historico/historico_fact.xlsx", $this, 'setRowSabana');
-    echo "Finalizado";
-  }
-
-  public function setRowSabana($row)
-  {
-    $this->load->model('Facturacion_db', 'fac');
-    $headers = $this->fac->fieldSabanaFacturacion();
-    $data = array();
-    foreach ($headers as $key => $value) {
-      if ($value == 'fecha_reporte') {
-        $data[$value] = $row[$key]->format('Y-m-d');
-        echo " ".$data[$value]." ";
-      }else{
-        $data[$value] = $row[$key];
+    $reader = readXlsx(FCPATH."uploads/cargue_historico/historico_fact.xlsx", NULL, NULL);
+    $i=0;
+    $return = new stdClass();
+    $return->status = TRUE;
+    $return->success = array(); $return->failed = array();
+    foreach ($reader->getSheetIterator() as $key => $sheet) {
+      $i++;
+      $j = 0;
+      foreach ($sheet->getRowIterator() as $row) {
+        if($j<=0){
+          $j++;
+        }else{
+          $return = $this->setRowSabana( $row, $return, $j );
+          $j++;
+          if($j > 100000)
+            break;
+        }
       }
     }
-    $this->fac->setRowSabana($data);
+    $reader->close();
+    echo json_encode($return);
   }
-
-
-
-  public function crear_directorio($carpeta)
+  // lestura de fila
+  public function setRowSabana($row, $return=NULL, $fila=NULL)
+  {
+    $this->load->model('HistoricoFacturacion_db', 'fac');
+    $headers = $this->fac->fieldsMetaData();
+    $data = array();
+    foreach ($headers as $key => $field) {
+      if ($key!=0) {
+        if ($this->validarTipos($row[$key-1], $field->type)) {
+          if($field->name == 'fecha_reporte')
+            $data[$key-1] = $row[$key-1]->format('Y-m-d');
+          else
+            $data[$key-1] = $row[$key-1];
+        }else {
+          $data[$key-1] = "Error en fila: ".$fila." del archivo, campo ".$field->name." con valor '".$row[$key-1]."' es incorrecto";
+          $return->status = FALSE;
+        }
+      }
+    }
+    if($return->status){
+      array_push($return->success, $data);
+    }else{
+      array_push($return->failed, $data);
+    }
+    return $return;
+    //$this->fac->setRowSabana($data);
+  }
+  // crea un directorio no existente
+  private function crear_directorio($carpeta)
   {
     if (!file_exists($carpeta)) {
       mkdir($carpeta, 0777, true);
     }
+  }
+  // Valida la estructura de datos de información
+  public function validarTipos($dato, $tipo)
+  {
+    $return = FALSE;
+    switch ($tipo) {
+      case 'int':
+        $ret = is_numeric($dato);
+        break;
+      case 'double':
+        $ret = is_float($dato)||is_numeric($dato)?TRUE:FALSE;
+        break;
+      case 'decimal':
+        $ret = is_float($dato)||is_numeric($dato)?TRUE:FALSE;
+        break;
+      case 'date':
+        if (is_object($dato)) {
+          $ret = checkdate( $dato->format('m'), $dato->format('d'), $dato->format('Y') );
+        }else{
+          $ret = FALSE;
+        }
+        break;
+      case 'varchar':
+        $ret = is_string($dato) || is_numeric($dato)? TRUE: FALSE;
+        break;
+      default:
+        $ret = TRUE;
+        break;
+    }
+    return $ret;
   }
 
 }

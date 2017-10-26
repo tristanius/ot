@@ -45,18 +45,18 @@ function readXlsx($path='', $super=NULL, $methodname=NULL)
 {
   $reader = ReaderFactory::create(Type::XLSX);
   $reader->open($path);
-  $sheets = array();
-  foreach ($reader->getSheetIterator() as $sheet) {
-      $j=0;
-      foreach ($sheet->getRowIterator() as $row) {
-        echo $j++."<br>";
-        if ( isset($super) && isset($methodname)) {
+  if ( isset($super) && isset($methodname)) {
+    $sheets = array();
+    foreach ($reader->getSheetIterator() as $sheet) {
+        $j=0;
+        foreach ($sheet->getRowIterator() as $row) {
           $super->$methodname($row);
+          if($j > 100000)
+            break;
         }
-        if($j > 100000)
-          break;
-      }
+    }
+    $reader->close();
+    return $sheets;
   }
-  $reader->close();
-  return $sheets;
+  return $reader;
 }

@@ -7,8 +7,8 @@
   </b>
   <ul>
     <ol> 1. El formato debe ser un libro de excel xlsx o libro excel 2007 o superior</ol>
-    <ol> 2. Trata que carga archivo no tenga mas de 100mil registros</ol>
-    <ol> 3. Evita completamente tener mas de dos hojas en el mismo archivo de excel </ol>
+    <ol> 2. Trata que el archivo cargado no tenga mas de 100mil registros</ol>
+    <ol> 3. Evita completamente tener dos o más hojas en el mismo archivo de excel </ol>
   </ul>
 
   <fieldset class="" ng-init="initAdjunto('<?= site_url("historicoFacturacion/upload_cague_historico") ?>')">
@@ -18,7 +18,22 @@
   </fieldset>
   <fieldset class="">
     <legend>Datos y Validaciones</legend>
-    <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from") ?>')">2. leer informació carga</button>
+    <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2") ?>')">2. leer informació carga</button>
   </fieldset>
+
+  <div >
+    <button type="button" clas="btn padding1ex" ng-click="asinateResults(rows.success)">Exitosos</button>
+    <button type="button" clas="btn padding1ex" ng-click="asinateResults(rows.failed)">Fallidos</button>
+    <div style="font-size: 9px; overflow: auto;">
+      <table class="mytabla" border="1" style="min-width: 1800px;">
+        <caption>Resultados del cargue</caption>
+        <tbody>
+          <tr ng-repeat="result in resultados">
+            <td ng-repeat="cell in result track by $index" ng-bind="cell"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 </section>
