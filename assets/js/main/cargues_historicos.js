@@ -58,7 +58,24 @@ var cargue_historico =  function($scope, $http, $timeout){
       );
   }
 
-  $scope.asinateResults = function(rows){
+  $scope.asinateResults = function(rows, vw){
     $scope.resultados = rows;
+    $scope.view = vw;
+  }
+
+  $scope.genDownloadFile = function(link, mdata){
+    $http.post(link, mdata).then(
+      function(response) {
+        $scope.downloadFile = response.data;
+        if($scope.downloadFile.success){
+          window.open($scope.downloadFile.download);
+        }else{
+          console.log(response.data)
+        }
+      },
+      function(err) {
+        console.log(err.data);
+      }
+    );
   }
 }

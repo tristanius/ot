@@ -64,23 +64,20 @@ class HistoricoFacturacion extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
-    $reader = readXlsx(FCPATH."uploads/cargue_historico/historico_fact.xlsx", NULL, NULL);
+    $reader = readXlsx(FCPATH."uploads/cargue_historico/historico_fact16.xlsx", NULL, NULL);
     $i=0;
     $return = new stdClass();
     $return->status = TRUE;
-    $return->success = array(); $return->failed = array();
+    $return->success = array();
+    $return->failed = array();
     foreach ($reader->getSheetIterator() as $key => $sheet) {
       $i++;
       $j = 0;
       foreach ($sheet->getRowIterator() as $row) {
-        if($j<=0){
-          $j++;
-        }else{
           $return = $this->setRowSabana( $row, $return, $j );
           $j++;
           if($j > 100000)
             break;
-        }
       }
     }
     $reader->close();
@@ -91,27 +88,45 @@ class HistoricoFacturacion extends CI_Controller{
   {
     $this->load->model('HistoricoFacturacion_db', 'fac');
     $headers = $this->fac->fieldsMetaData();
+    $hd = array();
     $data = array();
+    $error = array( );
     foreach ($headers as $key => $field) {
-      if ($key!=0) {
-        if ($this->validarTipos($row[$key-1], $field->type)) {
-          if($field->name == 'fecha_reporte')
-            $data[$key-1] = $row[$key-1]->format('Y-m-d');
-          else
-            $data[$key-1] = $row[$key-1];
-        }else {
-          $data[$key-1] = "Error en fila: ".$fila." del archivo, campo ".$field->name." con valor '".$row[$key-1]."' es incorrecto";
-          $return->status = FALSE;
-        }
+      if ($key!=0 && $fila!=0) {
+        $rs = $this->getRowResult($data, $row, $field, $fila, $key, $return);
+        $return->status = $rs['status'];
+        $data = $rs['data'];
+      }
+      if($key!=0 && $fila==0){
+        array_push($hd, $field->name);
       }
     }
-    if($return->status){
-      array_push($return->success, $data);
+    if($fila==0){
+        array_push( $return->failed, $hd );
+        array_push( $return->success, $hd );
+    }
+    if ($return->status) {
+      array_push( $return->success, $data );
     }else{
-      array_push($return->failed, $data);
+      array_push( $return->failed, $data );
     }
     return $return;
     //$this->fac->setRowSabana($data);
+  }
+
+  private function getRowResult($data, $row, $field, $fila, $key, $return)
+  {
+    $status = $return->status;
+    if ($this->validarTipos($row[$key-1], $field->type)) {
+      if($field->name == 'fecha_reporte')
+        $data[$key-1] = $row[$key-1]->format('Y-m-d');
+      else
+        $data[$key-1] = $row[$key-1];
+    }else {
+      array_push( $data, "Error en fila: ".$fila." del archivo, campo ".$field->name." con valor '".$row[$key-1]."' es incorrecto" );
+      $status = FALSE;
+    }
+    return array('data'=>$data, 'status'=>$status);
   }
   // crea un directorio no existente
   private function crear_directorio($carpeta)
@@ -149,6 +164,28 @@ class HistoricoFacturacion extends CI_Controller{
         break;
     }
     return $ret;
+  }
+
+  public function generarXlsx()
+  {
+    $this->load->helper('xlsxwriter');
+    $ps = json_decode( file_get_contents('php://input') );
+    //$ps = json_decode( $this->input->post('mdata'); );
+    $header = array_shift($ps);
+    $name = date('Ymdhis').'.xlsx';
+    $file = './uploads/cargue_historico/resultados/'.$name;
+    xlsx( $ps, $header, $file, 'CargueHistorico'.date('YmdHis'));
+    $return = new stdClass();
+    $return->file_name=$name;
+    $return->success = TRUE;
+    $return->download = site_url('HistoricoFacturacion/descargarXlsx/'.$name);
+    echo json_encode($return);
+  }
+  public function descargarXlsx($name)
+  {
+    $this->load->helper('download');
+    $file = './uploads/cargue_historico/resultados/'.$name;
+    force_download($file,NULL);
   }
 
 }
