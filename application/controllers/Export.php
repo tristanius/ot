@@ -160,6 +160,7 @@ class Export extends CI_Controller{
   public function printSelection($idOT, $idrepo)
   {
     $this->load->helper('pdf');
+    $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
     $rpers = $this->repo->getRecursos($idrepo,"personal");
@@ -197,10 +198,11 @@ class Export extends CI_Controller{
     $json_r->contratista_cargo = isset($post->contratista_cargo)?$post->contratista_cargo:'';
     $json_r->ecopetrol_cargo = isset($post->ecopetrol_cargo)?$post->ecopetrol_cargo:'';
 
-    $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
+    /*$semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $html = $this->load->view('reportes/imprimir/reporte_diario',
       array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
-      TRUE);
+      TRUE);*/
+    $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
     doPDF($html, 'Reporte-'.$row->nombre_ot);
   }
 

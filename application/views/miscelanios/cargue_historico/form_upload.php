@@ -25,17 +25,10 @@
     <button type="button" clas="waves-effect waves-light btn padding1ex" ng-click="asinateResults(rows.success, 'Exitosos')">Exitosos</button>
     <button type="button" clas="waves-effect waves-light btn padding1ex" ng-click="asinateResults(rows.failed, 'Fallidos')">Fallidos</button>
     <div style="font-size: 9px; overflow: auto;">
-      
-      <button type="button" class="waves-effect waves-light btn" ng-click="genDownloadFile('<?= site_url('HistoricoFacturacion/generarXlsx') ?>', resultados)">Download resultados</button>
 
-      <table class="mytabla" border="1" style="min-width: 1800px;">
-        <caption>Resultados del cargue: {{ view }}</caption>
-        <tbody>
-          <tr ng-repeat="result in resultados">
-            <td ng-repeat="cell in result track by $index" ng-bind="cell"></td>
-          </tr>
-        </tbody>
-      </table>
+      <button type="button" class="waves-effect waves-light btn" ng-click="genDownloadFile('<?= site_url('HistoricoFacturacion/generarXlsx') ?>', resultados)">Download resultados</button>
+      <h4>Resultados del cargue {{ view + ': ' + (resultados.length-1) }}</h4>
+
     </div>
   </div>
 

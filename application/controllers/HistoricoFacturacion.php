@@ -64,7 +64,11 @@ class HistoricoFacturacion extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
-    $reader = readXlsx(FCPATH."uploads/cargue_historico/historico_fact16.xlsx", NULL, NULL);
+    //$reader = readXlsx(FCPATH."uploads/cargue_historico/historico_fact16.xlsx", NULL, NULL);
+    $this->load->model('HistoricoFacturacion_db', 'fac');
+    $this->fac->init_transact();
+    $headers = $this->fac->fieldsMetaData();
+    $reader = readXlsx(FCPATH.$post->path,NULL);
     $i=0;
     $return = new stdClass();
     $return->status = TRUE;
@@ -74,28 +78,30 @@ class HistoricoFacturacion extends CI_Controller{
       $i++;
       $j = 0;
       foreach ($sheet->getRowIterator() as $row) {
-          $return = $this->setRowSabana( $row, $return, $j );
+          $return = $this->setRowSabana( $row, $return, $j, $headers);
           $j++;
           if($j > 100000)
             break;
       }
     }
+    $this->fac->end_transact($return->status);
     $reader->close();
     echo json_encode($return);
   }
   // lestura de fila
-  public function setRowSabana($row, $return=NULL, $fila=NULL)
+  public function setRowSabana($row, $return=NULL, $fila=NULL, $headers=NULL)
   {
     $this->load->model('HistoricoFacturacion_db', 'fac');
-    $headers = $this->fac->fieldsMetaData();
     $hd = array();
     $data = array();
     $error = array( );
+    $insert = array();
     foreach ($headers as $key => $field) {
       if ($key!=0 && $fila!=0) {
         $rs = $this->getRowResult($data, $row, $field, $fila, $key, $return);
         $return->status = $rs['status'];
         $data = $rs['data'];
+        $insert[$field->name] = $data[$key-1];
       }
       if($key!=0 && $fila==0){
         array_push($hd, $field->name);
@@ -107,6 +113,8 @@ class HistoricoFacturacion extends CI_Controller{
     }
     if ($return->status) {
       array_push( $return->success, $data );
+      //$this->fac->setRowHistorico($insert);
+      print_r($insert);
     }else{
       array_push( $return->failed, $data );
     }
@@ -186,6 +194,7 @@ class HistoricoFacturacion extends CI_Controller{
     $this->load->helper('download');
     $file = './uploads/cargue_historico/resultados/'.$name;
     force_download($file,NULL);
+    unlink($file);
   }
 
 }
