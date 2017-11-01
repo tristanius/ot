@@ -211,7 +211,8 @@ class Ot extends CI_Controller {
 				$item->codigo,
 				$idTr,
 				( isset($item->facturable)?$item->facturable:FALSE ),
-				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL )
+				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL ),
+				$item->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 	#=============================================================================
@@ -453,7 +454,8 @@ class Ot extends CI_Controller {
 				$it->itemf_codigo,
 				$it->tarea_ot_idtarea_ot,
 				isset($it->facturable)?$it->facturable:FALSE,
-				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL )
+				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL ),
+				$it->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 

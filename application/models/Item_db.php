@@ -80,18 +80,22 @@ class Item_db extends CI_Model {
 			itemf.descripcion AS descripcion,
 			itemf.itemc_item,
 			itemf.tipo AS tipo_item,
+			tarifa.idtarifa,
+			tarifa.idvigencia_tarifas,
 			tarifa.salario,
 			tarifa.estado_salario,
 			tarifa.tarifa,
 			titemc.CL,
 			titemc.BO,
+			v.descripcion_vigencia
 			0 AS add');
 		$this->db->from('itemf');
 		$this->db->join('itemc','itemf.itemc_iditemc = itemc.iditemc');
 		$this->db->join('tipo_itemc AS titemc','titemc.idtipo_itemc = itemc.idtipo_itemc','LEFT');
 		$this->db->join('tarifa','tarifa.itemf_iditemf = itemf.iditemf');
+		$this->db->join('vigencia AS v','v.idvigencia_tarifas = tarifa.idvigencia_tarifas');
 		$this->db->where('itemf.tipo', $value);
-		$this->db->where('tarifa.estado_tarifa', TRUE);
+		$this->db->where('v.estado', TRUE);
 		// $this->db->where('tarifa.periodo_id = ( SELECT MAX(tarifa.periodo_id) as periodo FROM tarifa)', NULL, FALSE);
 		$this->db->order_by('itemf.itemc_iditemc', 'asc');
 		return $this->db->get();
@@ -108,7 +112,8 @@ class Item_db extends CI_Model {
 			$itemf_codigo,
 			$idTr,
 			$facturable,
-			$sector
+			$sector,
+			$idvigencia_tarifas
 		){
 		$data = array(
 			'cantidad'=>$cantidad,
@@ -122,7 +127,8 @@ class Item_db extends CI_Model {
 			'itemf_codigo'=>$itemf_codigo,
 			'tarea_ot_idtarea_ot'=>$idTr,
 			'facturable'=>$facturable,
-			'idsector_item_tarea'=>$sector
+			'idsector_item_tarea'=>$sector,
+			'idvigencia_tarifas'=>$idvigencia_tarifas
 		);
 		$this->db->insert('item_tarea_ot', $data);
 	}
@@ -139,7 +145,8 @@ class Item_db extends CI_Model {
 			$itemf_codigo,
 			$idTr,
 			$facturable,
-			$sector
+			$sector,
+			$idvigencia_tarifas
 		){
 		$data = array(
 			'cantidad'=>$cantidad,
@@ -153,7 +160,8 @@ class Item_db extends CI_Model {
 			'itemf_codigo'=>$itemf_codigo,
 			'tarea_ot_idtarea_ot'=>$idTr,
 			'facturable'=>$facturable,
-			'idsector_item_tarea'=>$sector
+			'idsector_item_tarea'=>$sector,
+			'idvigencia_tarifas'=>$idvigencia_tarifas
 		);
 		$this->db->update('item_tarea_ot', $data, 'iditem_tarea_ot = '.$iditem_tarea_ot);
 	}
