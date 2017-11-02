@@ -21,6 +21,7 @@ var OT = function($scope, $http, $timeout){
 			function(response) {
 				ambito.bases = JSON.parse(response.data.bases);
 				ambito.items = JSON.parse(response.data.items);
+				ambito.vigencias = JSON.parse(response.data.vigencias);
 			},
 			function (response) {
 				alert("Algo ha salido mal al cargar esta interfaz, cierra la vista e intenta de nuevo, si el problema persiste comunicate a el area TIC.");
@@ -721,6 +722,7 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.copiar_tarea = function(tarea_cp){
 		var tr = angular.copy(tarea_cp);
 		tr.idtarea_ot = undefined;
+		tr.idvigencia_tarifas = undefined;
 		tr.editable = true;
 		tr.nombre_tarea = "TAREA "+($scope.ot.tareas.length+1);
 		/*tr.editable = true;*/

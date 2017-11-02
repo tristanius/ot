@@ -1,9 +1,7 @@
-
   <div id="ventana_add_items" class="nodisplay ventanaItems">
 		<div style="position: relative">
 			<button type="button" class="btn green" ng-click="addSelectedItems()" data-icon="">Ok</button>
 		</div>
-
 		<table class="mytabla filtered ">
 			<tbody>
         <tr style="border-top:1px solid #777">
@@ -31,7 +29,7 @@
 					<td> </td>
 					<td> </td>
 					<td> </td>
-					<td> </td>
+					<td></td>
 				</tr>
 				<tr ng-repeat="it in myItems | filter: filtroItems" style="border:1px solid #999" >
 					<td class="noMaterialStyles">

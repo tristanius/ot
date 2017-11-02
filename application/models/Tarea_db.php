@@ -31,7 +31,7 @@ class Tarea_db extends CI_Model{
     $json_reembolsables, $json_racion, $json_recursos,
     $responsables, $requisitos_documentales,
     $OT_idOT, $sap,$clase_sap, $tipo_sap,
-    $sap_pago, $clase_sap_pago, $tipo_sap_pago,  $editable)
+    $sap_pago, $clase_sap_pago, $tipo_sap_pago,  $editable, $idvigencia_tarifas = NULL )
   {
     $data = array(
       'nombre_tarea'=>$nombre_tarea_ot,
@@ -54,7 +54,8 @@ class Tarea_db extends CI_Model{
       'sap_pago'=>$sap_pago,
       "clase_sap_pago"=>$clase_sap_pago,
       "tipo_sap_pago"=>$tipo_sap_pago,
-      'editable'=>$editable
+      'editable'=>$editable,
+			'idvigencia_tarifas'=>$idvigencia_tarifas
     );
     $this->db->insert('tarea_ot', $data);
     return $this->db->insert_id();
@@ -70,7 +71,7 @@ class Tarea_db extends CI_Model{
     $json_racion, $json_recursos, $responsables,
     $requisitos_documentales, $OT_idOT,
     $sap, $clase_sap, $tipo_sap, $sap_pago,
-    $clase_sap_pago, $tipo_sap_pago, $editable)
+    $clase_sap_pago, $tipo_sap_pago, $editable, $idvigencia_tarifas = NULL)
   {
     $data = array(
       'nombre_tarea'=>$nombre_tarea_ot,
@@ -93,7 +94,8 @@ class Tarea_db extends CI_Model{
       'sap_pago'=>$sap_pago,
       "clase_sap_pago"=>$clase_sap_pago,
       "tipo_sap_pago"=>$tipo_sap_pago,
-      'editable'=>$editable
+      'editable'=>$editable,
+			'idvigencia_tarifas'=>$idvigencia_tarifas
     );
     return $this->db->update('tarea_ot', $data, 'idtarea_ot = '.$idtarea_ot);
   }

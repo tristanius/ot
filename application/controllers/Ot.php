@@ -80,9 +80,12 @@ class Ot extends CI_Controller {
 		$items['actividad']  = $this->item_db->getBytipo(1)->result();
 		$items['personal']  = $this->item_db->getBytipo(2)->result();
 		$items['equipo']  = $this->item_db->getBytipo(3)->result();
+		$vigencias = $this->item_db->getVigenciasActivas()->result();
 		$arr =array(
 			"bases"=>json_encode($bases->result()),
-			'items'=>json_encode($items)
+			'items'=>json_encode($items),
+			'vigencias'=>json_encode($vigencias),
+			'allVigencias'=>json_encode($vigencias)
 			);
 		echo json_encode($arr);
 	}
@@ -187,7 +190,8 @@ class Ot extends CI_Controller {
 				isset($tar->sap_pago)?$tar->sap_pago:NULL,
 				isset($tar->clase_sap_pago)?$tar->clase_sap_pago:NULL,
 				isset($tar->tipo_sap_pago)?$tar->tipo_sap_pago:NULL,
-				isset($tar->editable)?TRUE:TRUE
+				isset($tar->editable)?TRUE:TRUE,
+				isset($tar->idvigencia_tarifas)?$tar->idvigencia_tarifas:NULL
 			);
 	}
 
@@ -427,7 +431,8 @@ class Ot extends CI_Controller {
 				isset($tr->sap_pago)?$tr->sap_pago:NULL,
 				isset($tr->clase_sap_pago)?$tr->clase_sap_pago:NULL,
 				isset($tr->tipo_sap_pago)?$tr->tipo_sap_pago:NULL,
-				isset($tr->editable)?$tr->editable:NULL
+				isset($tr->editable)?$tr->editable:NULL,
+				isset($tr->idvigencia_tarifas)?$tr->idvigencia_tarifas:NULL
 			);
 	}
 	# proceso que recorre los items de las tareas e inserta o actualiza los cambios

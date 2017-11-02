@@ -269,6 +269,21 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
       function(response){console.log(response.data);}
     );
   }
+
+	$scope.setValorProp = function(valor, obj, prop){
+		obj[prop] = valor;
+	}
+
+  $scope.findObjByProp = function(find, prop, list){
+    var ret = undefined;
+    angular.forEach(list, function(v,k){
+      if (v[prop] == find) {
+        console.log('ok-')
+        ret =  v;
+      }
+    });
+    return ret;
+  }
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });

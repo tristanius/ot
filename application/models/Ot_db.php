@@ -184,7 +184,7 @@ class Ot_db extends CI_Model {
 	public function getOtBy($campo, $valorbuscado)
 	{
 		$this->load->database('ot');
-		return $this->db->get_where('OT',array($campo=>$valorbuscado));
+		return $this->db->from('OT')->like( $campo, $valorbuscado )->get();
 	}
 
 	# ===========================================================================
