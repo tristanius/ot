@@ -135,8 +135,8 @@ class Equipo extends CI_Controller{
   			$equipos = $this->equ->searchBy('0'.$val['E'].'-0');
   			if($equipos->num_rows() > 0){
   				$equipo = $equipos->row();
-  				$ots = $this->equ->getField('nombre_ot LIKE "%'.$val['B'].'%"', 'idOT', 'OT');
-  				$its = $this->item->getItemfByvigencia( 'itf.itemc_item', $val['C'] );
+  				$ots = $this->equ->getField('nombre_ot LIKE "'.$val['B'].'"', 'idOT', 'OT');
+  				$its = $this->item->getItemByOT( $val['B'], NULL, $val['C'] );
 
   				if($ots->num_rows() > 0 ){
   					if($its->num_rows() > 0 ){

@@ -25,6 +25,18 @@ class Reportepersonal extends CI_Controller{
     );
   }
 
+  public function tl_pma($idOT, $idReporte)
+  {
+    $post = json_decode( file_get_contents("php://input") );
+    $this->load->model('Reportepersonal_db', 'repoper');
+    $rows = $this->repoper->getBy($idOT, NULL,$idReporte);
+    $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
+    $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
+    $this->load->view('reportes/imprimir_pma/tl/tiempo_laborado',
+      array('personal'=>$rowsPersonas->result(),'r'=>$rows->row(), 'download'=>true)
+    );
+  }
+
   public function form_tiempoLaboradoGeneral()
   {
     $this->load->database('ot');

@@ -42,6 +42,8 @@
 
     <!-- Charts JS -->
     <script src="<?= base_url('assets/js/vendor/Chart.min.js') ?>" type="text/javascript"></script>
+    <!-- FileSaverAs -->
+    <script src="<?= base_url('assets/js/vendor/FileSaver.min.js') ?>" type="text/javascript"></script>
     <!-- Mainer JS -->
     <script type="text/javascript">
     var task = {url:'<?= site_url('welcome/loadOptions') ?>'}

@@ -88,7 +88,7 @@
             <tr class="noMaterialStyles">
               <td>Festivo: <input type="checkbox" ng-model="rd.info.festivo" ng-init="rd.info.festivo = <?= $r->festivo; ?>" ng-disabled="rd.info.estado == 'CERRADO' "></td>
               <td colspan="">
-                Tiempo Laborado: <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tiempolaborado/'.$r->idOT.'/'.$r->idreporte_diario)?>" target="_blank" data-icon="&#xe048;">  </a>
+                Tiempo Laborado: <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tl_pma/'.$r->idOT.'/'.$r->idreporte_diario)?>" target="_blank" data-icon="&#xe048;">  </a>
               </td>
               <td>
                 Reporte día: <a class="btn mini-btn2" ng-href="<?= site_url('export/rd_pma/'.$r->idOT.'/'.$r->idreporte_diario) ?>" target="_blank" data-icon="h">  </a>

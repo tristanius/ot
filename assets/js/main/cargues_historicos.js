@@ -1,5 +1,7 @@
 var cargue_historico =  function($scope, $http, $timeout){
   $scope.resultado_cargue = [];
+  $scope.resultados = [];
+  $scope.rows = [];
 
   $scope.spinner  = false;
   $scope.initAdjunto = function(ruta) {
@@ -22,7 +24,6 @@ var cargue_historico =  function($scope, $http, $timeout){
             $scope.resultado_cargue = JSON.parse(data);
             console.log(data);
             if ($scope.resultado_cargue.success) {
-
             }
             //$scope.cerrarWindow();
             //$scope.refreshTabs();
@@ -47,12 +48,34 @@ var cargue_historico =  function($scope, $http, $timeout){
         path:$scope.resultado_cargue.return
       }).then(
         function(response) {
+          $scope.rows = response.data;
           console.log(response.data);
-          console.log('cargando...'+ new Date().toUTCString() );
+          console.log('Cerrando...'+ new Date().toUTCString() );
         },
         function(response) {
           console.log(response.data);
         }
       );
+  }
+
+  $scope.asinateResults = function(rows, vw){
+    $scope.resultados = rows;
+    $scope.view = vw;
+  }
+
+  $scope.genDownloadFile = function(link, mdata){
+    $http.post(link, mdata).then(
+      function(response) {
+        $scope.downloadFile = response.data;
+        if($scope.downloadFile.success){
+          window.open($scope.downloadFile.download);
+        }else{
+          console.log(response.data)
+        }
+      },
+      function(err) {
+        console.log(err.data);
+      }
+    );
   }
 }

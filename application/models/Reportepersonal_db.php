@@ -53,9 +53,11 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr,
       rrd.gasto_viaje_lugar,
       "" as firma,
-'
+      itf.itemc_item,
+      itf.codigo,
+      itf.iditemf'
     );
-//      if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
+    // if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
     $this->db->from('reporte_diario AS rd');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');

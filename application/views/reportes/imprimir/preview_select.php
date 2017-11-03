@@ -181,7 +181,7 @@
 
   <div class="btnWindow ">
     <button type="button" class="waves-effect waves-light btn mini-btn2" ng-if=" (validPriv(38) || validPriv(45) || validPriv(46) ) "
-        ng-click="printSelected('<?= site_url('export/reportePDFSelected'.$idOT."/".$idrepo) ?>')">
+        ng-click="printSelected('<?= site_url('export/rd_pma/'.$idOT."/".$idrepo) ?>')">
       <b data-icon="&#xe015;"></b> Generar
     </button>
     <button type="button" class="waves-effect waves-light btn grey mini-btn2" ng-click="toggleWindow2('#ventanaReporte', '#ventanaReporteOCulta')" data-icon="&#xe036;"> Ocultar</button>

@@ -167,11 +167,11 @@ class Reporte_db extends CI_Model{
     if ( $tipo=='equipos' ) {
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo');
       $this->db->where('e.codigo_siesa', $identificacion);
-      $this->db->where('rrd.cantidad', 1);
+      $this->db->where('rrd.cantidad >=', 1);
     }elseif ($tipo == 'personal') {
       $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion');
       $this->db->where('p.identificacion', $identificacion);
-      $this->db->where('rrd.cantidad', 1);
+      $this->db->where('rrd.cantidad >=', 1);
     }
     return $this->db->get();
   }

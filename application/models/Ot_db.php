@@ -25,9 +25,9 @@ class Ot_db extends CI_Model {
 	// Registrar una nueva OT.
 	public function add(
 		$nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad, $justificacion,
-		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $clasificacion_ot, $gerencia, $departamento_ecp, $nombre_departamento_ecp=NULL, $estado_doc,
-		$ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
-		$fecha_creacion_cc=NULL,  $basica = NULL
+		$locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp, $json, $clasificacion_ot, $gerencia, $departamento_ecp, $nombre_departamento_ecp=NULL,
+		$estado_doc, $ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
+		$fecha_creacion_cc=NULL,  $basica = NULL, $idcontrato=NULL
 	){
 		$this->load->database('ot');
 		$data = array(
@@ -60,7 +60,8 @@ class Ot_db extends CI_Model {
 			"presupuesto_fecha_fin"=>$presupuesto_fecha_fin,
 			"presupuesto_porcent_fin"=>$presupuesto_porcent_fin,
 			"fecha_creacion_cc"=>$fecha_creacion_cc,
-			"basica" =>$basica
+			"basica" =>$basica,
+			"idcontrato" =>$idcontrato
 		);
 		$this->db->insert('OT', $data);
 		return $this->db->insert_id();
@@ -69,8 +70,8 @@ class Ot_db extends CI_Model {
 	public function update(
 		$idot, $nombre_ot, $ccosto, $base, $zona, $fecha_creacion, $especialidad, $tipo_ot, $actividad,
 		$justificacion, $locacion, $abscisa, $departamento, $municipio, $vereda, $cc_ecp,  $json, $clasificacion_ot, $gerencia, $departamento_ecp, $nombre_departamento_ecp=NULL,
-		$estado_doc, $ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin,
-		$presupuesto_porcent_fin,	$fecha_creacion_cc=NULL, $basica = NULL
+		$estado_doc, $ot_legalizada, $fecha_inicio, $fecha_fin, $presupuesto_fecha_ini, $presupuesto_porcent_ini, $presupuesto_fecha_fin, $presupuesto_porcent_fin,
+		$fecha_creacion_cc=NULL, $basica = NULL, $idcontrato =NULL
 	) {
 		$this->load->database('ot');
 		$data = array(
@@ -103,7 +104,8 @@ class Ot_db extends CI_Model {
 			"presupuesto_fecha_fin"=>$presupuesto_fecha_fin,
 			"presupuesto_porcent_fin"=>$presupuesto_porcent_fin,
 			"fecha_creacion_cc"=>$fecha_creacion_cc,
-			"basica" =>$basica
+			"basica" =>$basica,
+			"idcontrato" =>$idcontrato
 		);
 		return $this->db->update('OT', $data, "idOT =".$idot);
 	}
@@ -123,6 +125,7 @@ class Ot_db extends CI_Model {
 		$this->db->join('especialidad AS esp', 'OT.especialidad_idespecialidad = esp.idespecialidad');
 		$this->db->join('base AS b', 'OT.base_idbase = b.idbase');
 		$this->db->join('tipo_ot AS tp', 'OT.tipo_ot_idtipo_ot = tp.idtipo_ot');
+		$this->db->join('contrato AS c', 'c.idcontrato = OT.idcontrato');
 		$this->db->where('OT.idOT', $idot);
 		return $this->db->get();
 
@@ -184,7 +187,7 @@ class Ot_db extends CI_Model {
 	public function getOtBy($campo, $valorbuscado)
 	{
 		$this->load->database('ot');
-		return $this->db->get_where('OT',array($campo=>$valorbuscado));
+		return $this->db->from('OT')->like( $campo, $valorbuscado )->get();
 	}
 
 	# ===========================================================================

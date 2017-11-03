@@ -99,7 +99,7 @@ class Recurso extends CI_Controller{
   }
 
   # Recorrer excel
-  public function recorrerFilasMaestro($process, $ruta='/equipos/26122016/test.xlsx') {
+  public function recorrerFilasMaestro($process, $ruta='personal/02112017/personalOT.xlsx') {
     $rows = $this->leerExcel($ruta);
     $this->load->model('ot_db', 'ot');
     $this->load->model('item_db', 'item');
@@ -111,7 +111,7 @@ class Recurso extends CI_Controller{
       if ($process == 'personal') {
         if($cell['A']!= 'Comentario' && $cell['B'] != 'Id C.O.' && $cell['C'] != 'Empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
-          $items = $this->item->getItemfByvigencia( 'itf.codigo', $cell['G'] );
+          $items = $this->item->getItemByOT( $cell['F'] , $cell['G'] );
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
           if ($ots->num_rows() > 0 && $items->num_rows() > 0) {
             $orden = $ots->row();

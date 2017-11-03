@@ -75,14 +75,19 @@ class Ot extends CI_Controller {
 
 	public function getDataNewForm()
 	{
-		$this->load->model(array("Ot_db","item_db","miscelanio_db"));
+		$this->load->model(array("Ot_db","item_db","miscelanio_db","contrato_db"));
 		$bases = $this->Ot_db->getBases();
 		$items['actividad']  = $this->item_db->getBytipo(1)->result();
 		$items['personal']  = $this->item_db->getBytipo(2)->result();
 		$items['equipo']  = $this->item_db->getBytipo(3)->result();
+		$vigencias = $this->item_db->getVigenciasActivas()->result();
+		$contratos = $this->contrato_db->getContratos()->result();
 		$arr =array(
 			"bases"=>json_encode($bases->result()),
-			'items'=>json_encode($items)
+			'items'=>json_encode($items),
+			'vigencias'=>json_encode($vigencias),
+			'allVigencias'=>json_encode($vigencias),
+			'contratos'=>json_encode($contratos)
 			);
 		echo json_encode($arr);
 	}
@@ -133,7 +138,8 @@ class Ot extends CI_Controller {
 						isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 						isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 						isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-						isset($orden->basica)?$orden->basica:FALSE
+						isset($orden->basica)?$orden->basica:FALSE,
+						isset($orden->idcontrato)?$orden->idcontrato:NULL
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s'), 'OT CREADA' );	}
@@ -187,7 +193,8 @@ class Ot extends CI_Controller {
 				isset($tar->sap_pago)?$tar->sap_pago:NULL,
 				isset($tar->clase_sap_pago)?$tar->clase_sap_pago:NULL,
 				isset($tar->tipo_sap_pago)?$tar->tipo_sap_pago:NULL,
-				isset($tar->editable)?TRUE:TRUE
+				isset($tar->editable)?TRUE:TRUE,
+				isset($tar->idvigencia_tarifas)?$tar->idvigencia_tarifas:NULL
 			);
 	}
 
@@ -211,7 +218,8 @@ class Ot extends CI_Controller {
 				$item->codigo,
 				$idTr,
 				( isset($item->facturable)?$item->facturable:FALSE ),
-				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL )
+				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL ),
+				$item->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 	#=============================================================================
@@ -368,7 +376,8 @@ class Ot extends CI_Controller {
 				isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 				isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 				isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-				isset($orden->basica)?$orden->basica:FALSE
+				isset($orden->basica)?$orden->basica:FALSE,
+				isset($orden->idcontrato)?$orden->idcontrato:NULL
 			);
 
 		$this->inf_ot->saveAllMeses($orden->allMeses);
@@ -426,7 +435,8 @@ class Ot extends CI_Controller {
 				isset($tr->sap_pago)?$tr->sap_pago:NULL,
 				isset($tr->clase_sap_pago)?$tr->clase_sap_pago:NULL,
 				isset($tr->tipo_sap_pago)?$tr->tipo_sap_pago:NULL,
-				isset($tr->editable)?$tr->editable:NULL
+				isset($tr->editable)?$tr->editable:NULL,
+				isset($tr->idvigencia_tarifas)?$tr->idvigencia_tarifas:NULL
 			);
 	}
 	# proceso que recorre los items de las tareas e inserta o actualiza los cambios
@@ -453,7 +463,8 @@ class Ot extends CI_Controller {
 				$it->itemf_codigo,
 				$it->tarea_ot_idtarea_ot,
 				isset($it->facturable)?$it->facturable:FALSE,
-				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL )
+				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL ),
+				$it->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 
