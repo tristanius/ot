@@ -87,13 +87,13 @@ class Item_db extends CI_Model {
 			tarifa.tarifa,
 			titemc.CL,
 			titemc.BO,
-			v.descripcion_vigencia
+			v.descripcion_vigencia,
 			0 AS add');
 		$this->db->from('itemf');
 		$this->db->join('itemc','itemf.itemc_iditemc = itemc.iditemc');
 		$this->db->join('tipo_itemc AS titemc','titemc.idtipo_itemc = itemc.idtipo_itemc','LEFT');
 		$this->db->join('tarifa','tarifa.itemf_iditemf = itemf.iditemf');
-		$this->db->join('vigencia AS v','v.idvigencia_tarifas = tarifa.idvigencia_tarifas');
+		$this->db->join('vigencia_tarifas AS v','v.idvigencia_tarifas = tarifa.idvigencia_tarifas');
 		$this->db->where('itemf.tipo', $value);
 		$this->db->where('v.estado', TRUE);
 		// $this->db->where('tarifa.periodo_id = ( SELECT MAX(tarifa.periodo_id) as periodo FROM tarifa)', NULL, FALSE);
@@ -330,6 +330,40 @@ class Item_db extends CI_Model {
 							->where('v.estado',TRUE)
 							->where($field, $val)
 							->get();
+	}
+
+	public function getVigenciasActivas($id=NULL, $status=TRUE)
+	{
+		$this->load->database('ot');
+		if (isset($id)) {
+			$this->db->where('vg.idvigencia_tarifas', $id);
+		}else{
+			$this->db->where('vg.estado',$status);
+		}
+		return $this->db->select('vg.*, CONCAT(vg.descripcion_vigencia, " By: ",  c.contratista ) AS descripcion_vigencia, c.no_contrato, c.contratista')
+								->from('vigencia_tarifas AS vg')
+								->join('contrato AS c','c.idcontrato = vg.idcontrato')
+								->get();
+	}
+
+	public function getItemByOT($ot, $codigo=NULL, $item=NULL)
+	{
+		$this->load->database('ot');
+		if(isset($codigo)){
+			$this->db->like('itf.codigo',$codigo);
+		}elseif (isset($item)) {
+			$this->db->like('itf.itemc_item',$item);
+		}
+		return $this->db->select('OT.idOT, OT.nombre_ot, tr.idtarea_ot, tr.nombre_tarea, itt.*, itf.*, tarf.idtarifa, tarf.idvigencia_tarifas, tarf.estado_tarifa, tarf.tarifa, tarf.salario')
+								->from('OT')
+								->join('tarea_ot AS tr', 'tr.OT_idOT = OT.idOT')
+								->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
+								->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf')
+								->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
+								->join('tarifa  AS tarf', 'tarf.itemf_iditemf = itf.iditemf')
+								->like('OT.nombre_ot',$ot)
+								->order_by('itt.iditem_tarea_ot','DESC')
+								->get();
 	}
 
 }

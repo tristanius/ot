@@ -91,7 +91,8 @@
 				<tr>
 					<th>Gerencia</th>
 					<th>Sistemas ECP</th>
-					<th colspan="5"></th>
+					<th colspan="2">Contrato (Macro)</th>
+					<th colspan="3"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -112,7 +113,10 @@
 							<option value="POR">POR</option>
 						</select>
 					</td>
-					<td colspan="5"></td>
+					<td colspan="2">
+						<select ng-model="ot.idcontrato" ng-options="c.idcontrato as (c.no_contrato+' '+c.contratista) for c in contratos track by c.idcontrato"></select>
+					</td>
+					<td colspan="3"></td>
 				</tr>
 			</tbody>
 		</table>

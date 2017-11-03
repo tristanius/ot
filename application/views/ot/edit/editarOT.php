@@ -88,7 +88,8 @@
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Gerencia</th>
 					<th>Departamento ECP</th>
-					<th colspan="5"></th>
+					<th colspan="2"></th>
+					<th colspan="3"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -109,7 +110,8 @@
 							<option value="POR">POR</option>
 						</select>
 					</td>
-					<td colspan="5"></td>
+					<td colspan="2"> <span ng-bind="ot.no_contrato"></span> <span ng-bind="ot.contratista"></span> </td>
+					<td colspan="3"></td>
 				</tr>
 			</tbody>
 		</table>
