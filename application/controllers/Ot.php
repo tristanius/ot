@@ -75,17 +75,19 @@ class Ot extends CI_Controller {
 
 	public function getDataNewForm()
 	{
-		$this->load->model(array("Ot_db","item_db","miscelanio_db"));
+		$this->load->model(array("Ot_db","item_db","miscelanio_db","contrato_db"));
 		$bases = $this->Ot_db->getBases();
 		$items['actividad']  = $this->item_db->getBytipo(1)->result();
 		$items['personal']  = $this->item_db->getBytipo(2)->result();
 		$items['equipo']  = $this->item_db->getBytipo(3)->result();
 		$vigencias = $this->item_db->getVigenciasActivas()->result();
+		$contratos = $this->contrato_db->getContratos()->result();
 		$arr =array(
 			"bases"=>json_encode($bases->result()),
 			'items'=>json_encode($items),
 			'vigencias'=>json_encode($vigencias),
-			'allVigencias'=>json_encode($vigencias)
+			'allVigencias'=>json_encode($vigencias),
+			'contratos'=>json_encode($contratos)
 			);
 		echo json_encode($arr);
 	}
@@ -136,7 +138,8 @@ class Ot extends CI_Controller {
 						isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 						isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 						isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-						isset($orden->basica)?$orden->basica:FALSE
+						isset($orden->basica)?$orden->basica:FALSE,
+						isset($orden->idcontrato)?$orden->idcontrato:NULL
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s'), 'OT CREADA' );	}
@@ -373,7 +376,8 @@ class Ot extends CI_Controller {
 				isset($orden->presupuesto_fecha_fin)?$orden->presupuesto_fecha_fin:NULL,
 				isset($orden->presupuesto_porcent_fin)?$orden->presupuesto_porcent_fin:NULL,
 				isset($orden->fecha_creacion_cc)?$orden->fecha_creacion_cc:NULL,
-				isset($orden->basica)?$orden->basica:FALSE
+				isset($orden->basica)?$orden->basica:FALSE,
+				isset($orden->idcontrato)?$orden->idcontrato:NULL
 			);
 
 		$this->inf_ot->saveAllMeses($orden->allMeses);

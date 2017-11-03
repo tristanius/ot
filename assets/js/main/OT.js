@@ -22,6 +22,7 @@ var OT = function($scope, $http, $timeout){
 				ambito.bases = JSON.parse(response.data.bases);
 				ambito.items = JSON.parse(response.data.items);
 				ambito.vigencias = JSON.parse(response.data.vigencias);
+				ambito.contratos = JSON.parse(response.data.contratos);
 			},
 			function (response) {
 				alert("Algo ha salido mal al cargar esta interfaz, cierra la vista e intenta de nuevo, si el problema persiste comunicate a el area TIC.");

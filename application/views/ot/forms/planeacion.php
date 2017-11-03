@@ -4,11 +4,12 @@
 	<p ng-show=" (tr.idtarea_ot == undefined || tr.idtarea_ot == '') || true">
 		<div ng-if="!tr.idvigencia_tarifas">
 			<label>Selecione una vigencia de tarifas: </label>
-			<select ng-model="vg" ng-options="vg as vg.descripcion_vigencia for vg in vigencias track by vg.idvigencia_tarifas"></select>
+			<select ng-model="vg" ng-options="vg as vg.descripcion_vigencia disable when (ot.idcontrato != vg.idcontrato) for vg in vigencias track by vg.idvigencia_tarifas"></select>
 			<button type="button" ng-if="vg"
 				ng-click="setValorProp( vg.idvigencia_tarifas, tr, 'idvigencia_tarifas' ); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn blue mini-btn">
 				Seleccionar
 			</button>
+			<span ng-if="!tr.idcontrato"> Seleciona un contrato. </span>
 		</div>
 		<div ng-if="tr.idvigencia_tarifas">
 					<h5>{{ findObjByProp(tr.idvigencia_tarifas, 'idvigencia_tarifas', vigencias).descripcion_vigencia }}</h5>
