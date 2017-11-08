@@ -60,7 +60,7 @@ class HistoricoFacturacion extends CI_Controller{
     }
   }
   // TEST
-  public function read_data_from2()
+  public function read_data_from2($process=NULL)
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
@@ -78,23 +78,24 @@ class HistoricoFacturacion extends CI_Controller{
       $i++;
       $j = 0;
       foreach ($sheet->getRowIterator() as $row) {
-          $return = $this->setRowSabana( $row, $return, $j, $headers);
+          $return = $this->setRowSabana( $row, $return, $j, $headers, $process);
           $j++;
           if($j > 100000)
             break;
       }
     }
+    $return->tipo = $process;
     $this->fac->end_transact($return->status);
     $reader->close();
     echo json_encode($return);
   }
   // lestura de fila
-  public function setRowSabana($row, $return=NULL, $fila=NULL, $headers=NULL)
+  public function setRowSabana($row, $return=NULL, $fila=NULL, $headers=NULL, $process=NULL)
   {
     $this->load->model('HistoricoFacturacion_db', 'fac');
     $hd = array();
     $data = array();
-    $error = array( );
+    $error = array();
     $insert = array();
     foreach ($headers as $key => $field) {
       if ($key!=0 && $fila!=0) {
@@ -107,14 +108,16 @@ class HistoricoFacturacion extends CI_Controller{
         array_push($hd, $field->name);
       }
     }
+
     if($fila==0){
         array_push( $return->failed, $hd );
         array_push( $return->success, $hd );
     }
     if ($return->status) {
       array_push( $return->success, $data );
-      //$this->fac->setRowHistorico($insert);
-      print_r($insert);
+      if( $fila!=0 && $process == 'registro' ){
+        $this->fac->setRowHistorico($insert);
+      }
     }else{
       array_push( $return->failed, $data );
     }

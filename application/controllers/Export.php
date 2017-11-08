@@ -159,8 +159,6 @@ class Export extends CI_Controller{
 
   public function printSelection($idOT, $idrepo)
   {
-    $this->load->helper('pdf');
-    $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
     $rpers = $this->repo->getRecursos($idrepo,"personal");
@@ -181,6 +179,7 @@ class Export extends CI_Controller{
   public function printSelected($idOT, $idrepo)
   {
     $this->load->helper('pdf');
+    $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
     $post = json_decode($this->input->post('jsonSelection'));
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
