@@ -202,7 +202,7 @@ class Export extends CI_Controller{
       array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
       TRUE);*/
     $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
-    doPDF($html, 'Reporte-'.$row->nombre_ot);
+    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
   }
 
   public function getStatusFooter($value='')
