@@ -40,7 +40,7 @@ class Recurso_db extends CI_Model{
       'tipo' => $tipo,
       'codigo_temporal'=>$cod_temp,
       'descripcion_temporal'=>$desc_temp,
-      'propietario_recurso'=>$propietario_recurso,
+      'propietario_recurso'=>$propietario_recurso?TRUE:FALSE,
       'propietario_observacion'=>$propietario_observacion
     );
     $this->db->insert('recurso_ot', $data);

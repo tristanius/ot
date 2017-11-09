@@ -29,7 +29,7 @@
         <button type="button" class="btn mini-btn2 btn-boder-success" ng-click="appyEstadoDoc('CERRADO','VALIDO')" ng-disabled="!validPriv(45)">Valido</button>
         <button type="button" class="btn mini-btn2 btn-boder-warning" ng-click="appyEstadoDoc('ABIERTO','CORREGIR')" ng-disabled="!validPriv(45)">Corregir</button>
     </fieldset>
-    <fieldset class="col l3 m3 s12" ng-if="validPriv(46) && (rd.info.validado_pyco == 'VALIDO' || rd.info.validado_pyco == 'CORREGIDO')">
+    <fieldset class="col l3 m3 s12" ng-if="validPriv(46) && (rd.info.validado_pyco == 'VALIDO' || rd.info.validado_pyco == 'CORREGIDO' || rd.info.validado_pyco == 'ELABORADO'))">
         <legend>Validación G.V. y H.E.</legend>
         <button type="button" class="btn mini-btn2 btn-boder-warning" ng-click="appyEstadoDoc('CERRADO','CORREGIR HE')" ng-disabled="!validPriv(46)">corregir HE</button>
         <button type="button" class="btn mini-btn2 btn-boder-warning" ng-click="appyEstadoDoc('CERRADO','CORREGIR GV')" ng-disabled="!validPriv(46)">Corregir GV</button>

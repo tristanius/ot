@@ -125,7 +125,7 @@
           <td ng-bind="e.itemc_item"></td>
           <td ng-bind="e.descripcion"></td>
           <td ng-bind="e.propietario_observacion"></td>
-          <td ng-bind="e.propietario_recurso?'SI':'NO'"></td>
+          <td ng-bind="e.propietario_recurso==1?'SI':'NO'"></td>
         </tr>
       </tbody>
     </table>

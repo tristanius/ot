@@ -19,6 +19,7 @@
     <div>Referencia  propietario:</div>
     <select ng-model="addequipo.propietario_observacion" ng-init="addequipo.propietario_observacion = 'TERMOTECNICA'">
       <option value="TERMOTECNICA">TERMOTECNICA</option>
+      <option value="PMA-ALQ">PMA-ALQ</option>
       <option value="PMA">PMA</option>
       <option value="ECP">ECP</option>
     </select>

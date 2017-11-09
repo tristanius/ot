@@ -107,6 +107,17 @@ section.area select, .windowCentered select{
 .nodisplay{
   display: none;
 }
+.aparecerDiv{
+  display: block;
+  opacity: 1;
+  transition: opacity 1s linear;
+
+}
+.ocultarDiv{
+  display: none;
+  opacity: 0;
+  transition: opacity 1s linear;
+}
 
 .VentanaContainer{
   position: absolute;;
@@ -271,7 +282,9 @@ textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="
 .overflowAuto{
   overflow: auto;
 }
+
 /*-------------------*/
+
 
 @media (min-width:700px){
   nav img.logo{

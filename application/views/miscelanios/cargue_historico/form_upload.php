@@ -1,4 +1,4 @@
-<section ng-controller="cargue_historico">
+<section ng-controller="historico_fact">
 
   <h4 class="center-align">Interfaz de cargue de archivos historicos de facturación:</h4>
 
@@ -12,8 +12,7 @@
   </ul>
   <hr>
 
-  <fieldset ng-init="initAdjunto('<?= site_url("historicoFacturacion/upload_cague_historico") ?>')" ng-show="uploadView">
-
+  <fieldset class="{{ (uploadView?'aparecerDiv':'ocultarDiv') }}" ng-init="initAdjunto('<?= site_url("historicoFacturacion/upload_cague_historico") ?>')">
     <h5>Paso 1: cargar el archivo de datos</h5>
     <div class="left">
       <div id="fileHistorico"> Archivo </div>
@@ -24,27 +23,34 @@
 
   </fieldset>
 
-  <fieldset ng-show="validacionView">
+  <fieldset class="{{ (validacionView?'aparecerDiv':'ocultarDiv') }}">
     <h5>Paso 2: Datos del archivo cargado</h5>
     <legend>Datos y Validaciones</legend>
-    <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/validacion") ?>')">Validar información</button>
 
-    <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/registro") ?>')">Cargar información</button>
+    <div ng-if="spinner" >
+      <h6>Estamos trabajando en el archivo, por favor espere.</h6>
+      <label>Cargando...</label>
+      <img src="<?= base_url('assets/img/cargando.gif') ?>" alt="" width="300">
+    </div>
+
+    <button type="button" class="waves-effect waves-light blue btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/validacion") ?>')">Validar información</button>
+
+    <button type="button" class="waves-effect waves-light green btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/registro") ?>')">Cargar información</button>
 
   </fieldset>
 
-  <div ng-show="resultsView">
+  <div class="{{ (resultsView?'aparecerDiv':'ocultarDiv') }}">
     <h5>Paso 3: Resultados del proceso: {{ 'variable del proceso' }}</h5>
     <div style="font-size: 9px; overflow: auto;">
 
       <p>
-        <span>Resultados exitosos: </span> <span ng-bind="(rows.success.length-1)"></span>
-        <button type="button" class="waves-effect waves-light btn" ng-click="genDownloadFile('<?= site_url('historicoFacturacion/generarXlsx') ?>', rows.success)">Download resultados</button>
+        <big>Resultados exitosos: </big> <big><strong ng-bind="(rows.success.length-1)"></strong></big>
+        <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="genDownloadFile('<?= site_url('historicoFacturacion/generarXlsx') ?>', rows.success)">Download resultados</button>
       </p>
 
       <p>
-        <span>Resultados exitosos: </span> <span ng-bind="(rows.failed.length-1)"></span>
-        <button type="button" class="waves-effect waves-light btn" ng-click="genDownloadFile('<?= site_url('historicoFacturacion/generarXlsx') ?>', rows.failed)">Download resultados</button>
+        <big>Resultados exitosos: </big> <big><strong ng-bind="(rows.failed.length-1)"></strong></big>
+        <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="genDownloadFile('<?= site_url('historicoFacturacion/generarXlsx') ?>', rows.failed)">Download resultados</button>
       </p>
 
     </div>
