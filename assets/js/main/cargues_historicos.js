@@ -5,7 +5,7 @@ var historico_fact =  function($scope, $http, $timeout){
   $scope.uploadView = true;
   $scope.validacionView = false;
   $scope.resultsView = false;
-
+  $scope.proceso = '';
   $scope.spinner  = false;
   $scope.initAdjunto = function(ruta) {
     $timeout(
@@ -35,7 +35,6 @@ var historico_fact =  function($scope, $http, $timeout){
           },
           onError: function(files,status,errMsg,pd){
             alert(JSON.stringify(errMsg));
-            $scope.spinner  = false;
           }
         });
       }
@@ -45,8 +44,9 @@ var historico_fact =  function($scope, $http, $timeout){
     $scope.adjunto.startUpload();
   }
 
-  $scope.leerData = function(lnk){
+  $scope.leerData = function(lnk, tipo){
     $scope.spinner  = true;
+    $scope.proceso = tipo;
     console.log('cargando...'+ new Date().toUTCString() );
     $http.post(lnk, {
         path:$scope.resultado_cargue.return
@@ -85,5 +85,16 @@ var historico_fact =  function($scope, $http, $timeout){
         console.log(err.data);
       }
     );
+  }
+
+  $scope.restartValues = function(){
+    $scope.resultado_cargue = [];
+    $scope.resultados = [];
+    $scope.rows = [];
+    $scope.uploadView = true;
+    $scope.validacionView = false;
+    $scope.resultsView = false;
+    $scope.proceso = '';
+    $scope.spinner  = false;
   }
 }

@@ -35,11 +35,13 @@ class HistoricoFacturacion_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->list_fields('historico_facturacion');
   }
+  
   public function fieldsMetaData()
   {
     $this->load->database('ot');
     return $this->db->field_data('historico_facturacion');
   }
+
   public function setRowHistorico($data)
   {
     $this->load->database('ot');

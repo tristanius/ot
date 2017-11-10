@@ -30,28 +30,31 @@
     <div ng-if="spinner" >
       <h6>Estamos trabajando en el archivo, por favor espere.</h6>
       <label>Cargando...</label>
-      <img src="<?= base_url('assets/img/cargando.gif') ?>" alt="" width="300">
+      <img src="<?= base_url('assets/img/cargando3.gif') ?>" alt="" width="300">
     </div>
 
-    <button type="button" class="waves-effect waves-light blue btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/validacion") ?>')">Validar información</button>
+    <div class="" ng-if="!spinner">
+      <button type="button" class="waves-effect waves-light blue btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/validacion") ?>', 'validacion')">Validar información</button>
 
-    <button type="button" class="waves-effect waves-light green btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/registro") ?>')">Cargar información</button>
-
+      <button type="button" class="waves-effect waves-light green btn padding1ex" ng-click="leerData('<?= site_url("historicoFacturacion/read_data_from2/registro") ?>', 'registro')">Cargar información</button>
+    </div>
   </fieldset>
 
   <div class="{{ (resultsView?'aparecerDiv':'ocultarDiv') }}">
-    <h5>Paso 3: Resultados del proceso: {{ 'variable del proceso' }}</h5>
+    <h5>Paso 3: Resultados del proceso de {{ proceso }}: </h5>
     <div style="font-size: 9px; overflow: auto;">
 
-      <p>
-        <big>Resultados exitosos: </big> <big><strong ng-bind="(rows.success.length-1)"></strong></big>
+      <p class="card-panel blue-text text-darken-2">
+        <big style="font-size: 4ex;">Resultados exitosos: <strong ng-bind="(rows.success.length-1)"></strong></big>
         <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="genDownloadFile('<?= site_url('historicoFacturacion/generarXlsx') ?>', rows.success)">Download resultados</button>
       </p>
 
-      <p>
-        <big>Resultados exitosos: </big> <big><strong ng-bind="(rows.failed.length-1)"></strong></big>
+      <p class="card-panel red-text text-darken-2">
+        <big style="font-size: 4ex;">Resultados fallidos: <strong ng-bind="(rows.failed.length-1)"></strong></big>
         <button type="button" class="waves-effect waves-light btn padding1ex" ng-click="genDownloadFile('<?= site_url('historicoFacturacion/generarXlsx') ?>', rows.failed)">Download resultados</button>
       </p>
+
+      <button type="button" ng-click="restartValues()" class="waves-effect waves-light btn padding1ex"> << Realizar otro cargue</button>
 
     </div>
   </div>
