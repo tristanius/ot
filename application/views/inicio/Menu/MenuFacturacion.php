@@ -10,4 +10,13 @@
     </a>
   </div>
 
+
+
+  <div class="col l2" ng-if="validPriv(73)">
+    <a href="#" ng-click="clickeableLink('<?= site_url('historicoFacturacion/cargue_historico/') ?>', $event, 'Cargue de historico');" class="btn-panel" style="width:100%">
+      <h4 class="center-align" data-icon="">X</h4>
+      <p class="center-align"> Historicio de facturación </p>
+    </a>
+  </div>
+
 </div>

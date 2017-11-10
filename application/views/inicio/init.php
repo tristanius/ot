@@ -23,7 +23,7 @@
 					</a>
 				</li>
 
-				<li ng-show="validPriv(55)">
+				<li ng-show="validPriv(55) || validPriv(73)">
 					<a href="#" ng-click="getFromMenu('#MenuFacturacion','#slideOpciones')" data-icon="p">
 						Facturación
 					</a>

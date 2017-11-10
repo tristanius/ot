@@ -6,7 +6,7 @@
     Tips para realizar el cargue:
   </h5>
   <ul>
-    <ol> 1. El formato debe ser un libro de excel xlsx o libro excel 2007 o superior</ol>
+    <ol> 1. El formato debe ser un libro de excel xlsx o libro excel 2007 o superior <a href="<?= base_url('uploads/plantillas/plantilla_historico_fact.xlsx') ?>">(Plantilla)</a> </ol>
     <ol> 2. Trata que el archivo cargado no tenga mas de 100mil registros</ol>
     <ol> 3. Evita completamente tener dos o más hojas en el mismo archivo de excel </ol>
   </ul>
