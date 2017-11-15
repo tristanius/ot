@@ -28,16 +28,16 @@
     $rows = combinarEquiposReporte( $equipos, $apu);
     foreach ($rows as $key => $r): ?>
       <tr>
-        <td colspan="2"><?= !isset( $r["e"] )?" - ":$r["e"]->itemc_item ?></td>
-        <td colspan="6"><?=  !isset( $r["e"] )?" - ":$r["e"]->descripcion ?></td>
-        <td colspan="1"> <?= !isset( $r["e"] )?" - ":( $r["e"]->BO=="B")?"SI":"NO"; ?> </td>
-        <td colspan="1"> <?= !isset( $r["e"] )?" - ":( $r["e"]->BO=="O")?"SI":"NO"; ?> </td>
+        <td colspan="2"> <?= !isset( $r["e"] )?" - ":$r["e"]->itemc_item ?> </td>
+        <td colspan="6"> <?= !isset( $r["e"] )?" - ":$r["e"]->descripcion ?> </td>
+        <td colspan="1"> <?= !isset( $r["e"] )?" - ":( ( $r["e"]->BO=="B")?"SI":"NO" ); ?> </td>
+        <td colspan="1"> <?= !isset( $r["e"] )?" - ":( ( $r["e"]->BO=="O")?"SI":"NO" ); ?> </td>
         <td colspan="1"> </td>
-        <td colspan="1"> <?=  !isset( $r["e"] )?" - ":$r["e"]->unidad ?> </td>
-        <td colspan="1"> <?=  !isset( $r["e"] )?" - ":$r["e"]->cantidad*1 ?></td>
-        <td colspan="2"> <?=  !isset( $r["e"] )?" - ":$r["e"]->horas_operacion>0?"Operativo": (  $r["e"]->horas_disponible?"Disponible": (  $r["e"]->varado?"Varado":" - " ) ); ?> </td>
-        <td colspan="2"> <?=  !isset( $r["e"] )?" - ":$r["e"]->referencia ?> </td>
-        <td colspan="2"> <?=  !isset( $r["e"] )?" - ":$r["e"]->horas_operacion>0? $r["e"]->horas_operacion: $r["e"]->horas_disponible ?> </td>
+        <td colspan="1"> <?= !isset( $r["e"] )?" - ":$r["e"]->unidad ?> </td>
+        <td colspan="1"> <?= !isset( $r["e"] )?" - ":$r["e"]->cantidad*1 ?> </td>
+        <td colspan="2"> <?= !isset( $r["e"] )?" - ":( $r["e"]->horas_operacion>0?"Operativo": (  $r["e"]->horas_disponible?"Disponible":  $r["e"]->varado?"Varado":" - " ) ); ?> </td>
+        <td colspan="2"> <?= !isset( $r["e"] )?" - ":$r["e"]->referencia ?> </td>
+        <td colspan="2"> <?= !isset( $r["e"] )?" - ":( $r["e"]->horas_operacion>0? $r["e"]->horas_operacion: $r["e"]->horas_disponible ) ?> </td>
         <td colspan="2"> <?= !isset( $r["a"] )?" - ":$r['a']->itemc_item ?> </td>
         <td colspan="8"> <?= !isset( $r["a"] )?" - ":$r['a']->descripcion ?> </td>
         <td colspan="2"> <?= !isset( $r["a"] )?" - ":$r['a']->unidad ?> </td>
