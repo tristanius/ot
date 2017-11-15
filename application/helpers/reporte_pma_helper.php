@@ -14,7 +14,7 @@ function combinarEquiposReporte($equipos, $apu)
   }
   for ($j=0 ; $j < $i ; $j++ ) {
     $r = array();
-    if ( $n_eqs > $j && $equipos[$j]->facturable || $equipos[$j]->print) {
+    if ( $n_eqs > $j && ( (isset($equipos[$j]->facturable) && $equipos[$j]->facturable) || (isset( $equipos[$j]->print ) && $equipos[$j]->print) ) ) {
       $r['e'] = $equipos[$j];
     }
     if ( $n_apu > $j ) {

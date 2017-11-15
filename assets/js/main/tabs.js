@@ -284,6 +284,11 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     });
     return ret;
   }
+
+  $scope.dialog = function(msj){
+    alert(msj);
+    console.log(msj)
+  }
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });

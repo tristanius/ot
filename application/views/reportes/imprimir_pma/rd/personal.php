@@ -28,7 +28,7 @@
   </thead>
   <tbody>
     <?php foreach ($personal as $key => $p): ?>
-      <?php if ( (isset($v->facturable) && $v->facturable ) || ( isset($v->print) && $v->print)  ): ?>
+      <?php if ( (isset($p->facturable) && $p->facturable ) || ( isset($p->print) && $p->print)  ): ?>
         <tr>
           <td colspan="2" rowspan="2" ><?= $p->itemc_item ?></td>
     		  <td colspan="1" rowspan="2" ><?= $p->identificacion ?></td>
