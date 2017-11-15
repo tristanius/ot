@@ -47,7 +47,7 @@
           <button type="button" class="btn mini-btn2" data-icon="," ng-click="getReporte('<?= site_url('reporte/get/') ?>/'+rd.idreporte_diario, '#ventanaReporte', '#ventanaReporteOCulta')"> </button>
         </td>
         <td>
-          <a class="btn light-blue darken-3 mini-btn2" ng-href="<?= site_url('export/rd_pma')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}"
+          <a class="btn light-blue darken-3 mini-btn2" ng-href="<?= site_url('export/rdPDF')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}"
             target="_blank" data-icon="h">
           </a>
         </td>

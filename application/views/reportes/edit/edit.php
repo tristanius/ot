@@ -91,7 +91,7 @@
                 Tiempo Laborado: <a class="btn cyan mini-btn2" ng-href="<?= site_url('reportepersonal/tl_pma/'.$r->idOT.'/'.$r->idreporte_diario)?>" target="_blank" data-icon="&#xe048;">  </a>
               </td>
               <td>
-                Reporte día: <a class="btn mini-btn2" ng-href="<?= site_url('export/rd_pma/'.$r->idOT.'/'.$r->idreporte_diario) ?>" target="_blank" data-icon="h">  </a>
+                Reporte día: <a class="btn mini-btn2" ng-href="<?= site_url('export/rdPDF/'.$r->idOT.'/'.$r->idreporte_diario) ?>" target="_blank" data-icon="h">  </a>
               </td>
               <td>
                 <div class="row regularForm" >
