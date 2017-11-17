@@ -35,7 +35,7 @@
         <td colspan="1"> </td>
         <td colspan="1"> <?= !isset( $r["e"] )?" - ":$r["e"]->unidad ?> </td>
         <td colspan="1"> <?= !isset( $r["e"] )?" - ":$r["e"]->cantidad*1 ?> </td>
-        <td colspan="2"> <?= !isset( $r["e"] )?" - ":( $r["e"]->horas_operacion>0?"Operativo": (  $r["e"]->horas_disponible?"Disponible":  $r["e"]->varado?"Varado":" - " ) ); ?> </td>
+        <td colspan="2"> <?= !isset( $r["e"] )?" - ":( $r["e"]->horas_operacion>0?"Operativo": (  $r["e"]->horas_disponible>0? "Disponible" : ( $r["e"]->varado==TRUE?"Varado":" - " ) ) ); ?> </td>
         <td colspan="2"> <?= !isset( $r["e"] )?" - ":$r["e"]->referencia ?> </td>
         <td colspan="2"> <?= !isset( $r["e"] )?" - ":( $r["e"]->horas_operacion>0? $r["e"]->horas_operacion: $r["e"]->horas_disponible ) ?> </td>
         <td colspan="2"> <?= !isset( $r["a"] )?" - ":$r['a']->itemc_item ?> </td>

@@ -223,7 +223,7 @@ class Reportepersonal_db extends CI_Model{
     SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )
     AND rrd.nomina = ".($bandera?0:1)." ";
-    $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
+    $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO', 'CORREGIR', 'CORREGIR HE', 'CORREGIR GV') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
     if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
     if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }
@@ -240,7 +240,7 @@ class Reportepersonal_db extends CI_Model{
       JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE rd.fecha_reporte = '".$fecha."'
-    AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO' ,'VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO')
+    AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO', 'CORREGIR', 'CORREGIR HE', 'CORREGIR GV') 
     AND OT.nombre_ot = '".trim($ot)."'
     AND rrd.nomina = ".($bandera?0:1)."
     AND r.persona_identificacion = '".$identificacion."' ";
