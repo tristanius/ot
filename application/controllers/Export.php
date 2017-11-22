@@ -137,7 +137,8 @@ class Export extends CI_Controller{
     setlocale(LC_ALL,"es_ES");
     $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
-    $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
+    $row = $this->repo->getBy($idOT, NULL, $idrepo)->row();
+    $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
     $json_r = json_decode($row->json_r);
     $recursos = new stdClass();
     $recursos->personal = $this->repo->getRecursos($idrepo,"personal")->result();
@@ -223,9 +224,11 @@ class Export extends CI_Controller{
           TRUE);
         break;
       case 2:
+        $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
         $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
         break;
       default:
+        $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
         $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
         break;
     }

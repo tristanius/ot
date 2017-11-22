@@ -197,6 +197,7 @@ class Reporte_db extends CI_Model{
     }
     return $this->db->get();
   }
+
   # Consultar Reporte por id
   public function get($idrepo)
   {
@@ -205,6 +206,7 @@ class Reporte_db extends CI_Model{
     return $this->db->select('*')->from('reporte_diario AS rd')->join('OT','OT.idOT = rd.OT_idOT')->where('rd.idreporte_diario',$idrepo)->get();
   }
 
+  # Recursos de un reporte diario
   public function getRecursos($idrepo, $tipo){
     $this->load->database('ot');
     $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item, rot.propietario_recurso, rot.propietario_observacion');
@@ -413,6 +415,23 @@ class Reporte_db extends CI_Model{
 		$this->db->order_by('num_rerpotes', 'desc');
 		return $this->db->get();
 	}
+
+  // funcion para obtener el numero SAP
+  public function getSAP($idOT='', $fecha)
+  {
+    $this->load->database('ot');
+    $rows = $this->db->select('tr.sap')
+                ->from( 'OT' )
+                ->join( 'tarea_ot AS tr', 'tr.OT_idOT = OT.idOT' )
+                ->where( 'OT.idOT', $idOT )
+                ->where( 'tr.fecha_inicio <= "'.$fecha.'"' )
+                ->order_by('tr.idtarea_ot','DESC')
+                ->get();
+    if($rows->num_rows() > 0){
+      return $rows->row()->sap;
+    }
+    return "";
+  }
 
   # TRANSACTION
   public function init_transact()
