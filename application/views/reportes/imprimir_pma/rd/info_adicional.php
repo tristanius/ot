@@ -3,7 +3,7 @@
   <tbody>
     <tr>
       <td colspan="4" class="centrar"><b>No. OT SAP:</b></td>
-      <td colspan="5"></td>
+      <td colspan="5"><?= $r->sap_tarea ?></td>
       <td colspan="26"></td>
     </tr>
     <?php $this->load->view('reportes/imprimir_pma/rd/info_actividad', array('title'=>'ACTIVIDAD 1', 'data'=>NULL ) ); ?>

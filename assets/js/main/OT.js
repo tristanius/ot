@@ -624,7 +624,7 @@ var agregarOT = function($scope, $http, $timeout){
 		}else if ($scope.ot.nombre_ot == '' || $scope.ot.nombre_ot == undefined
 						|| $scope.ot.tipo_ot == undefined || $scope.ot.tipo_ot == ''
 						|| $scope.ot.especialidad == undefined || $scope.ot.especialidad == ''
-						|| $scope.ot.zona == '' || $scope.ot.zona == undefined) {
+						|| $scope.ot.zona == '' || $scope.ot.zona == undefined || $scope.ot.idcontrato == undefined) {
 			alert("No has seleccionado Todos los datos necesarios");
 		}else{
 			$scope.isOnPeticion = true;

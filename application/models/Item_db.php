@@ -350,9 +350,9 @@ class Item_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		if(isset($codigo)){
-			$this->db->like('itf.codigo',$codigo);
+			$this->db->where('itf.codigo',$codigo);
 		}elseif (isset($item)) {
-			$this->db->like('itf.itemc_item',$item);
+			$this->db->where('itf.itemc_item',$item);
 		}
 		return $this->db->select('OT.idOT, OT.nombre_ot, tr.idtarea_ot, tr.nombre_tarea, itt.*, itf.*, tarf.idtarifa, tarf.idvigencia_tarifas, tarf.estado_tarifa, tarf.tarifa, tarf.salario')
 								->from('OT')

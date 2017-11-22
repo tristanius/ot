@@ -121,7 +121,7 @@
 					<th colspan="10" rowspan="" style="background:#ddedd0">ACTIVIDADES DE MTTO.</th>
 				</tr>
 				<tr ng-repeat="act in tr.actividades | orderBy: 'codigo'">
-					<td>{{ act.itemc_item }}</td>
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+act.codigo)"></span> {{ act.itemc_item }}</td>
 					<td>{{ act.descripcion }}</td>
 					<th>
 						<select class="font9" style="width:60px;" ng-model="act.idsector_item_tarea" ng-init="act.idsector_item_tarea = (act.idsector_item_tarea)">
@@ -147,7 +147,7 @@
 					<th colspan="10" rowspan="" style="background:#ddedd0">PERSONAL</th>
 				</tr>
 				<tr ng-repeat="per in tr.personal | orderBy: 'codigo'">
-					<td>{{ per.itemc_item }}</td>
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+per.codigo)"></span> {{ per.itemc_item }}</td>
 					<td style="max-width: 50%;">{{ per.descripcion }}</td>
 					<th>
 						<select class="font9" style="width:60px;" ng-model="per.idsector_item_tarea" ng-init="per.idsector_item_tarea = (''+per.idsector_item_tarea)" disabled>
@@ -173,7 +173,7 @@
 					<th colspan="10" rowspan="" style="background:#ddedd0">EQUIPOS: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
 				</tr>
 				<tr ng-repeat="eq in tr.equipos | orderBy: 'codigo'">
-					<td>{{ eq.itemc_item }}</td>
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+eq.codigo)"></span> {{ eq.itemc_item }}</td>
 					<td>{{ eq.descripcion }}</td>
 					<th>
 						<select class="font9" style="width:60px;" ng-model="eq.idsector_item_tarea" ng-init="eq.idsector_item_tarea = (''+eq.idsector_item_tarea)" disabled>

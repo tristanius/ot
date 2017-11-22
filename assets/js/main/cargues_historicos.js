@@ -1,8 +1,11 @@
-var cargue_historico =  function($scope, $http, $timeout){
+var historico_fact =  function($scope, $http, $timeout){
   $scope.resultado_cargue = [];
   $scope.resultados = [];
   $scope.rows = [];
-
+  $scope.uploadView = true;
+  $scope.validacionView = false;
+  $scope.resultsView = false;
+  $scope.proceso = '';
   $scope.spinner  = false;
   $scope.initAdjunto = function(ruta) {
     $timeout(
@@ -22,27 +25,28 @@ var cargue_historico =  function($scope, $http, $timeout){
           },
           onSuccess: function(file, data){
             $scope.resultado_cargue = JSON.parse(data);
-            console.log(data);
-            if ($scope.resultado_cargue.success) {
-            }
+            console.log($scope.resultado_cargue);
             //$scope.cerrarWindow();
             //$scope.refreshTabs();
-            $scope.spinner = false;
+            $timeout(function(){
+              $scope.uploadView = false;
+              $scope.validacionView = true;
+            });
           },
           onError: function(files,status,errMsg,pd){
             alert(JSON.stringify(errMsg));
-            $scope.spinner  = false;
           }
         });
       }
     );
   }
   $scope.IniciarUploadAdjunto = function(){
-    $scope.spinner  = true;
     $scope.adjunto.startUpload();
   }
 
-  $scope.leerData = function(lnk){
+  $scope.leerData = function(lnk, tipo){
+    $scope.spinner  = true;
+    $scope.proceso = tipo;
     console.log('cargando...'+ new Date().toUTCString() );
     $http.post(lnk, {
         path:$scope.resultado_cargue.return
@@ -51,8 +55,12 @@ var cargue_historico =  function($scope, $http, $timeout){
           $scope.rows = response.data;
           console.log(response.data);
           console.log('Cerrando...'+ new Date().toUTCString() );
+          $scope.$parent.setValorProp(false, $scope, 'validacionView');
+          $scope.$parent.setValorProp(true, $scope, 'resultsView');
+          $scope.spinner = false;
         },
         function(response) {
+          $scope.spinner = false;
           console.log(response.data);
         }
       );
@@ -77,5 +85,16 @@ var cargue_historico =  function($scope, $http, $timeout){
         console.log(err.data);
       }
     );
+  }
+
+  $scope.restartValues = function(){
+    $scope.resultado_cargue = [];
+    $scope.resultados = [];
+    $scope.rows = [];
+    $scope.uploadView = true;
+    $scope.validacionView = false;
+    $scope.resultsView = false;
+    $scope.proceso = '';
+    $scope.spinner  = false;
   }
 }

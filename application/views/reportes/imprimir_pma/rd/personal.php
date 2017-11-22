@@ -28,26 +28,28 @@
   </thead>
   <tbody>
     <?php foreach ($personal as $key => $p): ?>
-      <tr>
-        <td colspan="2" rowspan="2" ><?= $p->itemc_item ?></td>
-  		  <td colspan="1" rowspan="2" ><?= $p->identificacion ?></td>
-  		  <td colspan="9" rowspan="2" ><?= $p->nombre_completo ?></td>
-        <td colspan="7" rowspan="2" ><?= $p->descripcion ?></td>
-        <td colspan="3" rowspan="2" ></td>
-        <td colspan="1" rowspan="2" ><?= $p->BO=='B'?'X':''; ?></td>
-        <td colspan="1" rowspan="2" ><?= $p->BO=='O'?'X':''; ?></td>
-        <td colspan="2" ><?= $p->hora_inicio ?></td>
-        <td colspan="2" ><?= $p->hora_fin ?></td>
-        <td colspan="1" rowspan="2" ><?= $p->hr_almuerzo?'SI':'NO' ?></td>
-        <td colspan="1" rowspan="2" ><?= $p->racion ?></td>
-        <td colspan="1" rowspan="2" ><?= $p->gasto_viaje_pr ?></td>
-        <td colspan="1" rowspan="2" ></td>
-        <td colspan="3" rowspan="2" ><?= $p->gasto_viaje_lugar ?></td>
-      </tr>
-      <tr>
-        <td colspan="2"><?= $p->hora_inicio2 ?></td>
-        <td colspan="2"><?= $p->hora_fin2 ?></td>
-      </tr>
+      <?php if ( (isset($p->facturable) && $p->facturable ) || ( isset($p->print) && $p->print)  ): ?>
+        <tr>
+          <td colspan="2" rowspan="2" ><?= $p->itemc_item ?></td>
+    		  <td colspan="1" rowspan="2" ><?= $p->identificacion ?></td>
+    		  <td colspan="9" rowspan="2" ><?= $p->nombre_completo ?></td>
+          <td colspan="7" rowspan="2" ><?= $p->descripcion ?></td>
+          <td colspan="3" rowspan="2" ></td>
+          <td colspan="1" rowspan="2" ><?= $p->BO=='B'?'X':''; ?></td>
+          <td colspan="1" rowspan="2" ><?= $p->BO=='O'?'X':''; ?></td>
+          <td colspan="2" ><?= $p->hora_inicio ?></td>
+          <td colspan="2" ><?= $p->hora_fin ?></td>
+          <td colspan="1" rowspan="2" ><?= $p->hr_almuerzo?'SI':'NO' ?></td>
+          <td colspan="1" rowspan="2" ><?= $p->racion ?></td>
+          <td colspan="1" rowspan="2" ><?= $p->gasto_viaje_pr ?></td>
+          <td colspan="1" rowspan="2" ></td>
+          <td colspan="3" rowspan="2" ><?= $p->gasto_viaje_lugar ?></td>
+        </tr>
+        <tr>
+          <td colspan="2"><?= $p->hora_inicio2 ?></td>
+          <td colspan="2"><?= $p->hora_fin2 ?></td>
+        </tr>
+      <?php endif; ?>
     <?php endforeach; ?>
     <?php
       for ($i=0; $i <= ( 11-sizeof($personal) ) ; $i++) {

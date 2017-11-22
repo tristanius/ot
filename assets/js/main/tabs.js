@@ -284,6 +284,11 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     });
     return ret;
   }
+
+  $scope.dialog = function(msj){
+    alert(msj);
+    console.log(msj)
+  }
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });
@@ -365,8 +370,8 @@ app.controller("imprimirRD", function($scope, $http, $timeout){
   imprimirRD($scope, $http, $timeout);
 });
 
-app.controller("cargue_historico", function($scope, $http, $timeout){
-  cargue_historico($scope, $http, $timeout);
+app.controller("historico_fact", function($scope, $http, $timeout){
+  historico_fact($scope, $http, $timeout);
 });
 
 
