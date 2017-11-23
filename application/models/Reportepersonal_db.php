@@ -90,6 +90,7 @@ class Reportepersonal_db extends CI_Model{
       year(rd.fecha_reporte) as agno,
       dayofweek(rd.fecha_reporte) as dia_semana,
       rd.festivo,
+      OT.idcontrato
       '
     );
     $this->db->from('reporte_diario AS rd');

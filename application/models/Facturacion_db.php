@@ -37,10 +37,10 @@ class Facturacion_db extends CI_Controller{
         (
           SELECT mytr.sap
           FROM tarea_ot AS mytr
-          WHERE OT.idOT = mytr.OT_idOT
-          AND rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin
+          WHERE mytr.OT_idOT = OT.idOT
+          AND mytr.fecha_inicio <= rd.fecha_reporte
+          GROUP BY mytr.OT_idOT DESC
           ORDER BY mytr.idtarea_ot DESC
-          LIMIT 1
         ), ""
       ) as numero_sap,
       "" as tarea,
