@@ -24,8 +24,8 @@
         <td ng-bind="act.itemc_item"></td>
         <td ng-bind="act.descripcion"></td>
         <td ng-bind="act.unidad"></td>
-        <td class="inputsSmall"> <input type="number" min=0 step=0.00001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td g-init="act.acumulado?act.acumulado:0;">
+        <td> <input type="number" min=0 step=0.00001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
+        <td ng-init="act.acumulado?act.acumulado:0;">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
         </td>
     </tbody>
