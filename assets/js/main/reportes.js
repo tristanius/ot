@@ -123,6 +123,12 @@ var reportes = function($scope, $http, $timeout) {
     	$(this).css( { "width": cell.w+"px" } );
     });
   }
+
+  $scope.popObservacion = function(list, obs) {
+    if( confirm("¿Esta seguro de borrar esta observacion?") ){
+      list.splice(list.indexOf(obs),1);
+    }
+  }
 }
 
 // ============================================================================================
