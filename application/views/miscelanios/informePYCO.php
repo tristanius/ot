@@ -12,7 +12,10 @@ if(!$nodownload){
     <tr>
       <th>ORDEN</th>
       <th>TAREA</th>
-      <th>SAP</th>
+      <th>SAP inicial</th>
+      <th>Clase SAP</th>
+      <th>SAP principal</th>
+      <th>Clase SAP Princ.</th>
       <th>BASE</th>
       <th>VEREDA</th>
       <th>DESCRIPCION</th>
@@ -66,7 +69,10 @@ if(!$nodownload){
       <tr>
         <td><?= $v->nombre_ot ?></td>
         <td><?= $v->nombre_tarea ?></td>
-        <td><?= $v->sap ?></td>
+        <td><?= $v->sap_inicial ?></td>
+        <td><?= $v->clase_sap ?></td>
+        <td><?= $v->sap_principal ?></td>
+        <td><?= $v->clase_sap_principal ?></td>
         <td><?= $v->nombre_base ?></td>
         <td><?= $v->vereda ?></td>
         <td><?= $v->actividad ?></td>

@@ -76,18 +76,26 @@ class Export extends CI_Controller{
     force_download('./uploads/sabanaFactura.xlsx',NULL);
   }
 
-  public function informeOtPyco($nodownload=FALSE)
+  public function informeOtPyco( $f_inicio=NULL, $f_final=NULL, $nodownload=FALSE)
   {
     $this->load->helper(array('config'));
     $this->load->model('facturacion_db', 'infofac');
-    $rows = $this->infofac->informeOtPyco();
+    $where = NULL;
+    if( isset($f_inicio)){
+      $where = "tr.fecha_inicio >= '".$f_inicio."'";
+    }
+    $rows = $this->infofac->informeOtPyco($where);
     $this->load->view('miscelanios/informesPyco/informeMesesOT', array('rows'=>$rows,'nodownload'=>$nodownload, "nombre"=>"InformeOrdenesPYCO") );
   }
-  public function informePYCO($nodownload=FALSE)
+  public function informePYCO( $f_inicio=NULL, $f_final=NULL, $nodownload=FALSE)
   {
     $this->load->helper(array('config'));
     $this->load->model('facturacion_db', 'repo');
-    $rows = $this->repo->informePYCO();
+    $where = NULL;
+    if( isset($f_inicio) ){
+      $where = "tr.fecha_inicio >= '".$f_inicio."'";
+    }
+    $rows = $this->repo->informePYCO($where);
     $this->load->view('miscelanios/informePYCO', array('rows'=>$rows,'nodownload'=>$nodownload));
   }
   #=============================================================================

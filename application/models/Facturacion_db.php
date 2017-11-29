@@ -235,13 +235,16 @@ class Facturacion_db extends CI_Controller{
     return $this->db->get();
   }
 
-  public function informePYCO($value='')
+  public function informePYCO($where=NULL)
   {
     $this->load->database('ot');
+    if(isset($where)){
+      $this->db->where($where);
+    }
     return $this->db->select('
       OT.nombre_ot,
       tr.nombre_tarea,
-      tr.sap AS sap_mes,
+      tr.sap AS sap_inicial,
       tr.clase_sap,
       tr.sap_pago AS sap_principal,
       tr.clase_sap_pago AS clase_sap_principal,
@@ -281,9 +284,12 @@ class Facturacion_db extends CI_Controller{
     ->group_by('tr.idtarea_ot')
     ->get();
   }
-  public function informeOtPyco()
+  public function informeOtPyco($where=NULL)
   {
     $this->load->database('ot');
+    if(isset($where)){
+      $this->db->where($where);
+    }
     return $this->db->select(
       '
       OT.nombre_ot,
