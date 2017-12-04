@@ -143,6 +143,10 @@
     <tr class="trLimpia"><td colspan="35"></td></tr>
     <tr><td colspan="35">OBSERVACIONES: </td></tr>
 
+    <tr>
+      <td colspan="35"> <b>OBJETO:</b> <?= $r->actividad ?></td>
+    </tr>
+
     <?php foreach ($json_r->observaciones as $key => $obs): ?>
     <tr><td colspan="35"> <?= $obs->msj ?> </td></tr>
     <?php endforeach; ?>
