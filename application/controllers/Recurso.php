@@ -11,7 +11,9 @@ class Recurso extends CI_Controller{
   function index(){
 
   }
-
+  # ==========================================================================================================================
+  # FORMULARIO DE RECURSOS DE OT
+  # ==========================================================================================================================
   # Fomulario para la gestión de recursos de una orden
   public function recursosOT()
   {
@@ -166,6 +168,7 @@ class Recurso extends CI_Controller{
   {
     $this->load->model('persona_db', 'per');
     $personas  = $this->per->getBy("identificacion", $row['C'], "persona");
+    $row['A'] = '';
     if($personas->num_rows() < 1){
       $obj = new stdClass();
       $obj->identificacion = $row['C'];
