@@ -2,6 +2,7 @@ var recursosOT = function($scope, $http, $timeout){
   $scope.myOts = [];
   $scope.ot = {};
   $scope.myitemf_eq={};
+  $scope.cambio_un = { show: false, data: undefined };
   $scope.recursosOT = {
       personal:[],
       equipo:[]
@@ -159,4 +160,10 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
+  $scope.cambiarUN = function(rec){
+    $timeout( function(){
+      $scope.cambio_un.show = true;
+      $scope.cambio_un.data = rec;
+    })
+  }
 }

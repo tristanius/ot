@@ -220,10 +220,24 @@ class Recurso extends CI_Controller{
     return $row;
   }
 
-  public function findEquiposBy($value='')
+  #==============================================================================
+
+  # Eliminar un recurso de una OT
+
+
+
+  public function delRecursoOT()
   {
-    # code...
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->database('ot');
+    $this->db->delete('recurso_ot', array('idrecurso_ot'=>$post->idrecurso_ot) );
+    $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
+    if($rows->num_rows() == 0){
+      $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+    }
+    echo "success";
   }
+
 
   # Exportar html aexcel
   public function exporExcel($value='')

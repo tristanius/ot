@@ -147,7 +147,7 @@ class Equipo extends CI_Controller{
     						  $equipo->nombre_ot = $val['B'];
     						  $equipo->fecha_ingreso = date("Y-m-d");
     						  $equipo->centro_costo = '';
-    						  $equipo->unidad_negocio = $equipo->desc_un;
+    						  $equipo->unidad_negocio = $equipo->desc_un; // agregarla desde el excel no desde la BD
     						  $equipo->fecha_registro = date("Y-m-d");
     						  $equipo->OT_idOT = $ot->idOT;
     						  $equipo->itemf_codigo = $it->codigo;
@@ -206,7 +206,7 @@ class Equipo extends CI_Controller{
   {
     $this->load->view('equipo/uploadEquipos');
   }
-  
+
   public function testCargar($value='')
   {
       $this->cargarEquiposOT( $this->getDataEquipo('/equipos/26122016/eqot.xlsx') ); //

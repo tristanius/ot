@@ -40,6 +40,7 @@
           <th>Descripcion cargo</th>
           <th>Asignacion como: </th>
           <th>Propio? </th>
+          <th>U.N.</th>
         </tr>
         <tr>
           <th></th>
@@ -47,6 +48,7 @@
           <th><input type="text" ng-model="filterPer.nombre_completo"></th>
           <th><input type="text" ng-model="filterPer.itemc_item"></th>
           <th><input type="text" ng-model="filterPer.descripcion"></th>
+          <th></th>
           <th></th>
           <th></th>
         </tr>
@@ -66,6 +68,10 @@
           <td ng-bind="p.descripcion"></td>
           <td ng-bind="p.propietario_observacion"></td>
           <td ng-bind="p.propietario_recurso==1?'SI':'NO'"></td>
+          <td>
+            <span ng-click="cambiarUN(p)" data-icon="&#xe01e;" style="color:#7c310b; cursor: pointer"></span>
+            <span ng-bind="p.item_asociado"></span> - <span ng-bind="p.UN"></span>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -106,6 +112,7 @@
           <th>Desc. Item</th>
           <th>Asinado como:</th>
           <th>propio?</th>
+          <th>U.N.</th>
         </tr>
         <tr>
           <th><input type="text" ng-model="filterEq.codigo_siesa"></th>
@@ -115,20 +122,39 @@
           <th><input type="text" ng-model="filterEq.descripcion"></th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'" style="{{ e.propietario_recurso==true?'':'background: #ffc46d' }}">
-          <td ng-bind="e.codigo_siesa"></td>
+          <td>
+              <button
+              type="button"
+              ng-click="delRecursoOT('<?= site_url('recurso/delRecursoOT') ?>/', e.idrecurso, e.idrecurso_ot );"
+              class="btn mini-btn red"
+              > x </button>
+              <span  ng-bind="e.codigo_siesa"></span>
+          </td>
           <td ng-bind="e.referencia"></td>
           <td ng-bind="e.descripcion_equipo"></td>
           <td ng-bind="e.itemc_item"></td>
           <td ng-bind="e.descripcion"></td>
           <td ng-bind="e.propietario_observacion"></td>
           <td ng-bind="e.propietario_recurso==1?'SI':'NO'"></td>
+          <td>
+            <span ng-click="cambiarUN(e)" data-icon="&#xe01e;" style="color:#7c310b; cursor: pointer"></span>
+            <span ng-bind="e.item_asociado"></span> - <span ng-bind="e.UN"></span>
+          </td>
         </tr>
       </tbody>
     </table>
   </section>
+
+  <div id="CambioUN" class="VentanaContainer" ng-show="cambio_un.show">
+    <div  class="loader col s12" >
+      {{ cambio_un.data | json  }}
+      <button type="button" class="btn mini-btn2 red" ng-click="cambio_un.show = false">Ocultar</button>
+    </div>
+  </div>
 
 </div>
