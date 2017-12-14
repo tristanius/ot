@@ -52,7 +52,7 @@ class Facturacion_db extends CI_Controller{
       p.identificacion as cedula,
       p.nombre_completo,
       itf.itemc_item as item,
-      tr.codigo_vinculado as item_sap,
+      rot.UN as un_asociada,
       itc.descripcion,
       if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
       if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
