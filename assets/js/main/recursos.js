@@ -160,10 +160,28 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
-  $scope.cambiarUN = function(rec){
+  $scope.cambioUN = function(rec){
     $timeout( function(){
       $scope.cambio_un.show = true;
       $scope.cambio_un.data = rec;
     })
+  }
+
+  $scope.cambiarUN = function(link, recs, dom_item){
+    $http.post(link, recs.data).then(
+      function(resp){
+        if (resp.data.success) {
+          console.log(resp.data);
+          $('#modal1').modal('close');
+        }else{
+          alert("error de actualizacion");
+          console.log(resp.data);
+        }
+      },
+      function(resp){
+        alert("error de peticion");
+        console.log(resp.data);
+      }
+    );
   }
 }

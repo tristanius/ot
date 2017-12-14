@@ -225,8 +225,8 @@ class Reporte_db extends CI_Model{
     elseif ($tipo == "equipos") {
       $this->db->select('
         IFNULL( e.descripcion, rot.descripcion_temporal ) AS descripcion_equipo,
-        IFNULL( e.codigo_siesa, rot.codigo_temporal ) AS codigo_siesa,
-        IFNULL( e.referencia, "Temporal" ) AS referencia,
+        IFNULL( e.codigo_siesa, "Temporal" ) AS codigo_siesa,
+        IFNULL( e.referencia, rot.codigo_temporal) AS referencia,
         e.ccosto, e.ccosto, desc_un, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
       $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');

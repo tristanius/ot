@@ -45,6 +45,23 @@ class Recurso extends CI_Controller{
     echo "success";
   }
 
+  # actualizar recurso OT
+  public function update_rot()
+  {
+    $post =  json_decode( file_get_contents('php://input') );
+    $this->load->model('recurso_db', 'recot');
+    $obj = new stdClass();
+    $obj->UN = $post->UN;
+    $obj->propietario_recurso = $post->propietario_recurso;
+    $obj->propietario_observacion = $post->propietario_observacion;
+    $this->recot->actualizar( 'recurso_ot', $obj, 'idrecurso_ot = '.$post->idrecurso_ot);
+    $return = new stdClass();
+    $return->success = TRUE;
+    $return->obj = $post;
+    echo json_encode($return);
+  }
+
+
   public function finby()
   {
     $post =json_decode( file_get_contents('php://input') );

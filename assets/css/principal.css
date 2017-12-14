@@ -211,7 +211,7 @@ section.area *{
   margin: 0;
 }
 /* ========= Fomularios sin Diseñop material ==========  */
-.noMaterialStyles input, .noMaterialStyles select, .noMaterialStyles [type="checkbox"]:not(:checked), .noMaterialStyles [type="checkbox"]:checked{
+.noMaterialStyles input, .noMaterialStyles select, .noMaterialStyles [type="checkbox"]:not(:checked), .noMaterialStyles [type="checkbox"]:checked, .noMaterialStyles input[type="text"]:not(.browser-default){
   height: auto;
   width: auto;
   position:inherit;;
