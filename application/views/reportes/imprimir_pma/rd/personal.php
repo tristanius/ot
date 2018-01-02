@@ -41,8 +41,8 @@
           <td colspan="2" ><?= $p->hora_fin ?></td>
           <td colspan="1" rowspan="2" ><?= $p->hr_almuerzo?'SI':'NO' ?></td>
           <td colspan="1" rowspan="2" ><?= $p->racion ?></td>
-          <td colspan="1" rowspan="2" ><?= $p->gasto_viaje_pr ?></td>
-          <td colspan="1" rowspan="2" ></td>
+          <td colspan="1" rowspan="2" ><?= $p->gasto_viaje_pr=='R'?$p->gasto_viaje_pr:''; ?></td>
+          <td colspan="1" rowspan="2" ><?= $p->gasto_viaje_pr=='P'?$p->gasto_viaje_pr:''; ?> </td>
           <td colspan="3" rowspan="2" ><?= $p->gasto_viaje_lugar ?></td>
         </tr>
         <tr>

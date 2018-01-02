@@ -154,6 +154,9 @@ class Equipo extends CI_Controller{
     						  $equipo->itemf_iditemf = $it->iditemf;
                   $equipo->propietario_recurso = $val['G']=='propio'?true:false;
                   $equipo->propietario_observacion = $val['F'];
+                  if( isset( $val['H'] ) && $val['H']!='' ){
+                    $equipo->UN = $val['H'];
+                  }
     						  // Crear el recurso
     						  $id = $this->equ->setEquipoRecurso($equipo);
     						  // Crear el recurso OT

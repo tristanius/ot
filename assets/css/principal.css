@@ -210,34 +210,6 @@ section.area *{
 .col.row, .row{
   margin: 0;
 }
-/* ========= Fomularios sin Diseñop material ==========  */
-.noMaterialStyles input, .noMaterialStyles select, .noMaterialStyles [type="checkbox"]:not(:checked), .noMaterialStyles [type="checkbox"]:checked, .noMaterialStyles input[type="text"]:not(.browser-default){
-  height: auto;
-  width: auto;
-  position:inherit;;
-  left: auto;
-  right: auto;
-  top: auto;
-  bottom: auto;
-  opacity: inherit;
-  margin: auto;
-  background: #FFF;
-  border: 1px solid #ccc;
-  display: inherit;
-  padding: 4px;
-}
-.noMaterialStyles [type="radio"]:not(:checked)+label, .noMaterialStyles [type="radio"]:checked+label {
-  padding: 0;
-}
-.noMaterialStyles [type="radio"]+label:before, .noMaterialStyles [type="radio"]+label:after{
-  content: none;
-}
-.noMaterialStyles [type="radio"]:not(:checked), .noMaterialStyles [type="radio"]:checked{
-  display: inline-block;
-  position: relative;
-  left: auto;
-  opacity: 1;
-}
 
 .mini-btn{
   padding: 1ex;
@@ -266,6 +238,7 @@ input[type=datetime-local]:disabled, input[type=datetime-local][readonly="readon
 input[type=number]:disabled, input[type=number][readonly="readonly"], input[type=search]:disabled, input[type=search][readonly="readonly"],
 textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"]{
   color: #999;
+  height: auto;
 }
 /* ---------------------- */
 .ventanaItems{

@@ -41,6 +41,11 @@ class Recurso extends CI_Controller{
   public function addRecursoOT(){
     $post = json_decode( file_get_contents('php://input') );
     $this->load->model('recurso_db', 'recdb');
+    if($post->propietario_recurso == 0 || $post->propietario_recurso == FALSE || $post->propietario_recurso == NULL){
+      $post->propietario_recurso = FALSE;
+    }else{
+      $post->propietario_recurso= TRUE;
+    }
     $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion);
     echo "success";
   }
@@ -154,7 +159,7 @@ class Recurso extends CI_Controller{
     }
 
     if($this->ot->end_transact()){
-      $html = $this->load->view('miscelanios/reporteCargaXLS',array("filas"=>$noValid),TRUE);
+      $html = $this->load->view('miscelanios/reporteCargaXLS', array("filas"=>$noValid),TRUE);
       $this->load->view('miscelanios/resultadoUpdateMaestro', array("html"=>$html));
     }else{
       echo "Fallo al insertar registros";
@@ -240,8 +245,6 @@ class Recurso extends CI_Controller{
   #==============================================================================
 
   # Eliminar un recurso de una OT
-
-
 
   public function delRecursoOT()
   {
