@@ -55,12 +55,14 @@
 					<option value="Z6 OM">Z6 OM</option>
 					<option value="Z6 PC">Z6 PC</option>
 					<option value="Z6 PM">Z6 PM</option>
+					<option value="">N/A</option>
 				</select>
 			</label>
 			<label class="right-align"><b style="color:#0D47A1">Tipo: </b>
 				<select ng-model="tr.tipo_sap" >
 					<option value="SUPERIOR">SUPERIOR</option>
 					<option value="DERIVADA">DERIVADA</option>
+					<option value="">N/A</option>
 				</select>
 			</label>
 		</p>
@@ -81,12 +83,14 @@
 					<option value="Z6 OM">Z6 OM</option>
 					<option value="Z6 PC">Z6 PC</option>
 					<option value="Z6 PM">Z6 PM</option>
+					<option value="">N/A</option>
 				</select>
 			</label>
 			<label class="right-align"><b style="color:#0D47A1">Tipo: </b>
 				<select ng-model="tr.tipo_sap_pago" >
 					<option value="SUPERIOR">SUPERIOR</option>
 					<option value="DERIVADA">DERIVADA</option>
+					<option value="">N/A</option>
 				</select>
 			</label>
 		</p>

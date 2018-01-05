@@ -247,11 +247,11 @@ class Export extends CI_Controller{
         break;
       case 2:
         $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-        $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        $vw = $this->load->view('reportes/imprimir_pma/v2017/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
         break;
       default:
         $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-        $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        $vw = $this->load->view('reportes/imprimir_pma/v2017/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
         break;
     }
     doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
@@ -265,6 +265,12 @@ class Export extends CI_Controller{
       return "CRDO";
     }
     return substr($value, 0, 2);
+  }
+
+
+  public function test()
+  {
+    $this->load->view('reportes/imprimir_pma/v2018/rd');
   }
 
   # =================================================================================
