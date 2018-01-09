@@ -268,9 +268,28 @@ class Export extends CI_Controller{
   }
 
 
-  public function test()
+  public function test($idOT, $idrepo)
   {
-    $this->load->view('reportes/imprimir_pma/v2018/rd');
+    $this->load->model('reporte_db', 'repo');
+    $this->load->helper('reporte_pma');
+    $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
+    $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
+    $json_r = json_decode($row->json_r);
+    $recursos = new stdClass();
+    $rpers = $this->repo->getRecursos($idrepo,"personal");
+    $requs = $this->repo->getRecursos($idrepo,"equipos");
+    $racts = $this->repo->getRecursos($idrepo,"actividades");
+    $recursos->personal = $rpers->result();
+    $recursos->equipos = $requs->result();
+    $recursos->actividades = $racts->result();
+	  $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
+    // generamos un pdf con el helper de pdf
+    $this->load->helper('pdf');
+    $html = $this->load->view('reportes/imprimir_pma/v2018/rd',
+      array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
+      TRUE);
+    //echo $html;
+    doPDF($html, 'Reporte-'.$row->nombre_ot);
   }
 
   # =================================================================================
