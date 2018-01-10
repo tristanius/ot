@@ -1,13 +1,13 @@
-  <thead>
+  <thead style="background: #FEFEFE">
     <tr>
       <th colspan="36">ACTIVIDADES DE MANTENIMIENTO</th>
     </tr>
     <tr>
-      <th colspan="1">Codigo</th>
-      <th colspan="26">Actividad</th>
-      <th colspan="3">Unidad</th>
-      <th colspan="3">canditad día</th>
-      <th colspan="3">Cantidad Acumulada</th>
+      <th colspan="1">CODIGO</th>
+      <th colspan="26">ACTIVIDAD DE MANTENIMIENTO</th>
+      <th colspan="3">UNIDAD</th>
+      <th colspan="3">CANTIDAD DÍA</th>
+      <th colspan="3">CANTIDAD ACUMULADA</th>
     </tr>
   </thead>
   <tbody>

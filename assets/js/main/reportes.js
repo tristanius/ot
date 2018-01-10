@@ -290,7 +290,8 @@ var addReporte = function($scope, $http, $timeout) {
   // estructuras JSON y array
   $scope.rd = {
     info:{
-      observaciones:[]
+      observaciones:[],
+      actividades:[]
     },
     recursos:{
       personal:[],
@@ -517,6 +518,18 @@ var addReporte = function($scope, $http, $timeout) {
       $scope.rd.info.observaciones.push( { msj:'', tipo:'proveedor', fecha: f.toLocaleString() } );
     }else{
       $scope.rd.info.observaciones_cliente.push( { msj:'', tipo:'cliente', fecha: f.toLocaleString() } );
+    }
+  }
+
+  $scope.addActividad = function(tipo){
+    var f = new Date();
+    if($scope.rd.info.actividades == undefined){
+      $scope.rd.info.actividades = [];
+    }
+    if (tipo=='proveedor') {
+      $scope.rd.info.actividades.push( { msj:'', tipo:'proveedor', fecha: f.toLocaleString() } );
+    }else{
+      $scope.rd.info.actividades.push( { msj:'', tipo:'cliente', fecha: f.toLocaleString() } );
     }
   }
 
@@ -938,6 +951,7 @@ var editReporte = function($scope, $http, $timeout){
       $scope.rd.info.observaciones_cliente.push( {msj:'', tipo:'cliente', fecha: f.toLocaleString()} );
     }
   }
+
   $scope.addObservacion2 = function(obspyco){
     var f = new Date();
     var data = {
@@ -946,6 +960,18 @@ var editReporte = function($scope, $http, $timeout){
         usuario: $scope.$parent.log.nombre_usuario
       };
     $scope.rd.observaciones_pyco.push(data);
+  }
+
+  $scope.addActividad = function(tipo){
+    var f = new Date();
+    if($scope.rd.info.actividades == undefined){
+      $scope.rd.info.actividades = [];
+    }
+    if (tipo=='proveedor') {
+      $scope.rd.info.actividades.push( { msj:'', tipo:'proveedor', fecha: f.toLocaleString() } );
+    }else{
+      $scope.rd.info.actividades.push( { msj:'', tipo:'cliente', fecha: f.toLocaleString() } );
+    }
   }
 
   $scope.getStatusLaboral = function(idstst, per){

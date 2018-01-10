@@ -1,4 +1,4 @@
-  <thead>
+  <thead style="background: #FEFEFE">
     <tr>
       <th colspan="36">EQUIPOS</th>
     </tr>
@@ -25,23 +25,28 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td colspan="1">-</td>
-      <td colspan="3"></td>
-      <td colspan="8"></td>
-      <td colspan="1"></td>
-      <td colspan="1"></td>
-      <td colspan="5"></td>
-      <td colspan="1"></td>
-      <td colspan="1"></td>
-      <td colspan="4"></td>
-      <td colspan="4"></td>
-      <td colspan="2"></td>
-      <td colspan="2"></td>
-      <td colspan="1"></td>
-      <td colspan="1"></td>
-      <td colspan="1"></td>
-    </tr>
+    <?php
+    $x=1;
+    foreach ($recursos->equipos as $key => $e): ?>
+      <tr>
+        <td colspan="1"> <?= $x++; ?></td>
+        <td colspan="3"> <?= $e->itemc_item ?>  </td>
+        <td colspan="8">  </td>
+        <td colspan="1"> <?= ($e->BO=="B")?"SI":"" ?> </td>
+        <td colspan="1"> <?= ($e->BO=="O")?"SI":"" ?> </td>
+        <td colspan="5">  </td>
+        <td colspan="1"> <?= $e->unidad ?> </td>
+        <td colspan="1"> <?= $e->cantidad*1 ?> </td>
+        <td colspan="4"> <?= ($e->horas_operacion>0) ? "Operativo" : ( ($e->horas_disponible>0) ? "Disponible" : ( ($e->varado==TRUE) ? "Varado" : " - " ) ) ?> </td>
+        <td colspan="4"> <?= $e->referencia ?> </td>
+        <td colspan="2"> <?= $e->horometro_ini ?> </td>
+        <td colspan="2"> <?= $e->horometro_fin ?> </td>
+        <td colspan="1"> <?= $e->horas_operacion ?> </td>
+        <td colspan="1"> <?= $e->horas_disponible ?> </td>
+        <td colspan="1"> <?= $e->varado?"SI":"" ?> </td>
+      </tr>
+    <?php endforeach; ?>
+
     <?php
     for ($i=0; $i <= ( 5-sizeof($recursos->actividades) ) ; $i++) {
     ?>
@@ -65,13 +70,4 @@
     <?php
     }
     ?>
-    <tr class="noborder" style="height:0px; padding:0px;">
-      <?php
-      for ($i=0; $i <= 35; $i++) {
-      ?>
-      <td style="height:0px; padding:0px;"> </td>
-      <?php
-      }
-      ?>
-    </tr>
   </tbody>

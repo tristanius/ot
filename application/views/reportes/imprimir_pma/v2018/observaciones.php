@@ -1,30 +1,65 @@
 <table class="font7" border="1">
   <thead>
     <tr>
-      <th>Observaciones</th>
+      <th>Actividades</th>
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($observaciones as $key => $v): ?>
-      <tr>
-        <td> <p><?= $v->msj ?></p> </td>
-      </tr>
-    <?php endforeach; ?>
+    <?php
+    $x=0;
+    if ( isset($json_r->actividades) ): ?>
+      <?php foreach ($json_r->actividades as $key => $v): ?>
+        <?php
+        $x=$x-1;
+        if ( isset($v->isActividad) && $v->isActividad): ?>
+          <tr>
+            <td> <p><?= $v->msj ?></p> </td>
+          </tr>
+        <?php endif; ?>
+      <?php endforeach; ?>
+
+    <?php endif; ?>
+
+    <?php
+    for ($i=0; $i <= (4-$x) ; $i++) {
+    ?>
+    <tr>
+      <td> &nbsp; </td>
+    </tr>
+    <?php
+    }
+    ?>
   </tbody>
 </table>
 
 <table class="font7" border="1">
   <thead>
     <tr>
-      <th>Actividades</th>
+      <th>Observaciones</th>
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($observaciones as $key => $v): ?>
-      <tr>
-        <td> <p><?= $v->msj ?></p> </td>
-      </tr>
+    <?php
+    $y = 0;
+    foreach ($observaciones as $key => $v): ?>
+      <?php
+      $y=$y+1;
+      if ( !isset($v->isActividad)|| !$v->isActividad ): ?>
+        <tr>
+          <td> <p><?= $v->msj ?></p> </td>
+        </tr>
+      <?php endif; ?>
     <?php endforeach; ?>
+
+    <?php
+    for ($i=0; $i <= (4-$y) ; $i++) {
+    ?>
+    <tr>
+      <td> &nbsp; </td>
+    </tr>
+    <?php
+    }
+    ?>
   </tbody>
 </table>
 
@@ -54,3 +89,7 @@
     </tr>
   </tbody>
 </table>
+<p class="font7">
+  <br>
+  <strong>** FIN DEL FORMATO **</strong>
+</p>

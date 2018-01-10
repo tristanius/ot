@@ -1,19 +1,19 @@
-  <thead>
+  <thead style="background: #FEFEFE">
     <tr>
       <th colspan="36">PERSONAL</th>
     </tr>
     <tr>
-      <th colspan="1" rowspan="2" >No.</th>
-      <th colspan="3" rowspan="2" >Codigo</th>
-      <th colspan="5" rowspan="2" >Identificacion</th>
-      <th colspan="9" rowspan="2" >Nombre Completo</th>
-      <th colspan="5" rowspan="2" >Cargo</th>
-      <th colspan="2" rowspan="2" >Base</th>
-      <th colspan="2" >Personal</th>
-      <th colspan="4" >Horario</th>
+      <th colspan="1" rowspan="2" >REF.</th>
+      <th colspan="3" rowspan="2" >CODIGO</th>
+      <th colspan="5" rowspan="2" >CEDULA</th>
+      <th colspan="9" rowspan="2" >NOMBRE Y APELLIDO</th>
+      <th colspan="5" rowspan="2" >CARGO</th>
+      <th colspan="2" rowspan="2" >BASE</th>
+      <th colspan="2" >PERSONAL</th>
+      <th colspan="4" >HORARIO</th>
       <th colspan="1" rowspan="2" >THA  <div>(S/N)</div> </th>
-      <th colspan="2" rowspan="2" >Racion</th>
-      <th colspan="2" >Viaticos</th>
+      <th colspan="2" rowspan="2" >RACION</th>
+      <th colspan="2" >VIATICOS</th>
     </tr>
     <tr>
       <th>B/V</th>
@@ -25,24 +25,30 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td colspan="1"> - </td>
-      <td colspan="3"></td>
-      <td colspan="5"></td>
-      <td colspan="9"></td>
-      <td colspan="5"></td>
-      <td colspan="2"></td>
-      <td colspan="1"></td>
-      <td colspan="1"></td>
-      <td colspan="2"></td>
-      <td colspan="2"></td>
-      <td colspan="1"></td>
-      <td colspan="2"></td>
-      <td colspan="1"></td>
-      <td colspan="1"></td>
-    </tr>
+
     <?php
-    for ($i=0; $i <= ( 18-sizeof($recursos->actividades) ) ; $i++) {
+    $x = 1;
+    foreach ($recursos->personal as $key => $p): ?>
+    <tr>
+      <td colspan="1"> <?=  $x++; ?> </td>
+      <td colspan="3"> <?= $p->itemc_item ?> </td>
+      <td colspan="5"> <?= $p->identificacion ?> </td>
+      <td colspan="9"> <?= $p->nombre_completo ?> </td>
+      <td colspan="5"> <?= $p->descripcion ?> </td>
+      <td colspan="2"></td>
+      <td colspan="1"> <?= $p->BO=='B'?'B':'V'; ?> </td>
+      <td colspan="1"> <?= $p->facturable?'':'N'; ?> </td>
+      <td colspan="2"> <?= $p->hora_inicio ?> </td>
+      <td colspan="2"> <?= $p->hora_fin ?> </td>
+      <td colspan="1"> <?= $p->hr_almuerzo?'S':'N' ?> </td>
+      <td colspan="2"> <?= $p->racion ?> </td>
+      <td colspan="1"> <?= $p->gasto_viaje_pr ?> </td>
+      <td colspan="1"> <?= $p->gasto_viaje_lugar ?> </td>
+    </tr>
+    <?php endforeach; ?>
+
+    <?php
+    for ($i=0; $i <= ( 20-sizeof($recursos->personal) ) ; $i++) {
     ?>
     <tr>
       <td colspan="1"> - </td>
@@ -68,14 +74,5 @@
         Convenciones para novedadesd del personal: B: Basico/ O: Opcional / N: No Facturable/ D: Descanso/ DC: Descanso compensario/ A: Ausente sin permiso/ I: Incapacidad por accidente de trabajo/
         IC: incapacidad por emfermedad común/ S: Sancionado/ ACSP: Ausente con permiso sin pago/ ACCP: Ausente con permiso con pago/ V: Vacaciones/ THA (S/N): Tomo hora de almuerzo (SI/NO) / P: Pernoctó/ R: Retornó
       </td>
-    </tr>
-    <tr class="noborder" style="height:0px; padding:0px;">
-      <?php
-      for ($i=0; $i <= 35; $i++) {
-      ?>
-      <td style="height:0px; padding:0px;"> </td>
-      <?php
-      }
-      ?>
     </tr>
   </tbody>

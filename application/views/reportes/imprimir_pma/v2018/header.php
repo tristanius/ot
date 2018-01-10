@@ -1,8 +1,14 @@
+<div id="lateral">
+  <img src="<?= base_url('assets/img/pma/lateral.png') ?>" style="width:100%">
+  <br>
+  <img src="<?= base_url('assets/img/pma/lateral.png') ?>" style="width:100%">
+</div>
+
 <table border="1" id="cabecera" class="font7">
-  <thead>
+  <thead class="font6">
     <tr>
       <th rowspan="3" colspan="4">
-        <img src="<?= base_url('assets/img/pma.png') ?>" style="width:22ex">
+        <img src="<?= base_url('assets/img/pma.png') ?>" style="width:26ex">
       </th>
       <th colspan="32" class="">REPORTE DIARIO OT <?= $r->nombre_ot ?></th>
     </tr>
@@ -12,10 +18,11 @@
           CONTRATO NO. MA-0032889 Y SU ADICIONAL NO. 1 DE ECOPETROL Y EL CONTRATO DE CENIT NO. 8000002840
       </td>
     </tr>
+
     <tr>
       <th colspan="4">CODIGO</th>
-      <th colspan="16">P135-P2001-PYC-ADM-16-13-005</th>
-      <th colspan="16">version: 1.0</th>
+      <th colspan="14">P135-P2001-PYC-ADM-16-13-005</th>
+      <th colspan="14">version: 1.0</th>
     </tr>
 
     <tr style="text-align: center">
@@ -23,7 +30,7 @@
       <th colspan="4"> ORDEN DE TRABAJO SAP </th>
       <th colspan="28"> DESCRIPCION DE LA OT: </th>
     </tr>
-    <tr style="text-align: center">
+    <tr style="text-align: center;">
       <td colspan="4">
         <?= $r->nombre_ot ?>
         <div class="">
@@ -37,10 +44,10 @@
         </div>
       </td>
       <td colspan="28">
-         <?= $r->actividad ?>
-         <div class="">
-           <br>
+         <div style="height:22px; overflow:hidden">
+           <?= $r->actividad ?>
          </div>
+         <br>
       </td>
     </tr>
   </thead>
