@@ -33,13 +33,4 @@
     <?php
     }
     ?>
-    <tr class="noborder" style="height:0px; padding:0px;">
-      <?php
-      for ($i=0; $i <= 35; $i++) {
-      ?>
-      <td style="height:0px; padding:0px;"> </td>
-      <?php
-      }
-      ?>
-    </tr>
   </tbody>

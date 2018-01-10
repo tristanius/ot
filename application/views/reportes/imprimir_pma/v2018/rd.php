@@ -7,7 +7,7 @@
       <style media="screen">
         @page {
           margin: 25px;
-          margin-top: 160px;
+          margin-top: 170px;
           margin-left: 45px;
         }
         body { margin: 0px; font-family: 'Helvetica';}
@@ -21,7 +21,6 @@
         }
         table, td, th {
           vertical-align: top;
-          text-align: center;
           min-width: 4ex;
         }
         #cabecera{
@@ -29,7 +28,7 @@
           background: #FFF;
           left: 0px;
           right: 0px;
-          top: -130px;
+          top: -140px;
           border: 1px solid #111;
         }
         #lateral{
@@ -38,6 +37,9 @@
           top: 0px;
           width: 15px;
           font-size: 6px;
+        }
+        .texto-central{
+          text-align: center;
         }
         .texto-vertical-1 {
           writing-mode: vertical-lr;
@@ -79,11 +81,11 @@
       $size = 5;
       $y = $pdf->get_height() - 25;
       $x = 30;//$pdf->get_width() - 15 - $fontMetrics->get_text_width("1/1", $font, $size);
-      $pdf->page_text($x, $y, "Pagina {PAGE_NUM} de {PAGE_COUNT} - SICO App", $font, $size);
+      $pdf->page_text($x, $y, "Pagina {PAGE_NUM} de {PAGE_COUNT} ", $font, $size);
     }
     </script>
     <?php $this->load->view('reportes/imprimir_pma/v2018/header.php'); ?>
-    <table border="1" class="font7" >
+    <table border="1" class="font7 texto-central" >
       <?php
       $this->load->view('reportes/imprimir_pma/v2018/personal', array('recursos'=>$recursos));
       $this->load->view('reportes/imprimir_pma/v2018/equipos', array('recursos'=>$recursos));

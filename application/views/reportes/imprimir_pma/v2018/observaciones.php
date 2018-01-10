@@ -1,4 +1,4 @@
-<table class="font7" border="1">
+<table class="font7" border="1" class="texto-central">
   <thead>
     <tr>
       <th>Actividades</th>
@@ -9,13 +9,10 @@
     $x=0;
     if ( isset($json_r->actividades) ): ?>
       <?php foreach ($json_r->actividades as $key => $v): ?>
-        <?php
-        $x=$x-1;
-        if ( isset($v->isActividad) && $v->isActividad): ?>
+        <?php $x=$x+1; ?>
           <tr>
-            <td> <p><?= $v->msj ?></p> </td>
+            <td> <?= $v->msj ?> <br> </td>
           </tr>
-        <?php endif; ?>
       <?php endforeach; ?>
 
     <?php endif; ?>
@@ -32,7 +29,7 @@
   </tbody>
 </table>
 
-<table class="font7" border="1">
+<table class="font7" border="1" class="texto-central">
   <thead>
     <tr>
       <th>Observaciones</th>
@@ -42,13 +39,10 @@
     <?php
     $y = 0;
     foreach ($observaciones as $key => $v): ?>
-      <?php
-      $y=$y+1;
-      if ( !isset($v->isActividad)|| !$v->isActividad ): ?>
+      <?php $y=$y+1; ?>
         <tr>
-          <td> <p><?= $v->msj ?></p> </td>
+          <td> <?= $v->msj ?> <br> </td>
         </tr>
-      <?php endif; ?>
     <?php endforeach; ?>
 
     <?php
@@ -63,7 +57,7 @@
   </tbody>
 </table>
 
-<table class="font7" border="1">
+<table class="font7" border="1" style="">
   <thead>
     <tr>
       <th> Elaborado por </th>

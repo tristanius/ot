@@ -4,7 +4,7 @@
   <img src="<?= base_url('assets/img/pma/lateral.png') ?>" style="width:100%">
 </div>
 
-<table border="1" id="cabecera" class="font7">
+<table border="1" id="cabecera" class="font7 texto-central">
   <thead class="font6">
     <tr>
       <th rowspan="3" colspan="4">

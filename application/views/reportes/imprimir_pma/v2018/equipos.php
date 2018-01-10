@@ -31,7 +31,7 @@
       <tr>
         <td colspan="1"> <?= $x++; ?></td>
         <td colspan="3"> <?= $e->itemc_item ?>  </td>
-        <td colspan="8">  </td>
+        <td colspan="8"> <?= $e->descripcion ?> </td>
         <td colspan="1"> <?= ($e->BO=="B")?"SI":"" ?> </td>
         <td colspan="1"> <?= ($e->BO=="O")?"SI":"" ?> </td>
         <td colspan="5">  </td>
@@ -48,7 +48,7 @@
     <?php endforeach; ?>
 
     <?php
-    for ($i=0; $i <= ( 5-sizeof($recursos->actividades) ) ; $i++) {
+    for ($i=0; $i <= ( 5-sizeof($recursos->equipos) ) ; $i++) {
     ?>
     <tr>
       <td colspan="1">-</td>
