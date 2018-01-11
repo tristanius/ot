@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <style media="screen">
         @page {
-          margin: 25px;
+          margin: 27px;
           margin-top: 170px;
           margin-left: 45px;
         }
@@ -70,6 +70,13 @@
         table tr.noborder{
           border: none;
         }
+        .table-container{
+          padding: 0px;
+        }
+        table.no-border tr, table.no-border tr td{
+          border: none;
+          border-color: #FFF;
+        }
       </style>
     </head>
     <title></title>
@@ -79,19 +86,17 @@
     if ( isset($pdf) ) {
       $font = $fontMetrics->get_font("Helvetica");
       $size = 5;
-      $y = $pdf->get_height() - 25;
+      $y = $pdf->get_height() - 22;
       $x = 30;//$pdf->get_width() - 15 - $fontMetrics->get_text_width("1/1", $font, $size);
       $pdf->page_text($x, $y, "Pagina {PAGE_NUM} de {PAGE_COUNT} ", $font, $size);
     }
     </script>
     <?php $this->load->view('reportes/imprimir_pma/v2018/header.php'); ?>
-    <table border="1" class="font7 texto-central" >
       <?php
       $this->load->view('reportes/imprimir_pma/v2018/personal', array('recursos'=>$recursos));
       $this->load->view('reportes/imprimir_pma/v2018/equipos', array('recursos'=>$recursos));
       $this->load->view('reportes/imprimir_pma/v2018/actividades', array('recursos'=>$recursos));
-      ?>
-    </table>
+    ?>
     <?php $this->load->view('reportes/imprimir_pma/v2018/observaciones', array('observaciones'=>$json_r->observaciones, 'json_r'=>$json_r)); ?>
   </body>
 </html>

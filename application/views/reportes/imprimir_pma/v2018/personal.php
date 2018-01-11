@@ -1,3 +1,4 @@
+<table border="1" class="font7 texto-central" >
   <thead style="background: #FEFEFE">
     <tr>
       <th colspan="36">PERSONAL</th>
@@ -38,8 +39,26 @@
       <td colspan="2"></td>
       <td colspan="1"> <?= $p->BO=='B'?'B':'V'; ?> </td>
       <td colspan="1"> <?= $p->facturable?'':'N'; ?> </td>
-      <td colspan="2"> <?= $p->hora_inicio ?> </td>
-      <td colspan="2"> <?= $p->hora_fin ?> </td>
+      <td colspan="2" class="table-container">
+        <table class="no-border texto-central">
+          <tr>
+            <td style="border-bottom: 1px solid #555;"><?= $p->hora_inicio ?></td>
+          </tr>
+          <tr>
+            <td><?= $p->hora_inicio2 ?></td>
+          </tr>
+        </table>
+      </td>
+      <td colspan="2" class="table-container">
+        <table class="no-border texto-central">
+          <tr>
+            <td style="border-bottom: 1px solid #555;"><?= $p->hora_fin ?></td>
+          </tr>
+          <tr>
+            <td><?= $p->hora_fin2 ?></td>
+          </tr>
+        </table>
+      </td>
       <td colspan="1"> <?= $p->hr_almuerzo?'S':'N' ?> </td>
       <td colspan="2"> <?= $p->racion ?> </td>
       <td colspan="1"> <?= $p->gasto_viaje_pr ?> </td>
@@ -48,7 +67,7 @@
     <?php endforeach; ?>
 
     <?php
-    for ($i=0; $i <= ( 20-sizeof($recursos->personal) ) ; $i++) {
+    for ($i=0; $i <= ( 18-sizeof($recursos->personal) ) ; $i++) {
     ?>
     <tr>
       <td colspan="1"> - </td>
@@ -76,3 +95,4 @@
       </td>
     </tr>
   </tbody>
+</table>

@@ -51,7 +51,7 @@ class Reportepersonal extends CI_Controller{
     $rows = $this->repoper->getBy($idOT, NULL,$idReporte);
     $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
     $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
-    $this->load->view('reportes/imprimir_pma/tl/tiempo_laborado',
+    $this->load->view('reportes/imprimir_pma/v2017/tl/tiempo_laborado',
       array('personal'=>$rowsPersonas->result(),'r'=>$rows->row(), 'download'=>true)
     );
   }

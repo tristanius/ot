@@ -1,3 +1,4 @@
+<table border="1" class="font7 texto-central" >
   <thead style="background: #FEFEFE">
     <tr>
       <th colspan="36">ACTIVIDADES DE MANTENIMIENTO</th>
@@ -21,7 +22,7 @@
     </tr>
     <?php endforeach; ?>
     <?php
-    for ($i=0; $i <= ( 6-sizeof($recursos->actividades) ) ; $i++) {
+    for ($i=0; $i <= ( 4-sizeof($recursos->actividades) ) ; $i++) {
     ?>
     <tr>
       <td colspan="1"> - </td>
@@ -34,3 +35,4 @@
     }
     ?>
   </tbody>
+</table>

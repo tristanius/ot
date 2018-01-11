@@ -18,7 +18,7 @@
     <?php endif; ?>
 
     <?php
-    for ($i=0; $i <= (4-$x) ; $i++) {
+    for ($i=0; $i <= (2-$x) ; $i++) {
     ?>
     <tr>
       <td> &nbsp; </td>
@@ -46,7 +46,7 @@
     <?php endforeach; ?>
 
     <?php
-    for ($i=0; $i <= (4-$y) ; $i++) {
+    for ($i=0; $i <= (2-$y) ; $i++) {
     ?>
     <tr>
       <td> &nbsp; </td>
