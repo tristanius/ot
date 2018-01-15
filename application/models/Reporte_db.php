@@ -231,6 +231,8 @@ class Reporte_db extends CI_Model{
       $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
       $this->db->where('rot.tipo', 'equipo');
+    }elseif ($tipo == 'mateial') {
+
     }elseif ($tipo == 'actividades') {
       $this->db->select("
         (

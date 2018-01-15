@@ -96,6 +96,8 @@ var OT = function($scope, $http, $timeout){
 	}
 
 	$scope.consola = function(tr){console.log(tr)}
+	// ---------------------------------------------------------------------------
+
 	// Add una nueva tarea
 	$scope.addTarea = function(ambito){
 		var idot = (ambito.ot.idOT != undefined)?ambito.ot.idOT:"";
@@ -524,6 +526,32 @@ var OT = function($scope, $http, $timeout){
 		meses.total += meses.julio*1+meses.agosto*1+meses.septiembre*1+meses.octubre*1+meses.noviembre*1+meses.diciembre*1;
 	}
 
+	// --------------------------------------------------------------------------------
+	// Frentes de trabajo
+
+	$scope.addFrente = function( lnk, lista, frente ){
+		$http.post(
+			lnk,
+			frente
+		).then(
+			function(resp){
+				if(resp.data.success == 'success'){
+					frente = resp.data.frente;
+					$scope.$parent.set_el_timeout(lista, frente);
+					frente = {};
+					console.log(resp.data);
+				}else{
+					alert("Error al recibir respuesta del servidor.");
+					console.log(resp.data);
+				}
+			},
+			function(resp){
+				alert("Error al crear un frente.")
+				console.log(resp.data);
+			}
+		);
+	}
+
 }
 
 // ====================================================================================================
@@ -567,6 +595,7 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.ot.estado_doc = 'POR EJECUTAR';
 	$scope.myestado_doc = 'POR EJECUTAR';
 	$scope.ot.allMeses = [ ];
+	$scope.ot.frentes = [];
 	////$scope.$parent.tinyMCE();
 
 	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope); }

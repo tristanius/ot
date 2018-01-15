@@ -143,7 +143,10 @@ class Ot extends CI_Controller {
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s'), 'OT CREADA' );	}
-				#-----------------------
+				#--------------------------------------------------------------------------------------------
+				#Adcionar frentes de trabajo
+				$this->frentesOT($orden->frentes, $idot);
+				#--------------------------------------------------------------------------------------------
 				#Adicionar tarea nueva
 				$this->load->model('Tarea_db','tarea');
 				$i = 0;
@@ -169,7 +172,40 @@ class Ot extends CI_Controller {
 			}
 		}
 	}
+	# ----------------------------------------------------------------------------
+	# Frente de trabajo
 
+	# add FRENTE
+	public function add_frente($idot=NULL)
+	{
+		$f = json_decode( file_get_contents("php://input") );
+		$this->load->model('ot_db', 'ot');
+		$f->OT_idOT = $idot;
+		$f->idfrente_ot = $this->ot->addFrenteOT($f);
+		$ret = new stdClass();
+		$ret->success = 'success';
+		$ret->frente = $f;
+		$ret->array = (array) $f;
+		echo json_encode($ret);
+	}
+
+	# Gestiona cuando hay que agregar o modificar frentes de trabajo de una OT.
+	private function frentesOT($frente, $idot){
+		$this->load->model('ot_db', 'ot');
+		foreach ($frente as $key => $f) {
+			if(isset($f->idfrente_ot) && $f->idfrente_ot != ''){
+				$f->OT_idOT = $idot;
+				$idfrente = $f->idfrente_ot;
+				$f->idfrente_ot = NULL;
+				$this->ot->modFrenteOT($f, $idfrente);
+			}else {
+				$f->OT_idOT = $idot;
+				$this->ot->addFrenteOT($f);
+			}
+		}
+	}
+	# ----------------------------------------------------------------------------
+	# Crear tarea de OT
 	private function crearTareaOT($tar, $idot, $nombre_tarea)
 	{
 		return $this->tarea->add(
@@ -198,12 +234,15 @@ class Ot extends CI_Controller {
 			);
 	}
 
+	# recorrer items de una tarea nueva
 	private function insetarITemsTarea($idTr, $items)
 	{
 		foreach ($items as $item) {
 			$this->addNewItemTarea($idTr, $item);
 		}
 	}
+
+	# agregar nuevos items de una tarea
 	public function addNewItemTarea($idTr, $item)
 	{
 		$this->load->model('Item_db', 'it');
@@ -219,7 +258,8 @@ class Ot extends CI_Controller {
 				$idTr,
 				( isset($item->facturable)?$item->facturable:FALSE ),
 				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL ),
-				$item->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
+				$item->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
+				$item->idfrente_ot// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 	#=============================================================================
@@ -380,11 +420,17 @@ class Ot extends CI_Controller {
 				isset($orden->idcontrato)?$orden->idcontrato:NULL
 			);
 
+		#--------------------------------------------------------------------------------------------
+		#Adcionar frentes de trabajo
+		$this->frentesOT($orden->frentes, $orden->idOT);
+		#--------------------------------------------------------------------------------------------
+		# Guardar costos de ot mes a mes
 		$this->inf_ot->saveAllMeses($orden->allMeses);
 
 		$this->load->helper('log');
 		if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $orden->idOT, 'OT', 'Orden '.$orden->nombre_ot.' modificada', date('Y-m-d H:i:s'), 'OT ACTUALIZADA' );	}
-
+		#--------------------------------------------------------------------------------------------
+		# actualizar / guardar tareas
 		foreach($orden->tareas as $tr){
 			if(isset($tr->idtarea_ot) &&  $tr->idtarea_ot != 0 ){
 				$valid = $this->update_tarea($tr);
@@ -464,7 +510,8 @@ class Ot extends CI_Controller {
 				$it->tarea_ot_idtarea_ot,
 				isset($it->facturable)?$it->facturable:FALSE,
 				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL ),
-				$it->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
+				$it->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
+				$it->idfrente_ot
 			);
 	}
 
@@ -554,6 +601,7 @@ class Ot extends CI_Controller {
 		$ot = $this->ot_db->getData($id)->row();
 		$ot->json = json_decode($ot->json);
 		$ot->tareas = $this->getTareasByOT($id);
+		$ot->frentes = $this->ot_db->getFrentesOT($id)->result();
 		$ot->allMeses = $this->inf_ot->getAllMeses($id, NULL);
 		return $ot;
 	}
@@ -564,6 +612,7 @@ class Ot extends CI_Controller {
 		$ot = $this->ot_db->getData($id)->row();
 		$ot->json = json_decode($ot->json);
 		$ot->tareas = $this->getTareasByOT($id);
+		$ot->frentes = $this->ot_db->getFrentesOT($id)->result();
 		$ot->allMeses = $this->inf_ot->getAllMeses($id, NULL);
 		echo json_encode($ot);
 		#echo '<pre>'.json_encode($ot).'</pre>';
@@ -589,12 +638,20 @@ class Ot extends CI_Controller {
 		return $trs->result();
 	}
 
-	# Obetener un listado de items por tarea de ot
+	# Obtener un listado de items por tarea de ot
 	public function getItemsByTipo($id, $tipo)
 	{
 		$this->load->model('tarea_db');
 		$items = $this->tarea_db->getItemsByTipo($id, $tipo);
 		return $items->result();
+	}
+
+	# Obtener un listado de frentes de trabajo de una OT
+	public function get_frentes_ot($idot)
+	{
+		$this->load->model('ot_db', 'ot');
+		$ret = $this->ot->getFrentesOT($idot);
+		echo json_encode( $ret->result() );
 	}
 
 	# ============================================================================

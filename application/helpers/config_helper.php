@@ -25,6 +25,12 @@ function getDestino($id){
 	return $r->row();
 }
 
+function getUsuarios($id){
+	$ci =& get_instance();
+	$ci->load->database('app1');
+	return $ci->db->get_where("usuario","rol_idrol = ".$id."");
+}
+
 function addlog($ip, $accion, $privilegio, $user){
 	$data["direccion_ip"] = $ip;
 	$data["actividad_realizada"] = $accion;

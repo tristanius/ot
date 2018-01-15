@@ -289,6 +289,15 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     alert(msj);
     console.log(msj)
   }
+
+  // inserta un elemento a una lista con la funcion timeout para refrescar la pagina
+  $scope.set_el_timeout = function(list, obj){
+    $timeout(function(){
+      list.push(obj);
+    });
+  }
+
+
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });

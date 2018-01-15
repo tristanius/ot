@@ -9,6 +9,8 @@
 				ng-click="setValorProp( vg.idvigencia_tarifas, tr, 'idvigencia_tarifas' ); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn blue mini-btn">
 				Seleccionar
 			</button>
+			{{tr.idvigencia_tarifas}}
+			<span ng-if="!tr" class="red-text">Debes crear una Tarea para continuar. </span>
 			<span ng-if="!tr.idcontrato"> Seleciona un contrato. </span>
 		</div>
 		<div ng-if="tr.idvigencia_tarifas">
@@ -117,12 +119,13 @@
 					<th>Duración</th>
 					<th>Valor Und.</th>
 					<th>Valor calc.</th>
+					<th>Frente</th>
 					<th>Agregado</th>
 				</tr>
 			</thead>
 			<tbody class="font11">
 				<tr>
-					<th colspan="10" rowspan="" style="background:#ddedd0">ACTIVIDADES DE MTTO.</th>
+					<th colspan="11" rowspan="" style="background:#ddedd0">ACTIVIDADES DE MTTO.</th>
 				</tr>
 				<tr ng-repeat="act in tr.actividades | orderBy: 'codigo'">
 					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+act.codigo)"></span> {{ act.itemc_item }}</td>
@@ -143,12 +146,16 @@
 						{{ ( act.facturable?(act.cantidad * act.duracion)*act.tarifa: 0 ) | currency:'$':0  }}
 						<button ng-show=" ( act.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true )" type="button" ng-click="unset_item(tr.actividades, act, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
 					</td>
+					<td>
+						<select ng-model="act.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot">	</select>
+						{{act.idfrente_ot}}
+					</td>
 					<td class="font9">{{ act.fecha_agregado }}</td>
 				</tr>
 
 
 				<tr>
-					<th colspan="10" rowspan="" style="background:#ddedd0">PERSONAL</th>
+					<th colspan="11" rowspan="" style="background:#ddedd0">PERSONAL</th>
 				</tr>
 				<tr ng-repeat="per in tr.personal | orderBy: 'codigo'">
 					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+per.codigo)"></span> {{ per.itemc_item }}</td>
@@ -169,12 +176,15 @@
 						{{ ( per.facturable? (per.cantidad * per.duracion)*per.tarifa :0 ) | currency:'$':0  }}
 						<button ng-show=" ( per.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.personal, per, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
 					</td>
+					<td>
+						<select ng-model="per.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot">	</select>
+					</td>
 					<td class="font9">{{ per.fecha_agregado }}</td>
 				</tr>
 
 
 				<tr>
-					<th colspan="10" rowspan="" style="background:#ddedd0">EQUIPOS: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
+					<th colspan="11" rowspan="" style="background:#ddedd0">EQUIPOS: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
 				</tr>
 				<tr ng-repeat="eq in tr.equipos | orderBy: 'codigo'">
 					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+eq.codigo)"></span> {{ eq.itemc_item }}</td>
@@ -193,7 +203,11 @@
 					<td style="text-align: right">{{ eq.tarifa | currency:'$':0 }}</td>
 					<td style="text-align: right">
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$':0 }}
-						<button ng-show=" ( eq.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.equipos, eq, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button></td>
+						<button ng-show=" ( eq.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.equipos, eq, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
+					</td>
+					<td>
+						<select ng-model="eq.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot">	</select>
+					</td>
 					<td class="font9">{{ eq.fecha_agregado }}</td>
 				</tr>
 				<tr>

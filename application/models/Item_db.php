@@ -113,7 +113,8 @@ class Item_db extends CI_Model {
 			$idTr,
 			$facturable,
 			$sector,
-			$idvigencia_tarifas
+			$idvigencia_tarifas,
+			$frente = NULL
 		){
 		$data = array(
 			'cantidad'=>$cantidad,
@@ -128,7 +129,8 @@ class Item_db extends CI_Model {
 			'tarea_ot_idtarea_ot'=>$idTr,
 			'facturable'=>$facturable,
 			'idsector_item_tarea'=>$sector,
-			'idvigencia_tarifas'=>$idvigencia_tarifas
+			'idvigencia_tarifas'=>$idvigencia_tarifas,
+			'idfrente_ot' => $frente
 		);
 		$this->db->insert('item_tarea_ot', $data);
 	}
@@ -146,7 +148,8 @@ class Item_db extends CI_Model {
 			$idTr,
 			$facturable,
 			$sector,
-			$idvigencia_tarifas
+			$idvigencia_tarifas,
+			$frente=NULL
 		){
 		$data = array(
 			'cantidad'=>$cantidad,
@@ -161,7 +164,8 @@ class Item_db extends CI_Model {
 			'tarea_ot_idtarea_ot'=>$idTr,
 			'facturable'=>$facturable,
 			'idsector_item_tarea'=>$sector,
-			'idvigencia_tarifas'=>$idvigencia_tarifas
+			'idvigencia_tarifas'=>$idvigencia_tarifas,
+			'idfrente_ot' => $frente
 		);
 		$this->db->update('item_tarea_ot', $data, 'iditem_tarea_ot = '.$iditem_tarea_ot);
 	}

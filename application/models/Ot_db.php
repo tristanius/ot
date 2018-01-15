@@ -181,6 +181,37 @@ class Ot_db extends CI_Model {
 		return $this->db->get();
 	}
 
+
+	# ============================================================================
+
+	# Frentes de TRABAJO
+
+	public function addFrenteOT($frente)
+	{
+		$this->load->database('ot');
+		$frente = (array) $frente;
+		$this->db->insert('frente_ot', $frente);
+		return $this->db->insert_id();
+	}
+	public function modFrenteOT($frente, $idfrente)
+	{
+		$this->load->database('ot');
+		$myfrente = (array) $frente;
+		return $this->db->update('frente_ot', $myfrente, 'idfrente_ot = '.$idfrente);
+	}
+
+	public function getFrentesOT($idot)
+	{
+		$this->load->database('ot');
+		return $this->db->get_where('frente_ot', array('OT_idOT',$idot));
+	}
+
+	public function delFrenteOT($idfrente)
+	{
+		$this->load->database('ot');
+		return $this->db->delete('frente_ot', array('idfrente',$idfrente));
+	}
+
 	#=============================================================================
 
 	# Obetener una Ot por un campo especificado por parametro
