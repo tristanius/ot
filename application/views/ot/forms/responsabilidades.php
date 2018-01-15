@@ -7,6 +7,7 @@
           <label for=""> RESP. PYCO:  </label> <small ng-bind="tr.responsables.pyco"></small>
           <select class="noMaterialStyles"  ng-model="tr.responsables.pyco">
             <option value="FABIO ARIAS"> FABIO ARIAS </option>
+            <option value="TATIANA GUZMAN"> TATIANA GUZMAN </option>
             <option value="WILLIAM CHAVEZ"> WILLIAM CHAVEZ </option>
             <option value="MARCELA DIAZ"> MARCELA DIAZ </option>
             <option value="KAROL ORDOÑEZ"> KAROL ORDOÑEZ </option>

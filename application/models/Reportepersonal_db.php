@@ -90,6 +90,7 @@ class Reportepersonal_db extends CI_Model{
       year(rd.fecha_reporte) as agno,
       dayofweek(rd.fecha_reporte) as dia_semana,
       rd.festivo,
+      OT.idcontrato
       '
     );
     $this->db->from('reporte_diario AS rd');
@@ -222,8 +223,10 @@ class Reportepersonal_db extends CI_Model{
     JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE ( rd.fecha_reporte BETWEEN '".$ini."' AND '".$fin."' )
-    AND rrd.nomina = ".($bandera?0:1)." ";
-    $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO') ":"";
+    AND rrd.nomina = ".($bandera?0:1)."
+    AND rot.propietario_recurso = TRUE
+    AND rot.tipo = 'persona' ";
+    $query .= $bandera?" AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO', 'CORREGIR', 'CORREGIR HE', 'CORREGIR GV') ":"";
     if(isset($args['base'])){ $query .= " AND OT.base_idbase = ".$args['base']; }
     if(isset($args['orden'])){ $query .=" AND OT.nombre_ot = '".$args['orden']."'"; }
     if(isset($args['identificacion'])){ $query .=" AND r.persona_identificacion = '".$args['identificacion']."'"; }
@@ -240,10 +243,12 @@ class Reportepersonal_db extends CI_Model{
       JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
     SET rrd.nomina = ".$bandera.", rrd.usuario_nomina = '".$usuario."'
     WHERE rd.fecha_reporte = '".$fecha."'
-    AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO' ,'VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO')
+    AND rd.validado_pyco IN ('ACTUALIZADO', 'ELABORADO','VALIDO', 'VALIDADO' ,'FIRMADO','CORREGIDO', 'CORREGIR', 'CORREGIR HE', 'CORREGIR GV')
     AND OT.nombre_ot = '".trim($ot)."'
     AND rrd.nomina = ".($bandera?0:1)."
-    AND r.persona_identificacion = '".$identificacion."' ";
+    AND r.persona_identificacion = '".$identificacion."'
+    AND rot.propietario_recurso = TRUE
+    AND rot.tipo = 'persona' ";
     $this->db->query($query);
     return $this->db->affected_rows();
   }

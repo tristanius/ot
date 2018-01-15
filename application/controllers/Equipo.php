@@ -14,7 +14,9 @@ class Equipo extends CI_Controller{
   {
 
   }
-
+  #===============================================================================================
+  # Manejo de maestros de equipos
+  #===============================================================================================
   public function listado($edit=NULL)
   {
     $this->load->view('equipo/listEquipos',array('edit'=>$edit));
@@ -91,13 +93,8 @@ class Equipo extends CI_Controller{
 
 
   #===============================================================================================
+  #==================== PROCESO DE CARGA DE EQUIPOS X OT DESDE UN ARCHIVO =======================
   #===============================================================================================
-  #==================== PROCESO DE CARGA DE PERSONAL X OT DESDE UN ARCHIVO =======================
-  #===============================================================================================
-  public function formUpload()
-  {
-    $this->load->view('equipo/uploadEquOT');
-  }
 
   public function formUploadByOT()
   {
@@ -150,13 +147,16 @@ class Equipo extends CI_Controller{
     						  $equipo->nombre_ot = $val['B'];
     						  $equipo->fecha_ingreso = date("Y-m-d");
     						  $equipo->centro_costo = '';
-    						  $equipo->unidad_negocio = $equipo->desc_un;
+    						  $equipo->unidad_negocio = $equipo->desc_un; // agregarla desde el excel no desde la BD
     						  $equipo->fecha_registro = date("Y-m-d");
     						  $equipo->OT_idOT = $ot->idOT;
     						  $equipo->itemf_codigo = $it->codigo;
     						  $equipo->itemf_iditemf = $it->iditemf;
                   $equipo->propietario_recurso = $val['G']=='propio'?true:false;
                   $equipo->propietario_observacion = $val['F'];
+                  if( isset( $val['H'] ) && $val['H']!='' ){
+                    $equipo->UN = $val['H'];
+                  }
     						  // Crear el recurso
     						  $id = $this->equ->setEquipoRecurso($equipo);
     						  // Crear el recurso OT
@@ -198,7 +198,18 @@ class Equipo extends CI_Controller{
       mkdir($carpeta, 0777, true);
     }
   }
+
+
+  # ===============================================================================================
+  # ========================= CARGA DE EQUIPOS AL MAESTRO =========================
+  # ===============================================================================================
   #Prueba
+
+  public function formUpload()
+  {
+    $this->load->view('equipo/uploadEquipos');
+  }
+
   public function testCargar($value='')
   {
       $this->cargarEquiposOT( $this->getDataEquipo('/equipos/26122016/eqot.xlsx') ); //

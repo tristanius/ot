@@ -515,19 +515,23 @@ class Ot extends CI_Controller {
 		foreach ($ot->tareas as $key => $val) {
 			$val->idtarea_ot = NULL;
 			$val->editable = TRUE;
+			$val->OT_idOT = NULL;
 			$i++;
 			if ( $i == 1  ) {	$val->nombre_tarea = 'TAREA INICIAL';	}else {	$val->nombre_tarea = 'TAREA '.$i;	}
 			foreach ($val->personal as $k => $v) {
 				$v->iditem_tarea_ot = NULL;
 				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
 			}
 			foreach ($val->actividades as $k => $v) {
 				$v->iditem_tarea_ot = NULL;
 				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
 			}
 			foreach ($val->equipos as $k => $v) {
 				$v->iditem_tarea_ot = NULL;
 				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
 			}
 		}
 		if(isset($ot)){

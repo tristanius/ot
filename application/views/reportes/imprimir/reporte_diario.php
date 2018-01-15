@@ -72,8 +72,6 @@
         width: 25em;
       }
     </style>
-
-
   </head>
   <body>
     <script type="text/php">

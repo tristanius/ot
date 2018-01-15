@@ -37,10 +37,10 @@ class Facturacion_db extends CI_Controller{
         (
           SELECT mytr.sap
           FROM tarea_ot AS mytr
-          WHERE OT.idOT = mytr.OT_idOT
-          AND rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin
+          WHERE mytr.OT_idOT = OT.idOT
+          AND mytr.fecha_inicio <= rd.fecha_reporte
+          GROUP BY mytr.OT_idOT DESC
           ORDER BY mytr.idtarea_ot DESC
-          LIMIT 1
         ), ""
       ) as numero_sap,
       "" as tarea,
@@ -52,7 +52,7 @@ class Facturacion_db extends CI_Controller{
       p.identificacion as cedula,
       p.nombre_completo,
       itf.itemc_item as item,
-      tr.codigo_vinculado as item_sap,
+      (titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
       itc.descripcion,
       if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
       if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
@@ -74,7 +74,7 @@ class Facturacion_db extends CI_Controller{
       rrd.horas_operacion,
       rrd.horas_disponible,
       e.codigo_siesa,
-      e.referencia,
+      if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) as referencia,
       rrd.nombre_operador,
       rrd.hora_inicio AS tr1_entrada,
       rrd.hora_fin AS tr1_salida,
@@ -182,8 +182,8 @@ class Facturacion_db extends CI_Controller{
       OT.locacion as lugar,
       OT.municipio AS municipio,
       OT.zona,
-      e.codigo_siesa,
-      e.referencia AS ref_equipo,
+      if(e.codigo_siesa IS NULL, rot.codigo_temporal, e.codigo_siesa) as codigo_siesa,
+      if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) as referencia,
       rrd.nombre_operador,
       rrd.horas_operacion AS operacion_equipo,
       rrd.horas_disponible AS disponibilidad_equipo,
@@ -235,13 +235,16 @@ class Facturacion_db extends CI_Controller{
     return $this->db->get();
   }
 
-  public function informePYCO($value='')
+  public function informePYCO($where=NULL)
   {
     $this->load->database('ot');
+    if(isset($where)){
+      $this->db->where($where);
+    }
     return $this->db->select('
       OT.nombre_ot,
       tr.nombre_tarea,
-      tr.sap AS sap_mes,
+      tr.sap AS sap_inicial,
       tr.clase_sap,
       tr.sap_pago AS sap_principal,
       tr.clase_sap_pago AS clase_sap_principal,
@@ -281,9 +284,12 @@ class Facturacion_db extends CI_Controller{
     ->group_by('tr.idtarea_ot')
     ->get();
   }
-  public function informeOtPyco()
+  public function informeOtPyco($where=NULL)
   {
     $this->load->database('ot');
+    if(isset($where)){
+      $this->db->where($where);
+    }
     return $this->db->select(
       '
       OT.nombre_ot,

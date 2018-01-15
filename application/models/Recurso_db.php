@@ -40,11 +40,19 @@ class Recurso_db extends CI_Model{
       'tipo' => $tipo,
       'codigo_temporal'=>$cod_temp,
       'descripcion_temporal'=>$desc_temp,
-      'propietario_recurso'=>$propietario_recurso,
+      'propietario_recurso'=>$propietario_recurso?TRUE:FALSE,
       'propietario_observacion'=>$propietario_observacion
     );
     $this->db->insert('recurso_ot', $data);
     return $this->db->insert_id();
+  }
+
+  # actualizar un recurso o un recurso_ot, parametros: $tabla, $id del objeto, $objeto PHP
+  public function actualizar($tabla, $obj,  $query )
+  {
+    $this->load->database('ot');
+    $data = (array) $obj;
+    $this->db->update($tabla, $obj, $query );
   }
 
   # Obtener los recursos de personal y equipos de un OT en especifico
@@ -54,7 +62,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion'
+        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN'
       )->from('recurso_ot AS rot')
       ->join('recurso AS r', 'rot.recurso_idrecurso = r.idrecurso')
       ->join('itemf AS itf', 'rot.itemf_iditemf = itf.iditemf')
@@ -71,10 +79,10 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, rot.codigo_temporal, rot.descripcion_temporal, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        e.idequipo, e.ccosto, e.un, e.desc_un, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion,
+        e.idequipo, e.ccosto, e.un, e.desc_un, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN,
         IFNULL( e.descripcion, rot.descripcion_temporal ) AS descripcion_equipo,
-        IFNULL( e.codigo_siesa, rot.codigo_temporal ) AS codigo_siesa,
-        IFNULL( e.referencia, "Temporal" ) AS referencia
+        IFNULL( e.codigo_siesa, "Temporal" ) AS codigo_siesa,
+        IFNULL( e.referencia, rot.codigo_temporal) AS referencia
         '
       )->from('recurso_ot AS rot')
       ->join('recurso AS r', 'rot.recurso_idrecurso = r.idrecurso','LEFT')

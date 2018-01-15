@@ -11,7 +11,9 @@ class Recurso extends CI_Controller{
   function index(){
 
   }
-
+  # ==========================================================================================================================
+  # FORMULARIO DE RECURSOS DE OT
+  # ==========================================================================================================================
   # Fomulario para la gestión de recursos de una orden
   public function recursosOT()
   {
@@ -39,9 +41,31 @@ class Recurso extends CI_Controller{
   public function addRecursoOT(){
     $post = json_decode( file_get_contents('php://input') );
     $this->load->model('recurso_db', 'recdb');
+    if($post->propietario_recurso == 0 || $post->propietario_recurso == FALSE || $post->propietario_recurso == NULL){
+      $post->propietario_recurso = FALSE;
+    }else{
+      $post->propietario_recurso= TRUE;
+    }
     $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion);
     echo "success";
   }
+
+  # actualizar recurso OT
+  public function update_rot()
+  {
+    $post =  json_decode( file_get_contents('php://input') );
+    $this->load->model('recurso_db', 'recot');
+    $obj = new stdClass();
+    $obj->UN = $post->UN;
+    $obj->propietario_recurso = $post->propietario_recurso;
+    $obj->propietario_observacion = $post->propietario_observacion;
+    $this->recot->actualizar( 'recurso_ot', $obj, 'idrecurso_ot = '.$post->idrecurso_ot);
+    $return = new stdClass();
+    $return->success = TRUE;
+    $return->obj = $post;
+    echo json_encode($return);
+  }
+
 
   public function finby()
   {
@@ -111,7 +135,7 @@ class Recurso extends CI_Controller{
       if ($process == 'personal') {
         if($cell['A']!= 'Comentario' && $cell['B'] != 'Id C.O.' && $cell['C'] != 'Empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
-          $items = $this->item->getItemByOT( $cell['F'] , $cell['G'] );
+          $items = $this->item->getItemByOT( $cell['F'] , $cell['G'], NULL );
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
           if ($ots->num_rows() > 0 && $items->num_rows() > 0) {
             $orden = $ots->row();
@@ -135,7 +159,7 @@ class Recurso extends CI_Controller{
     }
 
     if($this->ot->end_transact()){
-      $html = $this->load->view('miscelanios/reporteCargaXLS',array("filas"=>$noValid),TRUE);
+      $html = $this->load->view('miscelanios/reporteCargaXLS', array("filas"=>$noValid),TRUE);
       $this->load->view('miscelanios/resultadoUpdateMaestro', array("html"=>$html));
     }else{
       echo "Fallo al insertar registros";
@@ -166,6 +190,7 @@ class Recurso extends CI_Controller{
   {
     $this->load->model('persona_db', 'per');
     $personas  = $this->per->getBy("identificacion", $row['C'], "persona");
+    $row['A'] = '';
     if($personas->num_rows() < 1){
       $obj = new stdClass();
       $obj->identificacion = $row['C'];
@@ -217,10 +242,22 @@ class Recurso extends CI_Controller{
     return $row;
   }
 
-  public function findEquiposBy($value='')
+  #==============================================================================
+
+  # Eliminar un recurso de una OT
+
+  public function delRecursoOT()
   {
-    # code...
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->database('ot');
+    $this->db->delete('recurso_ot', array('idrecurso_ot'=>$post->idrecurso_ot) );
+    $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
+    if($rows->num_rows() == 0){
+      $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+    }
+    echo "success";
   }
+
 
   # Exportar html aexcel
   public function exporExcel($value='')
