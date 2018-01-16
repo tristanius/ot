@@ -82,12 +82,15 @@ class Ot extends CI_Controller {
 		$items['equipo']  = $this->item_db->getBytipo(3)->result();
 		$vigencias = $this->item_db->getVigenciasActivas()->result();
 		$contratos = $this->contrato_db->getContratos()->result();
+		$this->load->helper('config');
+		$usuarios = getUsuarios(NULL, TRUE);
 		$arr =array(
 			"bases"=>json_encode($bases->result()),
 			'items'=>json_encode($items),
 			'vigencias'=>json_encode($vigencias),
 			'allVigencias'=>json_encode($vigencias),
-			'contratos'=>json_encode($contratos)
+			'contratos'=>json_encode($contratos),
+			'usuarios'=>$usuarios
 			);
 		echo json_encode($arr);
 	}
@@ -197,6 +200,7 @@ class Ot extends CI_Controller {
 				$f->OT_idOT = $idot;
 				$idfrente = $f->idfrente_ot;
 				$f->idfrente_ot = NULL;
+				unset($f->idfrente_ot);
 				$this->ot->modFrenteOT($f, $idfrente);
 			}else {
 				$f->OT_idOT = $idot;
@@ -634,6 +638,7 @@ class Ot extends CI_Controller {
 			$t->actividades = $this->getItemsByTipo($t->idtarea_ot, 1);
 			$t->personal = $this->getItemsByTipo($t->idtarea_ot, 2);
 			$t->equipos = $this->getItemsByTipo($t->idtarea_ot, 3);
+			// Materiales
 		}
 		return $trs->result();
 	}

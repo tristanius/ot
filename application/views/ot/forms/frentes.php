@@ -20,35 +20,37 @@
 
       <label>
         Usuario asignado:
-        <select class="" ng-model="frente.usuario">
-          <option value="Yeison">Yeison</option>
-          <option value="Tatiana">Tatiana</option>
+        <select class="" ng-model="frente.usuario" ng-options="u as u.nombres+' '+u.apellidos for u in lista_usuarios">
         </select>
       </label>
 
-    </div>
+      <button type="button" class="btn-floating btn" ng-disabled=" frente.nombre == undefined || frente.nombre == '' "
+        ng-click="addFrente( '<?= site_url("ot/add_frente/") ?>', ot.frentes, frente); frente = {nombre: 'frente'+(ot.frentes.length+1)}">
+        +
+      </button>
 
-    <button type="button" class="btn-floating btn" ng-disabled=" frente.nombre == undefined || frente.nombre == '' "
-      ng-click="addFrente( '<?= site_url("ot/add_frente/") ?>', ot.frentes, frente); frente = {nombre: 'frente'+(ot.frentes.length+1)}">
-      +
-    </button>
+    </div>
   </div>
 
   <div class="center-align">
-    <table class="mytabla" style="max-width:100ex;">
+    <table class="mytabla" style="max-width:200ex;">
       <caption>Frente de trabajo</caption>
       <thead>
         <tr>
           <th>Nombre</th>
           <th>Ubicación</th>
           <th>Usuario</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="f in ot.frentes">
           <td>{{f.nombre}}</td>
           <td>{{f.ubicacion}}</td>
-          <td>{{f.usuario}}</td>
+          <td ng-init="f.usuario = parseJSON(f.usuario)">{{f.usuario.nombres}}</td>
+          <td>
+            <button type="button" name="button"></button>
+          </td>
         </tr>
       </tbody>
     </table>

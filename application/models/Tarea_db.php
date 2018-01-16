@@ -130,7 +130,8 @@ class Tarea_db extends CI_Model{
         tar.requisitos_documentales,
         tar.editable,
         titc.CL,
-        vg.idvigencia_tarifas
+        vg.idvigencia_tarifas,
+        itt.idfrente_ot
         ');
     $this->db->from('item_tarea_ot AS itt');
     $this->db->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf');

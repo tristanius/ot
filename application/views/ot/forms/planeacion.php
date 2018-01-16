@@ -148,7 +148,6 @@
 					</td>
 					<td>
 						<select ng-model="act.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot">	</select>
-						{{act.idfrente_ot}}
 					</td>
 					<td class="font9">{{ act.fecha_agregado }}</td>
 				</tr>

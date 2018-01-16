@@ -290,6 +290,10 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     console.log(msj)
   }
 
+  $scope.parseJSON = function(string){
+    return JSON.parse(string);
+  }
+
   // inserta un elemento a una lista con la funcion timeout para refrescar la pagina
   $scope.set_el_timeout = function(list, obj){
     $timeout(function(){

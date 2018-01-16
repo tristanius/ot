@@ -190,20 +190,22 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$frente = (array) $frente;
+		$frente['usuario'] = json_encode($frente['usuario']);
 		$this->db->insert('frente_ot', $frente);
 		return $this->db->insert_id();
 	}
 	public function modFrenteOT($frente, $idfrente)
 	{
 		$this->load->database('ot');
-		$myfrente = (array) $frente;
-		return $this->db->update('frente_ot', $myfrente, 'idfrente_ot = '.$idfrente);
+		$frente = (array) $frente;
+		$frente['usuario'] = json_encode($frente['usuario']);
+		return $this->db->update('frente_ot', $frente, 'idfrente_ot = '.$idfrente);
 	}
 
 	public function getFrentesOT($idot)
 	{
 		$this->load->database('ot');
-		return $this->db->get_where('frente_ot', array('OT_idOT',$idot));
+		return $this->db->get_where('frente_ot', array('OT_idOT'=>$idot));
 	}
 
 	public function delFrenteOT($idfrente)
@@ -245,7 +247,8 @@ class Ot_db extends CI_Model {
 				titc.grupo_mayor,
 				titc.BO,
 				titc.CL,
-				SUM(itt.cantidad) AS planeado
+				SUM(itt.cantidad) AS planeado,
+				itt.idfrente_ot
 				'
 			);
 		$this->db->from('item_tarea_ot AS itt');

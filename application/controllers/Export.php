@@ -141,7 +141,7 @@ class Export extends CI_Controller{
     $html = $this->load->view('reportes/imprimir/reporte_diario',
       array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
       TRUE);
-    doPDF($html, 'Reporte-'.$row->nombre_ot);
+    doPDF($html, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
     //echo $html;
   }
 
