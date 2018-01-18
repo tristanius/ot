@@ -11,9 +11,23 @@
         <th>Cant. día</th>
         <th>Acumulado</th>
       </tr>
+      <tr ng-init="actividadFilter  = {}">
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>
+          <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
+            <input type="hidden" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
+          <?php endif; ?>
+        </th>
+      </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="act in rd.recursos.actividades track by $index" class="{{ (act.idrecurso_reporte_diario == undefined || act.idrecurso_reporte_diario == '')?'newrow':''; }}">
+      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" class="{{ (act.idrecurso_reporte_diario == undefined || act.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.actividades, act, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>

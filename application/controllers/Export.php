@@ -249,17 +249,24 @@ class Export extends CI_Controller{
         $vw = $this->load->view('reportes/imprimir/reporte_diario',
           array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
           TRUE);
+          doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
         break;
       case 2:
         $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-        $vw = $this->load->view('reportes/imprimir_pma/v2017/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        if($fecha >= date('Y-m-d', strtotime('2018-01-01')) ){
+          $formato = 'reportes/imprimir_pma/v2018/rd';
+        }else{
+          $formato = 'reportes/imprimir_pma/v2017/rd/rd';
+        }
+        $vw = $this->load->view($formato, array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
         break;
       default:
         $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-        $vw = $this->load->view('reportes/imprimir_pma/v2017/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        $vw = $this->load->view('reportes/imprimir_pma/v2018/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
         break;
     }
-    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
   }
 
   public function getStatusFooter($value='')

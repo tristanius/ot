@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-01-2018 a las 23:02:13
+-- Tiempo de generación: 18-01-2018 a las 22:59:54
 -- Versión del servidor: 5.6.31
 -- Versión de PHP: 5.6.17
 
@@ -1443,7 +1443,83 @@ INSERT INTO `itemc` (`iditemc`, `item`, `descripcion`, `unidad`, `hrdisp`, `base
 (2188, '3,2,270', 'Equipo de CIPS', 'día', 5, 24, '3', 1, '2017-10-03 14:44:20', 2, 1, 8, 2),
 (2189, '3,2,271', 'Equipo de DCVG', 'día', 5, 24, '3', 1, '2017-10-03 14:44:20', 2, 1, 8, 2),
 (2190, '3,2,272', 'Equipo de PCM', 'día', 5, 24, '3', 1, '2017-10-03 14:44:20', 2, 1, 8, 2),
-(2191, '3,2,273', 'Medidor de aislamiento (RF)', 'día', 5, 24, '3', 1, '2017-10-03 14:44:20', 2, 1, 8, 2);
+(2191, '3,2,273', 'Medidor de aislamiento (RF)', 'día', 5, 24, '3', 1, '2017-10-03 14:44:20', 2, 1, 8, 2),
+(2192, '6,1', 'Excavaciones varias sin clasificar incluye disposicion final a 5 km y manejo de aguas menores.', 'M3', 0, 0, '1', 1, '2017-01-15 05:00:00', 3, 1, 9, 3),
+(2193, '6,2', 'Excavaciones varias en material común en seco a mano para Líneas de Proceso. Incluye dispocision final de material a 5 km.', 'M3', 0, 0, '1', 1, '2017-01-15 05:00:00', 3, 1, 9, 3),
+(2194, '6,3', 'Rellenos para estructuras con suelo, incluye material y compactación.', 'M3', 0, 0, '1', 1, '2017-01-15 05:00:00', 3, 1, 9, 3),
+(2195, '6,4', 'Rellenos con arena, incluye material y compactación', 'M3', 0, 0, '1', 1, '2017-01-15 05:00:00', 3, 1, 9, 3),
+(2196, '6,5', 'Protección tubería enterrada temp. 40 A 70 °C SSPC 2 Y/O 3. incluye pruebas de ultrasonido en las juntas de la tuberia, sandblastin SSPC SP 10 y aplicación de Sigma line 2500. Instalacion de mamparas de geotextil.', 'M2', 0, 0, '1', 1, '2017-01-15 05:00:00', 3, 1, 9, 3),
+(2197, '6,6', 'Protección tubería enterrada temp. 40 A 70 °C SSPC SP 10. incluye pruebas de ultrasonido en las juntas de la tuberia, SSPC 2 y/o 3 y aplicación de sigmaline 2500.', 'M2', 0, 0, '1', 1, '2017-01-15 05:00:00', 3, 1, 9, 3),
+(2198, '1,1', 'Polines 6" x 6" x 1,10 m', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2199, '1,2', 'Tabla Burra (3,0m x 0,25m x ½")', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2200, '1,3', 'Madera Rolliza (3,0 m x 5")', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2201, '1,4', 'Puntilla de Acero de 3½"', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2202, '1,5', 'Trajes Tyvek', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2203, '1,6', 'Guantes de Nitrilo', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2204, '1,7', 'Guante quirurgico', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2205, '1,8', 'Mascarilla P100 mediacara', 'UND', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2206, '1,9', 'Tazas Mezcladoras', 'Und', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2207, '1,10', 'Espatulas Silicona', 'Und', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2208, '1,11', 'Espatulas Acrilicas', 'Ml', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2209, '1,12', 'Liga ', 'Und', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2210, '1,13', 'Brochas', 'Und', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2211, '1,14', 'Polisombra', 'rollo', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2212, '1,15', 'Plastico Negro', 'rollo', 0, 0, 'mateial', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2213, '2,1', 'Ayudante de Obra C. Excavaciones Mecanicas S1', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2214, '2,2', 'Ayudante de Pintura', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2215, '2,3', 'Operador Cabezote Cama Baja', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2216, '2,4', 'Operador Camion Grua', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2217, '2,5', 'Operador Retrocargador', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2218, '2,6', 'Operador Retroexcavadora Oruga CAT-320 o equivalente.', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2219, '2,7', 'Pintor', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2220, '2,8', 'Sandblatero', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2221, '3,1', 'Baño Portatil', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2222, '3,2', 'Cabezote Con Cama Baja, sin Operador', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2223, '3,3', 'Camión Con Grúa Hiab 200c-3 O Similar, sin Operador', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2224, '3,4', 'Detector de discontinuidad (Holyday detector).', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2225, '3,5', 'Equipo de Comunicaciones Intrínsecamente Seguro.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2226, '3,6', 'Equipo de Medición de Adherencias.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2227, '3,7', 'Equipo de Pintura Convencional.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2228, '3,8', 'Equipo de Radiodetección para tuberías RD8000 o similar (Detector de Tubería).', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2229, '3,9', 'Equipo para Preparación de Superficie con Chorro Abrasivo. Compresor 250 CFM', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2230, '3,10', 'Excariadora para perfil de anclaje.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2231, '3,11', 'Explosimetro Digital Electrónico Certificado MSA o similar.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2232, '3,12', 'GPS Submétrico.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2233, '3,13', 'Herramienta Menor para Obras Civiles.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2234, '3,14', 'Motobomba Diésel de 3" mínimo 7 HP con mangueras.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2235, '3,15', 'Planta Eléctrica 5 KW a 7KW.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2236, '3,16', 'Planta Eléctrica tipo Estadio.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2237, '3,17', 'Pulidora para trabajo pesado.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2238, '3,18', 'Retro cargador de llantas tipo CAT-420E o equivalente, sin operador.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2239, '3,19', 'Retroexcavadora Oruga CAT-320 o equivalente.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2240, '3,20', 'Vehículo 4x4, doble cabina con platón sin conductor legal.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2241, '3,21', 'Vibrocompactador apisonador/canguro.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2242, '3,22', 'Volqueta de 12 m3, con conductor legal.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2243, '4,1,1', 'Supervisor', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2244, '4,1,2', 'Conductor Camioneta con Platon', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2245, '4,1,3', 'Conductor de Buseta 25P', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2246, '4,1,4', 'Tecnico Operetivo HSE', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2247, '4,1,5', 'Ing. Civil', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2248, '4,1,6', 'Planeador', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2249, '4,1,7', 'Ing. QA/QC', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2250, '4,1,8', 'Tecnico en Seguridad Industrial', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2251, '4,1,9', 'Mecanico (mantenimiento)', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3);
+INSERT INTO `itemc` (`iditemc`, `item`, `descripcion`, `unidad`, `hrdisp`, `basedisp`, `tipo`, `idusuario`, `fecha_registro`, `grupo`, `activo`, `idtipo_itemc`, `idcontrato`) VALUES
+(2252, '4,2,1', 'CAMION DE 3 TON', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2253, '4,2,2', 'Buseta, capacidad mínimo 25 pasajeros, sin conductor legal.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2254, '4,2,3', 'Equipo de computo', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2255, '4,2,4', 'EQUIPO TOPOGRAFIA', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2256, '4,2,5', 'EQUIPOS Y HERRAMT. SEGURIDAD IND.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2257, '4,2,6', 'EQUIPOS COMUNICACIONES (RADIOS)', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2258, '4,3,1', 'Suministro de Alimentacion ', 'DIA', 0, 0, 'otros', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2259, '4,3,2', 'Turno Vigilancia Turno Nocturno 17:00 pm a 07:00 am (Turno Especial 14 hr)', 'TURNO', 0, 0, 'otros', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2260, '4,3,3', 'Turno de Vigilancia 24 Horas ', 'TURNO', 0, 0, 'otros', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2261, '4,3,6', 'Disposicion final de Residuos Solidos', 'KG', 0, 0, 'otros', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2262, '5,1,1', 'Administrador', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2263, '5,1,2', 'Auxiliar Administrativo', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2264, '5,1,3', 'Auxiliar servicios generales', 'DIA', 0, 0, '2', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2265, '5,2,1', 'Vehículo 4x4, doble cabina con platón sin conductor legal.', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3),
+(2266, '5,2,2', 'Equipo de computo', 'DIA', 0, 0, '3', 1, '2017-01-15 05:00:00', 3, 1, 10, 3);
 
 -- --------------------------------------------------------
 
@@ -2971,7 +3047,82 @@ INSERT INTO `itemf` (`iditemf`, `codigo`, `descripcion`, `unidad`, `tipo`, `idus
 (2245, '530401', 'SUPERVISOR I', 'Día', 2, 1, '2017-01-01 05:00:00', 828, '2,3,4'),
 (2246, '540302', 'TECNICO ADMINISTRATIVO', 'Día', 2, 1, '2017-01-01 05:00:00', 832, '2,4,3'),
 (2247, '560602', 'CONDUCTOR DE VEHICULO PASAJEROS', 'Día', 2, 1, '2017-01-01 05:00:00', 847, '2,6,6'),
-(2248, '221004-PMA', 'Operador de BBA de reinyección.', 'Día', 2, 1, '2017-10-03 15:04:19', 1888, '2,2,10');
+(2248, '221004-PMA', 'Operador de BBA de reinyección.', 'Día', 2, 1, '2017-10-03 15:04:19', 1888, '2,2,10'),
+(2249, '6,1', 'Excavaciones varias sin clasificar incluye disposicion final a 5 km y manejo de aguas menores.', 'M3', 1, 1, '2018-01-15 05:00:00', 2192, '6,1'),
+(2250, '6,2', 'Excavaciones varias en material común en seco a mano para Líneas de Proceso. Incluye dispocision final de material a 5 km.', 'M3', 1, 1, '2018-01-15 05:00:00', 2193, '6,2'),
+(2251, '6,3', 'Rellenos para estructuras con suelo, incluye material y compactación.', 'M3', 1, 1, '2018-01-15 05:00:00', 2194, '6,3'),
+(2252, '6,4', 'Rellenos con arena, incluye material y compactación', 'M3', 1, 1, '2018-01-15 05:00:00', 2195, '6,4'),
+(2253, '6,5', 'Protección tubería enterrada temp. 40 A 70 °C SSPC 2 Y/O 3. incluye pruebas de ultrasonido en las juntas de la tuberia, sandblastin SSPC SP 10 y aplicación de Sigma line 2500. Instalacion de mamparas de geotextil.', 'M2', 1, 1, '2018-01-15 05:00:00', 2196, '6,5'),
+(2254, '6,6', 'Protección tubería enterrada temp. 40 A 70 °C SSPC SP 10. incluye pruebas de ultrasonido en las juntas de la tuberia, SSPC 2 y/o 3 y aplicación de sigmaline 2500.', 'M2', 1, 1, '2018-01-15 05:00:00', 2197, '6,6'),
+(2255, '1,1', 'Polines 6" x 6" x 1,10 m', 'UND', 0, 1, '2018-01-15 05:00:00', 2198, '1,1'),
+(2256, '1,2', 'Tabla Burra (3,0m x 0,25m x ½")', 'UND', 0, 1, '2018-01-15 05:00:00', 2199, '1,2'),
+(2257, '1,3', 'Madera Rolliza (3,0 m x 5")', 'UND', 0, 1, '2018-01-15 05:00:00', 2200, '1,3'),
+(2258, '1,4', 'Puntilla de Acero de 3½"', 'UND', 0, 1, '2018-01-15 05:00:00', 2201, '1,4'),
+(2259, '1,5', 'Trajes Tyvek', 'UND', 0, 1, '2018-01-15 05:00:00', 2202, '1,5'),
+(2260, '1,6', 'Guantes de Nitrilo', 'UND', 0, 1, '2018-01-15 05:00:00', 2203, '1,6'),
+(2261, '1,7', 'Guante quirurgico', 'UND', 0, 1, '2018-01-15 05:00:00', 2204, '1,7'),
+(2262, '1,8', 'Mascarilla P100 mediacara', 'UND', 0, 1, '2018-01-15 05:00:00', 2205, '1,8'),
+(2263, '1,9', 'Tazas Mezcladoras', 'UND', 0, 1, '2018-01-15 05:00:00', 2206, '1,9'),
+(2264, '1,10', 'Espatulas Silicona', 'UND', 0, 1, '2018-01-15 05:00:00', 2207, '1,10'),
+(2265, '1,11', 'Espatulas Acrilicas', 'Ml', 0, 1, '2018-01-15 05:00:00', 2208, '1,11'),
+(2266, '1,12', 'Liga', 'UND', 0, 1, '2018-01-15 05:00:00', 2209, '1,12'),
+(2267, '1,13', 'Brochas', 'UND', 0, 1, '2018-01-15 05:00:00', 2210, '1,13'),
+(2268, '1,14', 'Polisombra', 'rollo', 0, 1, '2018-01-15 05:00:00', 2211, '1,14'),
+(2269, '1,15', 'Plastico Negro', 'rollo', 0, 1, '2018-01-15 05:00:00', 2212, '1,15'),
+(2270, '2,1', 'Ayudante de Obra C. Excavaciones Mecanicas S1', 'DIA', 2, 1, '2018-01-15 05:00:00', 2213, '2,1'),
+(2271, '2,2', 'Ayudante de Pintura', 'DIA', 2, 1, '2018-01-15 05:00:00', 2214, '2,2'),
+(2272, '2,3', 'Operador Cabezote Cama Baja', 'DIA', 2, 1, '2018-01-15 05:00:00', 2215, '2,3'),
+(2273, '2,4', 'Operador Camion Grua', 'DIA', 2, 1, '2018-01-15 05:00:00', 2216, '2,4'),
+(2274, '2,5', 'Operador Retrocargador', 'DIA', 2, 1, '2018-01-15 05:00:00', 2217, '2,5'),
+(2275, '2,6', 'Operador Retroexcavadora Oruga CAT-320 o equivalente.', 'DIA', 2, 1, '2018-01-15 05:00:00', 2218, '2,6'),
+(2276, '2,7', 'Pintor', 'DIA', 2, 1, '2018-01-15 05:00:00', 2219, '2,7'),
+(2277, '2,8', 'Sandblatero', 'DIA', 2, 1, '2018-01-15 05:00:00', 2220, '2,8'),
+(2278, '3,1', 'Baño Portatil', 'DIA', 3, 1, '2018-01-15 05:00:00', 2221, '3,1'),
+(2279, '3,2', 'Cabezote Con Cama Baja, sin Operador', 'DIA', 3, 1, '2018-01-15 05:00:00', 2222, '3,2'),
+(2280, '3,3', 'Camión Con Grúa Hiab 200c-3 O Similar, sin Operador', 'DIA', 3, 1, '2018-01-15 05:00:00', 2223, '3,3'),
+(2281, '3,4', 'Detector de discontinuidad (Holyday detector).', 'DIA', 3, 1, '2018-01-15 05:00:00', 2224, '3,4'),
+(2282, '3,5', 'Equipo de Comunicaciones Intrínsecamente Seguro.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2225, '3,5'),
+(2283, '3,6', 'Equipo de Medición de Adherencias.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2226, '3,6'),
+(2284, '3,7', 'Equipo de Pintura Convencional.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2227, '3,7'),
+(2285, '3,8', 'Equipo de Radiodetección para tuberías RD8000 o similar (Detector de Tubería).', 'DIA', 3, 1, '2018-01-15 05:00:00', 2228, '3,8'),
+(2286, '3,9', 'Equipo para Preparación de Superficie con Chorro Abrasivo. Compresor 250 CFM', 'DIA', 3, 1, '2018-01-15 05:00:00', 2229, '3,9'),
+(2287, '3,10', 'Excariadora para perfil de anclaje.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2230, '3,10'),
+(2288, '3,11', 'Explosimetro Digital Electrónico Certificado MSA o similar.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2231, '3,11'),
+(2289, '3,12', 'GPS Submétrico.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2232, '3,12'),
+(2290, '3,13', 'Herramienta Menor para Obras Civiles.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2233, '3,13'),
+(2291, '3,14', 'Motobomba Diésel de 3" mínimo 7 HP con mangueras.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2234, '3,14'),
+(2292, '3,15', 'Planta Eléctrica 5 KW a 7KW.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2235, '3,15'),
+(2293, '3,16', 'Planta Eléctrica tipo Estadio.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2236, '3,16'),
+(2294, '3,17', 'Pulidora para trabajo pesado.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2237, '3,17'),
+(2295, '3,18', 'Retro cargador de llantas tipo CAT-420E o equivalente, sin operador.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2238, '3,18'),
+(2296, '3,19', 'Retroexcavadora Oruga CAT-320 o equivalente.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2239, '3,19'),
+(2297, '3,20', 'Vehículo 4x4, doble cabina con platón sin conductor legal.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2240, '3,20'),
+(2298, '3,21', 'Vibrocompactador apisonador/canguro.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2241, '3,21'),
+(2299, '3,22', 'Volqueta de 12 m3, con conductor legal.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2242, '3,22'),
+(2300, '4,1,1', 'Supervisor', 'DIA', 2, 1, '2018-01-15 05:00:00', 2243, '4,1,1'),
+(2301, '4,1,2', 'Conductor Camioneta con Platon', 'DIA', 2, 1, '2018-01-15 05:00:00', 2244, '4,1,2'),
+(2302, '4,1,3', 'Conductor de Buseta 25P', 'DIA', 2, 1, '2018-01-15 05:00:00', 2245, '4,1,3'),
+(2303, '4,1,4', 'Tecnico Operetivo HSE', 'DIA', 2, 1, '2018-01-15 05:00:00', 2246, '4,1,4'),
+(2304, '4,1,5', 'Ing. Civil', 'DIA', 2, 1, '2018-01-15 05:00:00', 2247, '4,1,5'),
+(2305, '4,1,6', 'Planeador', 'DIA', 2, 1, '2018-01-15 05:00:00', 2248, '4,1,6'),
+(2306, '4,1,7', 'Ing. QA/QC', 'DIA', 2, 1, '2018-01-15 05:00:00', 2249, '4,1,7'),
+(2307, '4,1,8', 'Tecnico en Seguridad Industrial', 'DIA', 2, 1, '2018-01-15 05:00:00', 2250, '4,1,8'),
+(2308, '4,1,9', 'Mecanico (mantenimiento)', 'DIA', 2, 1, '2018-01-15 05:00:00', 2251, '4,1,9'),
+(2309, '4,2,1', 'CAMION DE 3 TON', 'DIA', 3, 1, '2018-01-15 05:00:00', 2252, '4,2,1'),
+(2310, '4,2,2', 'Buseta, capacidad mínimo 25 pasajeros, sin conductor legal.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2253, '4,2,2'),
+(2311, '4,2,3', 'Equipo de computo', 'DIA', 3, 1, '2018-01-15 05:00:00', 2254, '4,2,3'),
+(2312, '4,2,4', 'EQUIPO TOPOGRAFIA', 'DIA', 3, 1, '2018-01-15 05:00:00', 2255, '4,2,4'),
+(2313, '4,2,5', 'EQUIPOS Y HERRAMT. SEGURIDAD IND.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2256, '4,2,5'),
+(2314, '4,2,6', 'EQUIPOS COMUNICACIONES (RADIOS)', 'DIA', 3, 1, '2018-01-15 05:00:00', 2257, '4,2,6'),
+(2315, '4,3,1', 'Suministro de Alimentacion', 'DIA', 0, 1, '2018-01-15 05:00:00', 2258, '4,3,1'),
+(2316, '4,3,2', 'Turno Vigilancia Turno Nocturno 17:00 pm a 07:00 am (Turno Especial 14 hr)', 'TURNO', 0, 1, '2018-01-15 05:00:00', 2259, '4,3,2'),
+(2317, '4,3,3', 'Turno de Vigilancia 24 Horas', 'TURNO', 0, 1, '2018-01-15 05:00:00', 2260, '4,3,3'),
+(2318, '4,3,6', 'Disposicion final de Residuos Solidos', 'KG', 0, 1, '2018-01-15 05:00:00', 2261, '4,3,6'),
+(2319, '5,1,1', 'Administrador', 'DIA', 2, 1, '2018-01-15 05:00:00', 2262, '5,1,1'),
+(2320, '5,1,2', 'Auxiliar Administrativo', 'DIA', 2, 1, '2018-01-15 05:00:00', 2263, '5,1,2'),
+(2321, '5,1,3', 'Auxiliar servicios generales', 'DIA', 2, 1, '2018-01-15 05:00:00', 2264, '5,1,3'),
+(2322, '5,2,1', 'Vehículo 4x4, doble cabina con platón sin conductor legal.', 'DIA', 3, 1, '2018-01-15 05:00:00', 2265, '5,2,1'),
+(2323, '5,2,2', 'Equipo de computo', 'DIA', 3, 1, '2018-01-15 05:00:00', 2266, '5,2,2');
 
 -- --------------------------------------------------------
 
@@ -3038,7 +3189,10 @@ INSERT INTO `log_movimiento` (`idlog_movimiento`, `idregistro`, `tabla`, `idusua
 (8, 1, 'OT', 1, 'Yeison Torrado', 'Orden TEST modificada', '2018-01-16 17:05:16', 'OT ACTUALIZADA', NULL),
 (9, 2, 'OT', 1, 'Yeison Torrado', 'Orden TEST2 creada', '2018-01-16 20:22:50', 'OT CREADA', NULL),
 (10, 2, 'OT', 1, 'Yeison Torrado', 'Orden TEST2 modificada', '2018-01-16 20:27:44', 'OT ACTUALIZADA', NULL),
-(11, 2, 'OT', 1, 'Yeison Torrado', 'Orden TEST2 modificada', '2018-01-16 20:27:48', 'OT ACTUALIZADA', NULL);
+(11, 2, 'OT', 1, 'Yeison Torrado', 'Orden TEST2 modificada', '2018-01-16 20:27:48', 'OT ACTUALIZADA', NULL),
+(12, 1, 'reporte_diario', 1, 'Yeison Torrado', 'reporte_diario 2018-1-15 de TEST creado', '2018-01-18 14:25:03', NULL, NULL),
+(13, 1, 'reporte_diario', 1, 'Yeison Torrado', 'Reporte diario 2018-01-15 de TEST  actualizado.', '2018-01-18 20:17:04', NULL, '{"info":{"observaciones":null,"actividades":[],"idOT":"1","ccosto":"","estado":"ABIERTO","nombre_ot":"TEST","fecha_reporte":"2018-01-15","festivo":false,"planta":"Cucuta","Linea":"1","validado_pyco":"PENDIENTE"},"actividades":[{"idOT":"1","nombre_ot":"TEST","base_idbase":"194","idtarea_ot":"1","nombre_tarea":"TAREA INICIAL","iditem_tarea_ot":"1","duracion_tot":"0","planeado":"0","unidad":"m3","tarifa":"223339","fecha_agregado":"2018-01-16 11:59:40","valor_plan":"0","itemf_iditemf":"1545","itemf_codigo":"10101","idsector_item_tarea":"1","iditemf":"1545","codigo":"10101","descripcion":"excavaci\\u00f3n manual en tierra para labores convencionales","tipo":"1","idusuario":"1","fecha_registro":"2017-10-03 10:04:19","itemc_iditemc":"1684","itemc_item":"1,1,1","responsables":"{}","requisitos_documentales":"{}","add":true,"facturable":true,"cantidad":0}],"personal":[],"equipos":[]}'),
+(14, 1, 'reporte_diario', 1, 'Yeison Torrado', 'Reporte diario 2018-01-15 de TEST  actualizado.', '2018-01-18 21:31:42', NULL, '{"actividades":[{"idOT":"1","nombre_ot":"TEST","base_idbase":"194","idtarea_ot":"1","nombre_tarea":"TAREA INICIAL","iditem_tarea_ot":"1","duracion_tot":"0","planeado":"0","unidad":"m3","tarifa":"223339","fecha_agregado":"2018-01-16 11:59:40","valor_plan":"0","itemf_iditemf":"1545","itemf_codigo":"10101","idsector_item_tarea":"1","iditemf":"1545","codigo":"10101","descripcion":"excavaci\\u00f3n manual en tierra para labores convencionales","tipo":"1","idusuario":"1","fecha_registro":"2017-10-03 10:04:19","itemc_iditemc":"1684","itemc_item":"1,1,1","responsables":"{}","requisitos_documentales":"{}","add":true,"facturable":true,"idfrente_ot":"9","cantidad":0}],"personal":[],"equipos":[]}');
 
 -- --------------------------------------------------------
 
@@ -3218,13 +3372,12 @@ CREATE TABLE `recurso_reporte_diario` (
   `horometro_ini` varchar(20) DEFAULT NULL,
   `horometro_fin` varchar(20) DEFAULT NULL,
   `varado` tinyint(1) DEFAULT NULL,
-  `cant` decimal(15,5) DEFAULT NULL,
   `itemf_iditemf` int(11) DEFAULT NULL,
   `itemf_codigo` varchar(15) DEFAULT NULL,
   `idrecurso_ot` int(11) DEFAULT NULL,
   `idreporte_diario` int(11) NOT NULL,
   `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `estado_factura` tinyint(1) DEFAULT '0',
+  `idfrente_ot` int(11) DEFAULT NULL,
   `idestado_labor` int(11) DEFAULT NULL,
   `idsector_item_tarea` int(11) DEFAULT '1',
   `nomina` tinyint(1) DEFAULT '0',
@@ -3232,6 +3385,13 @@ CREATE TABLE `recurso_reporte_diario` (
   `validacion_he` tinyint(1) DEFAULT '0',
   `usuario_validacion_he` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `recurso_reporte_diario`
+--
+
+INSERT INTO `recurso_reporte_diario` (`idrecurso_reporte_diario`, `print`, `facturable`, `cantidad`, `planeado`, `hora_inicio`, `hora_fin`, `hora_inicio2`, `hora_fin2`, `horas_extra_dia`, `horas_extra_noc`, `horas_recargo`, `horas_ordinarias`, `hr_almuerzo`, `racion`, `gasto_viaje_pr`, `gasto_viaje_lugar`, `nombre_operador`, `horas_operacion`, `horas_disponible`, `horometro_ini`, `horometro_fin`, `varado`, `itemf_iditemf`, `itemf_codigo`, `idrecurso_ot`, `idreporte_diario`, `fecha_registro`, `idfrente_ot`, `idestado_labor`, `idsector_item_tarea`, `nomina`, `usuario_nomina`, `validacion_he`, `usuario_validacion_he`) VALUES
+(3, 1, 1, '0.00000', 0, '', '', '', '', 0, 0, 0, 0, 0, 0, NULL, NULL, '', 0, 0, '', '', 0, 1545, '10101', NULL, 1, '2018-01-18 21:31:42', 9, NULL, 1, 0, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -3276,6 +3436,13 @@ CREATE TABLE `reporte_diario` (
   `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `usuario_creacion` varchar(130) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `reporte_diario`
+--
+
+INSERT INTO `reporte_diario` (`idreporte_diario`, `fecha_reporte`, `festivo`, `linea`, `municipio`, `sistema_reporte_ecp`, `json_r`, `observaciones_pyco`, `estado`, `validado_pyco`, `OT_idOT`, `fecha_registro`, `usuario_creacion`) VALUES
+(1, '2018-01-15', 0, '', '', '', '{"observaciones":[],"actividades":[],"idOT":"1","ccosto":"","estado":"ABIERTO","nombre_ot":"TEST","fecha_reporte":"2018-01-15","festivo":false,"planta":"Cucuta","Linea":"1","validado_pyco":"PENDIENTE"}', '[]', 'ABIERTO', 'PENDIENTE', 1, '2018-01-18 14:25:03', 'Yeison Torrado');
 
 -- --------------------------------------------------------
 
@@ -6437,7 +6604,83 @@ INSERT INTO `tarifa` (`idtarifa`, `idvigencia_tarifas`, `tarifa`, `estado_tarifa
 (6591, 10, 365383, 1, 182943, 1, 1, '2017-07-27 05:00:00', '3009800', 5, 2245, '530401'),
 (6592, 10, 137802, 1, 82507, 1, 1, '2017-07-27 05:00:00', '3009804', 5, 2246, '540302'),
 (6593, 10, 150656, 1, 57425, 1, 1, '2017-07-27 05:00:00', '3009819', 5, 2247, '560602'),
-(6594, 11, 251167, 1, 100047, 1, 1, '2017-10-03 15:58:57', NULL, 8, 2248, '221004-PMA');
+(6594, 11, 251167, 1, 100047, 1, 1, '2017-10-03 15:58:57', NULL, 8, 2248, '221004-PMA'),
+(6595, 12, 0, 1, 0, 1, 1, '2018-01-17 05:00:00', '-', 2018, 2249, '6,1'),
+(6596, 12, 0, 1, 0, 1, 1, '2018-01-18 05:00:00', '-', 2018, 2250, '6,2'),
+(6597, 12, 0, 1, 0, 1, 1, '2018-01-19 05:00:00', '-', 2018, 2251, '6,3'),
+(6598, 12, 0, 1, 0, 1, 1, '2018-01-20 05:00:00', '-', 2018, 2252, '6,4'),
+(6599, 12, 0, 1, 0, 1, 1, '2018-01-21 05:00:00', '-', 2018, 2253, '6,5'),
+(6600, 12, 0, 1, 0, 1, 1, '2018-01-22 05:00:00', '-', 2018, 2254, '6,6'),
+(6601, 12, 0, 1, 0, 1, 1, '2018-01-23 05:00:00', '-', 2018, 2255, '1,1'),
+(6602, 12, 0, 1, 0, 1, 1, '2018-01-24 05:00:00', '-', 2018, 2256, '1,2'),
+(6603, 12, 0, 1, 0, 1, 1, '2018-01-25 05:00:00', '-', 2018, 2257, '1,3'),
+(6604, 12, 0, 1, 0, 1, 1, '2018-01-26 05:00:00', '-', 2018, 2258, '1,4'),
+(6605, 12, 0, 1, 0, 1, 1, '2018-01-27 05:00:00', '-', 2018, 2259, '1,5'),
+(6606, 12, 0, 1, 0, 1, 1, '2018-01-28 05:00:00', '-', 2018, 2260, '1,6'),
+(6607, 12, 0, 1, 0, 1, 1, '2018-01-29 05:00:00', '-', 2018, 2261, '1,7'),
+(6608, 12, 0, 1, 0, 1, 1, '2018-01-30 05:00:00', '-', 2018, 2262, '1,8'),
+(6609, 12, 0, 1, 0, 1, 1, '2018-01-31 05:00:00', '-', 2018, 2263, '1,9'),
+(6610, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2264, '1,10'),
+(6611, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2265, '1,11'),
+(6612, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2266, '1,12'),
+(6613, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2267, '1,13'),
+(6614, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2268, '1,14'),
+(6615, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2269, '1,15'),
+(6616, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2270, '2,1'),
+(6617, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2271, '2,2'),
+(6618, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2272, '2,3'),
+(6619, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2273, '2,4'),
+(6620, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2274, '2,5'),
+(6621, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2275, '2,6'),
+(6622, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2276, '2,7'),
+(6623, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2277, '2,8'),
+(6624, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2278, '3,1'),
+(6625, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2279, '3,2'),
+(6626, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2280, '3,3'),
+(6627, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2281, '3,4'),
+(6628, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2282, '3,5'),
+(6629, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2283, '3,6'),
+(6630, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2284, '3,7'),
+(6631, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2285, '3,8'),
+(6632, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2286, '3,9');
+INSERT INTO `tarifa` (`idtarifa`, `idvigencia_tarifas`, `tarifa`, `estado_tarifa`, `salario`, `estado_salario`, `idusuario`, `fecha_registro`, `codigo_vinculado`, `periodo_id`, `itemf_iditemf`, `itemf_codigo`) VALUES
+(6633, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2287, '3,10'),
+(6634, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2288, '3,11'),
+(6635, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2289, '3,12'),
+(6636, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2290, '3,13'),
+(6637, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2291, '3,14'),
+(6638, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2292, '3,15'),
+(6639, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2293, '3,16'),
+(6640, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2294, '3,17'),
+(6641, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2295, '3,18'),
+(6642, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2296, '3,19'),
+(6643, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2297, '3,20'),
+(6644, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2298, '3,21'),
+(6645, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2299, '3,22'),
+(6646, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2300, '4,1,1'),
+(6647, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2301, '4,1,2'),
+(6648, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2302, '4,1,3'),
+(6649, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2303, '4,1,4'),
+(6650, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2304, '4,1,5'),
+(6651, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2305, '4,1,6'),
+(6652, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2306, '4,1,7'),
+(6653, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2307, '4,1,8'),
+(6654, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2308, '4,1,9'),
+(6655, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2309, '4,2,1'),
+(6656, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2310, '4,2,2'),
+(6657, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2311, '4,2,3'),
+(6658, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2312, '4,2,4'),
+(6659, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2313, '4,2,5'),
+(6660, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2314, '4,2,6'),
+(6661, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2315, '4,3,1'),
+(6662, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2316, '4,3,2'),
+(6663, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2317, '4,3,3'),
+(6664, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2318, '4,3,6'),
+(6665, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2319, '5,1,1'),
+(6666, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2320, '5,1,2'),
+(6667, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2321, '5,1,3'),
+(6668, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2322, '5,2,1'),
+(6669, 12, 0, 1, 0, 1, 1, '0000-00-00 00:00:00', '-', 2018, 2323, '5,2,2');
 
 -- --------------------------------------------------------
 
@@ -6795,7 +7038,8 @@ INSERT INTO `vigencia_tarifas` (`idvigencia_tarifas`, `descripcion_vigencia`, `f
 (8, 'Vigencia 2016B', '2016-07-01', '2016-12-31', 0, 1),
 (9, 'Vigencia 2017A', '2017-01-01', '2017-06-30', 0, 1),
 (10, 'Vigencia 2017B', '2017-07-01', '2017-12-31', 1, 1),
-(11, 'Vigencia 2017C - PMA', '2017-10-01', '2017-12-31', 1, 2);
+(11, 'Vigencia 2017C - PMA', '2017-10-01', '2017-12-31', 1, 2),
+(12, 'Vigencia CONTRATO YUMA', '2018-01-15', '2018-06-01', 1, 3);
 
 --
 -- Índices para tablas volcadas
@@ -7063,12 +7307,12 @@ ALTER TABLE `frente_ot`
 -- AUTO_INCREMENT de la tabla `itemc`
 --
 ALTER TABLE `itemc`
-  MODIFY `iditemc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2192;
+  MODIFY `iditemc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2267;
 --
 -- AUTO_INCREMENT de la tabla `itemf`
 --
 ALTER TABLE `itemf`
-  MODIFY `iditemf` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2249;
+  MODIFY `iditemf` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2324;
 --
 -- AUTO_INCREMENT de la tabla `item_tarea_ot`
 --
@@ -7078,7 +7322,7 @@ ALTER TABLE `item_tarea_ot`
 -- AUTO_INCREMENT de la tabla `log_movimiento`
 --
 ALTER TABLE `log_movimiento`
-  MODIFY `idlog_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idlog_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `material`
 --
@@ -7103,12 +7347,12 @@ ALTER TABLE `recurso_ot`
 -- AUTO_INCREMENT de la tabla `recurso_reporte_diario`
 --
 ALTER TABLE `recurso_reporte_diario`
-  MODIFY `idrecurso_reporte_diario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idrecurso_reporte_diario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `reporte_diario`
 --
 ALTER TABLE `reporte_diario`
-  MODIFY `idreporte_diario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idreporte_diario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `sector_item_tarea`
 --
@@ -7123,7 +7367,7 @@ ALTER TABLE `tarea_ot`
 -- AUTO_INCREMENT de la tabla `tarifa`
 --
 ALTER TABLE `tarifa`
-  MODIFY `idtarifa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6595;
+  MODIFY `idtarifa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6670;
 --
 -- AUTO_INCREMENT de la tabla `tarifas_gv`
 --
@@ -7143,7 +7387,7 @@ ALTER TABLE `validacion_doc`
 -- AUTO_INCREMENT de la tabla `vigencia_tarifas`
 --
 ALTER TABLE `vigencia_tarifas`
-  MODIFY `idvigencia_tarifas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idvigencia_tarifas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Restricciones para tablas volcadas
 --

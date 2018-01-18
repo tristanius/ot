@@ -1,4 +1,21 @@
-<section style="padding:1ex">
+<?php
+if (isset($frentes) && sizeof($frentes) > 0 ) {
+?>
+<div class="noMaterialStyles regularForm card-panel padding1ex">
+  <big><strong>SELECCIONA TU FRENTE:</strong> </big>
+  <select class="" ng-model="myfrente" ng-change="validDataView(myfrente, showRecursos)">
+    <?php foreach ($frentes as $key => $f): ?>
+      <?php $f->usuario = json_decode($f->usuario); ?>
+      <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> || !validPriv(45))">
+        <?= $f->nombre.' - '.$f->ubicacion ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</div>
+<?php
+}
+?>
+<section style="padding:1ex" class="card-panel" >
 
   <style media="screen">
     tr.newrow{
@@ -20,8 +37,8 @@
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#personalOT')" data-icon="&#xe047;" > Personal</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#equipoOT')" data-icon="&#xe042;"> Equipos</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#actividadOT')" data-icon="k"> Actividades</button>
-    <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#materiales')" data-icon="k"> Material</button>
-    <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#otros')" data-icon="k"> Otros</button>
+    <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#materiales')" data-icon="5"> Material</button>
+    <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#otros')" data-icon="&"> Otros</button>
   </div>
   <div class="">
     <h5>Personal:</h5>

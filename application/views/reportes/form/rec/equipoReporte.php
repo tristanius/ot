@@ -50,7 +50,11 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>
+          <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
+            <input type="hidden" ng-init="filterEquipos.idfrente_ot = myfrente" disabled="disabled">
+          <?php endif; ?>
+        </td>
       </tr>
 
       <tr ng-repeat="eq in rd.recursos.equipos | orderBy: 'itemc_item' | filter: filterEquipos track by $index"  class="{{ (eq.idrecurso_reporte_diario == undefined || eq.idrecurso_reporte_diario == '')?'newrow':''; }}">

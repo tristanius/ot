@@ -62,7 +62,6 @@ class Reporte_db extends CI_Model{
      $data = array(
        'idreporte_diario' => $idrepo,
        'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
-       'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
        'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
        'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
        'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -91,7 +90,8 @@ class Reporte_db extends CI_Model{
        'gasto_viaje_pr'=> isset($recurso->gasto_viaje_pr)?$recurso->gasto_viaje_pr:NULL,
        'gasto_viaje_lugar'=> isset($recurso->gasto_viaje_lugar)?$recurso->gasto_viaje_lugar:NULL,
        'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
-       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1
+       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
+       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL
      );
      $this->db->insert('recurso_reporte_diario', $data);
    }
@@ -101,7 +101,6 @@ class Reporte_db extends CI_Model{
     $data = array(
       'idreporte_diario' => $idrepo,
       'cantidad'=> isset($recurso->cantidad)?$recurso->cantidad: '0',
-      'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
       'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
       'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
 	    'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -130,7 +129,8 @@ class Reporte_db extends CI_Model{
       'gasto_viaje_pr'=> isset($recurso->gasto_viaje_pr)?$recurso->gasto_viaje_pr:NULL,
       'gasto_viaje_lugar'=> isset($recurso->gasto_viaje_lugar)?$recurso->gasto_viaje_lugar:NULL,
       'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
-      'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1
+      'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
+      'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;

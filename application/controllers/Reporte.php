@@ -39,6 +39,7 @@ class Reporte extends CI_Controller{
   public function add($idOT, $fecha){
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($idOT);
+    $frentes = $this->otdb->getFrentesOT($idOT);
     $this->load->model('tarea_db', 'tarea');
     $item_equipos = $this->tarea->getTareasItemsResumenBy($idOT,3);
     $this->load->model('miscelanio_db', 'misc');
@@ -54,6 +55,7 @@ class Reporte extends CI_Controller{
     $this->load->view('reportes/add/add',
 		array(
 				'ot'=>$ot->row(),
+        'frentes'=>$frentes->result(),
 				'fecha'=>$fecha,
 				'item_equipos'=>$item_equipos->result(),
 				'un_equipos'=>$un_equipos,
@@ -238,6 +240,7 @@ class Reporte extends CI_Controller{
     $r = $this->repo->get($idReporte)->row();
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($r->OT_idOT);
+    $frentes = $this->otdb->getFrentesOT($r->OT_idOT)->result();
     $this->load->model('tarea_db', 'tarea');
     $item_equipos = $this->tarea->getTareasItemsResumenBy($r->OT_idOT,3);
     //obtener unidades de negocio
@@ -252,7 +255,7 @@ class Reporte extends CI_Controller{
     $dias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $diasemana = $dias[ date( "w", strtotime($r->fecha_reporte) ) ];
     $this->load->view('reportes/edit/edit',
-      array( 'r'=>$r, 'item_equipos'=>$item_equipos->result(), 'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana, 'estados_labor'=>$this->misc->getEstadosLabor()->result() )
+      array( 'r'=>$r, 'frentes'=>$frentes, 'item_equipos'=>$item_equipos->result(), 'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana, 'estados_labor'=>$this->misc->getEstadosLabor()->result() )
     );
   }
 

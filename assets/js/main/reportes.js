@@ -129,6 +129,14 @@ var reportes = function($scope, $http, $timeout) {
       list.splice(list.indexOf(obs),1);
     }
   }
+
+  $scope.validDataView = function(data, view){
+    if(data && data != ''){
+      view = true;
+    }else{
+      view = false;
+    }
+  }
 }
 
 // ============================================================================================
@@ -410,6 +418,10 @@ var addReporte = function($scope, $http, $timeout) {
         val.gasto_viaje_lugar = '';
         val.racion = 0;
         val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
         $scope.rd.recursos.personal.push(val);
       }
     });
@@ -426,6 +438,10 @@ var addReporte = function($scope, $http, $timeout) {
         val.horas_disp = 1;
         val.cantidad = 1;
         val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
         $scope.rd.recursos.equipos.push(val);
       }
     });
@@ -442,6 +458,10 @@ var addReporte = function($scope, $http, $timeout) {
         )
       ){
         val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
         $scope.rd.recursos.actividades.push(val);
       }
     });
@@ -835,10 +855,13 @@ var editReporte = function($scope, $http, $timeout){
         val.horas_recargo = 0;
         val.horas_extra_dia = 0;
         val.horas_extra_noc = 0;
-        val.facturable = true;
         val.gasto_viaje_pr = '';
         val.gasto_viaje_lugar = '';
 		    val.racion = 0;
+        val.facturable = true;
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
         $scope.rd.recursos.personal.push(val);
       }
     });
@@ -854,6 +877,9 @@ var editReporte = function($scope, $http, $timeout){
         val.horas_disponible = 1;
         val.cantidad = 1;
         val.facturable = true;
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
         $scope.rd.recursos.equipos.push(val);
       }
     });
@@ -869,6 +895,9 @@ var editReporte = function($scope, $http, $timeout){
         )
       ){
         val.facturable = true;
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
         $scope.rd.recursos.actividades.push(val);
       }
     });

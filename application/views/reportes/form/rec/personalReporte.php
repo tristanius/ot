@@ -68,7 +68,11 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
+          <td>
+            <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
+              <input type="hidden" ng-init="personalFilter.idfrente_ot = myfrente" disabled="disabled">
+            <?php endif; ?>
+          </td>
       </tr>
 
       <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion_he==1 || pr.nomina==1)?'background:#fefefe;':''; }}"> <!--  | orderBy: 'itemc_item' -->
