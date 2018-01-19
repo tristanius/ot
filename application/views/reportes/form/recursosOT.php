@@ -1,12 +1,12 @@
 <?php
 if (isset($frentes) && sizeof($frentes) > 0 ) {
 ?>
-<div class="noMaterialStyles regularForm card-panel padding1ex">
-  <big><strong>SELECCIONA TU FRENTE:</strong> </big>
-  <select class="" ng-model="myfrente" ng-change="validDataView(myfrente, showRecursos)">
+<div class="noMaterialStyles regularForm card-panel padding1ex" ng-init='initRecursosFilters(); initFrentes(<?= json_encode($frentes) ?>)'>
+  <b>SELECCIONA TU FRENTE DE TRABAJO:</b>
+  <select class="" ng-model="myfrente" ng-change="changeFrente(myfrente)" style="font-weight: bold;">
     <?php foreach ($frentes as $key => $f): ?>
       <?php $f->usuario = json_decode($f->usuario); ?>
-      <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> || !validPriv(45))">
+      <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && !validPriv(45))">
         <?= $f->nombre.' - '.$f->ubicacion ?>
       </option>
     <?php endforeach; ?>
@@ -16,6 +16,10 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 }
 ?>
 <section style="padding:1ex" class="card-panel" >
+
+  <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
+    <h5 style="color:#14931d" >Frente: {{ getFrente(myfrente) }} </b> </h5>
+  <?php endif ?>
 
   <style media="screen">
     tr.newrow{
@@ -31,16 +35,17 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
     <?php $this->load->view('reportes/form/rec/equipoOT', array('ot'=>$ot, 'un_equipos'=>$un_equipos, 'item_equipos'=>$item_equipos) ); ?>
     <?php $this->load->view('reportes/form/rec/actividadesOT', array('ot'=>$ot) ); ?>
   </div>
-  <h5>Listados de recursos, cantidades y tiempos: </h5>
 
-  <div ng-if="rd.info.estado == 'ABIERTO'">
+  <div ng-if="rd.info.estado == 'ABIERTO' <?= (isset($frentes) && sizeof($frentes) > 0 )?'&& myfrente':''; ?>">
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#personalOT')" data-icon="&#xe047;" > Personal</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#equipoOT')" data-icon="&#xe042;"> Equipos</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#actividadOT')" data-icon="k"> Actividades</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#materiales')" data-icon="5"> Material</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#otros')" data-icon="&"> Otros</button>
   </div>
-  <div class="">
+  <div ng-if="<?= (isset($frentes) && sizeof($frentes) > 0 )?'myfrente':''; ?>">
+    <h5>Listados de recursos, cantidades y tiempos: </h5>
+
     <h5>Personal:</h5>
     <?php $this->load->view('reportes/form/rec/personalReporte', array('ot'=>$ot, 'estados_labor'=>$estados_labor) ); ?>
     <hr>

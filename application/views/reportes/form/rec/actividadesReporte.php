@@ -11,7 +11,7 @@
         <th>Cant. día</th>
         <th>Acumulado</th>
       </tr>
-      <tr ng-init="actividadFilter  = {}">
+      <tr>
         <th></th>
         <th></th>
         <th></th>
@@ -21,7 +21,7 @@
         <th></th>
         <th>
           <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
-            <input type="hidden" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
+            <input type="text" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
           <?php endif; ?>
         </th>
       </tr>
@@ -45,5 +45,4 @@
     </tbody>
   </table>
 </div>
-
 <br>

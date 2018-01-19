@@ -130,12 +130,29 @@ var reportes = function($scope, $http, $timeout) {
     }
   }
 
-  $scope.validDataView = function(data, view){
-    if(data && data != ''){
-      view = true;
-    }else{
-      view = false;
-    }
+  $scope.initRecursosFilters =function(){
+    $scope.personalFilter={};
+    $scope.equipoFilter={};
+    $scope.actividadFilter={};
+  }
+  $scope.changeFrente = function(val){
+    $timeout(function(){
+      $scope.personalFilter.idfrente_ot = val;
+      $scope.equipoFilter.idfrente_ot = val;
+      $scope.actividadFilter.idfrente_ot = val;
+    });
+  }
+  $scope.initFrentes = function(lista){
+    $scope.frentes = lista;
+  }
+  $scope.getFrente = function(id){
+    var dato = 'Sin seleccion.';
+    angular.forEach($scope.frentes, function(v,k){
+      if(v.idfrente_ot == id)
+        dato = v.nombre+" "+v.ubicacion;
+      console.log(v.idfrente_ot+": "+id);
+    });
+    return dato;
   }
 }
 
