@@ -149,10 +149,31 @@ var reportes = function($scope, $http, $timeout) {
     var dato = 'Sin seleccion.';
     angular.forEach($scope.frentes, function(v,k){
       if(v.idfrente_ot == id)
-        dato = v.nombre+" "+v.ubicacion;
-      console.log(v.idfrente_ot+": "+id);
+        dato = v.nombre+" - "+v.ubicacion;
     });
     return dato;
+  }
+  $scope.initItemsPlaneados = function( lista ){
+    $scope.items_planeados = lista;
+  }
+  $scope.viewAsociarItem = function(obj, tag){
+    $scope.asociableItem = obj;
+    $scope.showRecursosReporte(tag);
+  }
+  $scope.asociarItem = function(it, tag){
+    $scope.asociableItem.item_asociado = it.itemc_item;
+    $scope.closeRecursoReporte(tag);
+  }
+
+  // mostrar una sección para agregar elementos al reporte
+  $scope.showRecursosReporte = function(tag){
+    $(tag).show();
+  }
+  // Ocultar una seccion de agregar recursos y ejecutar una funcion de inicio
+  $scope.closeRecursoReporte = function(tag){
+    $timeout(function(){
+      $(tag).hide(100);
+    });
   }
 }
 

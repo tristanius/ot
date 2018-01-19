@@ -36,7 +36,7 @@
         </fieldset>
 
         <div class="row" ng-if="consulta_nom.fecha_inicio && consulta_nom.fecha_hasta">
-          <fieldset class="col m5" ng-if="validPriv(67)">
+          <!--<fieldset class="col m5" ng-if="validPriv(67)">
             <legend>Validación HE:</legend>
             <button type="button" class="btn mini-btn teal darken-1"
                 ng-click="bloquearPersonal('<?= site_url('reportepersonal/setValidacion/1'); ?>' ,'<?= site_url('persona/getJsonTiempoLaborado'); ?>')" >
@@ -47,7 +47,7 @@
                 Invalidar <span data-icon="&#xe04d;"></span>
             </button>
             <p></p>
-          </fieldset>
+          </fieldset>-->
 
           <fieldset class="col m5" ng-if="validPriv(66)">
               <legend>Nomina:</legend>

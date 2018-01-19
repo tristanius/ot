@@ -214,6 +214,30 @@ class Ot_db extends CI_Model {
 		return $this->db->delete('frente_ot', array('idfrente',$idfrente));
 	}
 
+	public function getPlanByFrentes($id)
+	{
+		$this->load->database('ot');
+		$this->db->select(
+			'OT.nombre_ot,
+			itf.descripcion,
+			itf.codigo,
+			itf.itemc_item,
+			f.nombre AS nombre_frente,
+			f.ubicacion AS ubicacion_frente
+			'
+		);
+		$this->db->from('OT');
+		$this->db->join('tarea_ot AS tr', 'tr.OT_idOT = OT.idOT');
+		$this->db->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot');
+		$this->db->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot', 'left');
+		$this->db->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf');
+		$this->db->where('OT.idOT', $id);
+		$this->db->group_by('itf.codigo');
+		$this->db->order_by("itt.iditem_tarea_ot", "asc");
+		$this->db->order_by('itf.itemc_item', 'asc');
+		return $this->db->get();
+	}
+
 	#=============================================================================
 
 	# Obetener una Ot por un campo especificado por parametro

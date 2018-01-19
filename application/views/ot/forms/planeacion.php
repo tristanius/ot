@@ -18,6 +18,8 @@
 					<button type="button" ng-click="VwITems(1); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn green mini-btn" data-icon="&#xe052;"> Actividades</button>
 					<button type="button" ng-click="VwITems(2); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn green mini-btn" data-icon="&#xe052;"> Personal</button>
 					<button type="button" ng-click="VwITems(3); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn green mini-btn" data-icon="&#xe052;"> Equipo</button>
+					<button type="button" ng-click="VwITems('material'); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn green mini-btn" data-icon="&#xe052;"> Material</button>
+					<button type="button" ng-click="VwITems('otros'); setValorProp( tr.idvigencia_tarifas, filtroItems, 'idvigencia_tarifas' )" class="btn green mini-btn" data-icon="&#xe052;"> Otros</button>
 		</div>
 
 	</p>
@@ -151,6 +153,9 @@
 					</td>
 					<td class="font9">{{ act.fecha_agregado }}</td>
 				</tr>
+				<tr>
+					<td colspan="11" class="" ng-bind="tr.actsubtotal | currency"></td>
+				</tr>
 
 
 				<tr>
@@ -179,6 +184,9 @@
 						<select ng-model="per.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot">	</select>
 					</td>
 					<td class="font9">{{ per.fecha_agregado }}</td>
+				</tr>
+				<tr>
+					<td colspan="11" class="" ng-bind="tr.persubtotal | currency"></td>
 				</tr>
 
 
@@ -209,9 +217,80 @@
 					</td>
 					<td class="font9">{{ eq.fecha_agregado }}</td>
 				</tr>
+
+				<tr>
+					<td colspan="11" class="" ng-bind="tr.eqsubtotal | currency"></td>
+				</tr>
+
+				<!-- MATERIAL Y OTROS -->
+
+				<tr>
+					<th colspan="11" rowspan="" style="background:#ddedd0">MATERIAL: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
+				</tr>
+				<tr ng-repeat="m in tr.material | orderBy: 'codigo'">
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+m.codigo)"></span> {{ m.itemc_item }}</td>
+					<td>{{ m.descripcion }}</td>
+					<th>
+						<select class="font9" style="width:60px;" ng-model="m.idsector_item_tarea" ng-init="m.idsector_item_tarea = (''+m.idsector_item_tarea)" disabled>
+							<?php foreach ($sectores->result() as $key => $value): ?>
+								<option value="<?= $value->idsector_item_tarea ?>"><?= $value->idsector_item_tarea.'-'.$value->nombre_sector_item ?></option>
+							<?php endforeach; ?>
+						</select>
+					</th>
+					<td class="noMaterialStyles"> <input type="checkbox" ng-model="m.facturable" ng-init="m.facturable = toboolean(m.facturable)"> </td>
+					<td>{{ m.unidad }}</td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="m.cantidad" ng-init="m.cantidad = strtonum(m.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="m.duracion" ng-init="m.duracion = strtonum(m.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td style="text-align: right">{{ m.tarifa | currency:'$':0 }}</td>
+					<td style="text-align: right">
+						{{ ( m.facturable?(m.cantidad * m.duracion)*m.tarifa:0 ) | currency:'$':0 }}
+						<button ng-show=" ( m.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.material, m, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
+					</td>
+					<td>
+						<select ng-model="m.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="m.idfrente_ot = m.idfrente_ot">	</select>
+					</td>
+					<td class="font9">{{ m.fecha_agregado }}</td>
+				</tr>
+
+				<tr>
+					<td colspan="11" class="" ng-bind="tr.msubtotal | currency"></td>
+				</tr>
+
+				<tr>
+					<th colspan="11" rowspan="" style="background:#ddedd0">OTROS: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
+				</tr>
+				<tr ng-repeat="o in tr.otros | orderBy: 'codigo'">
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+o.codigo)"></span> {{ o.itemc_item }}</td>
+					<td>{{ o.descripcion }}</td>
+					<th>
+						<select class="font9" style="width:60px;" ng-model="o.idsector_item_tarea" ng-init="o.idsector_item_tarea = (''+o.idsector_item_tarea)" disabled>
+							<?php foreach ($sectores->result() as $key => $value): ?>
+								<option value="<?= $value->idsector_item_tarea ?>"><?= $value->idsector_item_tarea.'-'.$value->nombre_sector_item ?></option>
+							<?php endforeach; ?>
+						</select>
+					</th>
+					<td class="noMaterialStyles"> <input type="checkbox" ng-model="o.facturable" ng-init="o.facturable = toboolean(o.facturable)"> </td>
+					<td>{{ o.unidad }}</td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="o.cantidad" ng-init="o.cantidad = strtonum(o.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="o.duracion" ng-init="o.duracion = strtonum(o.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td style="text-align: right">{{ o.tarifa | currency:'$':0 }}</td>
+					<td style="text-align: right">
+						{{ ( o.facturable?(o.cantidad * o.duracion)*o.tarifa:0 ) | currency:'$':0 }}
+						<button ng-show=" ( o.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.otros, m, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
+					</td>
+					<td>
+						<select ng-model="o.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="o.idfrente_ot = o.idfrente_ot">	</select>
+					</td>
+					<td class="font9">{{ o.fecha_agregado }}</td>
+				</tr>
+
+				<tr>
+					<td colspan="11" class="" ng-bind="tr.otrsubtotal | currency"></td>
+				</tr>
+
 				<tr>
 					<td colspan="6" rowspan="" style="text-align: right">Sutotal de recursos: </td>
-					<td colspan="3" rowspan="" headers=""><big><b>{{ (tr.eqsubtotal+tr.actsubtotal+tr.persubtotal) | currency:'$':0 }}</b></big></td>
+					<td colspan="3" rowspan="" headers=""><big><b>{{ (tr.eqsubtotal+tr.actsubtotal+tr.persubtotal+tr.msubtotal+tr.otrsubtotal) | currency:'$':0 }}</b></big></td>
 				</tr>
 			</tbody>
 		</table>

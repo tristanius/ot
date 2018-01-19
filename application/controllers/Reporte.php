@@ -240,6 +240,7 @@ class Reporte extends CI_Controller{
     $r = $this->repo->get($idReporte)->row();
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($r->OT_idOT);
+    $items_planeados = $this->otdb->getPlanByFrentes($r->OT_idOT);
     $frentes = $this->otdb->getFrentesOT($r->OT_idOT)->result();
     $this->load->model('tarea_db', 'tarea');
     $item_equipos = $this->tarea->getTareasItemsResumenBy($r->OT_idOT,3);
@@ -255,7 +256,12 @@ class Reporte extends CI_Controller{
     $dias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $diasemana = $dias[ date( "w", strtotime($r->fecha_reporte) ) ];
     $this->load->view('reportes/edit/edit',
-      array( 'r'=>$r, 'frentes'=>$frentes, 'item_equipos'=>$item_equipos->result(), 'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana, 'estados_labor'=>$this->misc->getEstadosLabor()->result() )
+      array(
+        'r'=>$r, 'frentes'=>$frentes, 'item_equipos'=>$item_equipos->result(),
+        'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana,
+        'estados_labor'=>$this->misc->getEstadosLabor()->result(),
+        'items_planeados' => $items_planeados->result()
+      )
     );
   }
 

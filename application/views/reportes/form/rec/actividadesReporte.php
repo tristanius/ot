@@ -1,5 +1,5 @@
 <div class="noMaterialStyles">
-  <table class="mytabla" ng-hide="isOnPeticion">
+  <table class="mytabla font10" ng-hide="isOnPeticion">
     <thead>
       <tr style="background: #EEE">
         <th>#</th>
@@ -10,8 +10,9 @@
         <th>Unidad</th>
         <th>Cant. día</th>
         <th>Acumulado</th>
+        <th> <> </th>
       </tr>
-      <tr>
+      <tr style="background: #b9dae5">
         <th></th>
         <th></th>
         <th></th>
@@ -21,9 +22,10 @@
         <th></th>
         <th>
           <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
-            <input type="text" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
+            <input type="hidden" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
           <?php endif; ?>
         </th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -35,12 +37,19 @@
           <input type="checkbox" ng-model="act.facturable" ng-init="act.facturable = parseBool(act.facturable) " ng-disabled="rd.info.estado == 'CERRADO' ">
         </td>
         <td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>
-        <td ng-bind="act.itemc_item"></td>
+        <td ng-bind="act.itemc_item">
+        </td>
         <td ng-bind="act.descripcion"></td>
         <td ng-bind="act.unidad"></td>
         <td> <input type="number" min=0 step=0.00001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
         <td ng-init="act.acumulado?act.acumulado:0;">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
+        </td>
+        <td  class="font9">
+          <span ng-if="act.item_asociado"> (<span ng-bind="act.item_asociado" style="color: #934B10"></span>)</span>
+          <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(act, '#asociarItem')"
+            ng-show="rd.info.estado != 'CERRADO'"> <>
+          </button>
         </td>
     </tbody>
   </table>

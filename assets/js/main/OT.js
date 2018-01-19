@@ -141,6 +141,8 @@ var OT = function($scope, $http, $timeout){
 					"actividades": [],
 					"personal": [],
 					"equipos": [],
+					'material':[],
+					'otros':[],
 					"responsables":{},
 					"requisitos_documentales":{}
 				}
@@ -152,12 +154,25 @@ var OT = function($scope, $http, $timeout){
 	// Gestion de items de OT
 	//Muestra items por agregar de un tipo en la ventana. Debe llamarse desde un controller hijo.
 	$scope.selectItemsType =  function(type, ambito){
-		if(type == 1){
-			ambito.myItems = angular.copy(ambito.items['actividad']);
-		}else if(type == 2){
-			ambito.myItems = angular.copy(ambito.items['personal']);
-		}else if(type == 3){
-			ambito.myItems = angular.copy(ambito.items['equipo']);
+		switch (type) {
+			case 1:
+				ambito.myItems = angular.copy(ambito.items['actividad']);
+				break;
+			case 2:
+				ambito.myItems = angular.copy(ambito.items['personal']);
+				break;
+			case 3:
+				ambito.myItems = angular.copy(ambito.items['equipo']);
+				break;
+			case 'material':
+				ambito.myItems = angular.copy(ambito.items['material']);
+				break;
+			case 'otros':
+				ambito.myItems = angular.copy(ambito.items['otros']);
+				break;
+			default:
+				ambito.myItems = [{}];
+				alert('no se encuentran elementos de el tipo seleccionado.');
 		}
 	}
 	//Muestra la ventana para add items. Debe llamarse desde un controller hijo.
@@ -196,6 +211,14 @@ var OT = function($scope, $http, $timeout){
 					tr.json_horas_extra.json_horas_extra.push(v);
 				}else if(v.tipo_item == 3){
 					tr.equipos.push(v);
+				}else if (v.tipo_item == 'material') {
+					if (!tr.material)
+						tr.material = [];
+					tr.material.push(v);
+				}else if(v.tipo_item == 'otros'){
+					if (!tr.otros)
+						tr.otros = [];
+					tr.otros.push(v);
 				}
 			};
 			if (i == size){
@@ -218,6 +241,10 @@ var OT = function($scope, $http, $timeout){
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
+			if(tr.material)
+				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
+			if (tr.otros)
+				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 			//Redondeado de totales
 			tr.valor_recursos = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * 0.18);

@@ -27,12 +27,16 @@ class Recurso extends CI_Controller{
     $this->load->model('ot_db', 'ot');
     $pers = $this->recdb->getPersonalOtBy($post->idOT, 'persona');
     $equs = $this->recdb->getEquiposOtBy($post->idOT, 'equipo');
+    $material = $this->recdb->getRecursoByOT($post->idOT, 'material');
+    $otros = $this->recdb->getRecursoByOT($post->idOT, 'otros');
 
     $items = $this->ot->getItemByTipeOT($post->idOT);
 
     $recursos = new stdClass();
     $recursos->personal = $pers->result();
     $recursos->equipo = $equs->result();
+    $recursos->material = $material->result();
+    $recursos->otros = $otros->result();
     $recursos->itemsOT = $items->result();
     $recursos->succ = 'success';
     echo json_encode($recursos);
@@ -251,9 +255,11 @@ class Recurso extends CI_Controller{
     $post = json_decode( file_get_contents('php://input') );
     $this->load->database('ot');
     $this->db->delete('recurso_ot', array('idrecurso_ot'=>$post->idrecurso_ot) );
-    $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
-    if($rows->num_rows() == 0){
-      $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+    if(isset($post->idrecurso)){
+      $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
+      if($rows->num_rows() == 0){
+        $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+      }
     }
     echo "success";
   }

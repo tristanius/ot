@@ -80,6 +80,8 @@ class Ot extends CI_Controller {
 		$items['actividad']  = $this->item_db->getBytipo(1)->result();
 		$items['personal']  = $this->item_db->getBytipo(2)->result();
 		$items['equipo']  = $this->item_db->getBytipo(3)->result();
+		$items['material']  = $this->item_db->getBytipo('material')->result();
+		$items['otros']  = $this->item_db->getBytipo('otros')->result();
 		$vigencias = $this->item_db->getVigenciasActivas()->result();
 		$contratos = $this->contrato_db->getContratos()->result();
 		$this->load->helper('config');
@@ -161,6 +163,8 @@ class Ot extends CI_Controller {
 					$this->insetarITemsTarea($idTr, $tar->personal);
 					$this->insetarITemsTarea($idTr, $tar->actividades);
 					$this->insetarITemsTarea($idTr, $tar->equipos);
+					$this->insetarITemsTarea($idTr, $tar->material);
+					$this->insetarITemsTarea($idTr, $tar->otros);
 				}
 				$status = $this->ot->end_transact();
 				if($status){
@@ -263,7 +267,7 @@ class Ot extends CI_Controller {
 				( isset($item->facturable)?$item->facturable:FALSE ),
 				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL ),
 				$item->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
-				$item->idfrente_ot// Nuevo preparar BD !!!!!!!!!!
+				isset($item->idfrente_ot)?$item->idfrente_ot:NULL// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 	#=============================================================================
@@ -441,11 +445,19 @@ class Ot extends CI_Controller {
 				$this->recorrerItems($tr->actividades, $tr->idtarea_ot);
 				$this->recorrerItems($tr->personal, $tr->idtarea_ot);
 				$this->recorrerItems($tr->equipos, $tr->idtarea_ot);
+				if (isset($tr->material))
+					$this->recorrerItems($tr->material, $tr->idtarea_ot);
+				if (isset($tr->otros))
+					$this->recorrerItems($tr->otros, $tr->idtarea_ot);
 			}else{
 				$idTr = $this->crearTareaOT($tr, $orden->idOT, $tr->nombre_tarea);
 				$this->insetarITemsTarea($idTr, $tr->personal);
 				$this->insetarITemsTarea($idTr, $tr->actividades);
 				$this->insetarITemsTarea($idTr, $tr->equipos);
+				if (isset($tr->material))
+					$this->insetarITemsTarea($idTr, $tr->material);
+				if (isset($tr->otros))
+					$this->insetarITemsTarea($idTr, $tr->otros);
 			}
 		}
 		# fin de seguimiento de transacciones concapacidad de RollBack
@@ -584,6 +596,16 @@ class Ot extends CI_Controller {
 				$v->fecha_agregado = NULL;
 				$v->tarea_ot_idtarea_ot  = NULL;
 			}
+			foreach ($val->material as $k => $v) {
+				$v->iditem_tarea_ot = NULL;
+				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
+			}
+			foreach ($val->otros as $k => $v) {
+				$v->iditem_tarea_ot = NULL;
+				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
+			}
 		}
 		if(isset($ot)){
 			$response = new stdClass();
@@ -638,6 +660,8 @@ class Ot extends CI_Controller {
 			$t->actividades = $this->getItemsByTipo($t->idtarea_ot, 1);
 			$t->personal = $this->getItemsByTipo($t->idtarea_ot, 2);
 			$t->equipos = $this->getItemsByTipo($t->idtarea_ot, 3);
+			$t->material = $this->getItemsByTipo($t->idtarea_ot, 'material');
+			$t->otros = $this->getItemsByTipo($t->idtarea_ot, 'otros');
 			// Materiales
 		}
 		return $trs->result();

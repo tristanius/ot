@@ -1,5 +1,5 @@
 <div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>' style="overflow:auto"> <!-- max-height:400px;  -->
-  <table id="personalReporte" class="mytabla" ng-hide="isOnPeticion"> <!-- class: sticked -->
+  <table id="personalReporte" class="mytabla font10" ng-hide="isOnPeticion"> <!-- class: sticked -->
     <thead id="thead2" style="box-shadow:0px 0px 4px #333;">
       <tr style="background: #EEE">
         <th></th>
@@ -21,19 +21,20 @@
         <th></th>
         <th></th>
         <th colspan="2">G. Viaje</th>
+        <td></td>
       </tr>
 
 
       <tr style="background: #EEE">
           <th></th>
-          <th>No.</th>
+          <th>#</th>
           <th>Item</th>
           <th>Cédula</th>
           <th>Nombre Completo</th>
           <th>Cargo</th>
-          <th>Estado <br> Trabajador</th>
+          <th>Estado</th>
           <th style="background: #F4F9FD ">Fact.</th>
-          <th><small>Impr.</small></th>
+          <th><small data-icon="x"></small></th>
           <th class="red lighten-5 inputsSmall">Turno 1</th>
           <th class="red lighten-5 inputsSmall">Turno 2</th>
           <th>Día</th>
@@ -45,6 +46,7 @@
           <th>Hr. <br> Almuer.</th>
           <th>R/P</th>
           <th>Lugar</th>
+          <th><></th>
       </tr>
     </thead>
     <tbody class="regularForm">
@@ -73,6 +75,7 @@
               <input type="hidden" ng-init="personalFilter.idfrente_ot = myfrente" disabled="disabled">
             <?php endif; ?>
           </td>
+          <td></td>
       </tr>
 
       <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion_he==1 || pr.nomina==1)?'background:#fefefe;':''; }}"> <!--  | orderBy: 'itemc_item' -->
@@ -159,6 +162,12 @@
         <td> <input type="checkbox" ng-model="pr.hr_almuerzo" ng-init="pr.hr_almuerzo = parseBool(pr.hr_almuerzo)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
         <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
         <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
+        <td class="font9">
+          <span ng-if="pr.item_asociado"> (<span ng-bind="pr.item_asociado" style="color: #934B10"></span>)</span>
+          <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(pr, '#asociarItem')"
+            ng-show="rd.info.estado != 'CERRADO'"> <>
+          </button>
+        </td>
       </tr>
 
       <tr id="thead1" style="background: #EEE; color: #EEE">
@@ -182,6 +191,7 @@
           <th>Hr. <br> Almuer.</th>
           <th>R/P</th>
           <th>Lugar</th>
+          <th><></th>
       </tr>
     </tbody>
   </table>
