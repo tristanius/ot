@@ -173,7 +173,7 @@ class Reporte extends CI_Controller{
     }
     $post->succ = TRUE;
     foreach ($post->recursos as $k => $v) {
-      if($k!='actividades'){
+      if($k != 'actividades' && $k != 'material' && $k != 'otros'){
         foreach ($v as $key => $value) {
           /*
           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -278,9 +278,6 @@ class Reporte extends CI_Controller{
   public function getRecursoData($idReporte)
   {
     $this->load->model('reporte_db', 'repo');
-    $acts = $this->repo->getRecursos($idReporte, 'actividades');
-    $pers = $this->repo->getRecursos($idReporte, 'personal');
-    $equs = $this->repo->getRecursos($idReporte, 'equipos');
     $myrepo = $this->repo->get($idReporte)->row();
 
     $recursos = new stdClass();
@@ -289,9 +286,11 @@ class Reporte extends CI_Controller{
     $recursos->validado_pyco = $myrepo->validado_pyco;
     $recursos->observaciones_pyco = json_decode($myrepo->observaciones_pyco);
     $recursos->info = json_decode( $this->getInfo($idReporte) );
-    $recursos->personal = $pers->result();
-    $recursos->equipos = $equs->result();
-    $recursos->actividades = $acts->result();
+    $recursos->personal = $this->repo->getRecursos($idReporte, 'personal')->result();
+    $recursos->equipos = $this->repo->getRecursos($idReporte, 'equipos')->result();
+    $recursos->actividades = $this->repo->getRecursos($idReporte, 'actividades')->result();
+    $recursos->material = $this->repo->getRecursos($idReporte, 'material')->result();
+    $recursos->otros = $this->repo->getRecursos($idReporte, 'otros')->result();
     return $recursos;
   }
   # ===========================================================================================================
@@ -318,6 +317,8 @@ class Reporte extends CI_Controller{
       $cambios->actividades = $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
       $cambios->personal = $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
       $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
+      $cambios->material = $this->actualizarRecursos($post->recursos->material, $post->idreporte_diario, $post->fecha);
+      $cambios->otros = $this->actualizarRecursos($post->recursos->otros, $post->idreporte_diario, $post->fecha);
       if (isset($post->log)) {
         $msj = 'Reporte diario '.$post->fecha." de ".$post->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
@@ -331,6 +332,8 @@ class Reporte extends CI_Controller{
         $response->personal = $var->personal;
         $response->equipos = $var->equipos;
         $response->actividades = $var->actividades;
+        $response->material = $var->material;
+        $response->otros = $var->otros;
         echo json_encode($response);
       }else{
         echo "Falló la inserción";
@@ -342,6 +345,8 @@ class Reporte extends CI_Controller{
       $response->personal = $validReporte->recursos->personal;
       $response->equipos = $validReporte->recursos->equipos;
       $response->actividades = $validReporte->recursos->actividades;
+      $response->material = $validReporte->recursos->material;
+      $response->otros = $validReporte->recursos->otros;
       echo json_encode($response);
     }
   }
@@ -434,10 +439,14 @@ class Reporte extends CI_Controller{
       $pers = $this->recdb->getPersonalOtBy($idOT, 'persona');
       $equs = $this->recdb->getEquiposOtBy($idOT, 'equipo');
       $acts = $this->tarea->getActividadesPlaneadas($idOT,1, NULL, $fecha);
+      $mats = $this->recdb->getRecursoByOT($idOT, 'material');
+      $otros = $this->recdb->getRecursoByOT($idOT, 'otros');
       $data = array(
           'personal' => $pers->result(),
           'equipo' => $equs->result(),
-          'actividad'=> $acts->result()
+          'actividad'=> $acts->result(),
+          'material'=>$mats->result(),
+          'otros' =>$otros->result()
         );
       echo json_encode($data);
   }

@@ -44,13 +44,15 @@ var reportes = function($scope, $http, $timeout) {
   $scope.parseBool = function(i){
     return (i==1)? true: false;
   }
+
   $scope.setSelecteState = function(add){
-		if(!add){
+		if( !add ){
 			add = true;
 		}else{
 			add = false;
 		}
 	}
+
   $scope.getStyleByValidacion = function(cell){
     var stylo = '';
     if (cell == 'VALIDO' || cell == 'VALIDO (FACT)'){
@@ -342,7 +344,9 @@ var addReporte = function($scope, $http, $timeout) {
     recursos:{
       personal:[],
       equipos:[],
-      actividades:[]
+      actividades:[],
+      material:[],
+      otros:[]
     }
   }
   $scope.personalOT = [];
@@ -402,7 +406,8 @@ var addReporte = function($scope, $http, $timeout) {
           $scope.personalOT = response.data.personal;
           $scope.equiposOT = response.data.equipo;
           $scope.actividadesOT = response.data.actividad;
-          console.log(response.data);
+          $scope.materialOT = response.data.material;
+          $scope.otrosOT = response.data.otros;
         },
         function(response){
           alert("Problemas a la cargar los datos de los formularios, por favor cierra la ventana y vuelve a ingresar.")
@@ -428,6 +433,10 @@ var addReporte = function($scope, $http, $timeout) {
       $scope.agregarEquipos();
     }else if(method == 3){
       $scope.agregarActividades();
+    }else if(method==4){
+      $scope.agregarMaterial();
+    }else if(method==5){
+      $scope.agregarOtros();
     }
     $timeout(function(){
       $(section).hide(100);
@@ -501,6 +510,34 @@ var addReporte = function($scope, $http, $timeout) {
           val.idfrente_ot = $scope.myfrente;
         }
         $scope.rd.recursos.actividades.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarMaterial = function(){
+    angular.forEach($scope.materialOT, function(val, key){
+      if(val.add)
+      {
+        val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
+        $scope.rd.recursos.material.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarOtros = function(){
+    angular.forEach($scope.otrosOT, function(val, key){
+      if(val.add)
+      {
+        val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
+        $scope.rd.recursos.otros.push(val);
       }
     });
   }
@@ -601,9 +638,10 @@ var addReporte = function($scope, $http, $timeout) {
 
   // Guardar reporte
   $scope.guardarRD = function(url){
+    var recursos = $scope.rd.recursos;
     if($scope.isOnPeticion){
       alert('Ya se esta realizando un proceso de guardado');
-    }else if($scope.rd.recursos.personal.length == 0 && $scope.rd.recursos.equipos.length == 0 && $scope.rd.recursos.actividades.length == 0){
+    }else if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 ){
       alert('No hay recurso agregados');
     }else{
       $scope.isOnPeticion = true;
@@ -634,6 +672,8 @@ var addReporte = function($scope, $http, $timeout) {
                 $scope.rd.recursos.personal = response.data.personal;
                 $scope.rd.recursos.equipos = response.data.equipos;
                 $scope.rd.recursos.actividades = response.data.actividades;
+                $scope.rd.recursos.material = response.data.material;
+                $scope.rd.recursos.otros = response.data.otros;
                 $scope.booleanCorrection();
               });
             }
@@ -659,13 +699,17 @@ var editReporte = function($scope, $http, $timeout){
     recursos:{
       personal:[],
       equipos:[],
-      actividades:[]
+      actividades:[],
+      material:[],
+      otros:[]
     },
     observaciones_pyco:[]
   }
   $scope.personalOT = [];
   $scope.equiposOT = [];
   $scope.actividadesOT = [];
+  $scope.materialOT = [];
+  $scope.otrosOT = [];
   $scope.estado_doc = [];
   $scope.myestado_doc = undefined;
   $scope.selected_validacion_doc = undefined;
@@ -716,9 +760,7 @@ var editReporte = function($scope, $http, $timeout){
       .then(
         function(response){
           $scope.rd.info = response.data.info;
-          // reasiganaciones
           response.data.info.idOT = $scope.rd.idOT;
-          //response.data.info.festivo = $scope.rd.festivo?true:false;
           response.data.info.fecha_reporte = $scope.rd.fecha_reporte;
           $scope.rd.info.estado = response.data.estado;
           $scope.rd.info.validado_pyco = response.data.validado_pyco;
@@ -730,6 +772,8 @@ var editReporte = function($scope, $http, $timeout){
           $scope.rd.recursos.personal = response.data.personal;
           $scope.rd.recursos.equipos = response.data.equipos;
           $scope.rd.recursos.actividades = response.data.actividades;
+          $scope.rd.recursos.material = response.data.material;
+          $scope.rd.recursos.otros = response.data.otros;
           $scope.spinner = false;
         },
         function(response){
@@ -843,7 +887,8 @@ var editReporte = function($scope, $http, $timeout){
           $scope.personalOT = response.data.personal;
           $scope.equiposOT = response.data.equipo;
           $scope.actividadesOT = response.data.actividad;
-          //console.log(response.data);
+          $scope.materialOT = response.data.material;
+          $scope.otrosOT = response.data.otros;
         },
         function(response){
           alert("Problemas a la cargar los datos de los formularios, por favor cierra la ventana y vuelve a ingresar.")
@@ -869,6 +914,10 @@ var editReporte = function($scope, $http, $timeout){
       $scope.agregarEquipos();
     }else if(method == 3){
       $scope.agregarActividades();
+    }else if(method==4){
+      $scope.agregarMaterial();
+    }else if(method==5){
+      $scope.agregarOtros();
     }
     $timeout(function(){
       $(section).hide(100);
@@ -937,6 +986,34 @@ var editReporte = function($scope, $http, $timeout){
           val.idfrente_ot = $scope.myfrente;
         }
         $scope.rd.recursos.actividades.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarMaterial = function(){
+    angular.forEach($scope.materialOT, function(val, key){
+      if(val.add)
+      {
+        val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
+        $scope.rd.recursos.material.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarOtros = function(){
+    angular.forEach($scope.otrosOT, function(val, key){
+      if(val.add)
+      {
+        val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if($scope.myfrente){
+          val.idfrente_ot = $scope.myfrente;
+        }
+        $scope.rd.recursos.otros.push(val);
       }
     });
   }
@@ -1071,9 +1148,10 @@ var editReporte = function($scope, $http, $timeout){
   }
 
   $scope.guardarReporte = function(url, data){
+    var recursos = $scope.rd.recursos;
     if($scope.isOnPeticion){
       alert('Ya se esta realizando un proceso de guardado');
-    }else if($scope.rd.recursos.personal.length == 0 && $scope.rd.recursos.equipos.length == 0 && $scope.rd.recursos.actividades.length == 0){
+    }else if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 ){
       alert('No hay recurso agregados');
     }else{
       $scope.isOnPeticion = true;
@@ -1088,6 +1166,8 @@ var editReporte = function($scope, $http, $timeout){
             $scope.rd.recursos.personal = [];
             $scope.rd.recursos.equipos = [];
             $scope.rd.recursos.actividades = [];
+            $scope.rd.recursos.material = [];
+            $scope.rd.recursos.otros = [];
             if(response.data.success == 'success'){
               // REEMPLADO DE VENTANA EMERGENTE
               $scope.mensaje_log = response.data.msj;
@@ -1095,18 +1175,19 @@ var editReporte = function($scope, $http, $timeout){
               if($scope.tipoGuardado == 0){
                 $scope.tipoGuardado = 1;
                 $scope.rd.idreporte_diario = response.data.idreporte_diario;
-                console.log( response.data );
               }
             }else{
                 alert("¡Oh Nooo! "+response.data.msj);
                 $scope.mensaje_log = response.data.msj;
                 $scope.mensaje_log_color = 'red darken-1';
-                console.log( response.data );
             }
+            console.log( response.data );
             $timeout(function() {
               $scope.rd.recursos.personal = response.data.personal;
               $scope.rd.recursos.equipos = response.data.equipos;
               $scope.rd.recursos.actividades = response.data.actividades;
+              $scope.rd.recursos.material = response.data.material;
+              $scope.rd.recursos.otros = response.data.actividades;
               $scope.booleanCorrection();
             });
             $scope.getReportesView($scope.site_url);

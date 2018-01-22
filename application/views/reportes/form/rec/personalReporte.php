@@ -9,6 +9,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th>Base</th>
 
         <th style="background: #F4F9FD "></th>
         <th></th>
@@ -32,7 +33,9 @@
           <th>Cédula</th>
           <th>Nombre Completo</th>
           <th>Cargo</th>
-          <th>Estado</th>
+          <th>Est.</th>
+          <th>Base</th>
+
           <th style="background: #F4F9FD ">Fact.</th>
           <th><small data-icon="x"></small></th>
           <th class="red lighten-5 inputsSmall">Turno 1</th>
@@ -58,6 +61,8 @@
           <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.nombre_completo"></td>
           <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.descripcion"></td>
           <td style="max-width: 7ex"></td>
+          <td></td>
+
           <td class="noMaterialStyles" style="background: #F4F9FD "></td>
           <td></td>
           <td style="background: #FCE8E9; text-align:center"></td>
@@ -102,6 +107,9 @@
           <select style="max-width: 10ex" ng-model="pr.idestado_labor" ng-change="getStatusLaboral(pr.idestado_labor, pr)" ng-disabled="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true">
             <option ng-repeat="st in listStatus" value="{{st.idestado_labor}}">{{st.descripcion_estado_labor}}</option>
           </select>
+        </td>
+        <td class="noMaterialStyles">
+          <input type="text" ng-model="pr.procedencia" style="border: green 1px solid; width:9ex;">
         </td>
 
         <td class="noMaterialStyles" style="background: #F4F9FD ">
@@ -178,6 +186,7 @@
           <th>Nombre Completo</th>
           <th>Cargo</th>
           <th>Estado <br> Trabajador</th>
+          <th></th>
           <th>Fact.</th>
           <th><small>Impr.</small></th>
           <th>Turno 1</th>

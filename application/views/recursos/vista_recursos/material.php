@@ -18,7 +18,7 @@
     <thead>
       <tr>
         <th></th>
-        <th>Codigo</th>
+        <th>Item</th>
         <th>Descripción</th>
         <th>item</th>¿
         <th>Asignacion</th>

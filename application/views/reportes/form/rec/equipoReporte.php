@@ -12,6 +12,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
         <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
         <th></th>
@@ -25,6 +26,8 @@
         <th>Ref./AF</th>
         <th>Equipo</th>
         <th>Operador / Conductor</th>
+        <th>Base</th>
+
         <th>Cant.</th>
         <th>UND</th>
         <th>Inicial</th>
@@ -46,6 +49,7 @@
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.referencia"> </td>
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.descripcion_equipo"> </td>
         <td> <input style="width: 13ex" type="text" ng-model="equipoFilter.nombre_operador"> </td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -87,6 +91,8 @@
         <td ng-bind="eq.referencia"></td>
         <td ng-bind="eq.descripcion_equipo"></td>
         <td> <input type="text" style="width:90%" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td class="noMaterialStyles"> <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:9ex;"> </td>
+
         <td class="inputSmall"> <input type="number" min=0 ng-model="eq.cantidad" step=any ng-init="eq.cantidad = parseNumb(eq.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputSmall"> <input type="text" ng-model="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
@@ -113,6 +119,8 @@
         <th>Ref./AF</th>
         <th>Equipo</th>
         <th>Operador / Conductor</th>
+        <th>Base</th>
+
         <th>Cant.</th>
         <th>UND</th>
         <th>Inicial</th>

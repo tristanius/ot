@@ -14,11 +14,11 @@
   <tbody>
     <?php foreach ($recursos->actividades as $key => $v): ?>
     <tr>
-      <td> <?= $v->itemc_item ?> </td>
-      <td> <p><?= $v->descripcion.($v->idsector_item_tarea != 1?' ('.$v->nom_sector.')':'') ?></p> </td>
-      <td> <?= $v->unidad ?> </td>
-      <td> <?= $v->cantidad*1 ?> </td>
-      <td> <?= $v->acumulado+($v->cantidad*1) ?> </td>
+      <td colspan="1"> <?= $v->itemc_item ?> </td>
+      <td colspan="26"> <p><?= $v->descripcion.($v->idsector_item_tarea != 1?' ('.$v->nom_sector.')':'') ?></p> </td>
+      <td colspan="3"> <?= $v->unidad ?> </td>
+      <td colspan="3"> <?= $v->cantidad*1 ?> </td>
+      <td colspan="3"> <?= $v->acumulado+($v->cantidad*1) ?> </td>
     </tr>
     <?php endforeach; ?>
     <?php

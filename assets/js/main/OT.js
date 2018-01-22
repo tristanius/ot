@@ -109,8 +109,8 @@ var OT = function($scope, $http, $timeout){
 					"nombre_tarea": "TAREA "+( (ambito.ot.tareas.length >= 1)?ambito.ot.tareas.length+1:'INICIAL'),
 					"valor_recursos": "0",
 					"valor_tarea_ot": "0",
-					"fecha_inicio": (d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()),
-					"fecha_fin": (d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()),
+					"fecha_inicio": (d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()),
+					"fecha_fin": (d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()),
 					"json_indirectos": {
 						"administracion": 0,
 						"imprevistos": 0,

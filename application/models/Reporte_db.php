@@ -92,7 +92,8 @@ class Reporte_db extends CI_Model{
        'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
        'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
        'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
-       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL
+       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
+       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL
      );
      $this->db->insert('recurso_reporte_diario', $data);
    }
@@ -132,7 +133,8 @@ class Reporte_db extends CI_Model{
       'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
-      'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL
+      'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
+      'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;
@@ -220,12 +222,12 @@ class Reporte_db extends CI_Model{
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
     $this->db->join('itemf AS itf', 'rrd.itemf_iditemf = itf.iditemf', 'LEFT');
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc', 'LEFT');
+    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT');
     $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT');
     $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if ($tipo == 'personal') {
       $this->db->select('p.*, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
-      $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
       $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
       $this->db->where('rot.tipo', 'persona');
     }
@@ -235,11 +237,8 @@ class Reporte_db extends CI_Model{
         IFNULL( e.codigo_siesa, "Temporal" ) AS codigo_siesa,
         IFNULL( e.referencia, rot.codigo_temporal) AS referencia,
         e.ccosto, e.ccosto, desc_un, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
-      $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
       $this->db->where('rot.tipo', 'equipo');
-    }elseif ($tipo == 'mateial') {
-
     }elseif ($tipo == 'actividades') {
       $this->db->select("
         (
@@ -255,6 +254,10 @@ class Reporte_db extends CI_Model{
       ");
       $this->db->join('sector_item_tarea AS sec', 'sec.idsector_item_tarea = rrd.idsector_item_tarea', 'LEFT');
       $this->db->where('rrd.idrecurso_ot', NULL);
+    }elseif ($tipo=='material' || $tipo=='otros'){
+      $this->db->select('
+        rot.descripcion_temporal AS descripcion_recurso, rot.codigo_temporal AS referencia, rot.*, titc.BO, titc.CL, titc.grupo_mayor');
+      $this->db->where('rot.tipo', $tipo);
     }
     $this->db->where('rrd.idreporte_diario', $idrepo);
     $this->db->order_by('itf.codigo', 'asc');
