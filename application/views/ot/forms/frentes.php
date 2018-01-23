@@ -10,7 +10,7 @@
     <div class="">
       <label>
         Nombre del frente:
-        <input type="text" ng-model="frente.nombre" ng-init="frente.nombre = 'frente '+(ot.frentes.length+1)" ng-disabled="true">
+        <input type="text" ng-model="frente.nombre" ng-init="frente.nombre = 'frente '+ (ot.frentes.length+1 )" >
       </label>
 
       <label>
@@ -25,7 +25,7 @@
       </label>
 
       <button type="button" class="btn-floating btn" ng-disabled=" frente.nombre == undefined || frente.nombre == '' "
-        ng-click="addFrente( '<?= site_url("ot/add_frente/") ?>', ot.frentes, frente); frente = {nombre: 'frente '+(ot.frentes.length+1)}">
+        ng-click="addFrente( '<?= site_url("ot/add_frente/") ?>', ot.frentes, frente)">
         +
       </button>
 
@@ -47,9 +47,9 @@
         <tr ng-repeat="f in ot.frentes">
           <td>{{f.nombre}}</td>
           <td>{{f.ubicacion}}</td>
-          <td ng-init="f.usuario = parseJSON(f.usuario)">{{f.usuario.nombres}}</td>
+          <td ng-init="f.usuario = parseJSON(f.usuario)">{{f.usuario.nombres+' '+f.usuario.apellidos}}</td>
           <td>
-            <button type="button" name="button"></button>
+            <button type="button" class="btn mini-btn2 disabled"> load data </button>
           </td>
         </tr>
       </tbody>

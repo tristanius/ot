@@ -85,6 +85,10 @@ class Reporte extends CI_Controller{
         $this->insertarRecursoRep($post->recursos->actividades, $idrepo);
         $this->insertarRecursoRep($post->recursos->personal, $idrepo);
         $this->insertarRecursoRep($post->recursos->equipos, $idrepo);
+        if(isset($post->recursos->material))
+        $this->insertarRecursoRep($post->recursos->material, $idrepo);
+        if(isset($post->recursos->otros))
+          $this->insertarRecursoRep($post->recursos->otros, $idrepo);
         $validProcc = $this->repo->end_transact();
         if($validProcc != FALSE){
           $response = new stdClass();
@@ -96,6 +100,8 @@ class Reporte extends CI_Controller{
           $response->personal = $var->personal;
           $response->equipos = $var->equipos;
           $response->actividades = $var->actividades;
+          $response->material = $var->material;
+          $response->otros = $var->otros;
           echo json_encode($response);
         }else{
           show_404();
@@ -457,6 +463,21 @@ class Reporte extends CI_Controller{
     $return =  $this->tarea_db->getCantidadSum($fecha, $item, $sector, $idOT);
     echo isset($return->row()->cant)?$return->row()->cant:0;
   }
+
+  # ============================================================================================================
+  # Consolidado
+  public function get_consolidado($idr='')
+  {
+    $ret = new stdClass();
+    $this->load->model('condensado_db', 'cons');
+    $ret->items = $this->cons->generar($idr)->result();
+    $ret->actividades = $this->cons->generar($idr, 1)->result();
+    $ret->fecha = date("Y-m-d");
+    echo json_encode($ret);
+  }
+
+  # ============================================================================================================
+  # Eliminaciones
 
   public function eliminarRecursosReporte($idrecurso_reporte_diario)
   {

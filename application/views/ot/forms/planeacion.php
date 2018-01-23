@@ -154,7 +154,7 @@
 					<td class="font9">{{ act.fecha_agregado }}</td>
 				</tr>
 				<tr>
-					<td colspan="11" class="" ng-bind="tr.actsubtotal | currency"></td>
+					<td colspan="11" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.actsubtotal | currency"></span> </td>
 				</tr>
 
 
@@ -186,7 +186,7 @@
 					<td class="font9">{{ per.fecha_agregado }}</td>
 				</tr>
 				<tr>
-					<td colspan="11" class="" ng-bind="tr.persubtotal | currency"></td>
+					<td colspan="11" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.persubtotal | currency"></span> </td>
 				</tr>
 
 
@@ -219,7 +219,7 @@
 				</tr>
 
 				<tr>
-					<td colspan="11" class="" ng-bind="tr.eqsubtotal | currency"></td>
+					<td colspan="11" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.eqsubtotal | currency"></span> </td>
 				</tr>
 
 				<!-- MATERIAL Y OTROS -->
@@ -253,7 +253,7 @@
 				</tr>
 
 				<tr>
-					<td colspan="11" class="" ng-bind="tr.msubtotal | currency"></td>
+					<td colspan="11" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.msubtotal | currency"></span> </td>
 				</tr>
 
 				<tr>
@@ -285,7 +285,7 @@
 				</tr>
 
 				<tr>
-					<td colspan="11" class="" ng-bind="tr.otrsubtotal | currency"></td>
+					<td colspan="11" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.otrsubtotal | currency"></span> </td>
 				</tr>
 
 				<tr>

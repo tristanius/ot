@@ -83,7 +83,7 @@
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
                 <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')">Validaciones</button>
-                <!--<button type="button"  class="btn mini-btn red" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="x"></button>-->
+                <button type="button"  class="btn mini-btn red" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="x"></button>
               </td>
             </tr>
             <tr class="noMaterialStyles">
@@ -118,7 +118,7 @@
         <div id="firmas" class="font11 nodisplay"> <?php $this->load->view('reportes/form/firmas'); ?> </div>
         <div id="observacion" class="font11 nodisplay"> <?php $this->load->view('reportes/form/observaciones'); ?> </div>
         <div id="validaciones" class="font11 nodisplay"> <?php $this->load->view('reportes/form/validaciones'); ?> </div>
-        <!--<div id="condensado" class="font11 nodisplay"> <?php $this->load->view('reportes/form/condensado'); ?> </div>-->
+        <div id="condensado" class="font11 nodisplay"> <?php $this->load->view('reportes/form/condensado'); ?> </div>
       </div>
       <br>
 

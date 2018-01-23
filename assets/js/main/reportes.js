@@ -1275,3 +1275,66 @@ var imprimirRD = function($scope, $http, $timeout){
     $("#formPrintSelected").submit();
   }
 }
+
+var condensado_rd = function($scope, $http, $timeout){
+  $scope.condensado=[];
+
+  $scope.get_condensado = function(lnk, myid){
+    $http.post(
+      lnk+"/"+myid,
+      {idreporte_diario: myid}
+    )
+    .then(
+      function(resp){
+        $timeout(function(){
+          $scope.condensado = resp.condensado;
+        });
+        console.log(resp.data);
+      },
+      function(resp){console.log(resp.data);}
+    );
+  }
+
+  $scope.get_condensado = function(lnk, myid){
+    $http.post(
+      lnk,
+      {idreporte_diario: myid}
+    )
+    .then(
+      function(resp){
+        $timeout(function(){
+          $scope.condensado = resp.condensado;
+        });
+        console.log(resp.data);
+      },
+      function(resp){console.log(resp.data);}
+    );
+  }
+
+  $scope.save_condensado = function(lnk, data){
+    $http.post(
+      lnk,
+      {condensado: data}
+    )
+    .then(
+      function(resp){
+        $timeout(function(){
+          $scope.condensado = resp.condensado;
+        });
+        console.log(resp.data);
+      },
+      function(resp){console.log(resp.data);}
+    );
+  }
+
+  $scope.getByCodigo = function(list, cod){
+    var ret = {};
+    angular.forEach(list, function(v,k){
+      if(v.codigo == cod){
+        ret = v;
+      }
+    });
+    return ret;
+  }
+
+}
