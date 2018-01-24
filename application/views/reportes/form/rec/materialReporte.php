@@ -8,6 +8,7 @@
         <th>Descripcion</th>
         <th>Unidad</th>
         <th>Cant. día</th>
+        <th>Frente</th>
         <th> <> </th>
       </tr>
       <tr style="background: #b9dae5">
@@ -36,7 +37,8 @@
         </td>
         <td ng-bind="m.descripcion"></td>
         <td ng-bind="m.unidad"></td>
-        <td> <input type="number" min=0 step=0.00001 ng-model="m.cantidad" ng-init="m.cantidad = parseNumb(m.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
+        <td> <input type="number" ng-model="m.cantidad" ng-init="m.cantidad = parseNumb(m.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
+        <td ng-bind="m.idfrente_ot"></td>
         <td  class="font9">
           <span ng-if="m.item_asociado"> (<span ng-bind="m.item_asociado" style="color: #934B10"></span>)</span>
           <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(m, '#asociarItem')"

@@ -5,7 +5,8 @@ class Ot extends CI_Controller {
 	private $clasificacion_ot = array(
 		"APIQUE",	"ATENTADO",	"ADMINISTRATIVA",	"CIVIL",	"CRATER",	"DEFORMIMETRO",	"DRENAJE",
 		"EGOS",	"ELE. VARIABLE",	"ILICITA",	"INSPECCION",	"INS. VARIABLE", "INTEGRIDAD",	"INYECCION", "VALVULAS",
-		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA", "MTTO. VIAS", "PRELIMINARES REP.", "URPC"
+		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA", "MTTO. VIAS",
+		"PRELIMINARES REP.", "URPC", "N/A"
 	);
 	private $nombre_departamento_ecp = array(
 		'PCL'=>'Oriente', 'PFL'=>'Fluvial', 'POR'=>'Magdalena', 'PNO'=>'Caribe', 'OBC'=>'Bicentenario'
@@ -752,7 +753,7 @@ class Ot extends CI_Controller {
 		foreach ($trs->result() as $key => $value) {
 			$this->delete_tarea($value->idtarea_ot);
 		}
-		$this->del_costo_mes($idOT);
+		$this->del_costos_mes($idOT);
 		$this->db->delete('OT', array('idOT'=>$idOT));
 		echo "success";
 	}
@@ -769,10 +770,15 @@ class Ot extends CI_Controller {
 		echo 'success';
 	}
 
-	public function del_costo_mes($id)
+	private function del_costos_mes($id)
 	{
 		$this->load->database('ot');
 		$this->db->delete('costo_mes_ot', array('OT_idOT'=>$id) );
+	}
+	private function del_frentes_ot($id)
+	{
+		$this->load->database('ot');
+		$this->db->delete('frente_ot', array('OT_idOT'=>$id) );
 	}
 }
 /* End of file Ot.php */

@@ -118,7 +118,7 @@ class Export extends CI_Controller{
         }
         break;
       default:
-        $this->rd_pma($idOT, $idrepo);
+        $this->reportePDF($idOT, $idrepo);
         break;
     }
   }

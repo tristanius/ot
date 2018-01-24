@@ -45,6 +45,8 @@ class Reporte extends CI_Controller{
     $this->load->model('miscelanio_db', 'misc');
     $estados = $this->misc->getDataEstados()->result();
 
+    $items_planeados = $this->otdb->getPlanByFrentes($idOT);
+
     //obtener unidades de negocio
     $this->load->model('equipo_db', 'equ');
     $un_equipos = $this->equ->getResumenUN();
@@ -61,7 +63,8 @@ class Reporte extends CI_Controller{
 				'un_equipos'=>$un_equipos,
 				'estados'=>$estados,
         'diasemana'=>$diasemana,
-        'estados_labor'=>$this->misc->getEstadosLabor()->result()
+        'estados_labor'=>$this->misc->getEstadosLabor()->result(),
+        'items_planeados'=>$items_planeados
 			)
 		);
   }
@@ -471,6 +474,7 @@ class Reporte extends CI_Controller{
     $ret = new stdClass();
     $this->load->model('condensado_db', 'cons');
     $ret->items = $this->cons->generar($idr)->result();
+    $this->db->last_query();
     $ret->actividades = $this->cons->generar($idr, 1)->result();
     $ret->fecha = date("Y-m-d");
     echo json_encode($ret);

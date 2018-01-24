@@ -37,6 +37,8 @@
 							<option value="OCCIDENTE">OCCIDENTE</option>
 							<option value="SUR">SUR</option>
 							<option value="LLANOS_ANDINA">LLANOS_ANDINA</option>
+							<option value="N/A">N/A</option>
+							<option value="General">General</option>
 						</select>
 					</td>
 					<td>
@@ -102,6 +104,7 @@
 							<option value="GOT">GOT: OLEDUCTOS</option>
 							<option value="GPO">GPO: POLIDUCTOS</option>
 							<option value="GPT">GPT: FLUVIAL</option>
+							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td>
@@ -111,6 +114,7 @@
 							<option value="PNO">PNO</option>
 							<option value="PFL">PFL</option>
 							<option value="POR">POR</option>
+							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td colspan="2">

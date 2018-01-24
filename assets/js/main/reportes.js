@@ -52,7 +52,33 @@ var reportes = function($scope, $http, $timeout) {
 			add = false;
 		}
 	}
+  //-----------------------------------------------------------------------------
+  // Procesos generales del reporte
 
+  $scope.existeRegistro = function(list, prop, valor) {
+    var bandera = false;
+    angular.forEach(list, function(val, key){
+      if(val[prop] == valor){
+        bandera = true;
+      }
+    });
+    return bandera;
+  }
+  $scope.existeRegistroList = function(list, props, valor) {
+    var bandera = false;
+    angular.forEach(list, function(val, key){
+      var row = true;
+      angular.forEach(props, function(v, k){
+        if(val[v] != valor){
+          row = false;
+        }
+      });
+      if(row){ bandera = true; }
+    });
+    return bandera;
+  }
+  // --------------------------------------------------------------------------
+  // UTILIDADES
   $scope.getStyleByValidacion = function(cell){
     var stylo = '';
     if (cell == 'VALIDO' || cell == 'VALIDO (FACT)'){
@@ -132,16 +158,26 @@ var reportes = function($scope, $http, $timeout) {
     }
   }
 
+  //--------------------------------------------------------------------------
+  // Procesos de los frentes
   $scope.initRecursosFilters =function(){
     $scope.personalFilter={};
     $scope.equipoFilter={};
     $scope.actividadFilter={};
+    $scope.materialFilter={};
+    $scope.otrosFilter={};
+
   }
+
   $scope.changeFrente = function(val){
+    $scope.showRecursos=false;
     $timeout(function(){
       $scope.personalFilter.idfrente_ot = val;
       $scope.equipoFilter.idfrente_ot = val;
       $scope.actividadFilter.idfrente_ot = val;
+      $scope.materialFilter.idfrente_ot = val;
+      $scope.otrosFilter.idfrente_ot = val;
+      $scope.showRecursos=true;
     });
   }
   $scope.initFrentes = function(lista){
@@ -166,7 +202,7 @@ var reportes = function($scope, $http, $timeout) {
     $scope.asociableItem.item_asociado = it.itemc_item;
     $scope.closeRecursoReporte(tag);
   }
-
+  //--------------------------------------------------------------------------
   // mostrar una sección para agregar elementos al reporte
   $scope.showRecursosReporte = function(tag){
     $(tag).show();
@@ -467,7 +503,8 @@ var addReporte = function($scope, $http, $timeout) {
         val.facturable = true;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.personal.push(val);
       }
@@ -487,7 +524,8 @@ var addReporte = function($scope, $http, $timeout) {
         val.facturable = true;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.equipos.push(val);
       }
@@ -497,17 +535,13 @@ var addReporte = function($scope, $http, $timeout) {
   $scope.agregarActividades = function(){
     angular.forEach($scope.actividadesOT, function(val, key){
       console.log(val);
-      if(val.add
-        &&
-        (
-          !$scope.existeRegistro($scope.rd.recursos.actividades, 'itemc_iditemc', val.itemc_iditemc)
-          || !$scope.existeRegistro($scope.rd.recursos.actividades, 'idsector_item_tarea', val.idsector_item_tarea)
-        )
-      ){
+      if(val.add && !$scope.$parent.existeRegistroList($scope.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
         val.facturable = true;
+        val.cantidad = 0;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.actividades.push(val);
       }
@@ -519,9 +553,11 @@ var addReporte = function($scope, $http, $timeout) {
       if(val.add)
       {
         val.facturable = true;
+        val.cantidad = 1;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.material.push(val);
       }
@@ -533,9 +569,11 @@ var addReporte = function($scope, $http, $timeout) {
       if(val.add)
       {
         val.facturable = true;
+        val.cantidad = 1;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.otros.push(val);
       }
@@ -546,16 +584,6 @@ var addReporte = function($scope, $http, $timeout) {
   $scope.relacionarEquipoAOt = function(it, url){
     console.log($scope.rd.info)
     $scope.$parent.relacionarEquipoAOt(it, url, $scope);
-  }
-
-  $scope.existeRegistro = function(list, prop, valor) {
-    var bandera = false;
-    angular.forEach(list, function(val, key){
-      if(val[prop] == valor){
-        bandera = true;
-      }
-    });
-    return bandera;
   }
 
   $scope.quitarRegistroLista = function( lista, item, url, prop){
@@ -947,7 +975,8 @@ var editReporte = function($scope, $http, $timeout){
 		    val.racion = 0;
         val.facturable = true;
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.personal.push(val);
       }
@@ -965,7 +994,8 @@ var editReporte = function($scope, $http, $timeout){
         val.cantidad = 1;
         val.facturable = true;
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.equipos.push(val);
       }
@@ -974,16 +1004,11 @@ var editReporte = function($scope, $http, $timeout){
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(){
     angular.forEach($scope.actividadesOT, function(val, key){
-      if(val.add
-        &&
-        (
-          !$scope.existeRegistro($scope.rd.recursos.actividades, 'codigo', val.codigo) ||
-          !$scope.existeRegistro($scope.rd.recursos.actividades, 'idsector_item_tarea', val.idsector_item_tarea)
-        )
-      ){
+      if(val.add && !$scope.$parent.existeRegistroList($scope.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
         val.facturable = true;
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.actividades.push(val);
       }
@@ -997,7 +1022,8 @@ var editReporte = function($scope, $http, $timeout){
         val.facturable = true;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.material.push(val);
       }
@@ -1011,7 +1037,8 @@ var editReporte = function($scope, $http, $timeout){
         val.facturable = true;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if($scope.myfrente){
-          val.idfrente_ot = $scope.myfrente;
+          var f = $scope.myfrente;
+          val.idfrente_ot = f;
         }
         $scope.rd.recursos.otros.push(val);
       }
@@ -1022,16 +1049,6 @@ var editReporte = function($scope, $http, $timeout){
   $scope.relacionarEquipoAOt = function(it, url){
     console.log($scope.rd.info)
     $scope.$parent.relacionarEquipoAOt(it, url, $scope);
-  }
-
-  $scope.existeRegistro = function(list, prop, valor) {
-    var bandera = false;
-    angular.forEach(list, function(val, key){
-      if(val[prop] == valor){
-        bandera = true;
-      }
-    });
-    return bandera;
   }
 
   $scope.quitarRegistroLista = function( lista, item, url, prop){
@@ -1280,6 +1297,7 @@ var condensado_rd = function($scope, $http, $timeout){
   $scope.condensado=[];
 
   $scope.get_condensado = function(lnk, myid){
+    console.log(lnk+"/"+myid);
     $http.post(
       lnk+"/"+myid,
       {idreporte_diario: myid}
@@ -1287,25 +1305,9 @@ var condensado_rd = function($scope, $http, $timeout){
     .then(
       function(resp){
         $timeout(function(){
-          $scope.condensado = resp.condensado;
+          $scope.condensado = resp.data;
         });
-        console.log(resp.data);
-      },
-      function(resp){console.log(resp.data);}
-    );
-  }
-
-  $scope.get_condensado = function(lnk, myid){
-    $http.post(
-      lnk,
-      {idreporte_diario: myid}
-    )
-    .then(
-      function(resp){
-        $timeout(function(){
-          $scope.condensado = resp.condensado;
-        });
-        console.log(resp.data);
+        console.log(  $scope.condensado );
       },
       function(resp){console.log(resp.data);}
     );

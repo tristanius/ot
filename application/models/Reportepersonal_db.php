@@ -146,7 +146,6 @@ class Reportepersonal_db extends CI_Model{
       rot.propietario_observacion AS asignado_como,
       IF(rot.propietario_recurso,"SI","NO") AS propio,
       rd.validado_pyco AS estado_reporte,
-      if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
       if(rrd.nomina=1, "SI","NO") AS en_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
@@ -195,8 +194,6 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco As estado_reporte,
-      if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
-      rrd.usuario_validacion_he,
       if(rrd.nomina=1, "SI","NO") AS en_nomina,
       rrd.usuario_nomina
       '

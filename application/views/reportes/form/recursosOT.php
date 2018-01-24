@@ -46,7 +46,8 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#materialOT')" data-icon="5"> Material</button>
     <button type="button" class="btn indigo lighten-1 mini-btn" ng-click="showRecursosReporte('.ventanasAdd > div', '#otrosOT')" data-icon="&"> Otros</button>
   </div>
-  <div <?= (isset($frentes) && sizeof($frentes) > 0 )?'ng-if="myfrente"':''; ?>>
+
+  <div id="showRecursos" <?= (isset($frentes) && sizeof($frentes) > 0 )?'ng-if="myfrente"':''; ?>>
     <h5 class="center-align">Listados de recursos, cantidades y tiempos: </h5>
 
     <h5>Personal:</h5>
@@ -67,4 +68,5 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 
     <?php $this->load->view('reportes/form/asociar_item'); ?>
   </div>
+
 </section>

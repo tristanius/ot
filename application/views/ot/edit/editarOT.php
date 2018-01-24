@@ -99,6 +99,7 @@
 							<option value="GOT">GOT: OLEDUCTOS</option>
 							<option value="GPO">GPO: POLIDUCTOS</option>
 							<option value="GPT">GPT: FLUVIAL</option>
+							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td>
@@ -108,6 +109,7 @@
 							<option value="PNO">PNO</option>
 							<option value="PFL">PFL</option>
 							<option value="POR">POR</option>
+							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td colspan="2"> <span ng-bind="ot.no_contrato"></span> <span ng-bind="ot.contratista"></span> </td>
