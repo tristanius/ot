@@ -1239,7 +1239,9 @@ var editReporte = function($scope, $http, $timeout){
     })
   }
 }
-/* -----------------------------------*/
+
+// =============================================================================
+// Controlador para imprimir por seleccion
 var imprimirRD = function($scope, $http, $timeout){
   $scope.recursos = {};
   $scope.retorno = { personal:[], equipos:[], actividades:[], observaciones:[] };
@@ -1296,50 +1298,41 @@ var imprimirRD = function($scope, $http, $timeout){
   }
 }
 
+// =============================================================================
+// Informe del reporte diario para cuantificar cuantos recursos incidieron en cada frente y actividad de frentes.
 var condensado_rd = function($scope, $http, $timeout){
   $scope.condensado=[];
 
   $scope.get_condensado = function(lnk, myid){
-    console.log(lnk+"/"+myid);
+    console.log(lnk+"/"+myid)
     $http.post(
       lnk+"/"+myid,
       {idreporte_diario: myid}
-    )
-    .then(
+    ).then(
       function(resp){
-        $timeout(function(){
-          $scope.condensado = resp.data;
-        });
-        console.log(  $scope.condensado );
+        console.log(resp.data);
+        $timeout(function(){ $scope.condensado = resp.data; });
       },
-      function(resp){console.log(resp.data);}
+      function(resp){ console.log(resp.data); }
     );
   }
 
-  $scope.save_condensado = function(lnk, data){
+  $scope.save_condensado = function(lnk, data, idreporte){
+    console.log(lnk)
     $http.post(
       lnk,
-      {condensado: data}
-    )
-    .then(
+      {condensado: data, idreporte_diario: idreporte}
+    ).then(
       function(resp){
-        $timeout(function(){
-          $scope.condensado = resp.condensado;
-        });
-        console.log(resp.data);
+        if(resp.data.success)
+          $timeout(function(){ $scope.condensado = resp.data.condensado; });
+        console.log(resp.data)
       },
-      function(resp){console.log(resp.data);}
+      function(resp){ console.log(resp.data); }
     );
   }
 
-  $scope.getByCodigo = function(list, cod){
-    var ret = {};
-    angular.forEach(list, function(v,k){
-      if(v.codigo == cod){
-        ret = v;
-      }
-    });
-    return ret;
+  $scope.exportar_tabla = function(tag){
+    $(tag).tableExport();
   }
-
 }

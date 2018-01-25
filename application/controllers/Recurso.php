@@ -197,7 +197,7 @@ class Recurso extends CI_Controller{
     $row['A'] = '';
     if($personas->num_rows() < 1){
       $obj = new stdClass();
-      $obj->identificacion = $row['C'];
+      $obj->identificacion = str_replace( array(',','.') , array('',''), $row['C']);
       $obj->nombre_completo = $row['D'];
       $obj->fecha_registro = date('Y-m-d');
       $this->per->addObj($obj);

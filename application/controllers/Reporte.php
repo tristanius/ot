@@ -468,8 +468,8 @@ class Reporte extends CI_Controller{
   }
 
   # ============================================================================================================
-  # Consolidado
-  public function gen_condensadoo($idr)
+  # Condensado de items por frente y actividad
+  public function gen_condensado($idr)
   {
     $ret = new stdClass();
     $this->load->model('condensado_db', 'cond');
@@ -487,6 +487,7 @@ class Reporte extends CI_Controller{
         }
       }
     }
+    $ret->guardado = FALSE;
     $ret->fecha = date("Y-m-d");
     echo json_encode($ret);
   }
@@ -496,8 +497,19 @@ class Reporte extends CI_Controller{
     $this->load->model('condensado_db', 'cond');
     $rows = $this->cond->get($idr);
     if($rows->num_rows() > 0)
-      echo json_encode($rows->row());
-    echo "{'frentes':[]}";
+      echo $rows->row()->condensado;
+    else
+      echo "{'frentes':[]}";
+  }
+
+  public function save_condensado()
+  {
+    $post = json_decode(file_get_contents('php://input'));
+    $this->load->model('condensado_db', 'cond');
+    $post->condensado->guardado = TRUE;
+    $ret = $this->cond->save(json_encode($post->condensado), $post->idreporte_diario);
+    $post->success = TRUE;
+    echo json_encode($post);
   }
 
   # ============================================================================================================

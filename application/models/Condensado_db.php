@@ -51,4 +51,9 @@ class Condensado_db extends CI_Model{
     $this->db->where('rd.idreporte_diario', $idreporte);
     return $this->db->get();
   }
+
+  public function save($cond, $idreporte)
+  {
+    $this->db->update('reporte_diario', array('condensado'=>$cond), 'idreporte_diario = '.$idreporte);
+  }
 }
