@@ -469,15 +469,35 @@ class Reporte extends CI_Controller{
 
   # ============================================================================================================
   # Consolidado
-  public function get_consolidado($idr='')
+  public function gen_condensadoo($idr)
   {
     $ret = new stdClass();
-    $this->load->model('condensado_db', 'cons');
-    $ret->items = $this->cons->generar($idr)->result();
-    $this->db->last_query();
-    $ret->actividades = $this->cons->generar($idr, 1)->result();
+    $this->load->model('condensado_db', 'cond');
+    $ret->fecha = date("Y-m-d");
+    $ret->frentes = $this->cond->getFrentes($idr)->result();
+    foreach ($ret->frentes as $key => $frente) {
+      $items = $this->cond->generar($idr, NULL, $frente->idfrente_ot)->result();
+      $actividades = $this->cond->generar($idr, 1, $frente->idfrente_ot)->result();
+      $frente->items = array();
+      foreach ($items as $key => $it) {
+        foreach ($actividades as $key => $act) {
+          $it->item_asociado = $act->itemc_item;
+          $it->descripcion_asociada = $act->descripcion;
+          array_push($frente->items, $it);
+        }
+      }
+    }
     $ret->fecha = date("Y-m-d");
     echo json_encode($ret);
+  }
+
+  public function get_condensado($idr)
+  {
+    $this->load->model('condensado_db', 'cond');
+    $rows = $this->cond->get($idr);
+    if($rows->num_rows() > 0)
+      echo json_encode($rows->row());
+    echo "{'frentes':[]}";
   }
 
   # ============================================================================================================

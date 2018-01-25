@@ -166,20 +166,23 @@ var reportes = function($scope, $http, $timeout) {
     $scope.actividadFilter={};
     $scope.materialFilter={};
     $scope.otrosFilter={};
-
   }
 
-  $scope.changeFrente = function(val){
-    $scope.showRecursos=false;
+  $scope.changeFrente = function(val, rd, tag){
+    $(tag).hide(50);
+    var rec = angular.copy(rd.recursos);
+    rd.recursos = undefined;
     $timeout(function(){
       $scope.personalFilter.idfrente_ot = val;
       $scope.equipoFilter.idfrente_ot = val;
       $scope.actividadFilter.idfrente_ot = val;
       $scope.materialFilter.idfrente_ot = val;
       $scope.otrosFilter.idfrente_ot = val;
-      $scope.showRecursos=true;
-    });
+      rd.recursos = rec;
+      $(tag).show(100);
+    }, 100);
   }
+
   $scope.initFrentes = function(lista){
     $scope.frentes = lista;
   }

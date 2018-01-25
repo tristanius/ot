@@ -3,7 +3,7 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 ?>
 <div class="noMaterialStyles regularForm card-panel padding1ex" ng-init='initRecursosFilters(); initFrentes(<?= json_encode($frentes) ?>)'>
   <b>SELECCIONA TU FRENTE DE TRABAJO:</b>
-  <select style="border:1px solid red;" ng-model="myfrente" ng-change="changeFrente(myfrente)" style="font-weight: bold;">
+  <select style="border:1px solid red;" ng-model="myfrente" ng-change="changeFrente(myfrente, rd, '#showRecursos')" style="font-weight: bold;">
     <?php foreach ($frentes as $key => $f): ?>
       <?php $f->usuario = json_decode($f->usuario); ?>
       <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && !validPriv(45))">

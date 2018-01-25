@@ -10,6 +10,17 @@ class Condensado_db extends CI_Model{
     $this->load->database('ot');
   }
 
+  public function getFrentes($idReporte)
+  {
+    $this->db->select('ft.idfrente_ot, ft.nombre, ft.ubicacion');
+    $this->db->from('frente_ot AS ft');
+    $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idfrente_ot = ft.idfrente_ot');
+    $this->db->where('rrd.idreporte_diario', $idReporte);
+    $this->db->group_by('rrd.idfrente_ot');
+    $this->db->order_by('ft.idfrente_ot', 'asc');
+    return $this->db->get();
+  }
+
   public function generar($idreporte, $tipo=NULL, $frente=NULL)
   {
     $this->db->select('OT.nombre_ot, OT.idOT, rd.fecha_reporte, rd.idreporte_diario, rrd.cantidad, itf.codigo, itf.descripcion, itf.itemc_item, "" AS actividad_asociada, CONCAT(ft.nombre, " - ",ft.ubicacion) AS nombre_frente  ');
