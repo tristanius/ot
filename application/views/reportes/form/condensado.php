@@ -16,6 +16,9 @@
         </tr>
       </thead>
       <tbody ng-repeat="frente in condensado.frentes">
+        <tr>
+          <td colspan="5" ng-bind="frente.nombre+' '+frente.ubicacion"></td>
+        </tr>
         <tr ng-repeat="it in frente.items" >
           <td ng-bind="it.nombre_frente"></td>
           <td ng-bind="it.itemc_item"></td>
@@ -25,10 +28,6 @@
             <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada">
             <span ng-if="condensado.guardado" ng-bind="it.cantidad_asociada"></span>
           </td>
-
-        </tr>
-        <tr>
-          <td colspan="5"></td>
         </tr>
       </tbody>
   </table>

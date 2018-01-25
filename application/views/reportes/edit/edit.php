@@ -78,12 +78,12 @@
               </td>
               <td>
                 <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#info', 'nodisplay', '.mypanel > div')" data-icon="&#xe021;"> Detalles</button>
-                <button type="button" ng-if="!validPriv(38) || !validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#preview_reporte', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Recursos</button>
+                <button type="button" ng-if="!validPriv(38) && !validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#preview_reporte', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Recursos</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#recursosOT', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Tiempo/Recursos</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
-                <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')">Validaciones</button>
-                <button type="button"  class="btn mini-btn red" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="x"></button>
+                <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')" data-icon="&#xe02d;">Validación</button>
+                <button type="button" ng-show="(rd.info.estado == 'CERRADO') && ( validPriv(45) || validPriv(46) )" class="btn mini-btn brown" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="&#xe04f;"> Consolidar</button>
               </td>
             </tr>
             <tr class="noMaterialStyles">
