@@ -139,6 +139,9 @@ class Recurso extends CI_Controller{
       if ($process == 'personal') {
         if($cell['A']!= 'Comentario' && $cell['B'] != 'Id C.O.' && $cell['C'] != 'Empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
+          if( isset($cell['L']) && $ots->num_rows() < 1 ){
+              $ots = $this->ot->getOtBy( 'nombre_ot', $cell['L'] );
+          }
           $items = $this->item->getItemByOT( $cell['F'] , $cell['G'], NULL );
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
           if ($ots->num_rows() > 0 && $items->num_rows() > 0) {
