@@ -35,7 +35,7 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
-        <th><></th>
+        <th data-icon="*"></th>
       </tr>
     </thead>
     <tbody>
@@ -61,7 +61,7 @@
             <input type="hidden" ng-init="equipoFilter.idfrente_ot = myfrente" disabled="disabled">
           <?php endif; ?>
         </td>
-        <td></td>
+        <td data-icon="*"></td>
       </tr>
 
       <tr ng-repeat="eq in rd.recursos.equipos | orderBy: 'itemc_item' | filter: equipoFilter track by $index"  class="{{ (eq.idrecurso_reporte_diario == undefined || eq.idrecurso_reporte_diario == '')?'newrow':''; }}">
@@ -106,7 +106,7 @@
         <td class="font9">
           <span ng-if="eq.item_asociado">  (<span ng-bind="eq.item_asociado" style="color: #934B10"></span>)</span>
           <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(eq, '#asociarItem')"
-            ng-show="rd.info.estado != 'CERRADO' "> <>
+            ng-show="rd.info.estado != 'CERRADO' " data-icon="*">
           </button>
         </td>
       </tr>
@@ -128,7 +128,7 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
-        <th><></th>
+        <th data-icon="*"></th>
       </tr>
     </tbody>
   </table>

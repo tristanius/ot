@@ -1302,7 +1302,7 @@ var imprimirRD = function($scope, $http, $timeout){
 // Informe del reporte diario para cuantificar cuantos recursos incidieron en cada frente y actividad de frentes.
 var condensado_rd = function($scope, $http, $timeout){
   $scope.condensado=[];
-  $scope.tabla = = undefined;
+  $scope.tabla = undefined;
 
   $scope.get_condensado = function(lnk, myid){
     console.log(lnk+"/"+myid)
@@ -1338,6 +1338,7 @@ var condensado_rd = function($scope, $http, $timeout){
       $scope.tabla.reset();
     }
     $scope.tabla = $(tag).tableExport();
+    $scope.tabla.prototype.charset = "charset=utf-8";
   }
 
   $scope.validar_cantidad_frente = function(prop, search, lista, item){
@@ -1349,8 +1350,8 @@ var condensado_rd = function($scope, $http, $timeout){
         acum += v.cantidad_asociada;
       }
     });
-    if(sum < acum){
-      $timeout( function(){ item.alerta = true; } );
-    }
+    $timeout(function(){
+      if(sum < acum){ item.alerta = true; }else{ item.alerta = false; }
+    });
   }
 }

@@ -49,7 +49,7 @@
           <th>Hr. <br> Almuer.</th>
           <th>R/P</th>
           <th>Lugar</th>
-          <th><></th>
+          <th data-icon="*"></th>
       </tr>
     </thead>
     <tbody class="regularForm">
@@ -173,7 +173,7 @@
         <td class="font9">
           <span ng-if="pr.item_asociado"> (<span ng-bind="pr.item_asociado" style="color: #934B10"></span>)</span>
           <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(pr, '#asociarItem')"
-            ng-show="rd.info.estado != 'CERRADO'"> <>
+            ng-show="rd.info.estado != 'CERRADO'" data-icon="*">
           </button>
         </td>
       </tr>
@@ -200,7 +200,7 @@
           <th>Hr. <br> Almuer.</th>
           <th>R/P</th>
           <th>Lugar</th>
-          <th><></th>
+          <th data-icon="*"></th>
       </tr>
     </tbody>
   </table>
