@@ -24,6 +24,10 @@
         </select>
       </label>
 
+      <label for="">C.C.
+        <input type="checkbox" ng-model="frente.cc" ng-init="toboolean(frente.cc)">
+      </label>
+
       <button type="button" class="btn-floating btn" ng-disabled=" frente.nombre == undefined || frente.nombre == '' "
         ng-click="addFrente( '<?= site_url("ot/add_frente/") ?>', ot.frentes, frente)">
         +
@@ -38,6 +42,7 @@
       <thead>
         <tr>
           <th>Nombre</th>
+          <th>C.C.</th>
           <th>Ubicación</th>
           <th>Usuario</th>
           <th></th>
@@ -46,10 +51,11 @@
       <tbody>
         <tr ng-repeat="f in ot.frentes">
           <td>{{f.nombre}}</td>
+          <td class="noMaterialStyles regularForm"> <input type="checkbox" ng-model="f.cc" ng-init="f.cc = toboolean(f.cc)"> </td>
           <td>{{f.ubicacion}}</td>
           <td ng-init="f.usuario = parseJSON(f.usuario)">{{f.usuario.nombres+' '+f.usuario.apellidos}}</td>
           <td>
-            <button type="button" class="btn mini-btn2 disabled"> load data </button>
+            <button type="button" class="btn mini-btn2 disabled orange"> Mod. </button>
           </td>
         </tr>
       </tbody>
