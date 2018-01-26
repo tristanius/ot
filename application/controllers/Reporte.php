@@ -475,15 +475,15 @@ class Reporte extends CI_Controller{
     $this->load->model('condensado_db', 'cond');
     $ret->fecha = date("Y-m-d");
     $ret->frentes = $this->cond->getFrentes($idr)->result();
-    foreach ($ret->frentes as $key => $frente) {
-      $items = $this->cond->generar($idr, NULL, $frente->idfrente_ot)->result();
-      $actividades = $this->cond->generar($idr, 1, $frente->idfrente_ot)->result();
-      $frente->items = array();
-      foreach ($items as $key => $it) {
-        foreach ($actividades as $key => $act) {
+    foreach ($ret->frentes as $key => $f) {
+      $actividades = $this->cond->generar($idr, 1, $f->idfrente_ot)->result();
+      $f->items = array();
+      foreach ($actividades as $key => $act) {
+        $items = $this->cond->generar($idr, NULL, $f->idfrente_ot)->result();
+        foreach ($items as $key => $it) {
           $it->item_asociado = $act->itemc_item;
           $it->descripcion_asociada = $act->descripcion;
-          array_push($frente->items, $it);
+          array_push($f->items, $it);
         }
       }
     }

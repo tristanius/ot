@@ -11,6 +11,8 @@
           <th>Frente</th>
           <th>Item</th>
           <th>Descripción</th>
+          <th>UND</th>
+          <th>Total frente</th>
           <th>Asociado</th>
           <th>Cantidad asociada</th>
         </tr>
@@ -23,10 +25,13 @@
           <td ng-bind="it.nombre_frente"></td>
           <td ng-bind="it.itemc_item"></td>
           <td ng-bind="it.descripcion"></td>
+          <td ng-bind="it.unidad"></td>
           <td ng-bind="it.item_asociado + ' ('+ it.descripcion_asociada +') '"></td>
+          <td ng-bind="it.total"></td>
           <td>
-            <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada">
+            <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada" ng-init="it.cantidad_asociada = 0" ng-change="validar_cantidad_frente('codigo', it.codigo, frente, it)">
             <span ng-if="condensado.guardado" ng-bind="it.cantidad_asociada"></span>
+            <span ng-if="it.alerta" style="color:red">La cantidad ingresada supera los valores maximos del item.</span>
           </td>
         </tr>
       </tbody>
