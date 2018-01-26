@@ -17,7 +17,7 @@ var recursosOT = function($scope, $http, $timeout){
   $scope.itemsOT = [];
 
   $scope.getOTs= function(url, link){
-    $http.post(url+"/", {indicio_nombre_ot: $scope.consulta.indicio_nombre_ot})
+    $http.post(url+"/", $scope.consulta)
     .then(
       function(response){
         $scope.myOts = response.data;
