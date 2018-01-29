@@ -23,10 +23,10 @@ class Reporteequipomes_db extends CI_Model{
   # consulta horas operativas
   public function getHorasOper($fechai=NULL, $fechaf=NULL,$laBase=NULL)
   {
-    $tmp_base=!empty($laBase)?" and OT.base_idbase=".$laBase:"";
+    $tmp_base = !empty($laBase)?" and OT.base_idbase=".$laBase:"";
     $this->load->database('ot');
     $this->db->select(
-      'select OT.base_idbase as base,rrd.itemf_codigo as codigo,e.codigo_siesa,descripcion,
+      'OT.base_idbase as base,rrd.itemf_codigo as codigo,e.codigo_siesa,descripcion,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-1))))  as d01,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-2))))  as d02,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-3))))  as d03,
@@ -123,18 +123,20 @@ class Reporteequipomes_db extends CI_Model{
       sum(varado*(1-abs(sign(day(fecha_reporte)-30)))) as v30,
       sum(varado*(1-abs(sign(day(fecha_reporte)-31)))) as v31,
       rot.propietario_observacion AS asignacion,
-      if(rot.propio, "SI", "NO") AS propio,
+      if(rot.propietario_recurso, "SI", "NO") AS propio,
       ft.nombre AS nombre_frente'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd ', 'rd.idreporte_diario = rrd.idreporte_diario');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('recurso_ot AS rot ', 'rot.idrecurso_ot = rrd.idrecurso_ot');
-    $this->db->join('recurso AS r', 'r.recurso_idrecurso = rot.idrecurso_ot');
-    $this->db->join('equipo AS e ', 'r.idrecurso_ot = r.equipo_idequipo');
+    $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso');
+    $this->db->join('equipo AS e ', 'e.idequipo = r.equipo_idequipo');
     $this->db->join('frente_ot AS ft', 'ft.idfrente_ot = rrd.idfrente_ot', 'left');
     $this->db->where('fecha_reporte between "'.$fechai.'" and "'.$fechaf.'" ');
-    $this->db->where($tmp_base);
+    if($tmp_base!=''){
+      $this->db->where($tmp_base);
+    }
     $this->db->group_by('e.codigo_siesa, OT.nombre_ot, ft.idfrente_ot');
     $this->db->order_by('e.codigo_siesa, OT.nombre_ot, base', 'asc');
     return $this->db->get();
@@ -145,19 +147,18 @@ class Reporteequipomes_db extends CI_Model{
     $tmp_base=!empty($laBase)?" AND OT.base_idbase=".$laBase:"";
     $this->load->database('ot');
     $this->db->select(
-      'select
-      "" as no,
+      '"" as no,
       IF(locate("ALQ",e.referencia)=0,"TERMOTECNICA","ALQUILADO") as un,
       if(rrd.facturable,"TARIFA","A.P.U") as eltipo,
       fecha_reporte,
       OT.nombre_ot,
       ft.nombre AS nombre_frente,
-      c.item,
+      itc.item,
       e.codigo_siesa,
       e.descripcion,
       e.referencia,
       OT.base_idbase as co,
-      upper(i.unidad) as unidad,
+      upper(itf.unidad) as unidad,
       if(horas_operacion>0,1,"") as horas,
       "" as valor_horas,
       if(horas_disponible>0 and horas_operacion=0,1,"") as disponible,
@@ -165,17 +166,19 @@ class Reporteequipomes_db extends CI_Model{
       CONCAT(rrd.horometro_ini, "-", rrd.horometro_fin),
       ft.nombre AS frente,
       rot.propietario_observacion AS asignacion,
-      rot.propietario_recurso AS propio'
+      if(rot.propietario_recurso, "SI", "NO") AS propio,'
     );
     $this->db->from('reporte_diario AS rd');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
+    $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+    $this->db->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot');
-    $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'left');
-    $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo', 'left');
+    $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso');
+    $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo');
     $this->db->join('frente_ot AS ft', 'ft.idfrente_ot = rrd.idfrente_ot', 'left');
     $this->db->where('fecha_reporte between "'.$fechai.'" and "'.$fechaf.'" ');
-    $this->db->where($tmp_base);
+    if($tmp_base!=''){$this->db->where($tmp_base);}
     $this->db->where('(rrd.horas_disponible + rrd.horas_operacion + rrd.cantidad) >0');
     $this->db->order_by('e.codigo_siesa,fecha_reporte', 'asc');
     return $this->db->get();

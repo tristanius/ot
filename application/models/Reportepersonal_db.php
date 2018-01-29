@@ -121,7 +121,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
-      ft.nombre AS nombre_frente,
+      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
@@ -176,7 +176,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
-      ft.nombre AS nombre_frente,
+      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
