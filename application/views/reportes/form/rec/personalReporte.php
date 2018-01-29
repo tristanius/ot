@@ -1,5 +1,5 @@
 <div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>' style="overflow:auto"> <!-- max-height:400px;  -->
-  <table id="personalReporte" class="mytabla" ng-hide="isOnPeticion"> <!-- class: sticked -->
+  <table id="personalReporte" class="mytabla font10" ng-hide="isOnPeticion"> <!-- class: sticked -->
     <thead id="thead2" style="box-shadow:0px 0px 4px #333;">
       <tr style="background: #EEE">
         <th></th>
@@ -9,6 +9,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th>Base</th>
 
         <th style="background: #F4F9FD "></th>
         <th></th>
@@ -21,19 +22,22 @@
         <th></th>
         <th></th>
         <th colspan="2">G. Viaje</th>
+        <td></td>
       </tr>
 
 
       <tr style="background: #EEE">
           <th></th>
-          <th>No.</th>
+          <th>#</th>
           <th>Item</th>
           <th>Cédula</th>
           <th>Nombre Completo</th>
           <th>Cargo</th>
-          <th>Estado <br> Trabajador</th>
+          <th>Est.</th>
+          <th>Base</th>
+
           <th style="background: #F4F9FD ">Fact.</th>
-          <th><small>Impr.</small></th>
+          <th><small data-icon="x"></small></th>
           <th class="red lighten-5 inputsSmall">Turno 1</th>
           <th class="red lighten-5 inputsSmall">Turno 2</th>
           <th>Día</th>
@@ -45,6 +49,7 @@
           <th>Hr. <br> Almuer.</th>
           <th>R/P</th>
           <th>Lugar</th>
+          <th data-icon="*"></th>
       </tr>
     </thead>
     <tbody class="regularForm">
@@ -56,6 +61,8 @@
           <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.nombre_completo"></td>
           <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.descripcion"></td>
           <td style="max-width: 7ex"></td>
+          <td></td>
+
           <td class="noMaterialStyles" style="background: #F4F9FD "></td>
           <td></td>
           <td style="background: #FCE8E9; text-align:center"></td>
@@ -68,6 +75,11 @@
           <td></td>
           <td></td>
           <td></td>
+          <td>
+            <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
+              <input type="hidden" ng-init="personalFilter.idfrente_ot = myfrente" disabled="disabled">
+            <?php endif; ?>
+          </td>
           <td></td>
       </tr>
 
@@ -95,6 +107,9 @@
           <select style="max-width: 10ex" ng-model="pr.idestado_labor" ng-change="getStatusLaboral(pr.idestado_labor, pr)" ng-disabled="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true">
             <option ng-repeat="st in listStatus" value="{{st.idestado_labor}}">{{st.descripcion_estado_labor}}</option>
           </select>
+        </td>
+        <td class="noMaterialStyles">
+          <input type="text" ng-model="pr.procedencia" style="border: green 1px solid; width:9ex;">
         </td>
 
         <td class="noMaterialStyles" style="background: #F4F9FD ">
@@ -155,6 +170,12 @@
         <td> <input type="checkbox" ng-model="pr.hr_almuerzo" ng-init="pr.hr_almuerzo = parseBool(pr.hr_almuerzo)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
         <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
         <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
+        <td class="font9">
+          <span ng-if="pr.item_asociado"> (<span ng-bind="pr.item_asociado" style="color: #934B10"></span>)</span>
+          <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(pr, '#asociarItem')"
+            ng-show="rd.info.estado != 'CERRADO'" data-icon="*">
+          </button>
+        </td>
       </tr>
 
       <tr id="thead1" style="background: #EEE; color: #EEE">
@@ -165,6 +186,7 @@
           <th>Nombre Completo</th>
           <th>Cargo</th>
           <th>Estado <br> Trabajador</th>
+          <th></th>
           <th>Fact.</th>
           <th><small>Impr.</small></th>
           <th>Turno 1</th>
@@ -178,6 +200,7 @@
           <th>Hr. <br> Almuer.</th>
           <th>R/P</th>
           <th>Lugar</th>
+          <th data-icon="*"></th>
       </tr>
     </tbody>
   </table>

@@ -55,7 +55,8 @@ class Reportepersonal_db extends CI_Model{
       "" as firma,
       itf.itemc_item,
       itf.codigo,
-      itf.iditemf'
+      itf.iditemf,
+      ft.nombre AS nombre_frente'
     );
     // if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
     $this->db->from('reporte_diario AS rd');
@@ -65,6 +66,7 @@ class Reportepersonal_db extends CI_Model{
     $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+    $this->db->join('frente_ot AS ft', 'ft.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if (isset($idOT)) {
       //$this->db->where('rd.OT_idOT', $idOT);
       $this->db->where('rd.idReporte_diario', $idReporte);
@@ -119,6 +121,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
+      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
@@ -146,7 +149,6 @@ class Reportepersonal_db extends CI_Model{
       rot.propietario_observacion AS asignado_como,
       IF(rot.propietario_recurso,"SI","NO") AS propio,
       rd.validado_pyco AS estado_reporte,
-      if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
       if(rrd.nomina=1, "SI","NO") AS en_nomina
       '
     )->from("recurso_reporte_diario AS rrd")
@@ -158,6 +160,7 @@ class Reportepersonal_db extends CI_Model{
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
     ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
+    ->join("frente_ot AS ft", "ft.idfrente_ot = rrd.idfrente_ot","LEFT")
     ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
     ->get();
   }
@@ -173,6 +176,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
+      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
@@ -195,8 +199,6 @@ class Reportepersonal_db extends CI_Model{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco As estado_reporte,
-      if(rrd.validacion_he=1, "VALIDO_HE", "NO") AS valido_HE,
-      rrd.usuario_validacion_he,
       if(rrd.nomina=1, "SI","NO") AS en_nomina,
       rrd.usuario_nomina
       '
@@ -209,6 +211,7 @@ class Reportepersonal_db extends CI_Model{
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
     ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
+    ->join("frente_ot AS ft", "ft.idfrente_ot = rrd.idfrente_ot","LEFT")
     ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
     ->get();
   }

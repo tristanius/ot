@@ -27,12 +27,16 @@ class Recurso extends CI_Controller{
     $this->load->model('ot_db', 'ot');
     $pers = $this->recdb->getPersonalOtBy($post->idOT, 'persona');
     $equs = $this->recdb->getEquiposOtBy($post->idOT, 'equipo');
+    $material = $this->recdb->getRecursoByOT($post->idOT, 'material');
+    $otros = $this->recdb->getRecursoByOT($post->idOT, 'otros');
 
     $items = $this->ot->getItemByTipeOT($post->idOT);
 
     $recursos = new stdClass();
     $recursos->personal = $pers->result();
     $recursos->equipo = $equs->result();
+    $recursos->material = $material->result();
+    $recursos->otros = $otros->result();
     $recursos->itemsOT = $items->result();
     $recursos->succ = 'success';
     echo json_encode($recursos);
@@ -133,9 +137,14 @@ class Recurso extends CI_Controller{
     $noValid = array();
     foreach ($rows as $key => $cell) {
       if ($process == 'personal') {
-        if($cell['A']!= 'Comentario' && $cell['B'] != 'Id C.O.' && $cell['C'] != 'Empleado'){
+        if( strtolower($cell['A']) != 'comentario' && $cell['B'] != 'Id C.O.' && strtolower($cell['C']) != 'empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
           $items = $this->item->getItemByOT( $cell['F'] , $cell['G'], NULL );
+          if( isset($cell['L']) && $ots->num_rows() < 1 ){
+            // Se hace una verificacion si no se encuentra la OT se busca si tiene una OT Mayor o contenedora
+            $ots = $this->ot->getOtBy( 'nombre_ot', $cell['L'] );
+            $items = $this->item->getItemByOT( $cell['L'] , $cell['G'], NULL );
+          }
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
           if ($ots->num_rows() > 0 && $items->num_rows() > 0) {
             $orden = $ots->row();
@@ -193,7 +202,7 @@ class Recurso extends CI_Controller{
     $row['A'] = '';
     if($personas->num_rows() < 1){
       $obj = new stdClass();
-      $obj->identificacion = $row['C'];
+      $obj->identificacion = str_replace( array(',','.') , array('',''), $row['C']);
       $obj->nombre_completo = $row['D'];
       $obj->fecha_registro = date('Y-m-d');
       $this->per->addObj($obj);
@@ -251,9 +260,11 @@ class Recurso extends CI_Controller{
     $post = json_decode( file_get_contents('php://input') );
     $this->load->database('ot');
     $this->db->delete('recurso_ot', array('idrecurso_ot'=>$post->idrecurso_ot) );
-    $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
-    if($rows->num_rows() == 0){
-      $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+    if(isset($post->idrecurso)){
+      $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
+      if($rows->num_rows() == 0){
+        $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+      }
     }
     echo "success";
   }

@@ -37,7 +37,14 @@
     <link rel="stylesheet" href="<?= base_url('assets/js/datatables/datatables.min.css') ?>" media="screen" charset="utf-8">
 
     <!-- tinyMCE -->
-    <script src="<?= base_url('assets/js/vendor/tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tableExport/js/xlsx.core.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tableExport/js/FileSaver.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tableExport/js/tableexport.min.js') ?>" type="text/javascript"></script>
+
+    <!-- TableExport -->
+    <link rel="stylesheet" href="<?= base_url('assets/js/vendor/tableExport/css/tableexport.min.css') ?>" />
+    <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
 
     <!-- Charts JS -->

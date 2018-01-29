@@ -33,7 +33,7 @@
   </p>
 
   <div>
-      <button type="button" name="btn mini-btn" ng-click="addEquipoTempOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>')">Crear</button>
+      <button type="button" name="btn mini-btn" ng-click="addRecursoOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>', 'equipo', myitemf_eq)">Crear</button>
       <button type="button" name="btn mini-btn" ng-click="showSection('#AddEquipoTemp')">Ocultar</button>
   </div>
 </fieldset>

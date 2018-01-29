@@ -6,12 +6,12 @@ if($download){
 }
 ?>
 <html>
-  <?php $this->load->view('reportes/imprimir_pma/tl/head'); ?>
+  <?php $this->load->view('reportes/imprimir_pma/v2017/tl/head'); ?>
   <body>
     <?php
-    $this->load->view('reportes/imprimir_pma/tl/header');
-    $this->load->view('reportes/imprimir_pma/tl/personal', array('personal'=>$personal));
-    $this->load->view('reportes/imprimir_pma/tl/footer');
+    $this->load->view('reportes/imprimir_pma/v2017/tl/header');
+    $this->load->view('reportes/imprimir_pma/v2017/tl/personal', array('personal'=>$personal));
+    $this->load->view('reportes/imprimir_pma/v2017/tl/footer');
     ?>
   </body>
 </html>

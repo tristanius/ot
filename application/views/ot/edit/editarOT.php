@@ -99,6 +99,7 @@
 							<option value="GOT">GOT: OLEDUCTOS</option>
 							<option value="GPO">GPO: POLIDUCTOS</option>
 							<option value="GPT">GPT: FLUVIAL</option>
+							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td>
@@ -108,6 +109,7 @@
 							<option value="PNO">PNO</option>
 							<option value="PFL">PFL</option>
 							<option value="POR">POR</option>
+							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td colspan="2"> <span ng-bind="ot.no_contrato"></span> <span ng-bind="ot.contratista"></span> </td>
@@ -152,8 +154,9 @@
 
 			<section class="row"  ng-show="!showCopiar">
 				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
-					<h6>Descripcion de la O.T.:</h6>
+					<h6>Información de O.T.:</h6>
 					<button class="btn blue mini-btn2" ng-click="toggleContent('#descripcion', 'nodisplay', '.mypanel > div')">Descripción</button>
+					<button class="btn teal accent-4 mini-btn2" ng-click="toggleContent('#frentes', 'nodisplay', '.mypanel > div')">Frentes</button>
 				</div>
 
 				<div class="col s6 m6 l6" style="border:1px solid #CCC; padding:3px;">
@@ -181,6 +184,10 @@
 
 			<div id="descripcion" class="font12 nodisplay">
 				<?php $this->load->view('ot/forms/info'); ?>
+			</div>
+
+			<div id="frentes" class="font12 nodisplay">
+				<?php $this->load->view('ot/forms/frentes'); ?>
 			</div>
 
 			<div id="planeacion" class="font12 nodisplay">

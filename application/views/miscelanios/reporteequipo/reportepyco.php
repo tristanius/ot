@@ -40,6 +40,7 @@ if(!$nodownload){
       <th>TIPO</th>
       <th>FECHA</th>
       <th>OT</th>
+      <th>Frente</th>
       <th>ITEM</th>
       <th>COD. SIESA</th>
       <th>DESCRIPCION EQUIPO</th>
@@ -51,6 +52,7 @@ if(!$nodownload){
       <th>STAND BY</th>
       <th>VALOR STAND</th>
       <th>HR/KM</th>
+      <th>FRENTE</th>
       <th>ASINADO COMO</th>
       <th>PROPIO</th>
     </tr>

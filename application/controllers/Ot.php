@@ -5,7 +5,8 @@ class Ot extends CI_Controller {
 	private $clasificacion_ot = array(
 		"APIQUE",	"ATENTADO",	"ADMINISTRATIVA",	"CIVIL",	"CRATER",	"DEFORMIMETRO",	"DRENAJE",
 		"EGOS",	"ELE. VARIABLE",	"ILICITA",	"INSPECCION",	"INS. VARIABLE", "INTEGRIDAD",	"INYECCION", "VALVULAS",
-		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA", "MTTO. VIAS", "PRELIMINARES REP.", "URPC"
+		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA", "MTTO. VIAS",
+		"PRELIMINARES REP.", "URPC", "N/A"
 	);
 	private $nombre_departamento_ecp = array(
 		'PCL'=>'Oriente', 'PFL'=>'Fluvial', 'POR'=>'Magdalena', 'PNO'=>'Caribe', 'OBC'=>'Bicentenario'
@@ -80,14 +81,19 @@ class Ot extends CI_Controller {
 		$items['actividad']  = $this->item_db->getBytipo(1)->result();
 		$items['personal']  = $this->item_db->getBytipo(2)->result();
 		$items['equipo']  = $this->item_db->getBytipo(3)->result();
+		$items['material']  = $this->item_db->getBytipo('material')->result();
+		$items['otros']  = $this->item_db->getBytipo('otros')->result();
 		$vigencias = $this->item_db->getVigenciasActivas()->result();
 		$contratos = $this->contrato_db->getContratos()->result();
+		$this->load->helper('config');
+		$usuarios = getUsuarios(NULL, TRUE);
 		$arr =array(
 			"bases"=>json_encode($bases->result()),
 			'items'=>json_encode($items),
 			'vigencias'=>json_encode($vigencias),
 			'allVigencias'=>json_encode($vigencias),
-			'contratos'=>json_encode($contratos)
+			'contratos'=>json_encode($contratos),
+			'usuarios'=>$usuarios
 			);
 		echo json_encode($arr);
 	}
@@ -143,7 +149,10 @@ class Ot extends CI_Controller {
 					);
 				$this->load->helper('log');
 				if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $idot, 'OT', 'Orden '.$orden->nombre_ot.' creada', date('Y-m-d H:i:s'), 'OT CREADA' );	}
-				#-----------------------
+				#--------------------------------------------------------------------------------------------
+				#Adcionar frentes de trabajo
+				$this->frentesOT($orden->frentes, $idot);
+				#--------------------------------------------------------------------------------------------
 				#Adicionar tarea nueva
 				$this->load->model('Tarea_db','tarea');
 				$i = 0;
@@ -155,6 +164,8 @@ class Ot extends CI_Controller {
 					$this->insetarITemsTarea($idTr, $tar->personal);
 					$this->insetarITemsTarea($idTr, $tar->actividades);
 					$this->insetarITemsTarea($idTr, $tar->equipos);
+					$this->insetarITemsTarea($idTr, $tar->material);
+					$this->insetarITemsTarea($idTr, $tar->otros);
 				}
 				$status = $this->ot->end_transact();
 				if($status){
@@ -169,7 +180,41 @@ class Ot extends CI_Controller {
 			}
 		}
 	}
+	# ----------------------------------------------------------------------------
+	# Frente de trabajo
 
+	# add FRENTE
+	public function add_frente($idot=NULL)
+	{
+		$f = json_decode( file_get_contents("php://input") );
+		$this->load->model('ot_db', 'ot');
+		$f->OT_idOT = $idot;
+		$f->idfrente_ot = $this->ot->addFrenteOT($f);
+		$ret = new stdClass();
+		$ret->success = 'success';
+		$ret->frente = $f;
+		$ret->array = (array) $f;
+		echo json_encode($ret);
+	}
+
+	# Gestiona cuando hay que agregar o modificar frentes de trabajo de una OT.
+	private function frentesOT($frente, $idot){
+		$this->load->model('ot_db', 'ot');
+		foreach ($frente as $key => $f) {
+			if(isset($f->idfrente_ot) && $f->idfrente_ot != ''){
+				$f->OT_idOT = $idot;
+				$idfrente = $f->idfrente_ot;
+				$f->idfrente_ot = NULL;
+				unset($f->idfrente_ot);
+				$this->ot->modFrenteOT($f, $idfrente);
+			}else {
+				$f->OT_idOT = $idot;
+				$this->ot->addFrenteOT($f);
+			}
+		}
+	}
+	# ----------------------------------------------------------------------------
+	# Crear tarea de OT
 	private function crearTareaOT($tar, $idot, $nombre_tarea)
 	{
 		return $this->tarea->add(
@@ -198,12 +243,15 @@ class Ot extends CI_Controller {
 			);
 	}
 
+	# recorrer items de una tarea nueva
 	private function insetarITemsTarea($idTr, $items)
 	{
 		foreach ($items as $item) {
 			$this->addNewItemTarea($idTr, $item);
 		}
 	}
+
+	# agregar nuevos items de una tarea
 	public function addNewItemTarea($idTr, $item)
 	{
 		$this->load->model('Item_db', 'it');
@@ -219,7 +267,8 @@ class Ot extends CI_Controller {
 				$idTr,
 				( isset($item->facturable)?$item->facturable:FALSE ),
 				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL ),
-				$item->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
+				$item->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
+				isset($item->idfrente_ot)?$item->idfrente_ot:NULL// Nuevo preparar BD !!!!!!!!!!
 			);
 	}
 	#=============================================================================
@@ -380,22 +429,36 @@ class Ot extends CI_Controller {
 				isset($orden->idcontrato)?$orden->idcontrato:NULL
 			);
 
+		#--------------------------------------------------------------------------------------------
+		#Adcionar frentes de trabajo
+		$this->frentesOT($orden->frentes, $orden->idOT);
+		#--------------------------------------------------------------------------------------------
+		# Guardar costos de ot mes a mes
 		$this->inf_ot->saveAllMeses($orden->allMeses);
 
 		$this->load->helper('log');
 		if (isset($ots->log)) {	addLog($ots->log->idusuario, $ots->log->nombre_usuario, $orden->idOT, 'OT', 'Orden '.$orden->nombre_ot.' modificada', date('Y-m-d H:i:s'), 'OT ACTUALIZADA' );	}
-
+		#--------------------------------------------------------------------------------------------
+		# actualizar / guardar tareas
 		foreach($orden->tareas as $tr){
 			if(isset($tr->idtarea_ot) &&  $tr->idtarea_ot != 0 ){
 				$valid = $this->update_tarea($tr);
 				$this->recorrerItems($tr->actividades, $tr->idtarea_ot);
 				$this->recorrerItems($tr->personal, $tr->idtarea_ot);
 				$this->recorrerItems($tr->equipos, $tr->idtarea_ot);
+				if (isset($tr->material))
+					$this->recorrerItems($tr->material, $tr->idtarea_ot);
+				if (isset($tr->otros))
+					$this->recorrerItems($tr->otros, $tr->idtarea_ot);
 			}else{
 				$idTr = $this->crearTareaOT($tr, $orden->idOT, $tr->nombre_tarea);
 				$this->insetarITemsTarea($idTr, $tr->personal);
 				$this->insetarITemsTarea($idTr, $tr->actividades);
 				$this->insetarITemsTarea($idTr, $tr->equipos);
+				if (isset($tr->material))
+					$this->insetarITemsTarea($idTr, $tr->material);
+				if (isset($tr->otros))
+					$this->insetarITemsTarea($idTr, $tr->otros);
 			}
 		}
 		# fin de seguimiento de transacciones concapacidad de RollBack
@@ -464,7 +527,8 @@ class Ot extends CI_Controller {
 				$it->tarea_ot_idtarea_ot,
 				isset($it->facturable)?$it->facturable:FALSE,
 				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL ),
-				$it->idvigencia_tarifas// Nuevo preparar BD !!!!!!!!!!
+				$it->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
+				$it->idfrente_ot
 			);
 	}
 
@@ -533,6 +597,16 @@ class Ot extends CI_Controller {
 				$v->fecha_agregado = NULL;
 				$v->tarea_ot_idtarea_ot  = NULL;
 			}
+			foreach ($val->material as $k => $v) {
+				$v->iditem_tarea_ot = NULL;
+				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
+			}
+			foreach ($val->otros as $k => $v) {
+				$v->iditem_tarea_ot = NULL;
+				$v->fecha_agregado = NULL;
+				$v->tarea_ot_idtarea_ot  = NULL;
+			}
 		}
 		if(isset($ot)){
 			$response = new stdClass();
@@ -554,6 +628,7 @@ class Ot extends CI_Controller {
 		$ot = $this->ot_db->getData($id)->row();
 		$ot->json = json_decode($ot->json);
 		$ot->tareas = $this->getTareasByOT($id);
+		$ot->frentes = $this->ot_db->getFrentesOT($id)->result();
 		$ot->allMeses = $this->inf_ot->getAllMeses($id, NULL);
 		return $ot;
 	}
@@ -564,6 +639,7 @@ class Ot extends CI_Controller {
 		$ot = $this->ot_db->getData($id)->row();
 		$ot->json = json_decode($ot->json);
 		$ot->tareas = $this->getTareasByOT($id);
+		$ot->frentes = $this->ot_db->getFrentesOT($id)->result();
 		$ot->allMeses = $this->inf_ot->getAllMeses($id, NULL);
 		echo json_encode($ot);
 		#echo '<pre>'.json_encode($ot).'</pre>';
@@ -585,16 +661,27 @@ class Ot extends CI_Controller {
 			$t->actividades = $this->getItemsByTipo($t->idtarea_ot, 1);
 			$t->personal = $this->getItemsByTipo($t->idtarea_ot, 2);
 			$t->equipos = $this->getItemsByTipo($t->idtarea_ot, 3);
+			$t->material = $this->getItemsByTipo($t->idtarea_ot, 'material');
+			$t->otros = $this->getItemsByTipo($t->idtarea_ot, 'otros');
+			// Materiales
 		}
 		return $trs->result();
 	}
 
-	# Obetener un listado de items por tarea de ot
+	# Obtener un listado de items por tarea de ot
 	public function getItemsByTipo($id, $tipo)
 	{
 		$this->load->model('tarea_db');
 		$items = $this->tarea_db->getItemsByTipo($id, $tipo);
 		return $items->result();
+	}
+
+	# Obtener un listado de frentes de trabajo de una OT
+	public function get_frentes_ot($idot)
+	{
+		$this->load->model('ot_db', 'ot');
+		$ret = $this->ot->getFrentesOT($idot);
+		echo json_encode( $ret->result() );
 	}
 
 	# ============================================================================
@@ -666,7 +753,7 @@ class Ot extends CI_Controller {
 		foreach ($trs->result() as $key => $value) {
 			$this->delete_tarea($value->idtarea_ot);
 		}
-		$this->del_costo_mes($idOT);
+		$this->del_costos_mes($idOT);
 		$this->db->delete('OT', array('idOT'=>$idOT));
 		echo "success";
 	}
@@ -683,10 +770,15 @@ class Ot extends CI_Controller {
 		echo 'success';
 	}
 
-	public function del_costo_mes($id)
+	private function del_costos_mes($id)
 	{
 		$this->load->database('ot');
 		$this->db->delete('costo_mes_ot', array('OT_idOT'=>$id) );
+	}
+	private function del_frentes_ot($id)
+	{
+		$this->load->database('ot');
+		$this->db->delete('frente_ot', array('OT_idOT'=>$id) );
 	}
 }
 /* End of file Ot.php */

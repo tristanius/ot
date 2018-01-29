@@ -35,7 +35,7 @@
         <td colspan="8"> <?= $e->descripcion ?> </td>
         <td colspan="1"> <?= ($e->BO=="B")?"SI":"" ?> </td>
         <td colspan="1"> <?= ($e->BO=="O")?"SI":"" ?> </td>
-        <td colspan="5">  </td>
+        <td colspan="5"> <?= (isset($e->procedencia) && $e->procedencia!='')?$e->procedencia:$r->nombre_base ?>  </td>
         <td colspan="1"> <?= $e->unidad ?> </td>
         <td colspan="1"> <?= $e->cantidad*1 ?> </td>
         <td colspan="4"> <?= ($e->horas_operacion>0) ? "Operativo" : ( ($e->horas_disponible>0) ? "Disponible" : ( ($e->varado==TRUE) ? "Varado" : " - " ) ) ?> </td>

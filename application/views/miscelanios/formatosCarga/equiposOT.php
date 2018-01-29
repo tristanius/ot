@@ -12,6 +12,8 @@
       <th>Item</th>
       <th>Descripción</th>
       <th>activo</th>
+      <th>Asignacion</th>
+      <th>Manejo</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +27,8 @@
         <td><?= $value->nombre_ot ?></td>
         <td><?= $value->itemc_item ?></td>
         <td><?= $value->descripcion ?></td>
+        <td> </td>
+        <td> </td>
         <td> </td>
       </tr>
       <?php

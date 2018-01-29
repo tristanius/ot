@@ -36,7 +36,7 @@
       <td colspan="5"> <?= $p->identificacion ?> </td>
       <td colspan="9"> <?= $p->nombre_completo ?> </td>
       <td colspan="5"> <?= $p->descripcion ?> </td>
-      <td colspan="2"></td>
+      <td colspan="2"> <?= (isset($p->procedencia) && $p->procedencia!='' )?$p->procedencia:$r->nombre_base ?> </td>
       <td colspan="1"> <?= $p->BO=='B'?'B':'V'; ?> </td>
       <td colspan="1"> <?= $p->facturable?'':'N'; ?> </td>
       <td colspan="2" class="table-container">

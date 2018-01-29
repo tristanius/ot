@@ -39,10 +39,13 @@ class Reporte extends CI_Controller{
   public function add($idOT, $fecha){
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($idOT);
+    $frentes = $this->otdb->getFrentesOT($idOT);
     $this->load->model('tarea_db', 'tarea');
     $item_equipos = $this->tarea->getTareasItemsResumenBy($idOT,3);
     $this->load->model('miscelanio_db', 'misc');
     $estados = $this->misc->getDataEstados()->result();
+
+    $items_planeados = $this->otdb->getPlanByFrentes($idOT);
 
     //obtener unidades de negocio
     $this->load->model('equipo_db', 'equ');
@@ -54,12 +57,14 @@ class Reporte extends CI_Controller{
     $this->load->view('reportes/add/add',
 		array(
 				'ot'=>$ot->row(),
+        'frentes'=>$frentes->result(),
 				'fecha'=>$fecha,
 				'item_equipos'=>$item_equipos->result(),
 				'un_equipos'=>$un_equipos,
 				'estados'=>$estados,
         'diasemana'=>$diasemana,
-        'estados_labor'=>$this->misc->getEstadosLabor()->result()
+        'estados_labor'=>$this->misc->getEstadosLabor()->result(),
+        'items_planeados'=>$items_planeados
 			)
 		);
   }
@@ -83,6 +88,10 @@ class Reporte extends CI_Controller{
         $this->insertarRecursoRep($post->recursos->actividades, $idrepo);
         $this->insertarRecursoRep($post->recursos->personal, $idrepo);
         $this->insertarRecursoRep($post->recursos->equipos, $idrepo);
+        if(isset($post->recursos->material))
+        $this->insertarRecursoRep($post->recursos->material, $idrepo);
+        if(isset($post->recursos->otros))
+          $this->insertarRecursoRep($post->recursos->otros, $idrepo);
         $validProcc = $this->repo->end_transact();
         if($validProcc != FALSE){
           $response = new stdClass();
@@ -94,6 +103,8 @@ class Reporte extends CI_Controller{
           $response->personal = $var->personal;
           $response->equipos = $var->equipos;
           $response->actividades = $var->actividades;
+          $response->material = $var->material;
+          $response->otros = $var->otros;
           echo json_encode($response);
         }else{
           show_404();
@@ -171,7 +182,7 @@ class Reporte extends CI_Controller{
     }
     $post->succ = TRUE;
     foreach ($post->recursos as $k => $v) {
-      if($k!='actividades'){
+      if($k != 'actividades' && $k != 'material' && $k != 'otros'){
         foreach ($v as $key => $value) {
           /*
           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -238,6 +249,8 @@ class Reporte extends CI_Controller{
     $r = $this->repo->get($idReporte)->row();
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($r->OT_idOT);
+    $items_planeados = $this->otdb->getPlanByFrentes($r->OT_idOT);
+    $frentes = $this->otdb->getFrentesOT($r->OT_idOT)->result();
     $this->load->model('tarea_db', 'tarea');
     $item_equipos = $this->tarea->getTareasItemsResumenBy($r->OT_idOT,3);
     //obtener unidades de negocio
@@ -252,7 +265,12 @@ class Reporte extends CI_Controller{
     $dias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $diasemana = $dias[ date( "w", strtotime($r->fecha_reporte) ) ];
     $this->load->view('reportes/edit/edit',
-      array( 'r'=>$r, 'item_equipos'=>$item_equipos->result(), 'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana, 'estados_labor'=>$this->misc->getEstadosLabor()->result() )
+      array(
+        'r'=>$r, 'frentes'=>$frentes, 'item_equipos'=>$item_equipos->result(),
+        'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana,
+        'estados_labor'=>$this->misc->getEstadosLabor()->result(),
+        'items_planeados' => $items_planeados->result()
+      )
     );
   }
 
@@ -269,9 +287,6 @@ class Reporte extends CI_Controller{
   public function getRecursoData($idReporte)
   {
     $this->load->model('reporte_db', 'repo');
-    $acts = $this->repo->getRecursos($idReporte, 'actividades');
-    $pers = $this->repo->getRecursos($idReporte, 'personal');
-    $equs = $this->repo->getRecursos($idReporte, 'equipos');
     $myrepo = $this->repo->get($idReporte)->row();
 
     $recursos = new stdClass();
@@ -280,9 +295,11 @@ class Reporte extends CI_Controller{
     $recursos->validado_pyco = $myrepo->validado_pyco;
     $recursos->observaciones_pyco = json_decode($myrepo->observaciones_pyco);
     $recursos->info = json_decode( $this->getInfo($idReporte) );
-    $recursos->personal = $pers->result();
-    $recursos->equipos = $equs->result();
-    $recursos->actividades = $acts->result();
+    $recursos->personal = $this->repo->getRecursos($idReporte, 'personal')->result();
+    $recursos->equipos = $this->repo->getRecursos($idReporte, 'equipos')->result();
+    $recursos->actividades = $this->repo->getRecursos($idReporte, 'actividades')->result();
+    $recursos->material = $this->repo->getRecursos($idReporte, 'material')->result();
+    $recursos->otros = $this->repo->getRecursos($idReporte, 'otros')->result();
     return $recursos;
   }
   # ===========================================================================================================
@@ -309,6 +326,8 @@ class Reporte extends CI_Controller{
       $cambios->actividades = $this->actualizarRecursos($post->recursos->actividades, $post->idreporte_diario, $post->fecha);
       $cambios->personal = $this->actualizarRecursos($post->recursos->personal, $post->idreporte_diario, $post->fecha);
       $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
+      $cambios->material = $this->actualizarRecursos($post->recursos->material, $post->idreporte_diario, $post->fecha);
+      $cambios->otros = $this->actualizarRecursos($post->recursos->otros, $post->idreporte_diario, $post->fecha);
       if (isset($post->log)) {
         $msj = 'Reporte diario '.$post->fecha." de ".$post->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
@@ -322,6 +341,8 @@ class Reporte extends CI_Controller{
         $response->personal = $var->personal;
         $response->equipos = $var->equipos;
         $response->actividades = $var->actividades;
+        $response->material = $var->material;
+        $response->otros = $var->otros;
         echo json_encode($response);
       }else{
         echo "Falló la inserción";
@@ -333,6 +354,8 @@ class Reporte extends CI_Controller{
       $response->personal = $validReporte->recursos->personal;
       $response->equipos = $validReporte->recursos->equipos;
       $response->actividades = $validReporte->recursos->actividades;
+      $response->material = $validReporte->recursos->material;
+      $response->otros = $validReporte->recursos->otros;
       echo json_encode($response);
     }
   }
@@ -425,10 +448,14 @@ class Reporte extends CI_Controller{
       $pers = $this->recdb->getPersonalOtBy($idOT, 'persona');
       $equs = $this->recdb->getEquiposOtBy($idOT, 'equipo');
       $acts = $this->tarea->getActividadesPlaneadas($idOT,1, NULL, $fecha);
+      $mats = $this->recdb->getRecursoByOT($idOT, 'material');
+      $otros = $this->recdb->getRecursoByOT($idOT, 'otros');
       $data = array(
           'personal' => $pers->result(),
           'equipo' => $equs->result(),
-          'actividad'=> $acts->result()
+          'actividad'=> $acts->result(),
+          'material'=>$mats->result(),
+          'otros' =>$otros->result()
         );
       echo json_encode($data);
   }
@@ -439,6 +466,54 @@ class Reporte extends CI_Controller{
     $return =  $this->tarea_db->getCantidadSum($fecha, $item, $sector, $idOT);
     echo isset($return->row()->cant)?$return->row()->cant:0;
   }
+
+  # ============================================================================================================
+  # Condensado de items por frente y actividad
+  public function gen_condensado($idr)
+  {
+    $ret = new stdClass();
+    $this->load->model('condensado_db', 'cond');
+    $ret->fecha = date("Y-m-d");
+    $ret->frentes = $this->cond->getFrentes($idr)->result();
+    foreach ($ret->frentes as $key => $f) {
+      $actividades = $this->cond->generar($idr, 1, $f->idfrente_ot)->result();
+      $f->items = array();
+      foreach ($actividades as $key => $act) {
+        $items = $this->cond->generar($idr, NULL, $f->idfrente_ot)->result();
+        foreach ($items as $key => $it) {
+          $it->item_asociado = $act->itemc_item;
+          $it->descripcion_asociada = $act->descripcion;
+          array_push($f->items, $it);
+        }
+      }
+    }
+    $ret->guardado = FALSE;
+    $ret->fecha = date("Y-m-d");
+    echo json_encode($ret);
+  }
+
+  public function get_condensado($idr)
+  {
+    $this->load->model('condensado_db', 'cond');
+    $rows = $this->cond->get($idr);
+    if($rows->num_rows() > 0)
+      echo $rows->row()->condensado;
+    else
+      echo "{'frentes':[]}";
+  }
+
+  public function save_condensado()
+  {
+    $post = json_decode(file_get_contents('php://input'));
+    $this->load->model('condensado_db', 'cond');
+    $post->condensado->guardado = TRUE;
+    $ret = $this->cond->save(json_encode($post->condensado), $post->idreporte_diario);
+    $post->success = TRUE;
+    echo json_encode($post);
+  }
+
+  # ============================================================================================================
+  # Eliminaciones
 
   public function eliminarRecursosReporte($idrecurso_reporte_diario)
   {

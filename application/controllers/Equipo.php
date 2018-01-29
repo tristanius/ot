@@ -129,7 +129,7 @@ class Equipo extends CI_Controller{
       }elseif ( $val['G']!='propio' && $val['G']!='externo') {
         $val['A'] = 'No se ha especificado correctamente si es propio o externo (minusculas)';
       }elseif(isset($val['E']) && $val['E'] != '' ){
-  			$equipos = $this->equ->searchBy('0'.$val['E'].'-0');
+  			$equipos = $this->equ->searchBy('0'.$val['E']);
   			if($equipos->num_rows() > 0){
   				$equipo = $equipos->row();
   				$ots = $this->equ->getField('nombre_ot LIKE "'.$val['B'].'"', 'idOT', 'OT');
