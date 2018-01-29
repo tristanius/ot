@@ -55,7 +55,8 @@ class Reportepersonal_db extends CI_Model{
       "" as firma,
       itf.itemc_item,
       itf.codigo,
-      itf.iditemf'
+      itf.iditemf,
+      ft.nombre AS nombre_frente'
     );
     // if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
     $this->db->from('reporte_diario AS rd');
@@ -65,6 +66,7 @@ class Reportepersonal_db extends CI_Model{
     $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+    $this->db->join('frente_ot AS ft', 'ft.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if (isset($idOT)) {
       //$this->db->where('rd.OT_idOT', $idOT);
       $this->db->where('rd.idReporte_diario', $idReporte);
@@ -119,6 +121,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
+      ft.nombre AS nombre_frente,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
@@ -157,6 +160,7 @@ class Reportepersonal_db extends CI_Model{
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
     ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
+    ->join("frente_ot AS ft", "ft.idfrente_ot = rrd.idfrente_ot","LEFT")
     ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
     ->get();
   }
@@ -172,6 +176,7 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
+      ft.nombre AS nombre_frente,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
@@ -206,6 +211,7 @@ class Reportepersonal_db extends CI_Model{
     ->join("recurso_ot AS rot","rot.idrecurso_ot = rrd.idrecurso_ot")
     ->join("recurso AS r","r.idrecurso = rot.recurso_idrecurso")
     ->join("persona AS p","p.identificacion = r.persona_identificacion")
+    ->join("frente_ot AS ft", "ft.idfrente_ot = rrd.idfrente_ot","LEFT")
     ->where("rd.fecha_reporte BETWEEN '".$ini."'  AND '".$fin."' ")
     ->get();
   }

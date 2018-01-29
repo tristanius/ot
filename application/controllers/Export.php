@@ -163,20 +163,6 @@ class Export extends CI_Controller{
     doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, $landscape);
   }
 
-  public function correccionPMA_SAP($idOT, $idrepo)
-  {
-    setlocale(LC_ALL,"es_ES");
-    $this->load->helper('reporte_pma');
-    $this->load->model('reporte_db', 'repo');
-    $row = $this->repo->getBy($idOT, NULL, $idrepo)->row();
-    $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-    $json_r = json_decode($row->json_r);
-    $vw = $this->load->view('reportes/imprimir_pma/rd/info_adicional2', array(  'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
-    // generamos un pdf con el helper de pdf
-    $this->load->helper('pdf');
-    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
-  }
-
   public function reportePDFHTML($idOT, $idrepo)
   {
     $this->load->helper('pdf');

@@ -46,8 +46,9 @@ if(!$nodownload){
       }
       ?>
       <th class="thT">TOTAL MES</th>
-      <th>ASINADO COMO</th>
-      <th>PROPIO</th>
+      <th class="thT">ASIGNACION</th>
+      <th class="thT">PROPIO</th>
+      <th class="thT">FRENTE</th>
       </tr>
   </thead>
       <tbody>
@@ -97,6 +98,15 @@ if(!$nodownload){
                           break;
                         case 's01':
                           echo "<td><b>EST</b></td><td>";
+                          break;
+                        case 'asignacion':
+                          echo "<td rowspan='2'>";
+                          break;
+                        case 'propio':
+                          echo "<td rowspan='2'>";
+                          break;
+                        case 'nombre_frente':
+                          echo "<td rowspan='2'>";
                           break;
                         default:
                           echo "<td>";
