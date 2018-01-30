@@ -46,7 +46,10 @@ if(!$nodownload){
       }
       ?>
       <th class="thT">TOTAL MES</th>
-      </tr>
+      <th class="thT">ASIGNACION</th>
+      <th class="thT">PROPIO</th>
+      <th class="thT">FRENTE</th>
+    </tr>
   </thead>
       <tbody>
         <?php
@@ -80,14 +83,20 @@ if(!$nodownload){
                     case 'codigo':
                       echo "<td rowspan='2'>";
                       break;
+                    case 'nombre_frente':
+                      echo "<td rowspan='2'>";
+                      break;
+                    case 'propio':
+                      echo "<td rowspan='2'>";
+                      break;
+                    case 'asignacion':
+                      echo "<td rowspan='2'>";
+                      break;
                     case 'd01':
                       echo "<td><b>HRT</b></td><td>";
                       break;
                     case 's01':
                       echo "<td><b>EST</b></td><td>";
-                      break;
-                    case 'nombre_ot':
-
                       break;
                     default:
                       echo '<td>';
@@ -108,11 +117,11 @@ if(!$nodownload){
                       $v = is_float($v)?number_format($v,2):number_format($v);
                       echo  ($v>0)?'<b>'.$v.'</b>':'';
                       if ($k=='d31') {
-                        echo '<td>=contar.si(f'.$n.':aj'.$n.'"=D")</td></tr>';
+                        echo '<td>=contar.si(f'.$n.':aj'.$n.';"=D")</td>';
                       }
                   }else{
                       echo  $v;
-                      if($k == 'NEWLINE'){
+                      if($k == 'nombre_frente'){
                         echo "</tr> <tr>";
                       }
                   }

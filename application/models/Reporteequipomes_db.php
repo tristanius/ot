@@ -58,6 +58,9 @@ class Reporteequipomes_db extends CI_Model{
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-29)))) as d29,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-30)))) as d30,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-31)))) as d31,
+      rot.propietario_observacion AS asignacion,
+      if(rot.propietario_recurso, "SI", "NO") AS propio,
+      ft.nombre AS nombre_frente,
       OT.nombre_ot,
       e.responsable,
       sum(horas_disponible*(1-abs(sign(day(fecha_reporte)-1))))  as s01,
@@ -121,10 +124,7 @@ class Reporteequipomes_db extends CI_Model{
       sum(varado*(1-abs(sign(day(fecha_reporte)-28)))) as v28,
       sum(varado*(1-abs(sign(day(fecha_reporte)-29)))) as v29,
       sum(varado*(1-abs(sign(day(fecha_reporte)-30)))) as v30,
-      sum(varado*(1-abs(sign(day(fecha_reporte)-31)))) as v31,
-      rot.propietario_observacion AS asignacion,
-      if(rot.propietario_recurso, "SI", "NO") AS propio,
-      ft.nombre AS nombre_frente'
+      sum(varado*(1-abs(sign(day(fecha_reporte)-31)))) as v31'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd ', 'rd.idreporte_diario = rrd.idreporte_diario');
