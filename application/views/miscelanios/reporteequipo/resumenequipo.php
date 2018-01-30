@@ -28,7 +28,7 @@ if(!$nodownload){
      <tr><th colspan="37" class="f18">TERMOTECNICA COINDUSTRIAL</th></tr>
      <tr><th colspan="37" class="f12">PROYECTO DE MANTENIMIENTO MA-0032887</th></tr>
      <tr><th colspan="37" class="f12">RESUMEN MENSUAL DE EQUIPOS</th></tr>
-     <tr><th colspan="37" class="f12">Periodo del <b><?=$inicio ?></b> al <b><?=$final ?></b></th></tr>
+     <tr><th colspan="37" class="f12">Periodo del <b><?= $inicio ?></b> al <b><?= $final ?></b></th></tr>
    </thead>
 </table>
 
@@ -62,18 +62,16 @@ if(!$nodownload){
                   $bg = !$bg;
               }
               if ($bg){
-                  $bgcolor='#ddd';
-               }else{
-                  $bgcolor='#fff';
-               }
-               $equipo_ant=$equipo_act;
-               $n++;
+                $bgcolor='#ddd';
+              }else{
+                $bgcolor='#fff';
+              }
+              $equipo_ant=$equipo_act;
+              $n++;
             ?>
-
+            <tr>
             <?php foreach ($fila as $k => $v): ?>
-
               <?php if ( !($k>='v01' and $k<='v31') ): ?>
-                <tr>
                 <?php
                   switch ($k) {
                     case 'base':
@@ -89,10 +87,10 @@ if(!$nodownload){
                       echo "<td><b>EST</b></td><td>";
                       break;
                     case 'nombre_ot':
-                      echo "<td>=suma(f".$n.":aj".$n.")</td></tr><tr style='background-color:".$bgcolor.";' ><td>";
+
                       break;
                     default:
-                      echo '<td>'
+                      echo '<td>';
                       break;
                   }
                   if ($k>='s01' and $k<='s31'){
@@ -102,19 +100,26 @@ if(!$nodownload){
                       }else{
                         echo ($v>0)?'D':'';
                       }
+                      if ($k == 's31') {
+                        echo "<td>=suma(f".$n.":aj".$n.")</td></tr><tr style='background-color:".$bgcolor.";' ><td>";
+                      }
                   }elseif ($k>='d01' and $k<='d31'){
                       $v = $v * 1;
                       $v = is_float($v)?number_format($v,2):number_format($v);
                       echo  ($v>0)?'<b>'.$v.'</b>':'';
                       if ($k=='d31') {
-                        echo "</tr> <tr>"
+                        echo '<td>=contar.si(f'.$n.':aj'.$n.'"=D")</td></tr>';
                       }
                   }else{
                       echo  $v;
+                      if($k == 'NEWLINE'){
+                        echo "</tr> <tr>";
+                      }
                   }
               ?>
               <?php endif; ?>
-              <td>=contar.si(f<?= $n ?>:aj<?= $n ?>;"=D")</td></tr>
+            <?php endforeach; ?>
+          </tr>
         <?php endforeach; ?>
       </tbody>
 </table>
