@@ -23,7 +23,7 @@ class Reporteequipomes_db extends CI_Model{
   # consulta horas operativas
   public function getHorasOper($fechai=NULL, $fechaf=NULL,$laBase=NULL)
   {
-    $tmp_base = !empty($laBase)?" and OT.base_idbase=".$laBase:"";
+    $tmp_base = !empty($laBase)?"OT.base_idbase=".$laBase:"";
     $this->load->database('ot');
     $this->db->select(
       'OT.base_idbase as base,rrd.itemf_codigo as codigo,e.codigo_siesa,descripcion,
@@ -144,7 +144,7 @@ class Reporteequipomes_db extends CI_Model{
   # consulta horas operativas
   public function getPyco($fechai=NULL, $fechaf=NULL,$laBase=NULL)
   {
-    $tmp_base=!empty($laBase)?" AND OT.base_idbase=".$laBase:"";
+    $tmp_base=!empty($laBase)?"OT.base_idbase=".$laBase:"";
     $this->load->database('ot');
     $this->db->select(
       '"" as no,

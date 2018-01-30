@@ -28,9 +28,9 @@ class Reporteequipomes extends CI_Controller{
     if($rows->num_rows() == 0){
       echo 'invalid';
     }else{
-      $rowsHorasOperativas = $this->requmes->getHorasOper($fechai, $fechaf,$laBase);
+      $rows = $this->requmes->getHorasOper($fechai, $fechaf,$laBase);
       $this->load->view('miscelanios/reporteequipo/resumenequipo',
-        array('lashoras'=>$rowsHorasOperativas,'nodownload'=>false,'inicio'=>$fechai,'final'=>$fechaf,'labase'=>$laBase)
+        array('rows'=>$rows,'nodownload'=>false,'inicio'=>$fechai,'final'=>$fechaf,'labase'=>$laBase)
       );
     }
   }
