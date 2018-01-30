@@ -111,7 +111,7 @@ if(!$nodownload){
                       }
                       if ($k == 's31') {
                         $n++;
-                        echo '<td>=contar.si(f'.$n.':aj'.$n.';"=D")';
+                        echo '=contar.si(f'.$n.':aj'.$n.';"=D")';
 
                       }
                   }elseif ($k>='d01' and $k<='d31'){
@@ -119,7 +119,7 @@ if(!$nodownload){
                       $v = is_float($v)?number_format($v,2):number_format($v);
                       echo  ($v>0)?'<b>'.$v.'</b>':'';
                       if ($k=='d31') {
-                        echo "<td>=suma(f".$n.":aj".$n.")";
+                        echo "=suma(f".$n.":aj".$n.")";
                       }
                   }else{
                       echo  $v;
