@@ -26,7 +26,10 @@ class Reporteequipomes_db extends CI_Model{
     $tmp_base = !empty($laBase)?"OT.base_idbase=".$laBase:"";
     $this->load->database('ot');
     $this->db->select(
-      'OT.base_idbase as base,rrd.itemf_codigo as codigo,e.codigo_siesa,descripcion,
+      'OT.base_idbase as base,
+      rrd.itemf_codigo as codigo,
+      e.codigo_siesa,
+      descripcion,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-1))))  as d01,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-2))))  as d02,
       sum(horas_operacion*(1-abs(sign(day(fecha_reporte)-3))))  as d03,

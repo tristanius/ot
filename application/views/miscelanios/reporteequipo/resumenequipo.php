@@ -72,7 +72,7 @@ if(!$nodownload){
               $equipo_ant=$equipo_act;
               $n++;
             ?>
-            <tr style='background-color:<?= $bgcolor ?>' ><td>
+            <tr style='background-color:<?= $bgcolor ?>' >
             <?php foreach ($fila as $k => $v): ?>
               <?php if ( !($k>='v01' and $k<='v31') ): ?>
                 <?php
@@ -111,22 +111,21 @@ if(!$nodownload){
                       }
                       if ($k == 's31') {
                         $n++;
-                        echo '=contar.si(f'.$n.':aj'.$n.';"=D")';
-
+                        echo '</td><td>=contar.si(f'.$n.':aj'.$n.';"=D")';
                       }
                   }elseif ($k>='d01' and $k<='d31'){
                       $v = $v * 1;
                       $v = is_float($v)?number_format($v,2):number_format($v);
                       echo  ($v>0)?'<b>'.$v.'</b>':'';
                       if ($k=='d31') {
-                        echo "=suma(f".$n.":aj".$n.")";
+                        echo "</td><td>=suma(f".$n.":aj".$n.")";
                       }
                   }else{
                       echo  $v;
                   }
                   echo "</td>";
                   if($k == 'nombre_frente'){
-                    echo "</tr> <tr>";
+                    echo "</tr> <tr style='background-color:".$bgcolor."'>";
                   }
               ?>
               <?php endif; ?>
