@@ -33,6 +33,7 @@ class Facturacion_db extends CI_Controller{
       rd.fecha_reporte,
       rd.festivo,
       OT.nombre_ot AS No_OT,
+      ft.nombre AS Frente_OT,
       IFNULL(
         (
           SELECT mytr.sap
@@ -113,7 +114,7 @@ class Facturacion_db extends CI_Controller{
     $this->db->join('tipo_ot as tp', 'OT.tipo_ot_idtipo_ot = tp.idtipo_ot','LEFT');
     $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT');
     $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
-
+    $this->db->join('frente_ot as ft', 'ft.idfrente_ot = rrd.idfrente_ot','LEFT');
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT', $idOT);
     }
