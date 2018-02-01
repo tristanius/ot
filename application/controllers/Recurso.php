@@ -211,7 +211,7 @@ class Recurso extends CI_Controller{
     if( $row['K'] != 'propio' && $row['K'] != 'externo') {
       $row['A'] = 'No se ha especificado correctamente si es propio o externo (minusculas)';
     }elseif( $this->per->existePersona( $row['C'] ) ){
-      $recursos = $this->per->getRecursoOT($row["C"], $ot->idOT, $itemf->iditemf);
+      $recursos = $this->per->getRecursoOT($row["C"], $ot->idOT, $itemf->iditemf, $row['J']);
       if ($recursos->num_rows() < 1) { //si no existe el recurso add
         $this->load->model('recurso_db','recurso');
         $propietario_recurso = $row['K']=='propio'?true:false;
