@@ -86,7 +86,7 @@ class Equipo_db extends CI_Model{
         'propietario_observacion' => $equipo->propietario_observacion
       );
       if(isset($equipo->costo_und) && $equipo->costo_und != '' && $equipo->costo_und != NULL ){
-        $data['costo_und']
+        $data['costo_und'] = $equipo->costo_und;
       }
       if(isset($equipo->UN) && $equipo->UN != '' && $equipo->UN != NULL ){
         $data['UN'] = $equipo->UN;
