@@ -65,6 +65,10 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
     <h5>Material:</h5>
     <?php $this->load->view('reportes/form/rec/materialReporte', array('ot'=>$ot) ); ?>
 
+    <hr>
+    <h5>Otros:</h5>
+    <?php $this->load->view('reportes/form/rec/otrosReporte', array('ot'=>$ot) ); ?>
+
 
     <?php $this->load->view('reportes/form/asociar_item'); ?>
   </div>

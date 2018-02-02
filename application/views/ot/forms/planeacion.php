@@ -276,7 +276,7 @@
 					<td style="text-align: right">{{ o.tarifa | currency:'$':0 }}</td>
 					<td style="text-align: right">
 						{{ ( o.facturable?(o.cantidad * o.duracion)*o.tarifa:0 ) | currency:'$':0 }}
-						<button ng-show=" ( o.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.otros, m, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
+						<button ng-show=" ( o.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.otros, o, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
 					</td>
 					<td>
 						<select ng-model="o.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="o.idfrente_ot = o.idfrente_ot">	</select>
