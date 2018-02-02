@@ -29,6 +29,7 @@
         <th>Asinado como:</th>
         <th>propio?</th>
         <th>U.N.</th>
+        <th>Costo</th>
       </tr>
       <tr>
         <th><input type="text" ng-model="filterEq.codigo_siesa"></th>
@@ -36,6 +37,7 @@
         <th><input type="text" ng-model="filterEq.descripcion_equipo"></th>
         <th><input type="text" ng-model="filterEq.itemc_item"></th>
         <th><input type="text" ng-model="filterEq.descripcion"></th>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -63,6 +65,7 @@
           </span>
           <span ng-bind="e.UN"></span>
         </td>
+        <td ng-bind="e.costo_und"></td>
       </tr>
     </tbody>
   </table>

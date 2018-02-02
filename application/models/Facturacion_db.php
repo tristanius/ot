@@ -45,7 +45,6 @@ class Facturacion_db extends CI_Controller{
         ), ""
       ) as numero_sap,
       "" as tarea,
-      "" as control_cambio,
       OT.cc_ecp as centro_costo,
       "" as cuenta_mayor,
       "" as sistema,
@@ -94,7 +93,8 @@ class Facturacion_db extends CI_Controller{
       rrd.gasto_viaje_pr AS pernocto,
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS estado_reporte,
-      rot.propietario_observacion AS asignacion
+      rot.propietario_observacion AS asignacion,
+      rot.costo_und
       '
     );
     $this->db->from('reporte_diario AS rd');

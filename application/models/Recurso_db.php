@@ -36,7 +36,6 @@ class Recurso_db extends CI_Model{
       'itemf_iditemf' => $itemf->iditemf,
       'itemf_codigo' => $itemf->codigo,
       'estado' => $estado,
-      'validado' => $validado,
       'tipo' => $tipo,
       'codigo_temporal'=>$cod_temp,
       'descripcion_temporal'=>$desc_temp,

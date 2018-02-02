@@ -20,10 +20,11 @@
         <th></th>
         <th>Item</th>
         <th>Descripción</th>
-        <th>item</th>¿
+        <th>item</th>
         <th>Asignacion</th>
         <th>Propietario</th>
         <th>UN</th>
+        <th>Costo</th>
       </tr>
     </thead>
     <tbody>
@@ -43,10 +44,11 @@
         <td ng-bind="m.propietario_recurso==1?'SI':'NO'"></td>
         <td>
           <span ng-if="validPriv(74)">
-            <a class="modal-trigger" href="#modal1"  data-icon="&#xe01e;" style="color:#7c310b;" ng-click="cambioUN(e)"></a>
+            <a class="modal-trigger" href="#modal1"  data-icon="&#xe01e;" style="color:#7c310b;" ng-click="cambioUN(m)"></a>
           </span>
           <span ng-bind="m.UN"></span>
         </td>
+        <td ng-bind="m.costo_und"></td>
       </tr>
     </tbody>
   </table>

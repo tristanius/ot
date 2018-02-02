@@ -23,6 +23,12 @@
     <?php $this->load->view('recursos/vista_recursos/material'); ?>
   </section>
 
+  <br>
+
+  <section class="card-panel">
+    <?php $this->load->view('recursos/vista_recursos/otros'); ?>
+  </section>
+
 </div>
 
 <!-- Modal Structure -->

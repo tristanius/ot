@@ -14,6 +14,7 @@
       <th>activo</th>
       <th>Asignacion</th>
       <th>Manejo</th>
+      <th>Costo</th>
     </tr>
   </thead>
   <tbody>
@@ -27,6 +28,7 @@
         <td><?= $value->nombre_ot ?></td>
         <td><?= $value->itemc_item ?></td>
         <td><?= $value->descripcion ?></td>
+        <td> </td>
         <td> </td>
         <td> </td>
         <td> </td>
