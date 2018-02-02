@@ -50,7 +50,8 @@ class Recurso extends CI_Controller{
     }else{
       $post->propietario_recurso= TRUE;
     }
-    $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion);
+    if(isset( $post->costo_und )){ $post->costo_und=0; }
+    $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion, $post->costo_und);
     echo "success";
   }
 

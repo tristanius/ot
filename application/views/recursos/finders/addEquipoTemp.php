@@ -32,6 +32,11 @@
     </select>
   </p>
 
+  <p>
+    <label>Costo por unidad :</label>
+    <input type="number" ng-model="addequipo.costo_und" ng-init="addequipo.costo_und = 0">
+  </p>
+
   <div>
       <button type="button" name="btn mini-btn" ng-click="addRecursoOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>', 'equipo', myitemf_eq)">Crear</button>
       <button type="button" name="btn mini-btn" ng-click="showSection('#AddEquipoTemp')">Ocultar</button>

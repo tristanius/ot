@@ -49,6 +49,7 @@ var recursosOT = function($scope, $http, $timeout){
           $scope.recursosOT.personal = resp.data.personal;
           $scope.recursosOT.equipo = resp.data.equipo;
           $scope.recursosOT.material = resp.data.material;
+          $scope.recursosOT.otros = resp.data.otros;
           $scope.itemsOT = resp.data.itemsOT;
       },
       function(resp){
@@ -82,7 +83,7 @@ var recursosOT = function($scope, $http, $timeout){
   }
 
   $scope.addRecursoOT = function(it, url, tp, item){
-    console.log($scope.myitemf_eq);
+    it.costo_und = it.costo_und?it.costo_und:0;
     $http.post(url,
       {
         recurso_idrecurso: null,
@@ -93,7 +94,8 @@ var recursosOT = function($scope, $http, $timeout){
         codigo_temporal:it.codigo_temporal,
         descripcion_temporal: it.descripcion_temporal,
         propietario_recurso: it.propietario_recurso,
-        propietario_observacion: it.propietario_observacion
+        propietario_observacion: it.propietario_observacion,
+        costo_und: it.costo_und
       }
     ).then(
       function(response){

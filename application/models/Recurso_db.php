@@ -27,7 +27,7 @@ class Recurso_db extends CI_Model{
     return $this->db->insert_id();
   }
 
-  public function addRecursoOT($idrecurso, $ot, $itemf, $estado, $validado, $tipo, $cod_temp=NULL, $desc_temp=NULL, $propietario_recurso, $propietario_observacion)
+  public function addRecursoOT($idrecurso, $ot, $itemf, $estado, $validado, $tipo, $cod_temp=NULL, $desc_temp=NULL, $propietario_recurso, $propietario_observacion, $costo_und=0)
   {
     $this->load->database('ot');
     $data = array(
@@ -40,7 +40,8 @@ class Recurso_db extends CI_Model{
       'codigo_temporal'=>$cod_temp,
       'descripcion_temporal'=>$desc_temp,
       'propietario_recurso'=>$propietario_recurso?TRUE:FALSE,
-      'propietario_observacion'=>$propietario_observacion
+      'propietario_observacion'=>$propietario_observacion,
+      'costo_und'=>$costo_und
     );
     $this->db->insert('recurso_ot', $data);
     return $this->db->insert_id();
