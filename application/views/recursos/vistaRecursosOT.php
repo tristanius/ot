@@ -12,7 +12,6 @@
 
   <br>
 
-  <!------------------------- EQUIPOS ------------------------------------------->
   <section class="card-panel">
     <?php $this->load->view('recursos/vista_recursos/equipos'); ?>
   </section>
@@ -52,6 +51,10 @@
             <td> <span ng-bind="cambio_un.data.referencia"></span> </td>
             <td> <span ng-bind="cambio_un.data.descripcion_equipo"></span> </td>
           </tr>
+          <tr ng-if="cambio_un.data.itemf_codigo">
+            <td> <span ng-bind="cambio_un.data.itemf_codigo"></span> </td>
+            <td> <span ng-bind="cambio_un.data.descripcion"></span> </td>
+          </tr>
         </tbody>
       </table>
     </p>
@@ -65,6 +68,11 @@
             <option value="EQUIPO">EQUIPO</option>
             <option value="APU">APU</option>
           </select>
+        </div>
+
+        <div class="">
+          <label for="">Costo UND:</label>
+          <input type="text" ng-model="cambio_un.data.costo_und">
         </div>
       </div>
     </fieldset>

@@ -83,7 +83,6 @@ var recursosOT = function($scope, $http, $timeout){
   }
 
   $scope.addRecursoOT = function(it, url, tp, item){
-    it.costo_und = it.costo_und?it.costo_und:0;
     $http.post(url,
       {
         recurso_idrecurso: null,

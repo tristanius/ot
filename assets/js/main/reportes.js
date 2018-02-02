@@ -1207,7 +1207,7 @@ var editReporte = function($scope, $http, $timeout){
               $scope.rd.recursos.equipos = response.data.equipos;
               $scope.rd.recursos.actividades = response.data.actividades;
               $scope.rd.recursos.material = response.data.material;
-              $scope.rd.recursos.otros = response.data.actividades;
+              $scope.rd.recursos.otros = response.data.otros;
               $scope.booleanCorrection();
             });
             $scope.getReportesView($scope.site_url);

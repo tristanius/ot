@@ -62,7 +62,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN'
+        p.*, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN, rot.costo_und'
       )->from('recurso_ot AS rot')
       ->join('recurso AS r', 'rot.recurso_idrecurso = r.idrecurso')
       ->join('itemf AS itf', 'rot.itemf_iditemf = itf.iditemf')
@@ -79,7 +79,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, rot.codigo_temporal, rot.descripcion_temporal, r.idrecurso, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        e.idequipo, e.ccosto, e.un, e.desc_un, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN,
+        e.idequipo, e.ccosto, e.un, e.desc_un, itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN, rot.costo_und,
         IFNULL( e.descripcion, rot.descripcion_temporal ) AS descripcion_equipo,
         IFNULL( e.codigo_siesa, "Temporal" ) AS codigo_siesa,
         IFNULL( e.referencia, rot.codigo_temporal) AS referencia
@@ -100,7 +100,7 @@ class Recurso_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
         rot.idrecurso_ot, rot.tipo, rot.itemf_iditemf, rot.recurso_idrecurso, rot.codigo_temporal, rot.descripcion_temporal, OT.nombre_ot, r.centro_costo, r.unidad_negocio,
-        itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN,
+        itf.iditemf, itf.descripcion, itf.codigo, itf.itemc_iditemc, itf.itemc_item, itf.unidad, rot.propietario_recurso, rot.propietario_observacion, rot.UN, rot.costo_und,
         rot.descripcion_temporal AS descripcion_recurso, rot.codigo_temporal AS referencia
         '
       )->from('recurso_ot AS rot')

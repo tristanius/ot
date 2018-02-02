@@ -50,7 +50,7 @@ class Recurso extends CI_Controller{
     }else{
       $post->propietario_recurso= TRUE;
     }
-    if(isset( $post->costo_und )){ $post->costo_und=0; }
+    if(!isset( $post->costo_und )){ $post->costo_und=0; }
     $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion, $post->costo_und);
     echo "success";
   }
@@ -64,6 +64,7 @@ class Recurso extends CI_Controller{
     $obj->UN = $post->UN;
     $obj->propietario_recurso = $post->propietario_recurso;
     $obj->propietario_observacion = $post->propietario_observacion;
+    if(isset($post->costo_und)){ $obj->costo_und = $post->costo_und; }
     $this->recot->actualizar( 'recurso_ot', $obj, 'idrecurso_ot = '.$post->idrecurso_ot);
     $return = new stdClass();
     $return->success = TRUE;
