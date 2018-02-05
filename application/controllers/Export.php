@@ -58,7 +58,8 @@ class Export extends CI_Controller{
     $bases = $this->input->post("bases");
     $f1 = $this->input->post("fecha_ini");
     $f2 = $this->input->post("fecha_fin");
-    $rows = $this->repo->informeFacturacion($f1, $f2, NULL, json_decode($bases));
+    $tipo_informe = $this->input->post("tipo_informe");
+    $rows = $this->repo->informeFacturacion($f1, $f2, NULL, json_decode($bases), $tipo_informe);
 
     write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
     force_download('./uploads/informeProduccion.xlsx',NULL);

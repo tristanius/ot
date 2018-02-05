@@ -1,7 +1,7 @@
 <table style="font-size: 10px;" class="mytabla" border="1">
   <thead>
     <tr>
-      <th></th>
+      <th>Frente</th>
       <th>Orden</th>
       <th>Codigo</th>
       <th>Item</th>
@@ -45,7 +45,7 @@
         ?>
 
         <tr style="<?= ( ( $v->facturable?$v->cant_ejecutada:$v->cant_ejecutada_nofact ) > ($v->cantidad_planeada) )?'background:#F95E5E; color:#FFF':''; ?>">
-          <td> </td>
+          <td><?= isset($v->nombre_frente)?$v->nombre_frente:''; ?></td>
           <td><?= $v->nombre_ot ?></td>
           <td><?= $v->codigo ?></td>
           <td><?= $v->itemc_item ?></td>

@@ -5,7 +5,7 @@
 
     <p>Vista de consulta del informe de excel de producción, por favor selecciona el rango de fechas que deseas generar en formato xlxs.</p>
     <div class="row noMaterialStyles">
-      <div class="col s12 m6 l5 row">
+      <div class="col s12 m6 l5">
         <div class="clear-left">
             <span >F. inicial: </span>
             <input type="text" class="datepicker" style="display:inline; border-radius: 7px;" ng-init="datepicker_init()" ng-model="fecha_ini" readonly="readonly" placeholder="Ingresa una fecha">
@@ -16,6 +16,15 @@
           <span >F. final: </span>
           <input type="text" class="datepicker" style="display:inline; border-radius: 7px;" ng-init="datepicker_init()" ng-model="fecha_fin" readonly="readonly" placeholder="Ingresa una fecha">
           <br>
+        </div>
+        <div class="">
+
+          <label for=""> Selecciona informe:</label>
+          <select class="" ng-model="tipo_informe">
+            <option value="1">Produccion MTTO</option>
+            <option value="2">Produccion Obras</option>
+          </select>
+
         </div>
       </div>
       <div class="col s12 m12 l2 noMaterialStyles" ng-init="lasbases = []" style="max-heigth: 25ex">
@@ -38,6 +47,7 @@
       <input type="hidden" name="bases" value="{{ lasbases | json }}">
       <input type="hidden" name="fecha_ini" value="{{fecha_ini}}">
       <input type="hidden" name="fecha_fin" value="{{fecha_fin}}">
+      <input type="hidden" name="tipo_informe" value="{{tipo_informe}}">
       <button type="submit" target="_blank" class="btn mini-btn"> Exportar <span data-icon="&#xe03b;"></span> </button>
     </form>
 
