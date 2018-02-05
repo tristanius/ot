@@ -725,7 +725,12 @@ class Ot extends CI_Controller {
 	public function resumenItems($idOT)
 	{
 		$this->load->model('ot_db', 'ot');
-		$resumen = $this->ot->resumenOT($idOT);
+		$frentes = $this->ot->getFrentesOT($idOT);
+		if($frentes->num_rows() > 0){
+			$resumen = $this->ot->resumenOT($idOT, TRUE);
+		}else{
+			$resumen = $this->ot->resumenOT($idOT);
+		}
 		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT) );
 		//$items = $this->ot->getResumenCantItems($idOT);
 		//echo $this->load->view('ot/forms/consolidado', array('items'=>$items), TRUE );
@@ -734,7 +739,12 @@ class Ot extends CI_Controller {
 	public function resumenOT($idOT)
 	{
 		$this->load->model('ot_db', 'ot');
-		$resumen = $this->ot->resumenOT($idOT);
+		$frentes = $this->ot->getFrentesOT($idOT);
+		if($frentes->num_rows() > 0){
+			$resumen = $this->ot->resumenOT($idOT, TRUE);
+		}else{
+			$resumen = $this->ot->resumenOT($idOT);
+		}
 		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT ) );
 	}
 	# ===============================================================================

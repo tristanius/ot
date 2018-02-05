@@ -17,9 +17,9 @@
           <input type="text" class="datepicker" style="display:inline; border-radius: 7px;" ng-init="datepicker_init()" ng-model="fecha_fin" readonly="readonly" placeholder="Ingresa una fecha">
           <br>
         </div>
-        <div class="">
+        <div class="regularForm">
 
-          <label for=""> Selecciona informe:</label>
+          <span for=""> Selecciona informe:</span>
           <select class="" ng-model="tipo_informe">
             <option value="1">Produccion MTTO</option>
             <option value="2">Produccion Obras</option>
