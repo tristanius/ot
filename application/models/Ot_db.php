@@ -412,6 +412,7 @@ class Ot_db extends CI_Model {
 			->group_by('itf.codigo')
 			->group_by('itt.facturable')
 			->group_by('itt.idsector_item_tarea');
+		$this->db->order_by('itf.tipo', 'ASC');
 		if(isset($frentes)){
 			$this->db->select('ft.nombre AS nombre_frente');
 			$this->db->select('

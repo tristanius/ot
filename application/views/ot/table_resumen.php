@@ -35,7 +35,7 @@
 
         <?php if ($tipo_itemc != $v->tipo_itemc){ ?>
           <tr>
-            <th style="background: #F4FBFC" colspan="13"><?= $v->tipo_itemc ?></th>
+            <th style="background: #F4FBFC" colspan="13"><?= $v->tipo_itemc ?>  <?= isset($v->nombre_frente)?"[".$v->nombre_frente."]":''; ?></th>
           </tr>
           <!-- fin contenido de la condicion -->
           <?php
