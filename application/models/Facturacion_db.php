@@ -113,7 +113,7 @@ class Facturacion_db extends CI_Controller{
         rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
-        IFNUL(rot.costo_und, tr.tarifa) AS costo_und
+        IFNULL(rot.costo_und, tr.tarifa) AS costo_und
       ';
     }else{
       return 'year(rd.fecha_reporte) as año,
@@ -194,7 +194,7 @@ class Facturacion_db extends CI_Controller{
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS estado_reporte,
       rot.propietario_observacion AS asignacion,
-      IFNUL(rot.costo_und, tr.tarifa) AS costo_und ';
+      IFNULL(rot.costo_und, tr.tarifa) AS costo_und ';
     }
   }
 
