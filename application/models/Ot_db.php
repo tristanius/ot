@@ -411,8 +411,7 @@ class Ot_db extends CI_Model {
 			->where('OT.idOT',$idOt)
 			->group_by('itf.codigo')
 			->group_by('itt.facturable')
-			->group_by('itt.idsector_item_tarea')
-			->order_by('itf.codigo', 'ASC');
+			->group_by('itt.idsector_item_tarea');
 		if(isset($frentes)){
 			$this->db->select('ft.nombre AS nombre_frente');
 			$this->db->select('
@@ -466,6 +465,7 @@ class Ot_db extends CI_Model {
 				) AS cant_ejecutada_nofact,
 			');
 		}
+		$this->db->order_by('itf.codigo', 'ASC');
 		return $this->db->get();
 	}
 	// Mejora en el resumen
