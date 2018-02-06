@@ -35,7 +35,7 @@
 
         <?php if ($tipo_itemc != $v->tipo_itemc){ ?>
           <tr>
-            <th style="background: #F4FBFC" colspan="13"><?= $v->tipo_itemc ?>  <?= isset($v->nombre_frente)?"[".$v->nombre_frente."]":''; ?></th>
+            <th style="background: #F4FBFC" colspan="13"><?= $v->tipo_itemc ?> </th>
           </tr>
           <!-- fin contenido de la condicion -->
           <?php
@@ -55,9 +55,9 @@
           <td style="border:1px green solid"><?= $v->facturable?'SI':'NO'; ?></td>
           <td><?= number_format($v->cantidad_planeada, 2) ?></td>
           <td>$ <?= number_format( ( $v->facturable? ( $v->tarifa * $v->cantidad_planeada ) :0 ), 2 ) ?></td>
-          <td style="border:1px green solid; <?= !$v->facturable?'background:#EEE; color:#999':''; ?>"> <?= number_format($v->cant_ejecutada, 2) ?></td>
-          <td style="border:1px #777 solid; <?= $v->facturable?'background:#EEE; color:#999':''; ?> "> <?= number_format($v->cant_ejecutada_nofact, 2) ?></td>
-          <td style="text-align: right; <?= !$v->facturable?'background:#EEE; color:#999':''; ?> ">$ <?= number_format($v->cant_ejecutada*$v->tarifa) ?></td>
+          <td style="border:1px green solid; <?= !$v->facturable?'background:#EEE; color:#999':''; ?>; color: #000;"> <?= number_format($v->cant_ejecutada, 2) ?></td>
+          <td style="border:1px #777 solid; <?= $v->facturable?'background:#EEE; color:#999':''; ?>; color: #000; "> <?= number_format($v->cant_ejecutada_nofact, 2) ?></td>
+          <td style="text-align: right; <?= !$v->facturable?'background:#EEE; color:#999':''; ?>; color: #000; ">$ <?= number_format($v->cant_ejecutada*$v->tarifa) ?></td>
         </tr>
 
         <?php

@@ -270,7 +270,13 @@ class Export extends CI_Controller{
   public function resumenOt($idOT)
   {
     $this->load->model('ot_db', 'ot');
-		$resumen = $this->ot->resumenOT($idOT);
+    $resumen = NULL;  
+		$frentes = $this->ot->getFrentesOT($idOT);
+		if($frentes->num_rows() > 0){
+			$resumen = $this->ot->resumenOT($idOT, TRUE);
+		}else{
+			$resumen = $this->ot->resumenOT($idOT);
+		}
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="ResumenOT.xls"');
     header('Cache-Control: max-age=0');
