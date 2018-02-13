@@ -6,7 +6,7 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
   <select style="border:1px solid red;" ng-model="myfrente" ng-change="changeFrente(myfrente, rd, '#showRecursos')" style="font-weight: bold;">
     <?php foreach ($frentes as $key => $f): ?>
       <?php $f->usuario = json_decode($f->usuario); ?>
-      <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && !validPriv(45))">
+      <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
         <?= $f->nombre.' - '.$f->ubicacion ?>
       </option>
     <?php endforeach; ?>
