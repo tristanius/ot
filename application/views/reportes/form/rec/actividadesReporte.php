@@ -29,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" class="{{ (act.idrecurso_reporte_diario == undefined || act.idrecurso_reporte_diario == '')?'newrow':''; }}">
+      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (act.idrecurso_reporte_diario == undefined || act.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.actividades, act, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>

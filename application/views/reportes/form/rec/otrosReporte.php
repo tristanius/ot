@@ -26,7 +26,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="otr in rd.recursos.otros | filter: otrosFilter track by $index" class="{{ (otr.idrecurso_reporte_diario == undefined || otr.idrecurso_reporte_diario == '')?'newrow':''; }}">
+      <tr ng-repeat="otr in rd.recursos.otros | filter: otrosFilter track by $index" ng-if="otr.idfrente_ot == myfrente" class="{{ (otr.idrecurso_reporte_diario == undefined || otr.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.material, otr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>

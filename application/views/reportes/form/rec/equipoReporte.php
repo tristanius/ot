@@ -64,7 +64,7 @@
         <td data-icon="*"></td>
       </tr>
 
-      <tr ng-repeat="eq in rd.recursos.equipos | orderBy: 'itemc_item' | filter: equipoFilter track by $index"  class="{{ (eq.idrecurso_reporte_diario == undefined || eq.idrecurso_reporte_diario == '')?'newrow':''; }}">
+      <tr ng-repeat="eq in rd.recursos.equipos | orderBy: 'itemc_item' | filter: equipoFilter track by $index" ng-if="eq.idfrente_ot == myfrente"  class="{{ (eq.idrecurso_reporte_diario == undefined || eq.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
           <span ng-bind="eq.ind" ng-init="eq.ind = $index+1"></span>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista( rd.recursos.equipos, eq, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')"

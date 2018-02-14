@@ -77,13 +77,13 @@
           <td></td>
           <td>
             <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
-              <input type="hidden" ng-init="personalFilter.idfrente_ot = myfrente" disabled="disabled">
+              <input type="hidden" ng-if="pr.idfrente_ot = myfrente" ng-init="personalFilter.idfrente_ot = myfrente" disabled="disabled">
             <?php endif; ?>
           </td>
           <td></td>
       </tr>
 
-      <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion_he==1 || pr.nomina==1)?'background:#fefefe;':''; }}"> <!--  | orderBy: 'itemc_item' -->
+      <tr ng-repeat="pr in rd.recursos.personal | orderBy: 'itemc_item' | filter: personalFilter track by $index" ng-if="pr.idfrente_ot == myfrente" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion_he==1 || pr.nomina==1)?'background:#fefefe;':''; }}"> <!--  | orderBy: 'itemc_item' -->
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista( rd.recursos.personal, pr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>', 'idrecurso_reporte_diario')" ng-show="(rd.info.estado == 'ABIERTO' && pr.nomina!=1)"> x </button>
         </td>
