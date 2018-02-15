@@ -99,7 +99,7 @@ class Miscelanio extends CI_Controller {
 	}
 	#============================================================================================
 	# Funciones de maestros
-	# =============================================================================
+	# ===========================================================================================
 
 	# subir personas
 	public function formUpPersona(){
@@ -109,6 +109,27 @@ class Miscelanio extends CI_Controller {
 	public function formUpEquipo(){
     $this->load->view('equipo/uploadEquOT');
   }
+
+	#============================================================================================
+	# Temporal
+	# ===========================================================================================
+	public function duplicarFrente($idreporte, $fechaDeseada, $idfrente)
+	{
+		$this->load->model('miscelanio_db', 'md');
+		$this->load->model('reporte_db', 'rd');
+		// reporte actual
+		$repos = $this->rd->getBy(NULL, NULL, $idreporte);
+		$repo = $repos->row();
+		// recursos a duplicar
+		$rows = $this->md->getRecReporteFrente($idreporte, $idfrente);
+		// reporte a actualizar recursos
+		$rds = $this->rd->getBy(NULL, $fechaDeseada);
+		$rd = $rds->row();
+		foreach ($rows->result() as $key => $r) {
+			$this->rd->addRecursoRepo($r, $rd->idreporte_diario);
+		}
+	}
+
 }
 
 /* End of file Miscelanio.php */

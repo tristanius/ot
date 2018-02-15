@@ -121,6 +121,18 @@ class Miscelanio_db extends CI_Model {
 			}
 		}
 	}
+	#============================================================================================
+	# Temporal
+	# ===========================================================================================
+	public function getRecReporteFrente($idreporte, $idfrente)
+	{
+		$this->load->database('ot');
+		return $this->db->from('reporte_diario AS rd ')
+			->join('recurso_reporte_diario AS rrd','rrd.idreporte_diario  = rd.idreporte_diario')
+			->where('rd.idreporte_diario',$idreporte)
+			->where('rrd.idfrente_ot', $idfrente)
+			->get();
+	}
 }
 
 /* End of file Miscelanio_db.php */

@@ -193,7 +193,9 @@ class Reporte_db extends CI_Model{
     $this->db->join('base','base.idbase = OT.base_idbase');
     $this->db->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad');
     $this->db->join('tipo_ot AS tp_ot','tp_ot.idtipo_ot = OT.tipo_ot_idtipo_ot');
-    $this->db->where('OT.idOT', $idOT);
+    if(isset($idOT)){
+      $this->db->where('OT.idOT', $idOT);
+    }
     if(isset($fecha)){
       $this->db->where('rd.fecha_reporte',$fecha);
     }elseif(isset($idrepo)) {
