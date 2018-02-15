@@ -1,7 +1,7 @@
 <section class="card-panel" ng-controller="condensado_rd">
   <h5 class="center-align" ng-init="get_condensado('<?= site_url('reporte/get_condensado/') ?>', <?= $r->idreporte_diario ?>)">Consilidar cantidades guardadas del reporte</h5>
   <button type="button" class="btn mini-btn2 orange" ng-click="get_condensado('<?= site_url('reporte/gen_condensado/') ?>',rd.idreporte_diario)">Generar</button> &nbsp;
-  <button type="button" ng-if="condensado.guardado == true" class="btn mini-btn2 light-green accent-1" ng-click="get_condensado('<?= site_url('reporte/actualizar_condensado/') ?>',rd.idreporte_diario)">Actualizar</button> 
+  <button type="button" ng-if="condensado.guardado == true" class="btn mini-btn2 light-green accent-1" ng-click="get_condensado('<?= site_url('reporte/actualizar_condensado/') ?>',rd.idreporte_diario)">Actualizar</button>
 
   <table id="info_rd_condensado" class="mytabla" >
       <caption style="border:1px solid #333">
@@ -34,7 +34,7 @@
           <td ng-bind="it.item_asociado + ' ('+ it.descripcion_asociada +') '"></td>
           <td ng-bind="it.total"></td>
           <td>
-            <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada" ng-init="it.cantidad_asociada = 0" ng-change="validar_cantidad_frente('codigo', it.codigo, frente.items, it)">
+            <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada" ng-change="validar_cantidad_frente('codigo', it.codigo, frente.items, it)">
             <span ng-if="condensado.guardado" ng-bind="it.cantidad_asociada"></span>
             <span ng-if="it.alerta == true" style="color:red">La cantidad ingresada supera los valores maximos reportados del item en este frente.</span>
           </td>
