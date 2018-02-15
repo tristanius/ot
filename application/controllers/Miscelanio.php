@@ -123,7 +123,7 @@ class Miscelanio extends CI_Controller {
 		// recursos a duplicar
 		$rows = $this->md->getRecReporteFrente($idreporte, $idfrente);
 		// reporte a actualizar recursos
-		$rds = $this->rd->getBy(NULL, $fechaDeseada);
+		$rds = $this->rd->getBy($repo->idOT, $fechaDeseada);
 		$rd = $rds->row();
 		foreach ($rows->result() as $key => $r) {
 			$this->rd->addRecursoRepo($r, $rd->idreporte_diario);
