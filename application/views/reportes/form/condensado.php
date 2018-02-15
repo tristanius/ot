@@ -1,6 +1,7 @@
 <section class="card-panel" ng-controller="condensado_rd">
   <h5 class="center-align" ng-init="get_condensado('<?= site_url('reporte/get_condensado/') ?>', <?= $r->idreporte_diario ?>)">Consilidar cantidades guardadas del reporte</h5>
-  <button type="button" class="btn mini-btn2 orange" ng-click="get_condensado('<?= site_url('reporte/gen_condensado/') ?>',rd.idreporte_diario)">Generar</button>
+  <button type="button" class="btn mini-btn2 orange" ng-click="get_condensado('<?= site_url('reporte/gen_condensado/') ?>',rd.idreporte_diario)">Generar</button> &nbsp;
+  <button type="button" ng-if="condensado.guardado == true" class="btn mini-btn2 light-green accent-1" ng-click="get_condensado('<?= site_url('reporte/actualizar_condensado/') ?>',rd.idreporte_diario)">Actualizar</button> 
 
   <table id="info_rd_condensado" class="mytabla" >
       <caption style="border:1px solid #333">
@@ -42,6 +43,7 @@
   </table>
 
   <div>
+
     <button type="button" class="btn blue" ng-click="save_condensado('<?= site_url('reporte/save_condensado') ?>', condensado, rd.idreporte_diario)" ng-if="condensado.guardado == false">Guardar</button>
     <button type="button" class="btn green" ng-click="exportar_tabla('#info_rd_condensado')" ng-if="condensado.guardado == true">Exportar</button>
   </div>

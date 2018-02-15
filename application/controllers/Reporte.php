@@ -469,7 +469,7 @@ class Reporte extends CI_Controller{
 
   # ============================================================================================================
   # Condensado de items por frente y actividad
-  public function gen_condensado($idr)
+  public function gen_condensado($idr, $retornar = FALSE)
   {
     $ret = new stdClass();
     $this->load->model('condensado_db', 'cond');
@@ -489,6 +489,8 @@ class Reporte extends CI_Controller{
     }
     $ret->guardado = FALSE;
     $ret->fecha = date("Y-m-d");
+    if($retornar)
+      return $ret;
     echo json_encode($ret);
   }
 
@@ -500,6 +502,33 @@ class Reporte extends CI_Controller{
       echo $rows->row()->condensado;
     else
       echo "{'frentes':[]}";
+  }
+
+  public function actualizar_condensado($idr)
+  {
+    $this->load->model('condensado_db', 'cond');
+    $current = json_decode( $this->cond->get($idr)->row()->condensado );
+    $new = $this->gen_condensado($idr,TRUE);
+    foreach ($new->frentes as $key1 => $frente) {
+      foreach ($current->frentes as $key2 => $frente_c) {
+        if($frente->nombre == $frente_c->nombre){
+          $frente->items = $this->update_items_frente($frente, $frente_c);
+        }
+      }
+    }
+    echo json_encode($new);
+  }
+
+  private function update_items_frente($f1, $f2)
+  {
+    foreach ($f1->items as $k1 => $item) {
+      foreach ($f2->items as $k2 => $item_c) {
+        if($item_c->codigo == $item->codigo && $item_c->item_asociado == $item->item_asociado){
+          $item->cantidad_asociada = $item_c->cantidad_asociada;
+        }
+      }
+    }
+    return $f1->items;
   }
 
   public function save_condensado()
