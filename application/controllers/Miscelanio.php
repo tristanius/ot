@@ -127,6 +127,7 @@ class Miscelanio extends CI_Controller {
 		$rd = $rds->row();
 		foreach ($rows->result() as $key => $r) {
 			$this->rd->addRecursoRepo($r, $rd->idreporte_diario);
+			echo $r->idrecurso_reporte_diario;
 		}
 	}
 
