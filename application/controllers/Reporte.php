@@ -521,14 +521,16 @@ class Reporte extends CI_Controller{
 
   private function update_items_frente($f1, $f2)
   {
+    $new_items = array();
     foreach ($f1->items as $k1 => $item) {
       foreach ($f2->items as $k2 => $item_c) {
         if($item_c->codigo == $item->codigo && $item_c->item_asociado == $item->item_asociado){
           $item->cantidad_asociada = $item_c->cantidad_asociada;
         }
       }
+      array_push($new_items, $item);
     }
-    return $f1->items;
+    return $new_items;
   }
 
   public function save_condensado()
