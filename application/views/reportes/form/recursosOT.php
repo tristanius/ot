@@ -11,6 +11,10 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
       </option>
     <?php endforeach; ?>
   </select>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
 </div>
 <div ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'></div>
 <?php
