@@ -450,6 +450,39 @@ class Reporte_db extends CI_Model{
     return "";
   }
 
+  # ======================================================================================
+  # Frentes
+  # ======================================================================================
+
+  public function getRecusoReportesByFrente($idOT, $idfrente, $group=TRUE, $idreporte=NULL)
+  {
+    if($group){
+      $this->db->select('OT.nombre_ot, rd.fecha_reporte, ft.nombre AS nombre_frente');
+    }else{
+      $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
+      rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
+      ft.nombre AS nombre_frente, ft.ubicacion AS ubicacion_frente');
+    }
+    $this->db->from('reporte_diario AS rd')
+      ->join('recurso_reporte_diario AS rrd', 'rd.idreporte_diario = rrd.idreporte_diario')
+      ->join('frente_ot AS ft','ft.idfrente_ot = rrd.idfrente_ot')
+      ->join('OT','OT.idOT = rd.OT_idOT')
+      ->where('OT.idOT',$idOT)
+      ->where('ft.idfrente_ot',$idfrente);
+    if($group && isset($idreporte)){
+      $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+      $this->db->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc');
+      $this->db->join('recurso_ot AS rot', 'rrd.idrecurso_ot = rot.idrecurso_ot', 'left');
+      $this->db->where('rd.idreporte_diario', $idreporte);
+    }else{
+      $this->db->group_by('rd.idreporte_diario');
+    }
+    return $this->db->get();
+  }
+
+
+
+  # ======================================================================================
   # TRANSACTION
   public function init_transact()
 	{

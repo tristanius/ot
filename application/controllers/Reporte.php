@@ -543,6 +543,27 @@ class Reporte extends CI_Controller{
     echo json_encode($post);
   }
 
+  #============================================================================================
+	# Duplicar frentes
+	# ===========================================================================================
+  public function get_fecha_frentes($idOT, $idFrente)
+  {
+    $this->load->model('reporte_db','rd');
+    $rows = $this->rd->getRecusoReportesByFrente($idOT, $idFrente);
+    $ret = new StdClass();
+    $ret->reportes = $rows->result();
+    $ret->succes = TRUE;
+  }
+
+  public function get_recursos_reporte_by($idOT, $idFrente, $idReporte)
+  {
+    $this->load->model('reporte_db','rd');
+    $rows = $this->rd->getRecusoReportesByFrente($idOT, $idFrente, FALSE, $idReporte);
+    $ret = new StdClass();
+    $ret->recursos = $rows->result();
+    $ret->succes = TRUE;
+  }
+
   # ============================================================================================================
   # Eliminaciones
 
