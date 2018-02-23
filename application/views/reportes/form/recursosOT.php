@@ -14,7 +14,7 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-  <button type="button" class="btn mini-btn" ng-disabled="!validPriv(45) && validPriv(46)"> Duplicar frente desde</button>
+  <button type="button" class="btn mini-btn indigo lighten-4 black-text" ng-disabled="!validPriv(45) && validPriv(46)"> Duplicar frente desde</button>
 
 </div>
 <div ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'></div>
