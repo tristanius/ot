@@ -1370,7 +1370,7 @@ var frentes = function($scope, $http, $timeout){
             $scope.frentes_dupe = resp.data.frentes;
              $scope.duplicar_frente = true;
           }
-          console.log(resp.dataq)
+          console.log(resp.data)
         },
         function(resp){
           alert("error");
@@ -1386,7 +1386,7 @@ var frentes = function($scope, $http, $timeout){
           if(resp.data.success){
             $scope.dupe_frente(resp.data.recursos);
           }
-          console.log(resp.dataq)
+          console.log(resp.data)
         },
         function(resp){
           alert("error");

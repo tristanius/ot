@@ -1,7 +1,5 @@
 <section ng-controller="frentes">
 
-
-
   <button  ng-show="!duplicar_frente" type="button" ng-click="getFrentes('<?= site_url('reporte/get_fecha_frentes/'); ?>', rd.idOT, myfrente);" class="btn mini-btn indigo lighten-4 black-text" ng-disabled="!validPriv(45) && validPriv(46)">
     Duplicar frente
   </button>
@@ -9,7 +7,7 @@
 
   <div ng-show="duplicar_frente">
     <!-- Modal Trigger -->
-    <a class="waves-effect waves-light btn modal-trigger" href="#duplicar" >Ver Frentes a duplicar</a>
+    <button type="button" data-target="duplicar" class="btn modal-trigger" >Frentes a duplicar</button>
 
     <!-- Modal Structure -->
     <div id="duplicar" class="modal">
