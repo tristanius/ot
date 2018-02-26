@@ -1367,7 +1367,7 @@ var frentes = function($scope, $http, $timeout){
       .then(
         function(resp){
           if(resp.data.success){
-            $scope.frentes_dupe = resp.data.frentes;
+            $scope.frentes_dupe = resp.data.reportes;
              $scope.duplicar_frente = true;
           }
           console.log(resp.data)

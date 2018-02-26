@@ -1,11 +1,11 @@
 <section ng-controller="frentes">
 
-  <button  ng-show="!duplicar_frente" type="button" ng-click="getFrentes('<?= site_url('reporte/get_fecha_frentes/'); ?>', rd.idOT, myfrente);" class="btn mini-btn indigo lighten-4 black-text" ng-disabled="!validPriv(45) && validPriv(46)">
+  <button  ng-if="myfrente" type="button" ng-click="getFrentes('<?= site_url('reporte/get_fecha_frentes/'); ?>', rd.idOT, myfrente);" class="btn mini-btn4 indigo accent-2" ng-disabled="!validPriv(45) && validPriv(46)">
     Duplicar frente
   </button>
 
 
-  <div ng-show="duplicar_frente" style="position:fixed; z-index: 20; width: 90%; text-align:center; padding 2ex;">
+  <div ng-show="duplicar_frente" style="position:fixed; z-index: 20; width: 90%; text-align:center; padding 2ex; background: #FFF; border: 1px solid #000; border-radius: 10px;">
       <table>
         <thead>
           <tr>
