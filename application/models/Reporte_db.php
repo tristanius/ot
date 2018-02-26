@@ -213,7 +213,7 @@ class Reporte_db extends CI_Model{
   }
 
   # Recursos de un reporte diario
-  public function getRecursos($idrepo, $tipo){
+  public function getRecursos($idrepo, $tipo, $idfrente=NULL){
     $this->load->database('ot');
     $this->db->select('
       rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
@@ -267,6 +267,9 @@ class Reporte_db extends CI_Model{
     if ($tipo != 'actividades') {
       $this->db->order_by('titc.idtipo_itemc', 'desc');
       $this->db->order_by('rrd.idrecurso_reporte_diario', 'desc');
+    }
+    if(isset($idfrente)){
+      $this->db->where('rrd.idfrente_ot', $idfrente);
     }
     return $this->db->get();
   }
@@ -457,7 +460,7 @@ class Reporte_db extends CI_Model{
   public function getRecusoReportesByFrente($idOT, $idfrente, $group=TRUE, $idreporte=NULL)
   {
     if($group){
-      $this->db->select('OT.nombre_ot, rd.fecha_reporte, ft.nombre AS nombre_frente');
+      $this->db->select('OT.idOT, OT.nombre_ot, rd.idreporte_diario, rd.fecha_reporte, ft.idfrente_ot, ft.nombre AS nombre_frente');
     }else{
       $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,

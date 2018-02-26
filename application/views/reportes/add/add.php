@@ -26,6 +26,7 @@
       </style>
 
       <form class="hidden" action="#">
+        <input type="hidden" ng-model="rd.idOT" ng-init="rd.idOT = '<?= $ot->idOT ?>'">
         <input type="hidden" ng-model="rd.info.idOT" ng-init="rd.info.idOT = '<?= $ot->idOT ?>'">
         <input type="hidden" ng-model="rd.idbase" ng-init="rd.idbase = '<?= $ot->base_idbase ?>'">
         <input type="hidden" ng-model="rd.info.ccosto" ng-init="rd.info.ccosto = '<?= $ot->ccosto ?>'">

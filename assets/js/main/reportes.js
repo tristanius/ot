@@ -1355,3 +1355,100 @@ var condensado_rd = function($scope, $http, $timeout){
     });
   }
 }
+
+// ================================================================================
+// frentes
+var frentes = function($scope, $http, $timeout){
+  $scope.frentes_dupe = [];
+  $scope.duplicar_frente = false;
+
+  $scope.getFrentes = function(lnk, idot, idfrente){
+    $http.post( lnk+"/"+idot+"/"+idfrente, [idOT:idot])
+      .then(
+        function(resp){
+          if(resp.data.success){
+            $scope.frentes_dupe = resp.data.frentes;
+             $scope.duplicar_frente = true;
+          }
+          console.log(resp.dataq)
+        },
+        function(resp){
+          alert("error");
+          console.log(resp.data);
+        }
+      );
+  }
+
+  $scope.get_recursos_frente = function(lnk, idot, idfrente, idreporte_dupe){
+    $http.post( lnk+"/"+idot+"/"+idfrente+"/"+idreporte_dupe, [])
+      .then(
+        function(resp){
+          if(resp.data.success){
+            $scope.dupe_frente(resp.data.recursos);
+          }
+          console.log(resp.dataq)
+        },
+        function(resp){
+          alert("error");
+          console.log(resp.data);
+        }
+      );
+  }
+
+  $scope.dupe_frente = function(recursos){
+    $scope.agregarPersonal(recursos.personal);
+    $scope.agregarEquipos(recursos.equipos);
+    $scope.agregarActividades(recursos.actividades);
+    $scope.agregarMaterial(recursos.material);
+    $scope.agregarOtros(recursos.otros);
+    $scope.duplicar_frente = false;
+  }
+
+  $scope.agregarPersonal = function(personal){
+    angular.forEach( personal, function(val, key){
+      if(!$scope.existeRegistro($scope.$parent.rd.recursos.personal, 'identificacion', val.identificacion) && val.add){
+        val.idrecurso_reporte_diario = undefined;
+        val.idreporte_diario = undefined;
+        $scope.$parent.rd.recursos.personal.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarEquipos = function(equipos){
+    angular.forEach( equipos, function(val, key){
+      if( (!$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
+        ($scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add )
+      ){
+        val.idrecurso_reporte_diario = undefined;
+        val.idreporte_diario = undefined;
+        $scope.$parent.rd.recursos.equipos.push(val);
+      }
+    });
+  }
+  // Agregar actividades seleccionadas al reporte
+  $scope.agregarActividades = function(actividades){
+    angular.forEach( actividades , function(val, key){
+      if(val.add && !$scope.$parent.existeRegistroList($scope.$parent.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
+        val.idrecurso_reporte_diario = undefined;
+        val.idreporte_diario = undefined;
+        $scope.$parent.rd.recursos.actividades.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarMaterial = function(material){
+    angular.forEach( material , function(val, key){
+      val.idrecurso_reporte_diario = undefined;
+      val.idreporte_diario = undefined;
+      $scope.$parent.rd.recursos.material.push(val);
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarOtros = function(otros){
+    angular.forEach( otros, function(val, key){
+      val.idrecurso_reporte_diario = undefined;
+      val.idreporte_diario = undefined;
+      $scope.$parent.rd.recursos.otros.push(val);
+    });
+  }
+}

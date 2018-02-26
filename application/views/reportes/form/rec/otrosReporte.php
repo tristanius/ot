@@ -28,7 +28,7 @@
     <tbody>
       <tr ng-repeat="otr in rd.recursos.otros | filter: otrosFilter track by $index" ng-if="otr.idfrente_ot == myfrente" class="{{ (otr.idrecurso_reporte_diario == undefined || otr.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
-          <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.material, otr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
+          <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.otros, otr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>
         <td class="noMaterialStyles" style="background: #F4F9FD ">
           <input type="checkbox" ng-model="otr.facturable" ng-init="otr.facturable = parseBool(otr.facturable) " ng-disabled="rd.info.estado == 'CERRADO' ">

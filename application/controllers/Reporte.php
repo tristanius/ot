@@ -552,16 +552,22 @@ class Reporte extends CI_Controller{
     $rows = $this->rd->getRecusoReportesByFrente($idOT, $idFrente);
     $ret = new StdClass();
     $ret->reportes = $rows->result();
-    $ret->succes = TRUE;
+    $ret->success = TRUE;
+    echo json_encode($ret);
   }
 
   public function get_recursos_reporte_by($idOT, $idFrente, $idReporte)
   {
     $this->load->model('reporte_db','rd');
-    $rows = $this->rd->getRecusoReportesByFrente($idOT, $idFrente, FALSE, $idReporte);
     $ret = new StdClass();
-    $ret->recursos = $rows->result();
-    $ret->succes = TRUE;
+    $ret->recursos = new StdClass();
+    $ret->recursos->personal = $this->rd->getRecursos($idReporte, 'personal', $idFrente)->result();
+    $ret->recursos->equipos = $this->rd->getRecursos($idReporte, 'equipos', $idFrente)->result();
+    $ret->recursos->actividades = $this->rd->getRecursos($idReporte, 'actividades', $idFrente)->result();
+    $ret->recursos->material = $this->rd->getRecursos($idReporte, 'material', $idFrente)->result();
+    $ret->recursos->otros = $this->rd->getRecursos($idReporte, 'otros', $idFrente)->result();
+    $ret->success = TRUE;
+    echo json_encode($ret);
   }
 
   # ============================================================================================================

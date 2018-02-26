@@ -389,6 +389,9 @@ app.controller("historico_fact", function($scope, $http, $timeout){
 app.controller("condensado_rd", function($scope, $http, $timeout){
   condensado_rd($scope, $http, $timeout);
 });
+app.controller("frentes", function($scope, $http, $timeout){
+  frentes($scope, $http, $timeout);
+});
 
 
 //let's make a startFrom filter
