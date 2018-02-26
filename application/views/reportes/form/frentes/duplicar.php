@@ -6,7 +6,7 @@
 
 
   <div ng-show="duplicar_frente" style="position:absolute; z-index: 20; width: 90%; text-align:center; padding: 3ex; background: #FFF; border: 1px solid #000; box-shadow: 0px 0px 6px #333;">
-      <table>
+      <table class="mytabla">
         <thead>
           <tr>
             <th>Orden</th>
