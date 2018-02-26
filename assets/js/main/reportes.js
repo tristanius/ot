@@ -1363,7 +1363,7 @@ var frentes = function($scope, $http, $timeout){
   $scope.duplicar_frente = false;
 
   $scope.getFrentes = function(lnk, idot, idfrente){
-    $http.post( lnk+"/"+idot+"/"+idfrente, [idOT:idot])
+    $http.post( lnk+"/"+idot+"/"+idfrente, {} )
       .then(
         function(resp){
           if(resp.data.success){
@@ -1380,7 +1380,7 @@ var frentes = function($scope, $http, $timeout){
   }
 
   $scope.get_recursos_frente = function(lnk, idot, idfrente, idreporte_dupe){
-    $http.post( lnk+"/"+idot+"/"+idfrente+"/"+idreporte_dupe, [])
+    $http.post( lnk+"/"+idot+"/"+idfrente+"/"+idreporte_dupe, {})
       .then(
         function(resp){
           if(resp.data.success){
