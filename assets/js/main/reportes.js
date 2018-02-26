@@ -1417,7 +1417,7 @@ var frentes = function($scope, $http, $timeout){
   // Agregar equipos seleccionados al reporte
   $scope.agregarEquipos = function(equipos){
     angular.forEach( equipos, function(val, key){
-      if( (!$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) ||
+      if(!$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) ||
         ($scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'itemc_item', val.itemc_item) )
       ){
         val.idrecurso_reporte_diario = undefined;
