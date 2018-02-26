@@ -459,6 +459,7 @@ class Reporte_db extends CI_Model{
 
   public function getRecusoReportesByFrente($idOT, $idfrente, $group=TRUE, $idreporte=NULL)
   {
+    $this->load->database('ot');
     if($group){
       $this->db->select('OT.idOT, OT.nombre_ot, rd.idreporte_diario, rd.fecha_reporte, ft.idfrente_ot, ft.nombre AS nombre_frente');
     }else{
