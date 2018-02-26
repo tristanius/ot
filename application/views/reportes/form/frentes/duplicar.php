@@ -5,12 +5,7 @@
   </button>
 
 
-  <div ng-show="duplicar_frente">
-    <!-- Modal Trigger -->
-    <button type="button" data-target="duplicar" class="btn modal-trigger" >Frentes a duplicar</button>
-
-    <!-- Modal Structure -->
-    <div id="duplicar" class="modal">
+  <div ng-show="duplicar_frente" style="position:fixed; z-index: 20; width: 90%; text-align:center; padding 2ex;">
       <table>
         <thead>
           <tr>
@@ -40,6 +35,5 @@
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
 </section>
