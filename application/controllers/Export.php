@@ -266,11 +266,19 @@ class Export extends CI_Controller{
     return substr($value, 0, 2);
   }
 
+  public function getObservaciones($idOT)
+  {
+    $this->load->database('ot');
+    $observaciones = $this->misc->getObservaciones($idOT);
+    $this->load->helper('xlsx');
+    genObservaciones($observaciones);
+  }
+
   # =================================================================================
   public function resumenOt($idOT)
   {
     $this->load->model('ot_db', 'ot');
-    $resumen = NULL;  
+    $resumen = NULL;
 		$frentes = $this->ot->getFrentesOT($idOT);
 		if($frentes->num_rows() > 0){
 			$resumen = $this->ot->resumenOT($idOT, TRUE);

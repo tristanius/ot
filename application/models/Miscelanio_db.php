@@ -121,6 +121,14 @@ class Miscelanio_db extends CI_Model {
 			}
 		}
 	}
+
+
+	public function getObservaciones($idOT)
+	{
+		$this->load->database('ot');
+		return $this->db->select('OT.nombre_ot, rd.fecha, rd.json_r')->from('reporte_diario AS rd')->join('OT','OT.idOT = rd.OT_idOT')->where('rd.OT_idOT',$idOT)->get();
+	}
+
 	#============================================================================================
 	# Temporal
 	# ===========================================================================================

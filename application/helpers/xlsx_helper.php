@@ -10,13 +10,10 @@ function genHojaCalculo($datos, $cabeceras , $filePath = './uploads/informeFactu
   $writer = WriterFactory::create(Type::XLSX); // for XLSX files
   //$writer = WriterFactory::create(Type::CSV); // for CSV files
   //$writer = WriterFactory::create(Type::ODS); // for ODS files
-
   $writer->openToFile($filePath); // write data to a file or to a PHP stream
   //$writer->openToBrowser($fileName); // stream data directly to the browser
-
   $style = (new StyleBuilder())->setFontBold()->build();
 	$writer->addRowWithStyle($cabeceras, $style);
-
   foreach ($datos as $key => $value ) {
     if ($value['facturable'] == 'SI' && $value['cantidad_total'] != 0) {
 			$value['valor_total'] = $value['tarifa'] * $value['cantidad_total'];
@@ -33,9 +30,7 @@ function genHojaCalculo($datos, $cabeceras , $filePath = './uploads/informeFactu
     $value['fecha_reporte'] = 25569 + ( strtotime( $value['fecha_reporte'] ) / 86400 );
     $writer->addRow($value); // add a row at a time
   }
-
   //$writer->addRows($multipleRows); // add multiple rows at a time
-
   $writer->close();
 
 }
@@ -59,4 +54,21 @@ function readXlsx($path='', $super=NULL, $methodname=NULL)
     return $sheets;
   }
   return $reader;
+}
+
+function genObservaciones($rows){
+  $writer = WriterFactory::create(Type::XLSX);
+  $writer->openToBrowser('Observaciones');
+  $style = (new StyleBuilder())->setFontBold()->build();
+	$writer->addRowWithStyle($rows->list_fields(), $style);
+  foreach ($rows->result() as $key => $observes) {
+    $fila['nombre_ot'] = $observes->nombre_ot;
+    $fila['fecha_reporte'] = $observes->fecha_reporte;
+    $json_r = json_decode($observes->json_r);
+    foreach ($json_r->observaciones as $key => $obs) {
+      $fila['observaciones'] = $obs->msj;
+      $writer->addRow($fila);
+    }
+  }
+  $writer->close();
 }
