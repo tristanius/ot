@@ -269,6 +269,7 @@ class Export extends CI_Controller{
   public function getObservaciones($idOT)
   {
     $this->load->database('ot');
+    $this->load->model('miscelanio_db', 'misc');
     $observaciones = $this->misc->getObservaciones($idOT);
     $this->load->helper('xlsx');
     genObservaciones($observaciones);

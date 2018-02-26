@@ -58,9 +58,9 @@ function readXlsx($path='', $super=NULL, $methodname=NULL)
 
 function genObservaciones($rows){
   $writer = WriterFactory::create(Type::XLSX);
-  $writer->openToBrowser('Observaciones');
+  $writer->openToBrowser('Observaciones.xlsx');
   $style = (new StyleBuilder())->setFontBold()->build();
-	$writer->addRowWithStyle($rows->list_fields(), $style);
+	$writer->addRowWithStyle( array("Orden de trabajo","Fecha de reporte","Observaciones"), $style);
   foreach ($rows->result() as $key => $observes) {
     $fila['nombre_ot'] = $observes->nombre_ot;
     $fila['fecha_reporte'] = $observes->fecha_reporte;
