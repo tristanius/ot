@@ -5,7 +5,7 @@
   </button>
 
 
-  <div ng-show="duplicar_frente" style="position:fixed; z-index: 20; width: 90%; text-align:center; padding 2ex; background: #FFF; border: 1px solid #000; border-radius: 10px;">
+  <div ng-show="duplicar_frente" style="position:absolute; z-index: 20; width: 90%; text-align:center; padding 2ex; background: #FFF; border: 1px solid #000; border-radius: 10px;">
       <table>
         <thead>
           <tr>
@@ -35,5 +35,6 @@
           </tr>
         </tbody>
       </table>
+      <button type="button" ng-click="duplicar_frente = false" class="btn mini-btn2 red darken-2" >Salir</button>
   </div>
 </section>
