@@ -1384,6 +1384,7 @@ var frentes = function($scope, $http, $timeout){
       .then(
         function(resp){
           if(resp.data.success){
+            console.log(resp.data)
             $scope.dupe_frente(resp.data.recursos);
           }
           console.log(resp.data)
@@ -1406,7 +1407,7 @@ var frentes = function($scope, $http, $timeout){
 
   $scope.agregarPersonal = function(personal){
     angular.forEach( personal, function(val, key){
-      if(!$scope.existeRegistro($scope.$parent.rd.recursos.personal, 'identificacion', val.identificacion) && val.add){
+      if(!$scope.existeRegistro($scope.$parent.rd.recursos.personal, 'identificacion', val.identificacion)){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
         $scope.$parent.rd.recursos.personal.push(val);
@@ -1416,8 +1417,8 @@ var frentes = function($scope, $http, $timeout){
   // Agregar equipos seleccionados al reporte
   $scope.agregarEquipos = function(equipos){
     angular.forEach( equipos, function(val, key){
-      if( (!$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
-        ($scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add )
+      if( (!$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) ||
+        ($scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.$parent.rd.recursos.equipos, 'itemc_item', val.itemc_item) )
       ){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
@@ -1428,7 +1429,7 @@ var frentes = function($scope, $http, $timeout){
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(actividades){
     angular.forEach( actividades , function(val, key){
-      if(val.add && !$scope.$parent.existeRegistroList($scope.$parent.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
+      if( !$scope.$parent.existeRegistroList($scope.$parent.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
         $scope.$parent.rd.recursos.actividades.push(val);

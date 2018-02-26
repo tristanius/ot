@@ -5,7 +5,7 @@
   </button>
 
 
-  <div ng-show="duplicar_frente" style="position:absolute; z-index: 20; width: 90%; text-align:center; padding 2ex; background: #FFF; border: 1px solid #000; border-radius: 10px;">
+  <div ng-show="duplicar_frente" style="position:absolute; z-index: 20; width: 90%; text-align:center; padding: 3ex; background: #FFF; border: 1px solid #000; box-shadow: 0px 0px 6px #333;">
       <table>
         <thead>
           <tr>
@@ -27,7 +27,7 @@
             <td ng-bind="r.fecha_reporte"></td>
             <td ng-bind="r.nombre_frente"></td>
             <td>
-              <button type="button" ng-click="" class="btn mini-btn2"
+              <button type="button" class="btn mini-btn2"
                 ng-click="get_recursos_frente('<?= site_url('reporte/get_recursos_reporte_by'); ?>', r.idOT, r.idfrente_ot, r.idreporte_diario)">
                 Duplicar
               </button>
