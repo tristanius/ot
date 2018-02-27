@@ -3,16 +3,15 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 ?>
 <div class="noMaterialStyles regularForm card-panel padding1ex" ng-init='initRecursosFilters(); initFrentes(<?= json_encode($frentes) ?>)'>
   <b>SELECCIONA TU FRENTE DE TRABAJO:</b>
-  <ul class="tabs">
-    <?php foreach ($frentes as $key => $f): ?>
-      <?php $f->usuario = json_decode($f->usuario); ?>
-      <li class="tab col s3">
-        <a ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
-          <?= $key.". "$f->nombre ?>
-        </a>
-      </li>
-    <?php endforeach; ?>
-  </ul>
+
+  <?php foreach ($frentes as $key => $f): ?>
+    <?php $f->usuario = json_decode($f->usuario); ?>
+    <button class="btn mini-btn2  {{myfrente == <?= $f->idfrente_ot ?> ?'teal darken-4':'';}}"
+      ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')"
+      ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
+        <?= $key.". ".$f->nombre ?>
+    </button>
+  <?php endforeach; ?>
 
 </div>
 <div ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'></div>
