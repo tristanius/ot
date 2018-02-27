@@ -114,7 +114,7 @@ class Facturacion_db extends CI_Controller{
         rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
-        IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) AS costo_und
+        IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und
       ';
     }else{
       return 'year(rd.fecha_reporte) as año,

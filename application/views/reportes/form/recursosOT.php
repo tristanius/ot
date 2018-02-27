@@ -2,14 +2,14 @@
 if (isset($frentes) && sizeof($frentes) > 0 ) {
 ?>
 <div class="noMaterialStyles regularForm card-panel padding1ex" ng-init='initRecursosFilters(); initFrentes(<?= json_encode($frentes) ?>)'>
-  <b>SELECCIONA TU FRENTE DE TRABAJO:</b>
+  <b>SELECCIONA FRENTE:</b>
 
   <?php foreach ($frentes as $key => $f): ?>
     <?php $f->usuario = json_decode($f->usuario); ?>
     <button class="btn mini-btn  {{myfrente == <?= $f->idfrente_ot ?> ?'teal darken-4':'light-blue darken-3';}}"
       ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')"
       ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
-        <?= $key.". ".$f->nombre ?>
+        <?= ($key+1).". ".$f->nombre ?>
     </button>
   <?php endforeach; ?>
 
