@@ -138,7 +138,7 @@
       <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
 
-      <div class="btnWindow">
+      <div class="btnWindow" ng-show="!spinner">
 
         <button type="button" class="light-green waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
           ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')">

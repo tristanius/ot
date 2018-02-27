@@ -3,14 +3,17 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 ?>
 <div class="noMaterialStyles regularForm card-panel padding1ex" ng-init='initRecursosFilters(); initFrentes(<?= json_encode($frentes) ?>)'>
   <b>SELECCIONA TU FRENTE DE TRABAJO:</b>
-  <select style="border:1px solid red;" ng-model="myfrente" ng-change="changeFrente(myfrente, rd, '#showRecursos')" style="font-weight: bold;">
+  <ul class="tabs">
     <?php foreach ($frentes as $key => $f): ?>
       <?php $f->usuario = json_decode($f->usuario); ?>
-      <option value="<?= $f->idfrente_ot ?>" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
-        <?= $f->nombre.' - '.$f->ubicacion ?>
-      </option>
+      <li class="tab col s3">
+        <a ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')" ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
+          <?= $key.". "$f->nombre ?>
+        </a>
+      </li>
     <?php endforeach; ?>
-  </select>
+  </ul>
+
 </div>
 <div ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'></div>
 <?php $this->load->view('reportes/form/frentes/duplicar', array() );  ?>

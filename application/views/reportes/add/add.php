@@ -76,7 +76,7 @@
       </div>
       <br>
 
-      <div class="btnWindow">
+      <div class="btnWindow" ng-show="!isOnPeticion">
         <!--
         <button type="button" class="waves-effect waves-light btn green mini-btn2" ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')" data-icon="&#xe02d;">
            Validar recursos

@@ -611,6 +611,7 @@ var addReporte = function($scope, $http, $timeout) {
     if($scope.rd.recursos.personal.length == 0 && $scope.rd.recursos.equipos.length == 0 && $scope.rd.recursos.actividades.length == 0){
       alert('No hay recurso agregados');
     }else{
+        $scope.isOnPeticion = true;
         $http.post(
           url,
           {
@@ -631,6 +632,7 @@ var addReporte = function($scope, $http, $timeout) {
               $('#guardar_reporte').hide();
               alert('Los recursos agregados a la OT deben ser validados.')
             }
+            $scope.isOnPeticion = false;
           },
           function(response) {
             console.log(response.data);
@@ -1080,6 +1082,8 @@ var editReporte = function($scope, $http, $timeout){
     if($scope.rd.recursos.personal.length == 0 && $scope.rd.recursos.equipos.length == 0 && $scope.rd.recursos.actividades.length == 0){
       alert('No hay recurso agregados');
     }else{
+        $scope.isOnPeticion = true;
+        $scope.spinner = true;
         $http.post(
           url,
           {
@@ -1100,6 +1104,8 @@ var editReporte = function($scope, $http, $timeout){
             }else{
               alert('Los recursos agregados a la OT deben ser validados.')
             }
+            $scope.isOnPeticion = false;
+            $scope.spinner = false;
           },
           function(response) {
             console.log(response.data);
