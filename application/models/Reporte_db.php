@@ -59,7 +59,7 @@ class Reporte_db extends CI_Model{
   # Insertar un recurso a un reporte con unas cantidades
    public function addRecursoRepo($recurso, $idrepo)
    {
-     $log = ( $this->session->userdata('idusuario') != NULL || $this->session->userdata('idusuario') !=  ""  )? $this->session->userdata('idusuario') :'Undefined data';
+     $log = $this->session->userdata('idusuario').' '.$this->session->userdata('nombre_usuario');
      $data = array(
        'idreporte_diario' => $idrepo,
        'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
@@ -95,14 +95,14 @@ class Reporte_db extends CI_Model{
        'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
        'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
        'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
-       'last_log'=>$log." - ".date('Y-m-d')
+       'last_log'=>$log." - ".date('Y-m-d H:i:s')
      );
      $this->db->insert('recurso_reporte_diario', $data);
    }
   #Actualiar un recurso reporte
   public function editRecursoRepo($recurso, $idrepo)
   {
-    $log = ( $this->session->userdata('idusuario') != NULL || $this->session->userdata('idusuario') !=  ""  )? $this->session->userdata('idusuario'):'Undefined data';
+    $log = $this->session->userdata('idusuario').' '.$this->session->userdata('nombre_usuario');
     $data = array(
       'idreporte_diario' => $idrepo,
       'cantidad'=> isset($recurso->cantidad)?$recurso->cantidad: '0',
@@ -138,7 +138,7 @@ class Reporte_db extends CI_Model{
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
-      'last_log'=>$log." - ".date('Y-m-d')
+      'last_log'=>$log." - ".date('Y-m-d H:i:s')
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;

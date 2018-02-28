@@ -179,7 +179,7 @@ var reportes = function($scope, $http, $timeout) {
       $scope.materialFilter.idfrente_ot = val;
       $scope.otrosFilter.idfrente_ot = val;
       rd.recursos = rec;
-      $(tag).show(100);
+      $(tag).show(50);
     }, 100);
   }
 
