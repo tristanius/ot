@@ -308,8 +308,7 @@ class Reporte extends CI_Controller{
     $post = json_decode( file_get_contents("php://input") );
     $cambios = new stdClass();
     $validReporte = $this->validarRecursos("retornable", $post);
-    if($post->info->validado_pyco == 'CORREGIR'){ $validReporte->succ = TRUE; }
-    if($validReporte->succ){
+    if($validReporte->succ || $post->info->validado_pyco == 'CORREGIR'){
       $info = $post->info;
       $this->load->model('reporte_db', 'repo');
       $this->repo->init_transact();
@@ -332,12 +331,17 @@ class Reporte extends CI_Controller{
         $msj = 'Reporte diario '.$post->fecha." de ".$post->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
       }
-
       if($this->repo->end_transact() != FALSE){
         $response = new stdClass();
         $response->success = 'success';
         $var = $this->getRecursoData($post->idreporte_diario);
-        $response->msj = 'Guardado correctamente. '.date('Y-m-d H:i:s');
+        if($validReporte->succ){
+          $response->success = 'success';
+          $response->msj = 'Guardado correctamente. '.date('Y-m-d H:i:s');
+        }elseif ($post->info->validado_pyco == 'CORREGIR') {
+          $response->success = 'unsuccess';
+          $response->msj = 'Los recursos deben ser validados pero el reporte al estar por CORREGIR se ha guardado. '.date('Y-m-d H:i:s');
+        }
         $response->personal = $var->personal;
         $response->equipos = $var->equipos;
         $response->actividades = $var->actividades;
