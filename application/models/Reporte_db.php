@@ -59,6 +59,7 @@ class Reporte_db extends CI_Model{
   # Insertar un recurso a un reporte con unas cantidades
    public function addRecursoRepo($recurso, $idrepo)
    {
+     $log = isset( $this->session->userdata('idusuario') )?isset( $this->session->userdata('idusuario') ):'Undefined data';
      $data = array(
        'idreporte_diario' => $idrepo,
        'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
@@ -93,13 +94,15 @@ class Reporte_db extends CI_Model{
        'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
        'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
        'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
-       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL
+       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+       'last_log'=>$log." - ".date('Y-m-d')
      );
      $this->db->insert('recurso_reporte_diario', $data);
    }
   #Actualiar un recurso reporte
   public function editRecursoRepo($recurso, $idrepo)
   {
+    $log = isset( $this->session->userdata('idusuario') )?isset( $this->session->userdata('idusuario') ):'Undefined data';
     $data = array(
       'idreporte_diario' => $idrepo,
       'cantidad'=> isset($recurso->cantidad)?$recurso->cantidad: '0',
@@ -134,7 +137,8 @@ class Reporte_db extends CI_Model{
       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
-      'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL
+      'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+      'last_log'=>$log." - ".date('Y-m-d')
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;
