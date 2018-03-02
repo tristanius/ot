@@ -275,6 +275,13 @@ class Export extends CI_Controller{
     genObservaciones($observaciones);
   }
 
+  public function getConsonlidados($idOT)
+  {
+    $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
+    $reportes = $this->con->get($idOT);
+    $this->load->view('miscelanios/consolidado/listado_consolidado', array('resportes'=>$reportes));
+  }
+
   # =================================================================================
   public function resumenOt($idOT)
   {

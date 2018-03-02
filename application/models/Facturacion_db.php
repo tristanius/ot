@@ -88,7 +88,6 @@ class Facturacion_db extends CI_Controller{
         tr.tarifa,
         itf.unidad,
         rrd.cantidad,
-        if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad), 0) as cantidad_disp,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
         e.referencia as placa_equipo,
         rrd.horas_operacion,

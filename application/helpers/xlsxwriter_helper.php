@@ -7,7 +7,10 @@ function write_xlsx($data=NULL, $headers=NULL, $file)
   $writer->writeSheetRow('informeProducción', $headers);
   foreach($data as $row){
     if( isset($row['cantidad_total']) ){
-      $row['cantidad_total'] = $row['cantidad_total']*1;  
+      $row['cantidad_total'] = $row['cantidad_total']*1;
+    }
+    if( isset($row['cantidad']) ){
+      $row['cantidad'] = $row['cantidad']*1;  
     }
     $row['fecha_reporte'] = 25569 + ( strtotime( $row['fecha_reporte'] ) / 86400 );
     $writer->writeSheetRow('informeProducción', $row);

@@ -51,11 +51,15 @@ class Condensado_db extends CI_Model{
     return $this->db->get();
   }
 
-  public function get($idreporte)
+  public function get($idreporte=NULL, $idOT = NULL)
   {
     $this->db->select('rd.condensado');
     $this->db->from('reporte_diario AS rd');
-    $this->db->where('rd.idreporte_diario', $idreporte);
+    if(isset($idreporte)){
+      $this->db->where('rd.idreporte_diario', $idreporte);
+    }elseif ( isset($idOT) ) {
+      $this->db->where('rd.OT_idOT', $idOT);
+    }
     return $this->db->get();
   }
 
