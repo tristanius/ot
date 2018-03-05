@@ -1,5 +1,8 @@
 <div style="border:1px solid #AAA; padding:1ex;">
-  <h5>Listado de reportes de la orden de trabajo {{ ot.nombre_ot }}  <a target="_blank" ng-href="<?= site_url('export/getObservaciones') ?>/{{consulta.idOT}}" class="btn mini-btn2" data-icon="?"></a> </h5>
+  <h5>Listado de reportes de la orden de trabajo {{ ot.nombre_ot }}
+    <a target="_blank" ng-href="<?= site_url('export/getObservaciones') ?>/{{consulta.idOT}}" class="btn mini-btn2" data-icon="?"></a>
+    <a target="_blank" ng-href="<?= site_url('export/getConsonlidados') ?>/{{consulta.idOT}}" class="btn mini-btn2 blue" data-icon="&#xe041;"></a>
+  </h5>
   <div class="noMaterialStyles regularForm">
     <span>Año: <input type="number" style="width:8ex" ng-model="filtroReportes.year" ng-init="filtroReportes.year = <?= date('Y') ?> "></span>
     <span>
