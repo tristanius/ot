@@ -41,7 +41,7 @@
             <?php foreach ($data->frentes as $key => $frente): ?>
             <tbody>
               <tr>
-                <td colspan="9"> <b> <?=  $frente->nombre+' '+$frente->ubicacion ?> </b>  </td>
+                <td colspan="9"> <b> <?=  $frente->nombre.' '.$frente->ubicacion ?> </b>  </td>
               </tr>
 
               <?php foreach ($frente->items as $key => $it): ?>
@@ -56,7 +56,7 @@
                 <td><?= $it->total ?></td>
                 <td>
                   <?php if (!$data->guardado): ?>
-                    <span> <?= $it->cantidad_asociada*1 ?> </span>
+                    <span> <?= is_float($v)?number_format($it->cantidad_asociada, 4):number_format($it->cantidad_asociada) ?> </span>
                   <?php endif; ?>
                   <?php if ($it->alerta): ?>
                     <span style="color:red">La cantidad ingresada supera los valores maximos reportados del item en este frente.</span>
@@ -74,6 +74,6 @@
 
     <?php endforeach; ?>
     </table>
-    
+
   </body>
 </html>
