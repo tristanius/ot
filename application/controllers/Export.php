@@ -278,8 +278,8 @@ class Export extends CI_Controller{
   public function getConsonlidados($idOT)
   {
     $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
-    $reportes = $this->con->get($idOT);
-    $this->load->view('miscelanios/consolidado/listado_consolidado', array('resportes'=>$reportes));
+    $reportes = $this->cond->get(NULL,$idOT);
+    $this->load->view('miscelanios/consolidado/listado_consolidado', array('reportes'=>$reportes));
   }
 
   # =================================================================================
