@@ -16,9 +16,10 @@
   </p>
 
   <p>
-    <div>Referencia  propietario:</div>
+    <div>Referencia propietario:</div>
     <select ng-model="addequipo.propietario_observacion" ng-init="addequipo.propietario_observacion = 'TERMOTECNICA'">
       <option value="TERMOTECNICA">TERMOTECNICA</option>
+      <option value="TERMOTECNICA-ALQ">TERMOTECNICA-ALQ</option>
       <option value="PMA-ALQ">PMA-ALQ</option>
       <option value="PMA">PMA</option>
       <option value="ECP">ECP</option>
@@ -31,8 +32,13 @@
     </select>
   </p>
 
+  <p>
+    <label>Costo por unidad :</label>
+    <input type="number" ng-model="addequipo.costo_und" ng-init="addequipo.costo_und = 0">
+  </p>
+
   <div>
-      <button type="button" name="btn mini-btn" ng-click="addEquipoTempOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>')">Crear</button>
+      <button type="button" name="btn mini-btn" ng-click="addRecursoOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>', 'equipo', myitemf_eq)">Crear</button>
       <button type="button" name="btn mini-btn" ng-click="showSection('#AddEquipoTemp')">Ocultar</button>
   </div>
 </fieldset>

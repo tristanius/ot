@@ -50,6 +50,9 @@
   <div class="col l3 row">
     <label class="col m3" ><b>Locacion:</b></label>
     <select class="col m7" ng-model="ot.locacion">
+      <optgroup label="General">
+        <option value="OTRO">OTRO</option>
+      </optgroup>
       <optgroup label="AYACUCHO">
         <option value='OLEODUCTO DE 8" AYACUCHO-GALAN'>OLEODUCTO DE 8" AYACUCHO-GALAN</option>
         <option value='OLEODUCTO DE 14" AYACUHO-CIB'>OLEODUCTO DE 14" AYACUHO-CIB</option>

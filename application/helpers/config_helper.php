@@ -25,6 +25,24 @@ function getDestino($id){
 	return $r->row();
 }
 
+function getUsuarios($id=NULL, $active=NULL){
+	$ci =& get_instance();
+	$ci->db->close();
+	$ci->load->database('app1');
+	$ci->db->select("idusuario, LOWER(nombres) as nombres, LOWER(apellidos) AS apellidos, rol_idrol");
+	$ci->db->from("app.usuario");
+	if(isset($id)){
+		$ci->db->where("rol_idrol", $id);
+	}
+	if(isset($active)){
+		$ci->db->where("estado", $active);
+	}
+	$ci->db->order_by('nombres', 'ASC');
+	$rows = $ci->db->get();
+	$ci->db->close();
+	return json_encode($rows->result());
+}
+
 function addlog($ip, $accion, $privilegio, $user){
 	$data["direccion_ip"] = $ip;
 	$data["actividad_realizada"] = $accion;

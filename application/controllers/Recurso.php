@@ -11,7 +11,9 @@ class Recurso extends CI_Controller{
   function index(){
 
   }
-
+  # ==========================================================================================================================
+  # FORMULARIO DE RECURSOS DE OT
+  # ==========================================================================================================================
   # Fomulario para la gestión de recursos de una orden
   public function recursosOT()
   {
@@ -25,12 +27,16 @@ class Recurso extends CI_Controller{
     $this->load->model('ot_db', 'ot');
     $pers = $this->recdb->getPersonalOtBy($post->idOT, 'persona');
     $equs = $this->recdb->getEquiposOtBy($post->idOT, 'equipo');
+    $material = $this->recdb->getRecursoByOT($post->idOT, 'material');
+    $otros = $this->recdb->getRecursoByOT($post->idOT, 'otros');
 
     $items = $this->ot->getItemByTipeOT($post->idOT);
 
     $recursos = new stdClass();
     $recursos->personal = $pers->result();
     $recursos->equipo = $equs->result();
+    $recursos->material = $material->result();
+    $recursos->otros = $otros->result();
     $recursos->itemsOT = $items->result();
     $recursos->succ = 'success';
     echo json_encode($recursos);
@@ -39,9 +45,33 @@ class Recurso extends CI_Controller{
   public function addRecursoOT(){
     $post = json_decode( file_get_contents('php://input') );
     $this->load->model('recurso_db', 'recdb');
-    $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion);
+    if($post->propietario_recurso == 0 || $post->propietario_recurso == FALSE || $post->propietario_recurso == NULL){
+      $post->propietario_recurso = FALSE;
+    }else{
+      $post->propietario_recurso= TRUE;
+    }
+    if(!isset( $post->costo_und )){ $post->costo_und=0; }
+    $id = $this->recdb->addRecursoOT( null, $post, $post, TRUE, TRUE, $post->tipo, $post->codigo_temporal, $post->descripcion_temporal, $post->propietario_recurso, $post->propietario_observacion, $post->costo_und);
     echo "success";
   }
+
+  # actualizar recurso OT
+  public function update_rot()
+  {
+    $post =  json_decode( file_get_contents('php://input') );
+    $this->load->model('recurso_db', 'recot');
+    $obj = new stdClass();
+    $obj->UN = $post->UN;
+    $obj->propietario_recurso = $post->propietario_recurso;
+    $obj->propietario_observacion = $post->propietario_observacion;
+    if(isset($post->costo_und)){ $obj->costo_und = $post->costo_und; }
+    $this->recot->actualizar( 'recurso_ot', $obj, 'idrecurso_ot = '.$post->idrecurso_ot);
+    $return = new stdClass();
+    $return->success = TRUE;
+    $return->obj = $post;
+    echo json_encode($return);
+  }
+
 
   public function finby()
   {
@@ -109,9 +139,14 @@ class Recurso extends CI_Controller{
     $noValid = array();
     foreach ($rows as $key => $cell) {
       if ($process == 'personal') {
-        if($cell['A']!= 'Comentario' && $cell['B'] != 'Id C.O.' && $cell['C'] != 'Empleado'){
+        if( strtolower($cell['A']) != 'comentario' && $cell['B'] != 'Id C.O.' && strtolower($cell['C']) != 'empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
           $items = $this->item->getItemByOT( $cell['F'] , $cell['G'], NULL );
+          if( isset($cell['L']) && $ots->num_rows() < 1 ){
+            // Se hace una verificacion si no se encuentra la OT se busca si tiene una OT Mayor o contenedora
+            $ots = $this->ot->getOtBy( 'nombre_ot', $cell['L'] );
+            $items = $this->item->getItemByOT( $cell['L'] , $cell['G'], NULL );
+          }
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
           if ($ots->num_rows() > 0 && $items->num_rows() > 0) {
             $orden = $ots->row();
@@ -135,7 +170,7 @@ class Recurso extends CI_Controller{
     }
 
     if($this->ot->end_transact()){
-      $html = $this->load->view('miscelanios/reporteCargaXLS',array("filas"=>$noValid),TRUE);
+      $html = $this->load->view('miscelanios/reporteCargaXLS', array("filas"=>$noValid),TRUE);
       $this->load->view('miscelanios/resultadoUpdateMaestro', array("html"=>$html));
     }else{
       echo "Fallo al insertar registros";
@@ -166,9 +201,10 @@ class Recurso extends CI_Controller{
   {
     $this->load->model('persona_db', 'per');
     $personas  = $this->per->getBy("identificacion", $row['C'], "persona");
+    $row['A'] = '';
     if($personas->num_rows() < 1){
       $obj = new stdClass();
-      $obj->identificacion = $row['C'];
+      $obj->identificacion = str_replace( array(',','.') , array('',''), $row['C']);
       $obj->nombre_completo = $row['D'];
       $obj->fecha_registro = date('Y-m-d');
       $this->per->addObj($obj);
@@ -177,7 +213,7 @@ class Recurso extends CI_Controller{
     if( $row['K'] != 'propio' && $row['K'] != 'externo') {
       $row['A'] = 'No se ha especificado correctamente si es propio o externo (minusculas)';
     }elseif( $this->per->existePersona( $row['C'] ) ){
-      $recursos = $this->per->getRecursoOT($row["C"], $ot->idOT, $itemf->iditemf);
+      $recursos = $this->per->getRecursoOT($row["C"], $ot->idOT, $itemf->iditemf, $row['J']);
       if ($recursos->num_rows() < 1) { //si no existe el recurso add
         $this->load->model('recurso_db','recurso');
         $propietario_recurso = $row['K']=='propio'?true:false;
@@ -217,10 +253,24 @@ class Recurso extends CI_Controller{
     return $row;
   }
 
-  public function findEquiposBy($value='')
+  #==============================================================================
+
+  # Eliminar un recurso de una OT
+
+  public function delRecursoOT()
   {
-    # code...
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->database('ot');
+    $this->db->delete('recurso_ot', array('idrecurso_ot'=>$post->idrecurso_ot) );
+    if(isset($post->idrecurso)){
+      $rows = $this->db->from('recurso_ot AS rot')->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso')->where('r.idrecurso',$post->idrecurso)->get();
+      if($rows->num_rows() == 0){
+        $this->db->delete('recurso', array('idrecurso'=>$post->idrecurso) );
+      }
+    }
+    echo "success";
   }
+
 
   # Exportar html aexcel
   public function exporExcel($value='')

@@ -59,10 +59,10 @@ class Reporte_db extends CI_Model{
   # Insertar un recurso a un reporte con unas cantidades
    public function addRecursoRepo($recurso, $idrepo)
    {
+     $log = $this->session->userdata('idusuario').' '.$this->session->userdata('nombre_usuario');
      $data = array(
        'idreporte_diario' => $idrepo,
        'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
-       'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
        'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
        'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
        'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -91,17 +91,21 @@ class Reporte_db extends CI_Model{
        'gasto_viaje_pr'=> isset($recurso->gasto_viaje_pr)?$recurso->gasto_viaje_pr:NULL,
        'gasto_viaje_lugar'=> isset($recurso->gasto_viaje_lugar)?$recurso->gasto_viaje_lugar:NULL,
        'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
-       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1
+       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
+       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
+       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
+       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+       'last_log'=>$log." - ".date('Y-m-d H:i:s')
      );
      $this->db->insert('recurso_reporte_diario', $data);
    }
   #Actualiar un recurso reporte
   public function editRecursoRepo($recurso, $idrepo)
   {
+    $log = $this->session->userdata('idusuario').' '.$this->session->userdata('nombre_usuario');
     $data = array(
       'idreporte_diario' => $idrepo,
       'cantidad'=> isset($recurso->cantidad)?$recurso->cantidad: '0',
-      'cant'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
       'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
       'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
 	    'print'=> isset($recurso->print)?$recurso->print:TRUE,
@@ -130,7 +134,11 @@ class Reporte_db extends CI_Model{
       'gasto_viaje_pr'=> isset($recurso->gasto_viaje_pr)?$recurso->gasto_viaje_pr:NULL,
       'gasto_viaje_lugar'=> isset($recurso->gasto_viaje_lugar)?$recurso->gasto_viaje_lugar:NULL,
       'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
-      'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1
+      'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
+      'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
+      'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
+      'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+      'last_log'=>$log." - ".date('Y-m-d H:i:s')
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;
@@ -189,7 +197,9 @@ class Reporte_db extends CI_Model{
     $this->db->join('base','base.idbase = OT.base_idbase');
     $this->db->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad');
     $this->db->join('tipo_ot AS tp_ot','tp_ot.idtipo_ot = OT.tipo_ot_idtipo_ot');
-    $this->db->where('OT.idOT', $idOT);
+    if(isset($idOT)){
+      $this->db->where('OT.idOT', $idOT);
+    }
     if(isset($fecha)){
       $this->db->where('rd.fecha_reporte',$fecha);
     }elseif(isset($idrepo)) {
@@ -207,28 +217,32 @@ class Reporte_db extends CI_Model{
   }
 
   # Recursos de un reporte diario
-  public function getRecursos($idrepo, $tipo){
+  public function getRecursos($idrepo, $tipo, $idfrente=NULL){
     $this->load->database('ot');
-    $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item, rot.propietario_recurso, rot.propietario_observacion');
+    $this->db->select('
+      rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
+      rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
+      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente'
+    );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
     $this->db->join('itemf AS itf', 'rrd.itemf_iditemf = itf.iditemf', 'LEFT');
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc', 'LEFT');
+    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT');
     $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT');
+    $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if ($tipo == 'personal') {
       $this->db->select('p.*, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
-      $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
       $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
       $this->db->where('rot.tipo', 'persona');
     }
     elseif ($tipo == "equipos") {
       $this->db->select('
         IFNULL( e.descripcion, rot.descripcion_temporal ) AS descripcion_equipo,
-        IFNULL( e.codigo_siesa, rot.codigo_temporal ) AS codigo_siesa,
-        IFNULL( e.referencia, "Temporal" ) AS referencia,
+        IFNULL( e.codigo_siesa, "Temporal" ) AS codigo_siesa,
+        IFNULL( e.referencia, rot.codigo_temporal) AS referencia,
         e.ccosto, e.ccosto, desc_un, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
-      $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
       $this->db->where('rot.tipo', 'equipo');
     }elseif ($tipo == 'actividades') {
@@ -246,6 +260,10 @@ class Reporte_db extends CI_Model{
       ");
       $this->db->join('sector_item_tarea AS sec', 'sec.idsector_item_tarea = rrd.idsector_item_tarea', 'LEFT');
       $this->db->where('rrd.idrecurso_ot', NULL);
+    }elseif ($tipo=='material' || $tipo=='otros'){
+      $this->db->select('
+        rot.descripcion_temporal AS descripcion_recurso, rot.codigo_temporal AS referencia, rot.*, titc.BO, titc.CL, titc.grupo_mayor');
+      $this->db->where('rot.tipo', $tipo);
     }
     $this->db->where('rrd.idreporte_diario', $idrepo);
     $this->db->order_by('itf.codigo', 'asc');
@@ -253,6 +271,9 @@ class Reporte_db extends CI_Model{
     if ($tipo != 'actividades') {
       $this->db->order_by('titc.idtipo_itemc', 'desc');
       $this->db->order_by('rrd.idrecurso_reporte_diario', 'desc');
+    }
+    if(isset($idfrente)){
+      $this->db->where('rrd.idfrente_ot', $idfrente);
     }
     return $this->db->get();
   }
@@ -348,6 +369,8 @@ class Reporte_db extends CI_Model{
       rrd.varado,
       rrd.gasto_viaje_pr,
       rrd.gasto_viaje_lugar,
+      CONCAT(frente.nombre, " ", frente.ubicacion ) AS frente,
+      rrd.item_asociado,
       p.identificacion,
       p.nombre_completo,
       e.codigo_siesa,
@@ -365,6 +388,7 @@ class Reporte_db extends CI_Model{
     $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+    $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT', $idOT);
     }
@@ -433,6 +457,40 @@ class Reporte_db extends CI_Model{
     return "";
   }
 
+  # ======================================================================================
+  # Frentes
+  # ======================================================================================
+
+  public function getRecusoReportesByFrente($idOT, $idfrente, $group=TRUE, $idreporte=NULL)
+  {
+    $this->load->database('ot');
+    if($group){
+      $this->db->select('OT.idOT, OT.nombre_ot, rd.idreporte_diario, rd.fecha_reporte, ft.idfrente_ot, ft.nombre AS nombre_frente');
+    }else{
+      $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
+      rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
+      ft.nombre AS nombre_frente, ft.ubicacion AS ubicacion_frente');
+    }
+    $this->db->from('reporte_diario AS rd')
+      ->join('recurso_reporte_diario AS rrd', 'rd.idreporte_diario = rrd.idreporte_diario')
+      ->join('frente_ot AS ft','ft.idfrente_ot = rrd.idfrente_ot')
+      ->join('OT','OT.idOT = rd.OT_idOT')
+      ->where('OT.idOT',$idOT)
+      ->where('ft.idfrente_ot',$idfrente);
+    if($group && isset($idreporte)){
+      $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+      $this->db->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc');
+      $this->db->join('recurso_ot AS rot', 'rrd.idrecurso_ot = rot.idrecurso_ot', 'left');
+      $this->db->where('rd.idreporte_diario', $idreporte);
+    }else{
+      $this->db->group_by('rd.idreporte_diario');
+    }
+    return $this->db->get();
+  }
+
+
+
+  # ======================================================================================
   # TRANSACTION
   public function init_transact()
 	{

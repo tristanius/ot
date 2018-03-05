@@ -1,6 +1,55 @@
 .regularForm{
 
 }
+input, select{
+  width: auto;
+}
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+  height: auto;
+  width: auto;
+  min-height: 2.5ex;
+  font-size: 2ex;
+  margin: 1px;
+  padding: 5px;
+  border: 1px solid #BBB;
+  border-radius: 5px;
+  background: #FFF;
+}
+
+.noMaterialStyles input, .noMaterialStyles select, .regularForm input, .regularForm select, .regularForm input[type="checkbox"]:not(:checked), .regularForm input[type="checkbox"]:checked{
+  width: auto;
+}
+/* ========= Fomularios sin Diseñop material ==========  */
+.noMaterialStyles input, .noMaterialStyles select, .noMaterialStyles [type="checkbox"]:not(:checked), .noMaterialStyles [type="checkbox"]:checked, .noMaterialStyles input[type="text"]:not(.browser-default){
+  height: auto;
+  position:inherit;;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+  opacity: inherit;
+  margin-bottom: 1px;
+  background: #FFF;
+  border: 1px solid #ccc;
+  display: inherit;
+  padding: 4px;
+}
+.noMaterialStyles [type="radio"]:not(:checked)+label, .noMaterialStyles [type="radio"]:checked+label {
+  padding: 0;
+}
+.noMaterialStyles [type="radio"]+label:before, .noMaterialStyles [type="radio"]+label:after{
+  content: none;
+}
+.noMaterialStyles [type="radio"]:not(:checked), .noMaterialStyles [type="radio"]:checked{
+  display: inline-block;
+  position: relative;
+  left: auto;
+  opacity: 1;
+}
 
 .regularForm input, .regularForm select, .regularForm input[type="checkbox"]:not(:checked), .regularForm input[type="checkbox"]:checked{
   margin: 0px;
@@ -8,9 +57,18 @@
   display: inline-block;
 }
 
-.regularForm input.inputSmall, .regularForm select.inputSmall{
-  width: 9ex;
+.inputSmall input, .inputSmall select , select.inputSmall, input.inputSmall, .regularForm input.inputSmall, .regularForm select.inputSmall,
+.inputSmall input:not(.browser-default), .inputSmall select:not(.browser-default) , select.inputSmall:not(.browser-default), input.inputSmall:not(.browser-default),
+.regularForm input.inputSmall:not(.browser-default), .regularForm select.inputSmall:not(.browser-default){
+  width: 8ex;
 }
-.regularForm input.inputMedium, .regularForm select.inputMedium{
+
+.inputMedium input, .inputMedium select , select.inputMedium, input.inputMedium,  .regularForm input.inputMedium, .regularForm select.inputMedium,
+.inputMedium input:not(.browser-default), .inputMedium select:not(.browser-default) , select.inputMedium:not(.browser-default), input.inputMedium:not(.browser-default),
+.regularForm input.inputMedium:not(.browser-default), .regularForm select.inputMedium:not(.browser-default){
   width: 16ex;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+  pointer-events: initial;
 }

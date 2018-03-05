@@ -7,7 +7,7 @@
 ?>
 <!DOCTYPE html>
 <html>
-  <?php $this->load->view('reportes/imprimir_pma/rd/head'); ?>
+  <?php $this->load->view('reportes/imprimir_pma/v2017/rd/head'); ?>
   <body>
     <script type="text/php">
     if ( isset($pdf) ) {
@@ -19,13 +19,13 @@
     }
     </script>
     <?php
-    $this->load->view('reportes/imprimir_pma/rd/header', array('r'=>$r, 'json_r'=>$json_r) );
-    $this->load->view('reportes/imprimir_pma/rd/personal', array( 'personal'=>$recursos->personal ) ); //, array('personal' => $recusos->personal  ) );
-    $this->load->view('reportes/imprimir_pma/rd/equipos_apu', array( 'equipos' => $recursos->equipos, 'apu'=>$recursos->actividades ) ); //, array('equipos' => $recursos->equipos, 'apu'=>$recursos->apu  ) );
+    $this->load->view('reportes/imprimir_pma/v2017/rd/header', array('r'=>$r, 'json_r'=>$json_r) );
+    $this->load->view('reportes/imprimir_pma/v2017/rd/personal', array( 'personal'=>$recursos->personal ) ); //, array('personal' => $recusos->personal  ) );
+    $this->load->view('reportes/imprimir_pma/v2017/rd/equipos_apu', array( 'equipos' => $recursos->equipos, 'apu'=>$recursos->actividades ) ); //, array('equipos' => $recursos->equipos, 'apu'=>$recursos->apu  ) );
     ?>
     <br>
     <?php
-    $this->load->view('reportes/imprimir_pma/rd/info_adicional', array('json_r'=>$json_r, 'r'=>$r));
+    $this->load->view('reportes/imprimir_pma/v2017/rd/info_adicional', array('json_r'=>$json_r, 'r'=>$r));
     ?>
   </body>
 </html>

@@ -289,6 +289,19 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     alert(msj);
     console.log(msj)
   }
+
+  $scope.parseJSON = function(string){
+    return JSON.parse(string);
+  }
+
+  // inserta un elemento a una lista con la funcion timeout para refrescar la pagina
+  $scope.set_el_timeout = function(list, obj){
+    $timeout(function(){
+      list.push(obj);
+    });
+  }
+
+
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });
@@ -372,6 +385,12 @@ app.controller("imprimirRD", function($scope, $http, $timeout){
 
 app.controller("historico_fact", function($scope, $http, $timeout){
   historico_fact($scope, $http, $timeout);
+});
+app.controller("condensado_rd", function($scope, $http, $timeout){
+  condensado_rd($scope, $http, $timeout);
+});
+app.controller("frentes", function($scope, $http, $timeout){
+  frentes($scope, $http, $timeout);
 });
 
 

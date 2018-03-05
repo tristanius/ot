@@ -77,12 +77,13 @@
                 <?php endif; ?>
               </td>
               <td>
-                <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#info', 'nodisplay', '.mypanel > div')" data-icon="&#xe021;"> Detalles Reporte</button>
-                <button type="button" ng-if="!validPriv(38) || !validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#preview_reporte', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Recursos</button>
+                <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#info', 'nodisplay', '.mypanel > div')" data-icon="&#xe021;"> Detalles</button>
+                <button type="button" ng-if="!validPriv(38) && !validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#preview_reporte', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Recursos</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#recursosOT', 'nodisplay', '.mypanel > div', 'setHeader' )" data-icon="+"> Tiempo/Recursos</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
-                <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')">Validaciones</button>
+                <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')" data-icon="&#xe02d;">Validación</button>
+                <button type="button" ng-show="(rd.info.estado == 'CERRADO') && ( validPriv(45) || validPriv(46) )" class="btn mini-btn brown" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="&#xe04f;"> Consolidar</button>
               </td>
             </tr>
             <tr class="noMaterialStyles">
@@ -117,6 +118,7 @@
         <div id="firmas" class="font11 nodisplay"> <?php $this->load->view('reportes/form/firmas'); ?> </div>
         <div id="observacion" class="font11 nodisplay"> <?php $this->load->view('reportes/form/observaciones'); ?> </div>
         <div id="validaciones" class="font11 nodisplay"> <?php $this->load->view('reportes/form/validaciones'); ?> </div>
+        <div id="condensado" class="font11 nodisplay"> <?php $this->load->view('reportes/form/condensado'); ?> </div>
       </div>
       <br>
 
@@ -136,7 +138,7 @@
       <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
 
-      <div class="btnWindow">
+      <div class="btnWindow" ng-show="!spinner">
 
         <button type="button" class="light-green waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
           ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')">

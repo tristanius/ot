@@ -79,7 +79,7 @@ class Persona_db extends CI_Model{
     return $rows->num_rows() > 0?TRUE:FALSE;
   }
 
-  public function getRecursoOT($idPersona, $idOT, $idItemf)
+  public function getRecursoOT($idPersona, $idOT, $idItemf, $asignacion=NULL)
   {
     $this->load->database('ot');
     $this->db->select('rot.*, r.fecha_ingreso, r.centro_costo, OT.nombre_ot, r.unidad_negocio');
@@ -89,6 +89,7 @@ class Persona_db extends CI_Model{
     $this->db->where('r.persona_identificacion', $idPersona);
     $this->db->where('rot.OT_idOT', $idOT);
     $this->db->where('rot.itemf_iditemf', $idItemf);
+    if( isset($asignacion) ){ $this->db->where('rot.propietario_observacion', $asignacion); }
     return $this->db->get();
   }
   public function setPersonaOT($persona)

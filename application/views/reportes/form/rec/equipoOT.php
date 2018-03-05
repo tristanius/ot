@@ -3,7 +3,7 @@
     <div class="">
       <h5 class="center-align blue white-text">Equipo agregado a esta OT: <?= $ot->nombre_ot ?></h5>
       <button type="button" ng-click="closeRecursoReporte('#equipoOT',2)" class="btn green mini-btn2" name="button" ng-show="rd.info.estado == 'ABIERTO'">Agregar</button>
-      <button type="button" ng-click="closeRecursoReporte('#equipoOT',4)" class="btn orange mini-btn2" name="button">Volver</button>
+      <button type="button" ng-click="closeRecursoReporte('#equipoOT',0)" class="btn orange mini-btn2" name="button">Volver</button>
     </div>
 
     <div class="row">

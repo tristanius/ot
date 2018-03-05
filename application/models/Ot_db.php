@@ -181,6 +181,63 @@ class Ot_db extends CI_Model {
 		return $this->db->get();
 	}
 
+
+	# ============================================================================
+
+	# Frentes de TRABAJO
+
+	public function addFrenteOT($frente)
+	{
+		$this->load->database('ot');
+		$frente = (array) $frente;
+		$frente['usuario'] = json_encode($frente['usuario']);
+		$this->db->insert('frente_ot', $frente);
+		return $this->db->insert_id();
+	}
+	public function modFrenteOT($frente, $idfrente)
+	{
+		$this->load->database('ot');
+		$frente = (array) $frente;
+		$frente['usuario'] = json_encode($frente['usuario']);
+		return $this->db->update('frente_ot', $frente, 'idfrente_ot = '.$idfrente);
+	}
+
+	public function getFrentesOT($idot)
+	{
+		$this->load->database('ot');
+		return $this->db->get_where('frente_ot', array('OT_idOT'=>$idot));
+	}
+
+	public function delFrenteOT($idfrente)
+	{
+		$this->load->database('ot');
+		return $this->db->delete('frente_ot', array('idfrente',$idfrente));
+	}
+
+	public function getPlanByFrentes($id)
+	{
+		$this->load->database('ot');
+		$this->db->select(
+			'OT.nombre_ot,
+			itf.descripcion,
+			itf.codigo,
+			itf.itemc_item,
+			f.nombre AS nombre_frente,
+			f.ubicacion AS ubicacion_frente
+			'
+		);
+		$this->db->from('OT');
+		$this->db->join('tarea_ot AS tr', 'tr.OT_idOT = OT.idOT');
+		$this->db->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot');
+		$this->db->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot', 'left');
+		$this->db->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf');
+		$this->db->where('OT.idOT', $id);
+		$this->db->group_by('itf.codigo');
+		$this->db->order_by("itt.iditem_tarea_ot", "asc");
+		$this->db->order_by('itf.itemc_item', 'asc');
+		return $this->db->get();
+	}
+
 	#=============================================================================
 
 	# Obetener una Ot por un campo especificado por parametro
@@ -214,7 +271,8 @@ class Ot_db extends CI_Model {
 				titc.grupo_mayor,
 				titc.BO,
 				titc.CL,
-				SUM(itt.cantidad) AS planeado
+				SUM(itt.cantidad) AS planeado,
+				itt.idfrente_ot
 				'
 			);
 		$this->db->from('item_tarea_ot AS itt');
@@ -325,10 +383,10 @@ class Ot_db extends CI_Model {
 			->get();
 	}
 
-	public function resumenOT($idOt='')
+	public function resumenOT($idOt='', $frentes=NULL)
 	{
 		$this->load->database('ot');
-		return $this->db->select('
+		$this->db->select('
 				titc.descripcion AS tipo_itemc,
 				OT.idOT,
 				OT.nombre_ot,
@@ -342,6 +400,50 @@ class Ot_db extends CI_Model {
 				itt.facturable,
 				itt.idsector_item_tarea,
 				SUM(itt.cantidad_planeada) AS cantidad_planeada,
+				itf.*
+			')
+			->from('OT')
+			->join('tarea_ot AS tr', 'tr.OT_idOT = OT.idOT')
+			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
+			->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf')
+			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
+			->join('tipo_itemc AS titc', 'titc.idtipo_itemc = itc.idtipo_itemc')
+			->where('OT.idOT',$idOt)
+			->group_by('itf.codigo')
+			->group_by('itt.facturable')
+			->group_by('itt.idsector_item_tarea');
+		$this->db->order_by('itf.tipo', 'ASC');
+		if(isset($frentes)){
+			$this->db->select('ft.nombre AS nombre_frente');
+			$this->db->select('
+				(
+					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
+					FROM recurso_reporte_diario AS rrd
+					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
+					WHERE rd.OT_idOT = OT.idOT
+					AND rrd.facturable = TRUE
+					AND rrd.cantidad > 0
+					AND rrd.itemf_iditemf = itf.iditemf
+					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
+					AND ft.idfrente_ot = rrd.idfrente_ot
+				) AS cant_ejecutada,
+				(
+					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
+					FROM recurso_reporte_diario AS rrd
+					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
+					WHERE rd.OT_idOT = OT.idOT
+					AND rrd.facturable = FALSE
+					AND rrd.cantidad > 0
+					AND rrd.itemf_iditemf = itf.iditemf
+					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
+					AND ft.idfrente_ot = rrd.idfrente_ot
+				) AS cant_ejecutada_nofact,
+			');
+			$this->db->join('frente_ot AS ft', 'ft.idfrente_ot = itt.idfrente_ot', 'left');
+			$this->db->group_by('ft.idfrente_ot');
+			$this->db->order_by('itt.idfrente_ot', 'ASC');
+		}else {
+			$this->db->select('
 				(
 					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
 					FROM recurso_reporte_diario AS rrd
@@ -362,19 +464,10 @@ class Ot_db extends CI_Model {
 					AND rrd.itemf_iditemf = itf.iditemf
 					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
 				) AS cant_ejecutada_nofact,
-				itf.*
-			')
-			->from('OT')
-			->join('tarea_ot AS tr', 'tr.OT_idOT = OT.idOT')
-			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
-			->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf')
-			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
-			->join('tipo_itemc AS titc', 'titc.idtipo_itemc = itc.idtipo_itemc')
-			->where('OT.idOT',$idOt)
-			->group_by('itf.codigo')
-			->group_by('itt.facturable')
-			->group_by('itt.idsector_item_tarea')
-			->get();
+			');
+		}
+		$this->db->order_by('itf.codigo', 'ASC');
+		return $this->db->get();
 	}
 	// Mejora en el resumen
 	# =================================================================================

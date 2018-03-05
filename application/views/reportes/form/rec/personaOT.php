@@ -3,7 +3,7 @@
     <div class="">
       <h5 class="center-align blue white-text">Personal agregado a esta OT: <?= $ot->nombre_ot ?></h5>
       <button type="button" ng-click="closeRecursoReporte('#personalOT',1)" class="btn green mini-btn2" name="button" ng-show="rd.info.estado == 'ABIERTO'">Agregar</button>
-      <button type="button" ng-click="closeRecursoReporte('#personalOT',4)" class="btn orange mini-btn2" name="button">Volver</button>
+      <button type="button" ng-click="closeRecursoReporte('#personalOT',0)" class="btn orange mini-btn2" name="button">Volver</button>
 
       <p class="padding1ex">
         Hola, aqui puedes elejir el personal que deseas agreagar al reporte diario que estas desarrollando. Recuerda, una vez hecho esto podras duplicar el reporte para agilizar este proceso

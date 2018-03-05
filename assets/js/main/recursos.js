@@ -2,9 +2,12 @@ var recursosOT = function($scope, $http, $timeout){
   $scope.myOts = [];
   $scope.ot = {};
   $scope.myitemf_eq={};
+  $scope.cambio_un = { show: false, data: undefined };
   $scope.recursosOT = {
       personal:[],
-      equipo:[]
+      equipo:[],
+      material:[],
+      otros:[]
   }
   $scope.findPersonal = false;
   $scope.addPersonaExterno = false;
@@ -14,7 +17,7 @@ var recursosOT = function($scope, $http, $timeout){
   $scope.itemsOT = [];
 
   $scope.getOTs= function(url, link){
-    $http.post(url+"/", {indicio_nombre_ot: $scope.consulta.indicio_nombre_ot})
+    $http.post(url+"/", $scope.consulta)
     .then(
       function(response){
         $scope.myOts = response.data;
@@ -42,12 +45,15 @@ var recursosOT = function($scope, $http, $timeout){
     console.log($scope.consulta.linkOT+'/'+ot.idOT);
     $http.post($scope.consulta.linkOT+'/'+ot.idOT, { idOT: $scope.consulta.ot.idOT })
     .then(
-      function(response){
-          $scope.recursosOT.personal = response.data.personal;
-          $scope.recursosOT.equipo = response.data.equipo;
-          $scope.itemsOT = response.data.itemsOT;      },
-      function(response){
-        alert(response.data);
+      function(resp){
+          $scope.recursosOT.personal = resp.data.personal;
+          $scope.recursosOT.equipo = resp.data.equipo;
+          $scope.recursosOT.material = resp.data.material;
+          $scope.recursosOT.otros = resp.data.otros;
+          $scope.itemsOT = resp.data.itemsOT;
+      },
+      function(resp){
+        alert(resp.data);
       }
     );
   }
@@ -76,19 +82,19 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
-  $scope.addEquipoTempOT = function(eq, url){
-    console.log($scope.myitemf_eq);
+  $scope.addRecursoOT = function(it, url, tp, item){
     $http.post(url,
       {
         recurso_idrecurso: null,
         idOT: $scope.consulta.idOT,
-        codigo: $scope.myitemf_eq.codigo,
-        iditemf: $scope.myitemf_eq.iditemf,
-        tipo:'equipo',
-        codigo_temporal:eq.codigo_temporal,
-        descripcion_temporal: eq.descripcion_temporal,
-        propietario_recurso: eq.propietario_recurso,
-        propietario_observacion: eq.propietario_observacion
+        codigo: item.codigo,
+        iditemf: item.iditemf,
+        tipo:tp,
+        codigo_temporal:it.codigo_temporal,
+        descripcion_temporal: it.descripcion_temporal,
+        propietario_recurso: it.propietario_recurso,
+        propietario_observacion: it.propietario_observacion,
+        costo_und: it.costo_und
       }
     ).then(
       function(response){
@@ -159,4 +165,28 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
+  $scope.cambioUN = function(rec){
+    $timeout( function(){
+      $scope.cambio_un.show = true;
+      $scope.cambio_un.data = rec;
+    })
+  }
+
+  $scope.cambiarUN = function(link, recs, dom_item){
+    $http.post(link, recs.data).then(
+      function(resp){
+        if (resp.data.success) {
+          console.log(resp.data);
+          $('#modal1').modal('close');
+        }else{
+          alert("error de actualizacion");
+          console.log(resp.data);
+        }
+      },
+      function(resp){
+        alert("error de peticion");
+        console.log(resp.data);
+      }
+    );
+  }
 }

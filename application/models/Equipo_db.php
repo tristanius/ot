@@ -76,16 +76,21 @@ class Equipo_db extends CI_Model{
     {
       $this->load->database('ot');
       $data = array(
-        'itemf_codigo'=>$equipo->itemf_codigo,
-        'itemf_iditemf'=>$equipo->itemf_iditemf,
-        'estado'=>TRUE,
-        'validado'=>TRUE,
-        'recurso_idrecurso'=>$id,
-        'OT_idOT'=>$equipo->OT_idOT,
+        'itemf_codigo' => $equipo->itemf_codigo,
+        'itemf_iditemf' => $equipo->itemf_iditemf,
+        'estado' => TRUE,
+        'recurso_idrecurso' => $id,
+        'OT_idOT' => $equipo->OT_idOT,
         'tipo' => 'equipo',
         'propietario_recurso' => $equipo->propietario_recurso,
         'propietario_observacion' => $equipo->propietario_observacion
       );
+      if(isset($equipo->costo_und) && $equipo->costo_und != '' && $equipo->costo_und != NULL ){
+        $data['costo_und'] = $equipo->costo_und;
+      }
+      if(isset($equipo->UN) && $equipo->UN != '' && $equipo->UN != NULL ){
+        $data['UN'] = $equipo->UN;
+      }
       $this->db->insert('recurso_ot', $data);
       return $this->db->insert_id();
     }

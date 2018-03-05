@@ -15,8 +15,28 @@ class Reportepersonal extends CI_Controller{
   # add
   public function tiempolaborado($idOT, $idReporte)
   {
-    $post = json_decode( file_get_contents("php://input") );
     $this->load->model('Reportepersonal_db', 'repoper');
+    $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
+    if( $rowOT->num_rows()>0 ){
+      switch ($rowOT->row()->idcontrato ) {
+        case 1:
+          $this->tl_termo($idOT, $idReporte);
+          break;
+
+        case 2:
+          $this->tl_pma($idOT, $idReporte);
+          break;
+
+        default:
+          $this->tl_pma($idOT, $idReporte);
+          break;
+      }
+    }
+  }
+
+  public function tl_termo($idOT, $idReporte)
+  {
+    $post = json_decode( file_get_contents("php://input") );
     $rows = $this->repoper->getBy($idOT, $idReporte);
     $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
     $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
@@ -28,11 +48,10 @@ class Reportepersonal extends CI_Controller{
   public function tl_pma($idOT, $idReporte)
   {
     $post = json_decode( file_get_contents("php://input") );
-    $this->load->model('Reportepersonal_db', 'repoper');
     $rows = $this->repoper->getBy($idOT, NULL,$idReporte);
     $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
     $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
-    $this->load->view('reportes/imprimir_pma/tl/tiempo_laborado',
+    $this->load->view('reportes/imprimir_pma/v2017/tl/tiempo_laborado',
       array('personal'=>$rowsPersonas->result(),'r'=>$rows->row(), 'download'=>true)
     );
   }

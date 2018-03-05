@@ -58,7 +58,8 @@ class Export extends CI_Controller{
     $bases = $this->input->post("bases");
     $f1 = $this->input->post("fecha_ini");
     $f2 = $this->input->post("fecha_fin");
-    $rows = $this->repo->informeFacturacion($f1, $f2, NULL, json_decode($bases));
+    $tipo_informe = $this->input->post("tipo_informe");
+    $rows = $this->repo->informeFacturacion($f1, $f2, NULL, json_decode($bases), $tipo_informe);
 
     write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
     force_download('./uploads/informeProduccion.xlsx',NULL);
@@ -76,18 +77,26 @@ class Export extends CI_Controller{
     force_download('./uploads/sabanaFactura.xlsx',NULL);
   }
 
-  public function informeOtPyco($nodownload=FALSE)
+  public function informeOtPyco( $f_inicio=NULL, $f_final=NULL, $nodownload=FALSE)
   {
     $this->load->helper(array('config'));
     $this->load->model('facturacion_db', 'infofac');
-    $rows = $this->infofac->informeOtPyco();
+    $where = NULL;
+    if( isset($f_inicio)){
+      $where = "tr.fecha_inicio >= '".$f_inicio."'";
+    }
+    $rows = $this->infofac->informeOtPyco($where);
     $this->load->view('miscelanios/informesPyco/informeMesesOT', array('rows'=>$rows,'nodownload'=>$nodownload, "nombre"=>"InformeOrdenesPYCO") );
   }
-  public function informePYCO($nodownload=FALSE)
+  public function informePYCO( $f_inicio=NULL, $f_final=NULL, $nodownload=FALSE)
   {
     $this->load->helper(array('config'));
     $this->load->model('facturacion_db', 'repo');
-    $rows = $this->repo->informePYCO();
+    $where = NULL;
+    if( isset($f_inicio) ){
+      $where = "tr.fecha_inicio >= '".$f_inicio."'";
+    }
+    $rows = $this->repo->informePYCO($where);
     $this->load->view('miscelanios/informePYCO', array('rows'=>$rows,'nodownload'=>$nodownload));
   }
   #=============================================================================
@@ -102,10 +111,15 @@ class Export extends CI_Controller{
         $this->reportePDF($idOT, $idrepo);
         break;
       case 2:
-        $this->rd_pma($idOT, $idrepo);
+        $fecha = date('Y-m-d', strtotime($row->fecha_reporte) );
+        if($fecha >= date('Y-m-d', strtotime('2018-01-01')) ){
+          $this->rd_pma($idOT, $idrepo, 'reportes/imprimir_pma/v2018/rd', FALSE);
+        }else{
+          $this->rd_pma($idOT, $idrepo, 'reportes/imprimir_pma/v2017/rd/rd');
+        }
         break;
       default:
-        $this->rd_pma($idOT, $idrepo);
+        $this->reportePDF($idOT, $idrepo);
         break;
     }
   }
@@ -128,11 +142,11 @@ class Export extends CI_Controller{
     $html = $this->load->view('reportes/imprimir/reporte_diario',
       array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
       TRUE);
-    doPDF($html, 'Reporte-'.$row->nombre_ot);
+    doPDF($html, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
     //echo $html;
   }
 
-  public function rd_pma($idOT, $idrepo)
+  public function rd_pma($idOT, $idrepo, $formato, $landscape = TRUE)
   {
     setlocale(LC_ALL,"es_ES");
     $this->load->helper('reporte_pma');
@@ -144,10 +158,10 @@ class Export extends CI_Controller{
     $recursos->personal = $this->repo->getRecursos($idrepo,"personal")->result();
     $recursos->equipos = $this->repo->getRecursos($idrepo,"equipos")->result();
     $recursos->actividades = $this->repo->getRecursos($idrepo,"actividades")->result();
-    $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+    $vw = $this->load->view( $formato , array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
     // generamos un pdf con el helper de pdf
     $this->load->helper('pdf');
-    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
+    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, $landscape);
   }
 
   public function reportePDFHTML($idOT, $idrepo)
@@ -222,17 +236,24 @@ class Export extends CI_Controller{
         $vw = $this->load->view('reportes/imprimir/reporte_diario',
           array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
           TRUE);
+          doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
         break;
       case 2:
         $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-        $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        if($fecha >= date('Y-m-d', strtotime('2018-01-01')) ){
+          $formato = 'reportes/imprimir_pma/v2018/rd';
+        }else{
+          $formato = 'reportes/imprimir_pma/v2017/rd/rd';
+        }
+        $vw = $this->load->view($formato, array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
         break;
       default:
         $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
-        $vw = $this->load->view('reportes/imprimir_pma/rd/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        $vw = $this->load->view('reportes/imprimir_pma/v2018/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
+        doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
         break;
     }
-    doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
   }
 
   public function getStatusFooter($value='')
@@ -245,11 +266,33 @@ class Export extends CI_Controller{
     return substr($value, 0, 2);
   }
 
+  public function getObservaciones($idOT)
+  {
+    $this->load->database('ot');
+    $this->load->model('miscelanio_db', 'misc');
+    $observaciones = $this->misc->getObservaciones($idOT);
+    $this->load->helper('xlsx');
+    genObservaciones($observaciones);
+  }
+
+  public function getConsonlidados($idOT)
+  {
+    $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
+    $reportes = $this->cond->get(NULL,$idOT);
+    $this->load->view('miscelanios/consolidado/listado_consolidado', array('reportes'=>$reportes));
+  }
+
   # =================================================================================
   public function resumenOt($idOT)
   {
     $this->load->model('ot_db', 'ot');
-		$resumen = $this->ot->resumenOT($idOT);
+    $resumen = NULL;
+		$frentes = $this->ot->getFrentesOT($idOT);
+		if($frentes->num_rows() > 0){
+			$resumen = $this->ot->resumenOT($idOT, TRUE);
+		}else{
+			$resumen = $this->ot->resumenOT($idOT);
+		}
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="ResumenOT.xls"');
     header('Cache-Control: max-age=0');

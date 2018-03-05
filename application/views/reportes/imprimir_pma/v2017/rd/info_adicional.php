@@ -6,7 +6,7 @@
       <td colspan="5"><?= $r->sap_tarea ?></td>
       <td colspan="26"></td>
     </tr>
-    <?php $this->load->view('reportes/imprimir_pma/rd/info_actividad', array('title'=>'ACTIVIDAD 1', 'data'=>NULL ) ); ?>
+    <?php $this->load->view('reportes/imprimir_pma/v2017/rd/info_actividad', array('title'=>'ACTIVIDAD 1', 'data'=>NULL ) ); ?>
     <tr>
       <td colspan="13" class="centrar"><b>ILICITOS</b></td>
       <td colspan="22" class="centrar"><b>CANTIDADES DE OBRAS EJECUTADAS</b></td>
@@ -72,7 +72,7 @@
       <td colspan="3"></td>
     </tr>
 
-    <?php $this->load->view('reportes/imprimir_pma/rd/info_actividad', array('title'=>'ACTIVIDAD 2', 'data'=>NULL ) ); ?>
+    <?php $this->load->view('reportes/imprimir_pma/v2017/rd/info_actividad', array('title'=>'ACTIVIDAD 2', 'data'=>NULL ) ); ?>
 
     <tr>
       <td colspan="13" class="centrar"><b>ILICITOS</b></td>
@@ -142,6 +142,10 @@
     <tr class="trLimpia"><td colspan="35"></td></tr>
     <tr class="trLimpia"><td colspan="35"></td></tr>
     <tr><td colspan="35">OBSERVACIONES: </td></tr>
+
+    <tr>
+      <td colspan="35"> <b>OBJETO:</b> <?= $r->actividad ?></td>
+    </tr>
 
     <?php foreach ($json_r->observaciones as $key => $obs): ?>
     <tr><td colspan="35"> <?= $obs->msj ?> </td></tr>

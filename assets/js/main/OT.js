@@ -23,6 +23,7 @@ var OT = function($scope, $http, $timeout){
 				ambito.items = JSON.parse(response.data.items);
 				ambito.vigencias = JSON.parse(response.data.vigencias);
 				ambito.contratos = JSON.parse(response.data.contratos);
+				ambito.lista_usuarios = JSON.parse(response.data.usuarios);
 			},
 			function (response) {
 				alert("Algo ha salido mal al cargar esta interfaz, cierra la vista e intenta de nuevo, si el problema persiste comunicate a el area TIC.");
@@ -96,6 +97,8 @@ var OT = function($scope, $http, $timeout){
 	}
 
 	$scope.consola = function(tr){console.log(tr)}
+	// ---------------------------------------------------------------------------
+
 	// Add una nueva tarea
 	$scope.addTarea = function(ambito){
 		var idot = (ambito.ot.idOT != undefined)?ambito.ot.idOT:"";
@@ -106,8 +109,8 @@ var OT = function($scope, $http, $timeout){
 					"nombre_tarea": "TAREA "+( (ambito.ot.tareas.length >= 1)?ambito.ot.tareas.length+1:'INICIAL'),
 					"valor_recursos": "0",
 					"valor_tarea_ot": "0",
-					"fecha_inicio": (d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()),
-					"fecha_fin": (d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()),
+					"fecha_inicio": (d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()),
+					"fecha_fin": (d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()),
 					"json_indirectos": {
 						"administracion": 0,
 						"imprevistos": 0,
@@ -138,6 +141,8 @@ var OT = function($scope, $http, $timeout){
 					"actividades": [],
 					"personal": [],
 					"equipos": [],
+					'material':[],
+					'otros':[],
 					"responsables":{},
 					"requisitos_documentales":{}
 				}
@@ -149,12 +154,25 @@ var OT = function($scope, $http, $timeout){
 	// Gestion de items de OT
 	//Muestra items por agregar de un tipo en la ventana. Debe llamarse desde un controller hijo.
 	$scope.selectItemsType =  function(type, ambito){
-		if(type == 1){
-			ambito.myItems = angular.copy(ambito.items['actividad']);
-		}else if(type == 2){
-			ambito.myItems = angular.copy(ambito.items['personal']);
-		}else if(type == 3){
-			ambito.myItems = angular.copy(ambito.items['equipo']);
+		switch (type) {
+			case 1:
+				ambito.myItems = angular.copy(ambito.items['actividad']);
+				break;
+			case 2:
+				ambito.myItems = angular.copy(ambito.items['personal']);
+				break;
+			case 3:
+				ambito.myItems = angular.copy(ambito.items['equipo']);
+				break;
+			case 'material':
+				ambito.myItems = angular.copy(ambito.items['material']);
+				break;
+			case 'otros':
+				ambito.myItems = angular.copy(ambito.items['otros']);
+				break;
+			default:
+				ambito.myItems = [{}];
+				alert('no se encuentran elementos de el tipo seleccionado.');
 		}
 	}
 	//Muestra la ventana para add items. Debe llamarse desde un controller hijo.
@@ -193,6 +211,14 @@ var OT = function($scope, $http, $timeout){
 					tr.json_horas_extra.json_horas_extra.push(v);
 				}else if(v.tipo_item == 3){
 					tr.equipos.push(v);
+				}else if (v.tipo_item == 'material') {
+					if (!tr.material)
+						tr.material = [];
+					tr.material.push(v);
+				}else if(v.tipo_item == 'otros'){
+					if (!tr.otros)
+						tr.otros = [];
+					tr.otros.push(v);
 				}
 			};
 			if (i == size){
@@ -215,6 +241,10 @@ var OT = function($scope, $http, $timeout){
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
+			if(tr.material)
+				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
+			if (tr.otros)
+				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 			//Redondeado de totales
 			tr.valor_recursos = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * 0.18);
@@ -524,6 +554,32 @@ var OT = function($scope, $http, $timeout){
 		meses.total += meses.julio*1+meses.agosto*1+meses.septiembre*1+meses.octubre*1+meses.noviembre*1+meses.diciembre*1;
 	}
 
+	// --------------------------------------------------------------------------------
+	// Frentes de trabajo
+
+	$scope.addFrente = function( lnk, lista, frente ){
+		$http.post(
+			lnk,
+			frente
+		).then(
+			function(resp){
+				if(resp.data.success == 'success'){
+					frente = resp.data.frente;
+					$scope.$parent.set_el_timeout(lista, frente);
+					frente = {};
+					console.log(resp.data);
+				}else{
+					alert("Error al recibir respuesta del servidor.");
+					console.log(resp.data);
+				}
+			},
+			function(resp){
+				alert("Error al crear un frente.")
+				console.log(resp.data);
+			}
+		);
+	}
+
 }
 
 // ====================================================================================================
@@ -567,6 +623,7 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.ot.estado_doc = 'POR EJECUTAR';
 	$scope.myestado_doc = 'POR EJECUTAR';
 	$scope.ot.allMeses = [ ];
+	$scope.ot.frentes = [];
 	////$scope.$parent.tinyMCE();
 
 	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope); }

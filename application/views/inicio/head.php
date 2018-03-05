@@ -4,16 +4,17 @@
     <link rel="stylesheet" href="<?= base_url('assets/fontastic/styles.css') ?>" />
     <!-- Materialize -->
     <link rel="stylesheet" href="<?= base_url('assets/materialize/css/materialize.min.css') ?>" />
-    <!--  -->
+    <link rel="shortcut icon" href="<?= base_url( 'favico.ico' ) ?>" />
+
+    <!-- uploadfile CSS -->
+    <link href="<?= base_url('assets/js/uploader/uploadfile.css') ?>" rel="stylesheet">
+
+    <!-- Estilos propios -->
     <link rel="stylesheet" href="<?= base_url('assets/css/principal.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/menu_opciones.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/tablas.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/calendario.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/forms.css') ?>?v=<?php echo rand(); ?>" />
-    <link rel="shortcut icon" href="<?= base_url( 'favico.ico' ) ?>" />
-
-    <!-- uploadfile CSS -->
-    <link href="<?= base_url('assets/js/uploader/uploadfile.css') ?>" rel="stylesheet">
 
     <!-- librerias JS -->
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/jquery.min.js') ?>"></script>
@@ -23,9 +24,8 @@
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/jquery-ui/jquery-ui.min.js') ?>"></script>
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/js/vendor/jquery-ui/jquery-ui.css') ?>" />
 
-    <!-- Materialize
+    <!-- Materialize -->
     <script type="text/javascript" src="<?= base_url('assets/materialize/js/materialize.min.js') ?>"></script>
-    -->
 
     <!-- uploadfile JS -->
     <script src="<?= base_url('assets/js/vendor/jquery.form.js') ?>" type="text/javascript"></script>
@@ -37,7 +37,14 @@
     <link rel="stylesheet" href="<?= base_url('assets/js/datatables/datatables.min.css') ?>" media="screen" charset="utf-8">
 
     <!-- tinyMCE -->
-    <script src="<?= base_url('assets/js/vendor/tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tableExport/js/xlsx.core.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tableExport/js/FileSaver.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tableExport/js/tableexport.min.js') ?>" type="text/javascript"></script>
+
+    <!-- TableExport -->
+    <link rel="stylesheet" href="<?= base_url('assets/js/vendor/tableExport/css/tableexport.min.css') ?>" />
+    <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
 
     <!-- Charts JS -->
