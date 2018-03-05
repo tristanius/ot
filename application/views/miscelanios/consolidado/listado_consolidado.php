@@ -6,7 +6,7 @@
 <table id="info_rd_condensado" class="mytabla" >
 <?php foreach ($reportes->result() as $key => $rd): ?>
 
-  <?php if ( isset($rd->condensado) && isset($rd->frentes) ): ?>
+  <?php if ( isset($rd->condensado) ): ?>
 
       <?php $data = json_decode($rd->condensado) ?>
 
@@ -41,7 +41,7 @@
           <td><?= $it->itemc_item ?></td>
           <td class="tableexport-string"> <span> <?= $it->descripcion ?> </span> </td>
           <td><?= $it->unidad ?></td>
-          <td><?= $it->item_asociado.' ('.$it->descripcion_asociad.') '; ?></td>
+          <td><?= $it->item_asociado.' ('.$it->descripcion_asociada.') '; ?></td>
           <td><?= $it->total ?></td>
           <td>
             <?php if (!$data->guardado): ?>
