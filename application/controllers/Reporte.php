@@ -70,6 +70,7 @@ class Reporte extends CI_Controller{
   }
   # insetar el reporte
   public function insert(){
+    $this->load->library('session');
     $post = json_decode( file_get_contents("php://input") );
 
     $validReporte = $this->validarRecursos("retornable", $post);
@@ -121,6 +122,7 @@ class Reporte extends CI_Controller{
     }
   }
   public function insertarRecursoRep($list, $idr){
+    $this->load->library('session');
     foreach ($list as $key => $value) {
       $this->repo->addRecursoRepo($value, $idr);
     }
@@ -305,6 +307,7 @@ class Reporte extends CI_Controller{
   # ===========================================================================================================
   public function update($value='')
   {
+    $this->load->library('session');
     $post = json_decode( file_get_contents("php://input") );
     $cambios = new stdClass();
     $validReporte = $this->validarRecursos("retornable", $post);
@@ -381,6 +384,7 @@ class Reporte extends CI_Controller{
 
   public function actualizarRecursos($recursos, $idr, $fecha_reporte)
   {
+    $this->load->library('session');
     $cambios = array();
     foreach ($recursos as $key => $rec) {
       if( !isset($rec->idrecurso_reporte_diario) ){
