@@ -56,7 +56,7 @@
                 <td><?= $it->total ?></td>
                 <td>
                   <?php if (!$data->guardado): ?>
-                    <span> <?= is_float($v)?number_format($it->cantidad_asociada, 4):number_format($it->cantidad_asociada) ?> </span>
+                    <span> <?= is_float($it->cantidad_asociada, 4)?number_format($it->cantidad_asociada, 4):number_format($it->cantidad_asociada) ?> </span>
                   <?php endif; ?>
                   <?php if ($it->alerta): ?>
                     <span style="color:red">La cantidad ingresada supera los valores maximos reportados del item en este frente.</span>
