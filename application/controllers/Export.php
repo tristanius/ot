@@ -282,6 +282,22 @@ class Export extends CI_Controller{
     $this->load->view('miscelanios/consolidado/listado_consolidado', array('reportes'=>$reportes));
   }
 
+  public function getConsolidadosXlsx($idOT)
+  {
+    $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
+    $reportes = $this->cond->get(NULL,$idOT);
+
+    $this->load->helper('xlsx');
+    $writer = getWriter();
+    $writer->openToBrowser('ConsolidadoOrden.xlsx');
+    $style = getStyleFont(0, 128, 255);
+
+    foreach ($reportes->result() as $key => $rd) {
+      $data = json_decode($rd->consolidado);
+    }
+
+  }
+
   # =================================================================================
   public function resumenOt($idOT)
   {

@@ -1,6 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once('XLSXWriter/xlsxwriter.class.php');
+
+function getWriter(){
+  return new XLSXWriter();
+}
+
 function write_xlsx($data=NULL, $headers=NULL, $file)
 {
   $writer = new XLSXWriter();

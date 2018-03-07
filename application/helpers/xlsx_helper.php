@@ -72,3 +72,15 @@ function genObservaciones($rows){
   }
   $writer->close();
 }
+
+// -------------------------------------
+// getting for external construction
+function getWriter(){
+  return WriterFactory::create(Type::XLSX);
+}
+function getStyleBuilder(){
+  return new StyleBuilder();
+}
+function getStyleFont($r, $g, $b){
+  return (new StyleBuilder())->setFontColor(Color::rgb($r,$g,$b))->setFontBold()->build();
+}
