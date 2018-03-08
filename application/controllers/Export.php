@@ -284,7 +284,7 @@ class Export extends CI_Controller{
 
   public function getConsolidadosXlsx($idOT)
   {
-    $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
+    $this->load->model(array('condensado_db'=>'cond', 'ot_db'=>'ot'));
     $reportes = $this->cond->get(NULL,$idOT);
 
     $this->load->helper('xlsx');
@@ -293,9 +293,29 @@ class Export extends CI_Controller{
     $style = getStyleFont(0, 128, 255);
 
     foreach ($reportes->result() as $key => $rd) {
-      $data = json_decode($rd->consolidado);
-    }
-
+      if ( isset($rd->condensado) ){
+        $data = json_decode($rd->consolidado);
+        $headers  = array('Orden','Frente','Item','Descripción','UND','Asociado','Total del Frente', 'Cantidad asociada','Valor','Observación');
+        $writer->$writer->addRowWithStyle( $headers );
+        if (isset($data->frentes)){
+          foreach ($data->frentes as $key => $frente){
+            $row["nombre_ot"] = $frente->nombre_ot;
+            $row["nombre_frente"] = $frente->nombre_frente;
+            $row["fecha_reporte"] = $frente->fecha_reporte;
+            $row["itemc_item"] = $frente->itemc_item;
+            $row["descripcion"] = $frente->descripcion;
+            $row["unidad"] = $frente->unidad;
+            $row["item_asociado"] = $frente->item_asociado;
+            $row["total"] = $frente->total;
+            $row["cantidad_asociada"] = $frente->cantidad_asociada;
+            $row["valor"] = $frente->valor;
+            $row["observacion"] = $frente->alert?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
+            $writer->addRow($row);
+          } // Cierre for rows
+        } // cierre if existe info frente
+      } // cierre if existe condensado
+    }// cierre de iteracion de reportes
+    $writer->close();
   }
 
   # =================================================================================
