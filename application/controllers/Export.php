@@ -291,19 +291,17 @@ class Export extends CI_Controller{
     $writer = getWriter();
     $writer->openToBrowser('ConsolidadoOrden.xlsx');
     $style = getStyleFont(0, 128, 255);
-
+    $headers  = array('Orden','Frente','Item','Descripción','UND','Asociado','Total del Frente', 'Cantidad asociada','Valor','Observación');
+    $writer->addRowWithStyle( $headers, $style );
+    
     foreach ($reportes->result() as $key => $rd) {
       if ( isset($rd->condensado) ){
-        $data = json_decode($rd->consolidado);
-        $headers  = array('Orden','Frente','Item','Descripción','UND','Asociado','Total del Frente', 'Cantidad asociada','Valor','Observación');
-        $writer->$writer->addRowWithStyle( $headers );
+        $data = json_decode($rd->condensado);
         if (isset($data->frentes)){
-          #subheader
-          $writer->addRow(array("Consolidado de frentes y actividades generado en: ".date('Y-m-d')));
           #recorrido de frentes y de items
           foreach ($data->frentes as $key => $frente){
-            $row = array();
             foreach ($frente->items as $key => $it){
+              $row = array();
               $row["nombre_ot"] = $it->nombre_ot;
               $row["nombre_frente"] = $it->nombre_frente;
               $row["fecha_reporte"] = $it->fecha_reporte;
