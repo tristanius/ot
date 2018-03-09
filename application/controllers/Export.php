@@ -275,14 +275,14 @@ class Export extends CI_Controller{
     genObservaciones($observaciones);
   }
 
-  public function getConsonlidados($idOT)
+  public function getConsolidadosTemp($idOT)
   {
     $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
     $reportes = $this->cond->get(NULL,$idOT);
     $this->load->view('miscelanios/consolidado/listado_consolidado', array('reportes'=>$reportes));
   }
 
-  public function getConsolidadosXlsx($idOT)
+  public function getConsolidados($idOT)
   {
     $this->load->model(array('condensado_db'=>'cond', 'ot_db'=>'ot'));
     $reportes = $this->cond->get(NULL,$idOT);
@@ -307,8 +307,8 @@ class Export extends CI_Controller{
             $row["unidad"] = $frente->unidad;
             $row["item_asociado"] = $frente->item_asociado;
             $row["total"] = $frente->total;
-            $row["cantidad_asociada"] = $frente->cantidad_asociada;
-            $row["valor"] = $frente->valor;
+            $row["cantidad_asociada"] = $frente->cantidad_asociada*1;
+            $row["valor"] = $frente->valor*1;
             $row["observacion"] = $frente->alert?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
             $writer->addRow($row);
           } // Cierre for rows
