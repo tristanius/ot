@@ -298,19 +298,25 @@ class Export extends CI_Controller{
         $headers  = array('Orden','Frente','Item','Descripción','UND','Asociado','Total del Frente', 'Cantidad asociada','Valor','Observación');
         $writer->$writer->addRowWithStyle( $headers );
         if (isset($data->frentes)){
+          #subheader
+          $writer->addRow(array("Consolidado de frentes y actividades generado en: ".date('Y-m-d')));
+          #recorrido de frentes y de items
           foreach ($data->frentes as $key => $frente){
-            $row["nombre_ot"] = $frente->nombre_ot;
-            $row["nombre_frente"] = $frente->nombre_frente;
-            $row["fecha_reporte"] = $frente->fecha_reporte;
-            $row["itemc_item"] = $frente->itemc_item;
-            $row["descripcion"] = $frente->descripcion;
-            $row["unidad"] = $frente->unidad;
-            $row["item_asociado"] = $frente->item_asociado;
-            $row["total"] = $frente->total;
-            $row["cantidad_asociada"] = $frente->cantidad_asociada*1;
-            $row["valor"] = $frente->valor*1;
-            $row["observacion"] = $frente->alert?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
-            $writer->addRow($row);
+            $row = array();
+            foreach ($frente->items as $key => $it){
+              $row["nombre_ot"] = $it->nombre_ot;
+              $row["nombre_frente"] = $it->nombre_frente;
+              $row["fecha_reporte"] = $it->fecha_reporte;
+              $row["itemc_item"] = $it->itemc_item;
+              $row["descripcion"] = $it->descripcion;
+              $row["unidad"] = $it->unidad;
+              $row["item_asociado"] = $it->item_asociado;
+              $row["total"] = $it->total;
+              $row["cantidad_asociada"] = $it->cantidad_asociada*1;
+              $row["valor"] = $it->valor*1;
+              $row["observacion"] = $it->alert?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
+              $writer->addRow($row);
+            }
           } // Cierre for rows
         } // cierre if existe info frente
       } // cierre if existe condensado
