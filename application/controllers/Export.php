@@ -291,9 +291,9 @@ class Export extends CI_Controller{
     $writer = getWriter();
     $writer->openToBrowser('ConsolidadoOrden.xlsx');
     $style = getStyleFont(0, 128, 255);
-    $headers  = array('Orden','Frente','Item','Descripción','UND','Asociado','Total del Frente', 'Cantidad asociada','Valor','Observación');
+    $headers  = array('Orden','Frente','fecha','Item','Descripción','UND','Asociado','Cant del Frente', 'Cantidad asociada','Valor','Observación');
     $writer->addRowWithStyle( $headers, $style );
-    
+
     foreach ($reportes->result() as $key => $rd) {
       if ( isset($rd->condensado) ){
         $data = json_decode($rd->condensado);
@@ -309,10 +309,10 @@ class Export extends CI_Controller{
               $row["descripcion"] = $it->descripcion;
               $row["unidad"] = $it->unidad;
               $row["item_asociado"] = $it->item_asociado;
-              $row["total"] = $it->total;
+              $row["total"] = $it->total*1;
               $row["cantidad_asociada"] = $it->cantidad_asociada*1;
               $row["valor"] = $it->valor*1;
-              $row["observacion"] = $it->alert?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
+              $row["observacion"] = $it->alerta?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
               $writer->addRow($row);
             }
           } // Cierre for rows

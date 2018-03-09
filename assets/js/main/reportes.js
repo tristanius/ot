@@ -1401,7 +1401,8 @@ var frentes = function($scope, $http, $timeout){
         }
       );
   }
-
+  // -------------------------------------------------------------
+  // Procedimiento de duplicado de frentes de un reporte a otro
   $scope.dupe_frente = function(recursos){
     $scope.agregarPersonal(recursos.personal);
     $scope.agregarEquipos(recursos.equipos);
@@ -1458,4 +1459,5 @@ var frentes = function($scope, $http, $timeout){
       $scope.$parent.rd.recursos.otros.push(val);
     });
   }
+  // Fin de duplicado de frente -----------------------------------------
 }

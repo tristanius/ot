@@ -24,7 +24,7 @@ class Condensado_db extends CI_Model{
   public function generar($idreporte, $tipo=NULL, $frente=NULL)
   {
     $this->db->select('OT.nombre_ot, OT.idOT, rd.fecha_reporte, rd.idreporte_diario, rrd.cantidad, itf.codigo, itf.descripcion, itf.itemc_item, itf.unidad');
-    $this->db->select('"" AS actividad_asociada, CONCAT(ft.nombre, " - ",ft.ubicacion) AS nombre_frente, 0 AS cantidad_asociada, 0 AS alerta, IFNULL(rot.costo_und, t.tarifa) AS valor');
+    $this->db->select('"" AS actividad_asociada, CONCAT(ft.nombre, " - ",ft.ubicacion) AS nombre_frente, 0 AS cantidad_asociada, 0 AS alerta, IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS valor');
     $this->db->select('SUM(rrd.cantidad) AS total ');
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
