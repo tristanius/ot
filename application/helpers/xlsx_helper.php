@@ -70,10 +70,12 @@ function genObservaciones($rows){
       $fila['tipo'] = "observacion";
       $writer->addRow($fila);
     }
-    foreach ($json_r->actividades as $key => $obs) {
-      $fila['observaciones'] = $obs->msj;
-      $fila['tipo'] = "actividad";
-      $writer->addRow($fila);
+    if (isset($json_r->actividades)) {
+      foreach ($json_r->actividades as $key => $obs) {
+        $fila['observaciones'] = $obs->msj;
+        $fila['tipo'] = "actividad";
+        $writer->addRow($fila);
+      }
     }
   }
   $writer->close();
