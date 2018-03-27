@@ -222,7 +222,7 @@ var OT = function($scope, $http, $timeout){
 				}
 			};
 			if (i == size){
-				ambito.myItems = null;
+				ambito.myItems = [];
 			}
 		});
 		$scope.calcularSubtotales(ambito, ambito.tr);
