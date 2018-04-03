@@ -308,7 +308,7 @@ class Export extends CI_Controller{
               $row["itemc_item"] = $it->itemc_item;
               $row["descripcion"] = $it->descripcion;
               $row["unidad"] = $it->unidad;
-              $row["item_asociado"] = $it->item_asociado;
+              $row["item_asociado"] = $it->item_asociado." (".$it->descripcion_asociada.")";
               $row["total"] = $it->total*1;
               $row["cantidad_asociada"] = $it->cantidad_asociada*1;
               $row["valor"] = $it->valor*1;

@@ -8,7 +8,7 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
     <?php $f->usuario = json_decode($f->usuario); ?>
     <button class="btn mini-btn  {{myfrente == <?= $f->idfrente_ot ?> ?'teal darken-4':'light-blue darken-3';}}"
       ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')"
-      ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && validPriv(46)) )">
+      ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) || !validPriv(46)) )">
         <?= ($key+1).". ".$f->nombre ?>
     </button>
   <?php endforeach; ?>
