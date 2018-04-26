@@ -32,12 +32,12 @@
 					</td>
 					<td>
 						<select name="zona" id="zona" id="zona" ng-model="ot.zona">
+							<option value="N/A">N/A</option>
 							<option value="NORTE" selected=selected"">NORTE</option>
 							<option value="CENTRO_ORIENTE">CENTRO_ORIENTE</option>
 							<option value="OCCIDENTE">OCCIDENTE</option>
 							<option value="SUR">SUR</option>
 							<option value="LLANOS_ANDINA">LLANOS_ANDINA</option>
-							<option value="N/A">N/A</option>
 							<option value="General">General</option>
 						</select>
 					</td>
@@ -101,20 +101,20 @@
 				<tr>
 					<td>
 						<select class="noMaterialStyles" ng-model="ot.gerencia" ng-init="ot.gerencia = 'GOT'">
+							<option value="N/A">N/A</option>
 							<option value="GOT">GOT: OLEDUCTOS</option>
 							<option value="GPO">GPO: POLIDUCTOS</option>
 							<option value="GPT">GPT: FLUVIAL</option>
-							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td>
 						<select class="noMaterialStyles" ng-model="ot.departamento_ecp" ng-init="ot.departamento_ecp = 'PCL'">
+							<option value="N/A">N/A</option>
 							<option value="PCL">PCL</option>
 							<option value="OBC">OBC</option>
 							<option value="PNO">PNO</option>
 							<option value="PFL">PFL</option>
 							<option value="POR">POR</option>
-							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td colspan="2">

@@ -518,7 +518,8 @@ var addReporte = function($scope, $http, $timeout) {
     angular.forEach($scope.equiposOT, function(val, key){
       if(
         (!$scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
-        ($scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add )
+        ($scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add ) ||
+        (val.codigo_siesa == "Temporal" && val.add)
       )
       {
         val.horas_oper = 0;
@@ -531,6 +532,8 @@ var addReporte = function($scope, $http, $timeout) {
           val.idfrente_ot = f;
         }
         $scope.rd.recursos.equipos.push(val);
+      }else{
+        console.log("No ha sido agregado "+val.codigo_siesa)
       }
     });
   }
@@ -992,7 +995,8 @@ var editReporte = function($scope, $http, $timeout){
     angular.forEach($scope.equiposOT, function(val, key){
       if(
         (!$scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
-        ($scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add )
+        ($scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add ) ||
+        (val.codigo_siesa == "Temporal" && val.add)
       ){
         val.horas_operacion = 0;
         val.horas_disponible = 1;
@@ -1003,6 +1007,8 @@ var editReporte = function($scope, $http, $timeout){
           val.idfrente_ot = f;
         }
         $scope.rd.recursos.equipos.push(val);
+      }else{
+        console.log(val.codigo_siesa + "No ha sido agregado");
       }
     });
   }

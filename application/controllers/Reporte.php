@@ -187,7 +187,6 @@ class Reporte extends CI_Controller{
       if($k != 'actividades' && $k != 'material' && $k != 'otros'){
         foreach ($v as $key => $value) {
           /*
-          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           Corregir: revisar primero las cantidades y estado facturable antes de ir a validar los items.
           */
           $value->msj = '';

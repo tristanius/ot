@@ -44,7 +44,7 @@ var OT = function($scope, $http, $timeout){
 			);
 	}
 	$scope.getIncidencia = function(itv){
-		return (itv.CL == 'L')?1.5829:1.6196;
+		return (itv.incidencia)?itv.incidencia:0;
 	}
 	$scope.selectTarea = function(ot, ambito, indice){
 		ambito.tr = ot.tareas[indice];
@@ -247,9 +247,9 @@ var OT = function($scope, $http, $timeout){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 			//Redondeado de totales
 			tr.valor_recursos = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
-			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * 0.18);
-			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * 0.01);
-			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * 0.04);
+			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * 0.18);//desde el contrato
+			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * 0.01);//desde el contrato
+			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * 0.04);//desde el contrato
 		}
 	}
 	$scope.setTareaAdministracion = function(value, tr){
@@ -318,8 +318,7 @@ var OT = function($scope, $http, $timeout){
 			tr.json_viaticos.valor_viaticos = 0;
 		}
 		tr.json_viaticos.valor_viaticos = Math.round( tr.json_viaticos.valor_viaticos );
-		tr.json_viaticos.administracion = ( tr.json_viaticos.valor_viaticos* ( 4.58 /100) );
-		tr.json_viaticos.administracion = Math.round( tr.json_viaticos.administracion );
+		tr.json_viaticos.administracion = Math.round( ( tr.json_viaticos.valor_viaticos* ( 4.58 /100) ) );//desde el contrato
 		$("#addViaticosOT").addClass('nodisplay');
 	}
 	$scope.reiniciarViaticos = function(tr){
@@ -337,7 +336,7 @@ var OT = function($scope, $http, $timeout){
 		angular.forEach(tr.json_reembolsables.json_reembolsables, function(v, k){
 			tr.json_reembolsables.valor_reembolsables +=(v.cantidad * v.valor_und);
 			tr.json_reembolsables.valor_reembolsables = Math.round(tr.json_reembolsables.valor_reembolsables);
-			tr.json_reembolsables.administracion += tr.json_reembolsables.valor_reembolsables * 0.01;
+			tr.json_reembolsables.administracion += tr.json_reembolsables.valor_reembolsables * 0.01;//desde el contrato
 			tr.json_reembolsables.administracion = Math.round( tr.json_reembolsables.administracion );
 		});
 	}
@@ -395,7 +394,7 @@ var OT = function($scope, $http, $timeout){
 		angular.forEach(tr.json_horas_extra.json_horas_extra, function(v,k){
 			val += v.total;
 			tr.json_horas_extra.valor_horas_extra = Math.round(val);
-			tr.json_horas_extra.administracion = Math.round( (tr.json_horas_extra.valor_horas_extra + (tr.json_horas_extra.raciones_cantidad * tr.json_horas_extra.raciones_valor_und)) * 0.0458 );
+			tr.json_horas_extra.administracion = Math.round( (tr.json_horas_extra.valor_horas_extra + (tr.json_horas_extra.raciones_cantidad * tr.json_horas_extra.raciones_valor_und)) * 0.0458 );//desde el contrato
 		});
 	}
 	$scope.endHorasExtra = function(tag, tr, ambito){
@@ -404,7 +403,7 @@ var OT = function($scope, $http, $timeout){
 	}
 	$scope.reiniciarHorasExtra = function(tr){
 		tr.json_horas_extra.json_horas_extra = angular.copy(tr.personal)
-		tr.json_horas_extra.administracion = Math.round( (tr.json_horas_extra.valor_horas_extra + (tr.json_horas_extra.raciones_cantidad * tr.json_horas_extra.raciones_valor_und)) * 0.0458 );
+		tr.json_horas_extra.administracion = Math.round( (tr.json_horas_extra.valor_horas_extra + (tr.json_horas_extra.raciones_cantidad * tr.json_horas_extra.raciones_valor_und)) * 0.0458 );//desde el contrato
 	}
 	// ----------------------------------------
 	//Calculos de OT
@@ -680,8 +679,7 @@ var agregarOT = function($scope, $http, $timeout){
 			alert('Faltan datos por registrar');
 		}else if ($scope.ot.nombre_ot == '' || $scope.ot.nombre_ot == undefined
 						|| $scope.ot.tipo_ot == undefined || $scope.ot.tipo_ot == ''
-						|| $scope.ot.especialidad == undefined || $scope.ot.especialidad == ''
-						|| $scope.ot.zona == '' || $scope.ot.zona == undefined || $scope.ot.idcontrato == undefined) {
+						|| $scope.ot.especialidad == undefined || $scope.ot.especialidad == '' || $scope.ot.idcontrato == undefined) {
 			alert("No has seleccionado Todos los datos necesarios");
 		}else{
 			$scope.isOnPeticion = true;
