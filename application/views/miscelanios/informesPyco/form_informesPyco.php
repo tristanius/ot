@@ -2,6 +2,8 @@
   <h5>Selecciona el informe de PyCO que deseas generar:</h5>
 
   <section class="noMaterialStyles regularform">
+
+    <!-- filtrar por contrato y CO -->
     <fieldset>
       <legend>Buscar ordenes por:</legend>
       <label>fecha de inicio: <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="fecha_inicio"> </label>
@@ -23,5 +25,14 @@
 				<p class="center-align">Informe sabana de ordenes V2</p>
 			</a>
 		</div>
+
+
+
+    <div class="col l2" ng-if="validPriv(52)">
+      <a href="#" ng-click="clickeableLink('<?= site_url('consulta/consolidadoOT') ?>', $event, 'Informes de OTs');" class="btn-panel" style="width:100%">
+        <h3 class="center-align" data-icon="&#xe009;"></h3>
+        <p class="center-align">Informes de consolidados OT </p>
+      </a>
+    </div>
   </div>
 </section>

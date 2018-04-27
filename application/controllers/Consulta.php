@@ -129,4 +129,10 @@ class Consulta extends CI_Controller{
     force_download('./uploads/InformeCierre.xlsx',NULL);
   }
 
+  // Consulta de consolidados de OT
+  public function consolidadoOT($value='')
+  {
+    $this->load->view('miscelanios/informesPyco/form_informe_consolidado_ot');
+  }
+
 }
