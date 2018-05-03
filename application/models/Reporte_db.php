@@ -343,7 +343,7 @@ class Reporte_db extends CI_Model{
       rd.fecha_reporte,
       rd.festivo,
       itf.codigo,
-      rot.tipo,
+      IFNULL(rot.tipo, "actividad" ) AS tipo_recurso,
       itf.itemc_item AS item,
       itf.descripcion,
       rrd.idsector_item_tarea,
