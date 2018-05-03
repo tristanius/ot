@@ -67,7 +67,14 @@
     </div>
   </fieldset>
 
+  <p>
+    Los informes consolidados de actividades reportadas no es un informe autogenerado, es un informe que se diligencia en los reportes diarios con actividades. esta consulta los une en un solo informe por orden de trabajo.
+  </p>
+
   <div class="" ng-if="consulta.ot.idOT">
     <a target="_blank" ng-href="<?= site_url('export/getConsolidados') ?>/{{consulta.ot.idOT}}" class="btn mini-btn2 blue" >Descargar consolidado diligenciados <span data-icon="&#xe041;"></span> </a>
   </div>
+
+  <hr>
+  <br>
 </section>
