@@ -33,7 +33,8 @@
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
   <div class="modal-content">
-    <h4>Cambio de Unidad de negocio</h4>
+    <h4>Cambio de Unidad de negocio </h4>
+    <small ng-bind="cambio_un.data.idrecurso_ot"> </small>
     <p>
       <table>
         <thead>
