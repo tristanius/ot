@@ -60,15 +60,35 @@ function genObservaciones($rows){
   $writer = WriterFactory::create(Type::XLSX);
   $writer->openToBrowser('Observaciones.xlsx');
   $style = (new StyleBuilder())->setFontBold()->build();
-	$writer->addRowWithStyle( array("Orden de trabajo","Fecha de reporte","Observaciones"), $style);
+	$writer->addRowWithStyle( array("Orden de trabajo","Fecha de reporte","Observaciones","tipo"), $style);
   foreach ($rows->result() as $key => $observes) {
     $fila['nombre_ot'] = $observes->nombre_ot;
     $fila['fecha_reporte'] = $observes->fecha_reporte;
     $json_r = json_decode($observes->json_r);
     foreach ($json_r->observaciones as $key => $obs) {
       $fila['observaciones'] = $obs->msj;
+      $fila['tipo'] = "observacion";
       $writer->addRow($fila);
+    }
+    if (isset($json_r->actividades)) {
+      foreach ($json_r->actividades as $key => $obs) {
+        $fila['observaciones'] = $obs->msj;
+        $fila['tipo'] = "actividad";
+        $writer->addRow($fila);
+      }
     }
   }
   $writer->close();
+}
+
+// -------------------------------------
+// getting for external construction
+function getWriter(){
+  return WriterFactory::create(Type::XLSX);
+}
+function getStyleBuilder(){
+  return new StyleBuilder();
+}
+function getStyleFont($r, $g, $b){
+  return (new StyleBuilder())->setFontColor(Color::rgb($r,$g,$b))->setFontBold()->build();
 }

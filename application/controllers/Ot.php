@@ -6,7 +6,7 @@ class Ot extends CI_Controller {
 		"APIQUE",	"ATENTADO",	"ADMINISTRATIVA",	"CIVIL",	"CRATER",	"DEFORMIMETRO",	"DRENAJE",
 		"EGOS",	"ELE. VARIABLE",	"ILICITA",	"INSPECCION",	"INS. VARIABLE", "INTEGRIDAD",	"INYECCION", "VALVULAS",
 		"MEC. VARIABLE",	"MONITOREO",	"OT. APOYO",	"PDE",	"RECORRIDO",	"REPARACION",		"ROCERIA", "MTTO. VIAS",
-		"PRELIMINARES REP.", "URPC", "N/A"
+		"PRELIMINARES REP.", "URPC", "CONSTRUCCION GENERAL", "CANALIZACION", "N/A"
 	);
 	private $nombre_departamento_ecp = array(
 		'PCL'=>'Oriente', 'PFL'=>'Fluvial', 'POR'=>'Magdalena', 'PNO'=>'Caribe', 'OBC'=>'Bicentenario'

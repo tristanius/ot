@@ -275,11 +275,51 @@ class Export extends CI_Controller{
     genObservaciones($observaciones);
   }
 
-  public function getConsonlidados($idOT)
+  public function getConsolidadosTemp($idOT)
   {
     $this->load->model(array('condensado_db'=>'cond', 'reporte_db'=>'repo'));
     $reportes = $this->cond->get(NULL,$idOT);
     $this->load->view('miscelanios/consolidado/listado_consolidado', array('reportes'=>$reportes));
+  }
+
+  public function getConsolidados($idOT)
+  {
+    $this->load->model(array('condensado_db'=>'cond', 'ot_db'=>'ot'));
+    $reportes = $this->cond->get(NULL,$idOT);
+
+    $this->load->helper('xlsx');
+    $writer = getWriter();
+    $writer->openToBrowser('ConsolidadoOrden.xlsx');
+    $style = getStyleFont(0, 128, 255);
+    $headers  = array('Orden','Frente','fecha','Item','Descripción','UND','Asociado','Cant del Frente', 'Cantidad asociada','Valor','Observación');
+    $writer->addRowWithStyle( $headers, $style );
+
+    foreach ($reportes->result() as $key => $rd) {
+      if ( isset($rd->condensado) ){
+        $data = json_decode($rd->condensado);
+        if (isset($data->frentes)){
+          #recorrido de frentes y de items
+          foreach ($data->frentes as $key => $frente){
+            foreach ($frente->items as $key => $it){
+              $row = array();
+              $row["nombre_ot"] = $it->nombre_ot;
+              $row["nombre_frente"] = $it->nombre_frente;
+              $row["fecha_reporte"] = $it->fecha_reporte;
+              $row["itemc_item"] = $it->itemc_item;
+              $row["descripcion"] = $it->descripcion;
+              $row["unidad"] = $it->unidad;
+              $row["item_asociado"] = $it->item_asociado." (".$it->descripcion_asociada.")";
+              $row["total"] = $it->total*1;
+              $row["cantidad_asociada"] = $it->cantidad_asociada*1;
+              $row["valor"] = $it->valor*1;
+              $row["observacion"] = $it->alerta?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
+              $writer->addRow($row);
+            }
+          } // Cierre for rows
+        } // cierre if existe info frente
+      } // cierre if existe condensado
+    }// cierre de iteracion de reportes
+    $writer->close();
   }
 
   # =================================================================================
