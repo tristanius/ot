@@ -83,7 +83,7 @@
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
                 <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')" data-icon="&#xe02d;">Validación</button>
-                <button type="button" ng-show="(rd.info.estado == 'CERRADO') && ( validPriv(45) || validPriv(46) )" class="btn mini-btn brown" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="&#xe04f;"> Consolidar</button>
+                <button type="button" ng-show="(rd.info.estado == 'CERRADO') && ( validPriv(45) || validPriv(46) )" class="btn mini-btn brown" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="&#xe04f;"> Asignar APU's</button>
               </td>
             </tr>
             <tr class="noMaterialStyles">

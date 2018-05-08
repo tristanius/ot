@@ -15,14 +15,14 @@
     <div class="col l2" ng-show="validPriv(52)">
 			<a href="<?= site_url('export/informePYCO') ?>/{{fecha_inicio}}" class="btn-panel  orange darken-3 white-text" style="width:100%">
 				<h3 class="center-align" data-icon="x"></h3>
-				<p class="center-align">Informe por tareas PyCO V1</p>
+				<p class="center-align">Informe por tareas de OT's</p>
 			</a>
 		</div>
 
 		<div class="col l2" ng-show="validPriv(52)">
 			<a href="<?= site_url('export/informeOtPyco') ?>/{{fecha_inicio}}" class="btn-panel lime lighten-1 black-text" style="width:100%">
 				<h3 class="center-align" data-icon="x"></h3>
-				<p class="center-align">Informe sabana de ordenes V2</p>
+				<p class="center-align">Informe consolidado por OT's</p>
 			</a>
 		</div>
 
@@ -31,7 +31,7 @@
     <div class="col l2" ng-if="validPriv(52)">
       <a href="#" ng-click="clickeableLink('<?= site_url('consulta/consolidadoOT') ?>', $event, 'Informes de OTs');" class="btn-panel" style="width:100%">
         <h3 class="center-align" data-icon="&#xe041;"></h3>
-        <p class="center-align">Informes de consolidados OT </p>
+        <p class="center-align">Informes costos por APU por OT </p>
       </a>
     </div>
   </div>
