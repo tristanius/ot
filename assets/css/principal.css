@@ -1,3 +1,6 @@
+html, body, button, input, optgroup, select, textarea{
+  font-family: "Roboto", sans-serif;
+}
 h1, h2, h3, h4{
   margin: 5px;
 }
@@ -179,6 +182,10 @@ section.area select, .windowCentered select{
 }
 /* ============================================= */
 
+.col .row{
+  margin-left: 0;
+  margin-right: 0;
+}
 .col.row{
   padding:2px;
   margin: 3px;

@@ -18,6 +18,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
         <th>
           <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
             <input type="hidden" ng-init="otrosFilter.idfrente_ot = myfrente" disabled="disabled">

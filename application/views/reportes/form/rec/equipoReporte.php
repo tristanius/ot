@@ -122,6 +122,7 @@
         <th>Codigo</th>
         <th>Ref./AF</th>
         <th>Equipo</th>
+        <th>Descrip. item</th>
         <th>Operador / Conductor</th>
         <th>Base</th>
 

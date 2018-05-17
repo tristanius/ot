@@ -3,8 +3,8 @@
 	<div class="opciones-menu" style="position:absolute;">
 		<div class="opcion-tab row" style="margin-bottom:0">
 			<button class="waves-effect waves-light blue btn"  ng-click="slideOtp('#slideOpciones')">
-				<small data-icon="o"> Opciones</small>
-
+				<small data-icon="o"> <b>Opciones</b> </small>
+				&nbsp;
 				<small class="slide-state" data-icon="&#xe026;" ng-show="showSlideState"></small>
 				<small class="slide-state" data-icon="&#xe029;" ng-show="!showSlideState"></small>
 			</button>
@@ -43,7 +43,7 @@
 					  Maestros
 					</a>
 				</li>
-		    </ul>
+			</ul>
 		</div>
 	</div>
 
