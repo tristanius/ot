@@ -54,9 +54,9 @@
 
     <?php
     if(!$isMod){
-      $this->load->view('factura/factura/form_co');
+      $this->load->view('factura/factura_v01/form_co');
     }else{
-      $this->load->view('factura/factura/form_newacta');
+      $this->load->view('factura/factura_v01/form_newacta');
     } ?>
 
     <?php if (!$isMod): ?>
@@ -73,7 +73,7 @@
   </div>
 
   <div class="panel" ng-show="panel_visible">
-    <?php $this->load->view('factura/factura/recursos'); ?>
+    <?php $this->load->view('factura/factura_v01/recursos'); ?>
   </div>
 
   <br>

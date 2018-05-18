@@ -21,7 +21,7 @@
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/angular.min.js') ?>"></script>
 
     <!-- Materialize -->
-    <script type="text/javascript" src="<?= base_url('assets/materialize/js/materialize.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/materialize/js/materialize.min.js') ?>"></script>
 
     <!-- JQuery UI -->
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/jquery-ui/jquery-ui.min.js') ?>"></script>

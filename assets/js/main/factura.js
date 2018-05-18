@@ -94,6 +94,13 @@ var formFactura = function($scope, $http, $timeout){
   $scope.orden = {recursos:[]};
   $scope.panel_visible = false;
 
+  $scope.initTabs = function(selector){
+    $( function() {
+      $( selector ).tabs();
+    } );
+    console.log(selector)
+  }
+
   $scope.getRecursos = function(link) {
     if ($scope.fac.no_doc == undefined || $scope.fac.no_doc == '' || $scope.fac.fecha_fin_factura == undefined || $scope.fac.fecha_fin_factura == undefined || $scope.fac.bases.length == 0) {
       alert('Debes selecionar los campos necesarios para realizar el ata de factura')

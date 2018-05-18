@@ -1,82 +1,90 @@
-<section id="formFactura" class="windowCentered2 row" ng-controller="formFactura" <?php if($isMod){?> ng-init="getFacturaData('<?= site_url('factura/get/'.$idfactura) ?>')" <?} ?>>
-  <style media="screen">
-     #formFactura label{
-       color:#000;
-     }
-  </style>
-  <section class="area reportes" ng-init='sectores = <?= json_encode($sectores) ?>'>
-    <div class="btnWindow">
-      <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" />
-      <button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindowLocal('#ventanaFactura', enlaceGetFactura)">Salir</button>
-    </div>
-  </section>
-  <h5 class="center-align" style="border:1px solid #2196F3;  padding:2px;"> Acta/Factura </h5>
+<section id="formFactura" class="windowCentered2 row" ng-controller="formFactura" <?php if($isMod): ?> ng-init="getFacturaData('<?= site_url('factura/get/'.$idfactura) ?>')" <?php endif; ?> >
+  <h4>Acta de factura - {{ contrato.contratista }}</h4>
+  <hr>
 
-  <div id="basesFact" class="noMaterialStyles row font12" style="border:1px solid #000; padding:1ex; background:#EFEFEF">
-    <div class="col s12 m6 l4 regularForm row">
-      <span>Nombre del documento.: </span>
-      <input type="text" class="text" ng-model="fac.no_doc" placeholder="Acta No. #">
+  <section class="card">
+    <div class="">
+
     </div>
 
-    <div class="col s12 m6 l4 regularForm row">
-      <span>Inicio periodo Fact.: </span>
-      <input type="text" class="datepicker" ng-model="fac.fecha_ini_factura" ng-init="datepicker_init()" placeholder="ingresa una fecha (ini)" readonly>
-    </div>
+    <div class="inputs row noMaterialStyles padding1ex">
 
-    <div class="col s12 m6 l4 regularForm row">
-      <span>Final periodo Fact.: </span>
-      <input type="text" class="datepicker" ng-model="fac.fecha_fin_factura" ng-init="datepicker_init()" placeholder="ingresa una fecha (fin)" readonly>
-    </div>
-
-    <div class="col s12 m6 l4 regularForm row">
-      <span>Vigencia de tarifas:</span>
-      <select class="" ng-model="fac.idvigencia_tarifas" ng-init="fac.idvigencia_tarifas = (contrato.vigencias[0].idvigencia_tarifas+'')">
-        <option value="">Selecciona una opción</option>
-        <option ng-repeat="vig in contrato.vigencias" value="{{vig.idvigencia_tarifas}}">{{vig.descripcion_vigencia}}</option>
-      </select>
-    </div>
-
-    <div class="col s12 m6 l4 regularForm row">
-      <span>Tipo de Factura:</span>
-      <select class="" ng-model="fac.tipo" ng-init="fac.tipo = 'ESTANDAR'">
-        <option value="">Selecciona una opción</option>
-        <option value="ESTANDAR">Estandar</option>
-        <option value="REAJUSTE">Reajuste</option>
-      </select>
-    </div>
-
-    <div class="col s12 m6 l4 regularForm row">
-      <span>C. Costo ECP: </span>
-      <input type="text" ng-model="fac.centro_costo_ecp" placeholder="Centro de costo" >
-    </div>
-
-    <div class="clear-left"></div>
-
-    <?php
-    if(!$isMod){
-      $this->load->view('factura/factura/form_co');
-    }else{
-      $this->load->view('factura/factura/form_newacta');
-    } ?>
-
-    <?php if (!$isMod): ?>
-      <div class="row">
-        <button type="button" class="btn mini-btn" ng-click="getRecursos('<?= site_url('factura/getFacturablesByOT') ?>')">Obtener recursos reportados</button>
+      <div class="padding1ex col s12 m6 l3">
+        <b class="col s5 m4 l4 right-align">No. Factura: </b>
+        <input type="text" name="" value="" placeholder="No. de factura">
       </div>
-    <?php endif; ?>
 
-  </div>
+      <div class="padding1ex col s12 m6 l3">
+        <b class="col s5 m4 l4 right-align">No. Contrato: </b>
+        <input type="text" ng-model="contrato.no_contrato" name="" disabled/>
+      </div>
 
-  <br>
-  <div class="loader col s12 m12 l12" ng-show="loaders.formLoad" <?php if (!$isMod): ?> ng-init="loaders.formLoad = false" <?php endif; ?> >
-    <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" alt="">
-  </div>
+      <div class="padding1ex col s12 m6 l3">
+        <b class="col s5 m4 l4 right-align">vigencia de tarifas: </b>
+        <select class="" ng-options="v as v.descripcion_vigencia for v in contrato.vigencias" ng-model="factura.vigencia" ng-init="factura.vigencia = contrato.vigencias[0]" disabled>
+        </select>
+      </div>
 
-  <div class="panel" ng-show="panel_visible">
-    <?php $this->load->view('factura/factura/recursos'); ?>
-  </div>
+      <div class="padding1ex col s12 m6 l3">
+        <b class="col s5 m4 l4 right-align">Estado del acta: </b>
+        <select class="" name="">
+          <option value="CREADO">CREADO</option>
+          <option value="APROBADO">APROBADO</option>
+          <option value="POR FIRMAR">POR FIRMAR</option>
+          <option value="CREADO">CREADO</option>
+        </select>
+      </div>
 
-  <br>
+    </div>
+
+    <div class="inputs row noMaterialStyles padding1ex" >
+
+      <div class="padding1ex col s12 m6 l3">
+        <b class="col s5 m4 l3 right-align">Inicio periodo facturación: </b>
+        <input type="text" class="datepicker" ng-init="datepicker_init()" name="" value="" placeholder="No. de fecha">
+      </div>
+
+      <div class="padding1ex col s12 m6 l3 end">
+        <b class="col s5 m4 l3 right-align">Final periodo facturación: </b>
+        <input type="text" class="datepicker" ng-init="datepicker_init()" name="" value="" placeholder="No. de fecha">
+      </div>
+
+    </div>
+
+    <br>
+
+    <div id="myTabs" ng-init="initTabs('#myTabs')">
+      <ul>
+        <li><a href="#tabs-1">Descripción</a></li>
+        <li><a href="#tabs-2">Recursos</a></li>
+        <li><a href="#tabs-3">Adjuntos</a></li>
+      </ul>
+      <div id="tabs-1" class="noMaterialStyles">
+
+        <div class="">
+          <b> Tipo de acta: </b>
+          <select class="" name="">
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div class="">
+          <p> Notas:</p>
+          <textarea></textarea>
+        </div>
+
+      </div>
+      <div id="tabs-2">
+        <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+      </div>
+      <div id="tabs-3">
+        <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+      </div>
+    </div>
+
+  </section>
+
   <hr>
 
   <div class="btnWindow">
@@ -93,3 +101,7 @@
     <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="cerrarWindowLocal('#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
   </div>
 </section>
+
+<script>
+
+</script>

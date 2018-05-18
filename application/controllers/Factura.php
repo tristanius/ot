@@ -26,10 +26,10 @@ class Factura extends CI_Controller{
     $this->load->model('miscelanio_db', 'misc');
     $sectores = $this->misc->getBasesBySector();
     if($tipo == 'add'){
-      $this->load->view('factura/factura/myform', array('sectores'=>$sectores, 'isMod'=>FALSE));
+      $this->load->view('factura/factura/form', array('sectores'=>$sectores, 'isMod'=>FALSE));
     }elseif ($tipo == 'mod') {
       $post = json_decode( file_get_contents('php://input') );
-      $this->load->view('factura/factura/myform', array('sectores'=>$sectores, 'idfactura'=>$idfactura, 'isMod'=>TRUE));
+      $this->load->view('factura/factura/form', array('sectores'=>$sectores, 'idfactura'=>$idfactura, 'isMod'=>TRUE));
     }
   }
 
