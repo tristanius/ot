@@ -253,4 +253,44 @@ var formFactura = function($scope, $http, $timeout){
     $scope.fac.actas.push(myacta);
   }
 
+  $scope.isSelectedFile = false;
+  $scope.cargandoConsulta = false;
+  $scope.initAdjunto = function(ruta) {
+    $scope.adjunto = $("#fileuploader").uploadFile({
+      url:ruta,
+      autoSubmit: false,
+      fileName:"myfile",
+      dynamicFormData: function(){
+        var data ={usuario:$scope.$parent.log.nombre_usuario}
+        return data;
+      },
+      onSelect: function(files){
+        $timeout(function(){
+          $scope.isSelectedFile = true;
+        });
+        return true;
+      },
+      onSuccess: function(file, data){
+        // actualizar listado de adjuntos
+        $timeout(function(){
+          $scope.isSelectedFile = false;
+        });
+      },
+      onError: function(files,status,errMsg,pd){
+        alert(JSON.stringify(errMsg));
+        $scope.cargandoConsulta = false;
+      }
+    });
+  }
+  $scope.IniciarUploadAdjunto = function(){
+    $scope.cargandoConsulta = true;
+    $scope.adjunto.startUpload();
+  }
+
+  //Vendors
+	$scope.tinyMCE = function(selTag){
+		tinymce.init({
+  	   selector: selTag
+  	});
+	}
 }

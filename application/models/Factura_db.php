@@ -115,8 +115,7 @@ class Factura_db extends CI_Model{
     ->select(
       '
       f.*,
-      vtar.descripcion_vigencia,
-      (SELECT SUM(frrd.total) FROM factura_recurso_reporte AS frrd WHERE frrd.idfactura = f.idfactura) AS total
+      vtar.descripcion_vigencia
       ')
     ->from('factura AS f')
     ->join('vigencia_tarifas AS vtar','vtar.idvigencia_tarifas = f.idvigencia_tarifas')
