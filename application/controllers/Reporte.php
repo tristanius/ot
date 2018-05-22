@@ -485,7 +485,7 @@ class Reporte extends CI_Controller{
     foreach ($ret->frentes as $key => $f) {
       $actividades = $this->cond->generar($idr, 1, $f->idfrente_ot)->result();
       $f->items = array();
-      var $odd = '';
+      $odd = '';
       foreach ($actividades as $key => $act) {
         $items = $this->cond->generar($idr, NULL, $f->idfrente_ot)->result();
         foreach ($items as $key => $it) {
