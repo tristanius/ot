@@ -53,6 +53,9 @@ table.mytabla tr{
   border-bottom: 1px solid #777;
   border-left: 1px solid #777;
 }
+table.mytabla tr.odd{
+  background: #EEE;
+}
 table.mytabla thead tr th{
   text-align: center;
 }
@@ -62,7 +65,7 @@ table.mytabla tr th, table.mytabla tr td{
   border-right: 1px solid #777;
   max-width: 110ex;
 }
-table.mytabla tbody tr:active, table.mytabla tbody tr:hover, table.mytabla tbody tr:focus{
+table.mytabla tbody tr:active, table.mytabla tbody tr:hover, table.mytabla tbody tr.odd:hover, table.mytabla tbody tr:focus{
   background: #CEE1FF;
 }
 .mytabla tr td input, .mytabla tr th input{

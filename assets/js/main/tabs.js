@@ -294,6 +294,19 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     return JSON.parse(string);
   }
 
+  // funcion general para odd / even TABLAS
+  $scope.isOdd = function(valor, odd){
+    return (odd!=valor)? true: false;
+  }
+  $scope.rowOdd = function(b, rowColor){
+    if(b && rowColor=='odd'){
+        return '';
+    }else if (b && rowColor=='') {
+      return 'odd';
+    }
+    return rowColor;
+  }
+
   // inserta un elemento a una lista con la funcion timeout para refrescar la pagina
   $scope.set_el_timeout = function(list, obj){
     $timeout(function(){
