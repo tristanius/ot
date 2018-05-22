@@ -114,6 +114,7 @@ class Factura extends CI_Controller{
     $contrato = $this->fact->getContrato($idcontrato)->row();
     $contrato->vigencias = $this->fact->getVigenciasContrato($contrato->idcontrato)->result();
     $contrato->facturas = $this->fact->getFacturasContrato($contrato->idcontrato)->result();
+    $contrato->centros_operacion = $this->fact->getCentrosOperacionContratos($contrato->idcontrato)->result();
     if ($JSON) {
       echo json_encode($contrato);
     }

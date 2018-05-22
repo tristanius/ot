@@ -3,7 +3,7 @@
   <button type="button" class="btn mini-btn2 orange" ng-click="get_condensado('<?= site_url('reporte/gen_condensado/') ?>',rd.idreporte_diario)">Generar</button> &nbsp;
   <button type="button" ng-if="condensado.guardado == true" class="btn mini-btn2 light-green accent-1" ng-click="get_condensado('<?= site_url('reporte/actualizar_condensado/') ?>',rd.idreporte_diario)">Actualizar</button>
 
-  <table id="info_rd_condensado" class="mytabla" ng-init="rowColor = false; odd=''">
+  <table id="info_rd_condensado" class="mytabla">
       <caption style="border:1px solid #333">
         Consolidado de frentes y actividades generado en: {{ condensado.fecha }}
       </caption>
@@ -24,7 +24,7 @@
         <tr style="background: #e1f5fe">
           <td colspan="9"> <b ng-bind="frente.nombre+' '+frente.ubicacion"></b>  </td>
         </tr>
-        <tr ng-repeat="it in frente.items" ng-class="rowColor" ng-init="rowColor = rowOdd( isOdd(it.item_asociado, odd) ) ">
+        <tr ng-repeat="it in frente.items" ng-class="it.odd">
           <td ng-bind="it.nombre_ot"></td>
           <td ng-bind="it.nombre_frente"></td>
           <td ng-bind="it.fecha_reporte"></td>
@@ -37,7 +37,6 @@
             <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada" ng-init="it.cantidad_asociada = it.cantidad_asociada*1" ng-change="validar_cantidad_frente('codigo', it.codigo, frente.items, it)">
             <span ng-if="condensado.guardado" ng-bind="it.cantidad_asociada"></span>
             <span ng-if="it.alerta == true" style="color:red">La cantidad ingresada supera los valores maximos reportados del item en este frente.</span>
-            <span ng-if="isOdd"></span>
           </td>
         </tr>
       </tbody>

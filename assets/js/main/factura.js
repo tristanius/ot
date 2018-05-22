@@ -4,6 +4,8 @@ var factura = function($scope, $http, $timeout){
   $scope.loaders = {};
   $scope.enlaceGetFactura = '';
   $scope.linkDataContrato = '';
+
+  // Obtiene la informacion de un contrato macro
   $scope.getDataContrato = function(){
     if ($scope.consulta.idcontrato != '' && $scope.consulta.idcontrato != undefined) {
       $scope.loaders.getfacturas = $scope.toggleLoader($scope.loaders.getfacturas);
@@ -24,16 +26,19 @@ var factura = function($scope, $http, $timeout){
       alert('no has selecionado contrato')
     }
   }
-
+  // spiner .gif
   $scope.toggleLoader = function(loader){
     return loader?false:true;
   }
+
+  // Carga la información de un formulario para agregar o modificar una factura
   $scope.factura = function(link, ventana, btnMostrar) {
     console.log(link);
     $scope.resetView(link);
     $scope.$parent.getAjaxWindowLocal(link, ventana, btnMostrar);
   }
-
+  // REEPLANTEAR
+  // Metodo para carcular una cantidad... con disponibilidad
   $scope.calcularCantidad = function(rec){
     var cant = 0;
     if (rec.tipo == 3) {
@@ -83,7 +88,7 @@ var factura = function($scope, $http, $timeout){
 }
 
 var formFactura = function($scope, $http, $timeout){
-  $scope.fac = {
+  $scope.factura = {
     actas:[],
     bases:[],
     recursos:[],
@@ -94,55 +99,58 @@ var formFactura = function($scope, $http, $timeout){
   $scope.orden = {recursos:[]};
   $scope.panel_visible = false;
 
+  // Renderiza las pestañas de JQuery
   $scope.initTabs = function(selector){
     $( function() {
       $( selector ).tabs();
     } );
-    console.log(selector)
   }
 
+  //Inicial ventanas modales del formulario
+  $scope.initModals = function(){
+    $( function(){
+      $('.modal').modal();
+    } );
+  }
+  // Ajax http request
+  // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
-    if ($scope.fac.no_doc == undefined || $scope.fac.no_doc == '' || $scope.fac.fecha_fin_factura == undefined || $scope.fac.fecha_fin_factura == undefined || $scope.fac.bases.length == 0) {
+    if ($scope.factura.no_factura == undefined || $scope.factura.no_factura == '' || $scope.factura.fecha_inicio == undefined || $scope.factura.fecha_fin == undefined || $scope.factura.bases.length == 0) {
       alert('Debes selecionar los campos necesarios para realizar el ata de factura')
     }else{
       $scope.$parent.loaders.formLoad = true;
-      $http.post(link, $scope.fac)
+      $http.post(link, $scope.factura)
       .then(
         function(response){
-          $scope.$parent.loaders.formLoad = false;
-          $scope.panel_visible = true;
-          $scope.fac.ordenes = response.data;
         },
         function(response){
-          $scope.$parent.loaders.formLoad = false;
-          alert('algo ha salido Mal');
-          console.log(response.data);
         }
       );
     }
   }
-
-  /// ==========================================================================
-  // INSERTAR
-  $scope.save = function(link, tipo){
-    if ($scope.fac.ordenes.length > 0) {
-      $scope.$parent.loaders.formLoad = true;
-      $scope.panel_visible = false;
-      $http.post(link, $scope.fac)
+  // Obtiene las ordenes a facturar
+  $scope.cargarOrdenesBy = function(lnk){
+    if(1){
+      $http.post(  lnk, {factura: $scope.factura}  )
       .then(
         function(response){
-          $scope.panel_visible = true;
-          $scope.$parent.loaders.formLoad = false;
-          console.log(response.data);
-          if (response.data == 'success') {
-            alert('Proceso realizado');
-            $scope.$parent.getDataContrato();
-            if (tipo=='add'){
-              $scope.cerrarWindowLocal('#ventanaFactura', $scope.$parent.enlaceGetFactura);
-            }
-          }else{
-            alert('Se ha interrumpido el proceso');
-          }
+        },
+        function(response){
+        }
+      );
+    }else{
+      console.log("");
+    }
+  }
+
+  /// ==========================================================================
+  // Guardar
+  $scope.save = function(link, tipo){
+    if ($scope.factura.ordenes.length > 0) {
+      $http.post(link, $scope.factura)
+      .then(
+        function(response){
+          //$scope.cerrarWindowLocal('#ventanaFactura', $scope.$parent.enlaceGetFactura);
         },
         function(response){
           console.log(response.data);
@@ -167,7 +175,7 @@ var formFactura = function($scope, $http, $timeout){
         if(response.data.success == 'success' ) {
           $scope.panel_visible = true;
           console.log( response.data.fac );
-          $scope.fac = response.data.fac;
+          $scope.factura = response.data.fac;
         }else{
           console.log(response.data);
           alert('Se ha interrumpido el proceso');
@@ -184,7 +192,7 @@ var formFactura = function($scope, $http, $timeout){
   $scope.togglePanel = function(){
     $scope.panel_visible = $scope.$parent.toggleLoader($scope.panel_visible);
   }
-
+  // Numero de paginas para las paginas de la tabla
   $scope.numberOfPages=function(){
     return Math.ceil($scope.orden.recursos.length/$scope.pageSize);
   }
@@ -218,7 +226,7 @@ var formFactura = function($scope, $http, $timeout){
   }
 
   $scope.changeSelectFac = function(tipo){
-    if (tipo=='orden') {
+    if (tipo == 'orden') {
       $scope.currentPage =  0;
       $scope.pgNum = 1;
     }else if (tipo == 'base') {
@@ -250,7 +258,7 @@ var formFactura = function($scope, $http, $timeout){
   }
 
   $scope.addActa = function(myacta){
-    $scope.fac.actas.push(myacta);
+    $scope.factura.actas.push(myacta);
   }
 
   $scope.isSelectedFile = false;

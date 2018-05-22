@@ -2,19 +2,18 @@
   <div style="border: 1px solid #333; padding:1ex" class="noMaterialStyles regularForm row">
     <div class="col s12 m6 l2">
       <b>C.O.</b>
-      <select class="" ng-model="filtro_CO" ng-options="b for b in fac.bases | orderBy:b"  ng-change="changeSelectFac('base')">
+      <select class="" ng-model="filtro_CO" ng-options="b for b in factura.bases | orderBy:b"  ng-change="changeSelectFac('base')">
       </select>
     </div>
 
     <div class="col s12 m6 l5">
       <b>Orden:</b>
-      <select ng-model="orden" ng-options="ot.No_OT for ot in fac.ordenes  | filter:{CO:filtro_CO}" ng-change="changeSelectFac('orden')">
-        <!-- <option ng-repeat="ot in fac.ordenes | filter: filtro" value="{{ ot.idOT}}"> {{ ot.No_OT+' - '+ot.CO }} </option> -->
+      <select ng-model="filtro_orden" ng-options="ot.No_OT for ot in factura.ordenes  | filter:{CO:filtro_CO}" ng-change="changeSelectFac('orden')">
       </select>
       &nbsp;&nbsp;
       &nbsp;&nbsp;
       <?php if (!$isMod): ?>
-        <button type="button" class="btn red mini-btn" style="margin-top: 0px" ng-click="deleteElementFactura(fac.ordenes, orden, 'orden')" >X</button>
+        <button type="button" class="btn red mini-btn" style="margin-top: 0px" ng-click="deleteElementFactura(factura.ordenes, orden, 'orden')" >X</button>
       <?php endif; ?>
 
       <button type="button" class="btn green mini-btn" style="margin-top:0px" >Exportar .xlsx</button>
@@ -29,6 +28,7 @@
       display:block;
     }
   </style>
+  
   <div style="overflow:scroll; width: 100%; height: 530px; border: 1px solid #333">
     <?php if ($isMod){
       $this->load->view('factura/factura/form_selec_estado');

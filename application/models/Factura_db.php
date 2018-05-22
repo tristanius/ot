@@ -124,6 +124,22 @@ class Factura_db extends CI_Model{
     ->get();
   }
 
+  public function getCentrosOperacionContratos($idcontrato)
+  {
+    $this->load->database("ot");
+    return $this->db->select("
+              c.idcontrato,
+              c.contratista,
+              b.idbase,
+              b.idsector,
+              cb.sector,
+              b.nombre_base
+            ")->from("contrato AS c")
+            ->join("contrato_base AS cb",'cb.idcontrato = c.idcontrato')
+            ->join("base AS b","b.idbase = cb.idbase")
+            ->where("c.idcontrato",$idcontrato)
+            ->get();
+  }
 
   #=============================================================================
   public function getOrdenes($obj)

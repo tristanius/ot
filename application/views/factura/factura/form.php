@@ -25,7 +25,7 @@
           </select>
         </div>
 
-        <div class="padding1ex col s12 m6 l3">
+        <div class="padding1ex col s12 m6 l3 end">
           <b>Estado del acta: </b>
           <select class="" ng-model="factura.estado_acta" ng-init="factura.estado_acta = (factura.estado_acta?factura.estado_acta:'EN CREACION')">
             <option value="EN CREACION">EN CREACION</option>
@@ -38,16 +38,30 @@
 
       </div>
 
-      <div class="inputs row noMaterialStyles padding1ex" >
+      <div class="inputs row noMaterialStyles padding1ex" ng-init="initModals()">
 
         <div class="padding1ex col s12 m6 l3">
           <b>Inicio periodo facturación: </b>
           <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="facura.fecha_inicio" placeholder="No. de fecha" ng-disabled="facura.fecha_inicio" >
         </div>
 
-        <div class="padding1ex col s12 m6 l3 end">
+        <div class="padding1ex col s12 m6 l3">
           <b>Final periodo facturación: </b>
           <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="facura.fecha_fin" placeholder="No. de fecha" ng-disabled="facura.fecha_fin" >
+        </div>
+
+        <div class="padding1ex col s12 m6 l3 end">
+          <b>Centros de operación a facturar: </b>
+          <div>
+            <button type="button" class="btn mini-btn modal-trigger" href="#centros_operacion">1. Centros de Operación</button>
+          </div>
+        </div>
+
+        <div class="padding1ex col s12 m6 l3 end">
+          <b>O.T.´s a facturar:</b>
+          <div>
+            <button type="button" class="btn mini-btn modal-trigger" href="#ordenes">2. Ordenes de trabajo</button>
+          </div>
         </div>
 
       </div>
@@ -71,6 +85,11 @@
     </div>
 
   </section>
+
+  <div id="modales">
+    <?php $this->load->view('factura/factura/modales/centros_operacion'); ?>
+    <?php $this->load->view('factura/factura/modales/ordenes'); ?>
+  </div>
 
   <hr>
 
