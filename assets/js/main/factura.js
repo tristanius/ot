@@ -122,24 +122,32 @@ var formFactura = function($scope, $http, $timeout){
       $http.post(link, $scope.factura)
       .then(
         function(response){
+          if(response.data.success){
+            $scope.factura.recursos = response.data.recursos;
+          }else{
+            console.log(response.data);
+          }
         },
         function(response){
+          console.log(response.data);
+          alert("error al consultar recursos");
         }
       );
     }
   }
-  // Obtiene las ordenes a facturar
-  $scope.cargarOrdenesBy = function(lnk){
-    if(1){
-      $http.post(  lnk, {factura: $scope.factura}  )
-      .then(
-        function(response){
+
+  $scope.getOrdenes = function(lnk){
+    if (true) {
+      $http.post(lnk, { centros_operacion: $scope.factura.centros_operacion } ).then(
+        function(resp){
+          if(resp.data.success){
+            alert("");
+          }
         },
-        function(response){
+        function(resp){
+
         }
       );
-    }else{
-      console.log("");
     }
   }
 

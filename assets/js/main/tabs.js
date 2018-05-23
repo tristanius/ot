@@ -301,6 +301,29 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     });
   }
 
+  $scope.datatable = function(selector){
+
+    $(selector+' thead tr.filters th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
+    // DataTable
+    var table = $(selector).DataTable();
+
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+
+        $( 'input', this.header() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+  }
 
 });
 

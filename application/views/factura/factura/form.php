@@ -42,12 +42,12 @@
 
         <div class="padding1ex col s12 m6 l3">
           <b>Inicio periodo facturación: </b>
-          <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="facura.fecha_inicio" placeholder="No. de fecha" ng-disabled="facura.fecha_inicio" >
+          <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="factura.fecha_inicio" placeholder="No. de fecha" ng-disabled="0" >
         </div>
 
         <div class="padding1ex col s12 m6 l3">
           <b>Final periodo facturación: </b>
-          <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="facura.fecha_fin" placeholder="No. de fecha" ng-disabled="facura.fecha_fin" >
+          <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="factura.fecha_fin" placeholder="No. de fecha" ng-disabled="0" >
         </div>
 
         <div class="padding1ex col s12 m6 l3 end">

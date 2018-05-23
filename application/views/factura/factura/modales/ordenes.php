@@ -2,8 +2,6 @@
   <div class="modal-content">
     <div class="card padding1ex">
 
-      <button type="button" class="btn mini-btn light-blue darken-4 white-text" ng-clic="cargarOrdenesBy()">Obtener ordenes por contrato y C.O.</button>
-
       <h5> Ordenes de Trabajo a facturar:</h5>
       <p>Las siguientes ordenes seleccionadas son las que tomaran recursos para facturar:</p>
       <table class="mytabla noMaterialStyles" style="background:#FFF; width: auto;">
@@ -31,6 +29,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="btn mini-btn modal-close"> He seleccionado las O.T.´s deseadas. </a>
+    <a href="#!" class="btn mini-btn modal-close" ng-click=""> He seleccionado las O.T.´s deseadas. </a>
   </div>
 </div>
