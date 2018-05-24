@@ -119,7 +119,7 @@
 
 
 <div ng-if="!factura.fecha_inicio || !factura.fecha_fin">
-  <strong>Hola, debes seleccionar fechas de inicio y final de factura para obtener los recursos de produccion dentro de un rango de fechas del contrato.</strong>
+  <p style="color:red">Hola, debes seleccionar fechas de inicio y final de factura para obtener los recursos de produccion dentro de un rango de fechas del contrato.</p>
 </div>
 
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">

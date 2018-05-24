@@ -132,6 +132,12 @@ class Factura extends CI_Controller{
     echo json_encode($ots);
   }
 
+  public function get_recursos()
+  {
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->model(array('factura_db'=>'fac'));
+  }
+
   #=============================================================================
   public function delItemFactura()
   {
