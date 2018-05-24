@@ -1,4 +1,4 @@
-<section ng-if="factura.fecha_inicio && factura.fecha_fin">
+<section ng-if="factura.fecha_inicio && factura.fecha_fin && factura.recursos.length > 0">
   <div style="border: 1px solid #333; padding:1ex" class="noMaterialStyles regularForm row">
     <div class="col s12 m6 l2">
       <b>C.O.</b>
@@ -122,6 +122,6 @@
   <strong>Hola, debes seleccionar fechas de inicio y final de factura para obtener los recursos de produccion dentro de un rango de fechas del contrato.</strong>
 </div>
 
-<div ng-if="!factura.recursos || factura.recursos.length == 0">
+<div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
   <button type="button" class="btn" ng-click="getRecursos('factura/get_recursos')">Obtener recursos</button>
 </div>

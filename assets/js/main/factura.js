@@ -141,11 +141,15 @@ var formFactura = function($scope, $http, $timeout){
       $http.post(lnk, { centros_operacion: $scope.factura.centros_operacion } ).then(
         function(resp){
           if(resp.data.success){
-            alert("");
+            $scope.factura.ordenes = resp.data.ordenes;
+          }else{
+            console.log(resp.data);
+            alert("Algo ha fallado al consultar Ordenes")
           }
         },
         function(resp){
-
+          console.log(resp.data);
+          alert("Algo ha fallado al consultar Ordenes")
         }
       );
     }

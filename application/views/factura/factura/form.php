@@ -1,5 +1,5 @@
 <section id="formFactura" class="windowCentered2 row" ng-controller="formFactura" <?php if($isMod): ?> ng-init="getFacturaData('<?= site_url('factura/get/'.$idfactura) ?>')" <?php endif; ?> >
-  <h4>Acta de factura - {{ contrato.contratista }}</h4>
+  <h4> <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" /> Acta de factura - {{ contrato.contratista }}</h4>
   <hr>
 
   <section>
