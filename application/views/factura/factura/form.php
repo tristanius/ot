@@ -1,8 +1,8 @@
 <section id="formFactura" class="windowCentered2 row" ng-controller="formFactura" <?php if($isMod): ?> ng-init="getFacturaData('<?= site_url('factura/get/'.$idfactura) ?>')" <?php endif; ?> >
-  <h4> <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" /> Acta de factura - {{ contrato.contratista }}</h4>
+  <h4 class="card padding1ex" > <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" /> Acta de factura - {{ contrato.contratista }}</h4>
   <hr>
 
-  <section>
+  <section >
 
     <div class="card">
       <div class="inputs row noMaterialStyles padding1ex">
@@ -69,7 +69,7 @@
 
     <div id="myTabs" ng-init="initTabs('#myTabs')">
       <ul>
-        <li><a href="#tabs-1">Descripción</a></li>
+        <li><a href="#tabs-1">Información</a></li>
         <li><a href="#tabs-2">Recursos</a></li>
         <li><a href="#tabs-3">Adjuntos</a></li>
       </ul>

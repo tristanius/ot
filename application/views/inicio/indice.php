@@ -7,7 +7,7 @@
     <div ng-app="myapp">
       <?php
       $this->load->view('inicio/nav');
-      
+
       echo $content;
 
       $this->load->view('inicio/footer');

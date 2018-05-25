@@ -327,6 +327,50 @@ class Factura_db extends CI_Model{
     $this->db->order_by('rd.idreporte_diario','ASC');
     return $this->db->get()->result();
   }
+
+  public function getRecursos($idcontrato, $fecha_inicio, $fecha_fin)
+  {
+    $this->db->select('
+    c.idcontrato,
+    OT.idOT,
+    OT.nombre_ot,
+    rd.idreporte_diario,
+    rd.fecha_reporte,
+    rrd.idrecurso_reporte_diario,
+    rrd.cantidad,
+    IF(rrd.facturable,"SI","NO") AS facturable,
+    itf.codigo,
+    itf.itemc_item,
+    itf.descripcion,
+    tar.tarifa,
+    p.identificacion,
+    p.nombre_completo,
+    IFNULL(itf.tipo, "activiad") AS tipo,
+    IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
+    IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo
+    ');
+    $this->db->from('contrato AS c');
+    $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
+          ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
+          ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
+          ->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot')
+          ->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso','LEFT')
+          ->join('persona AS p', 'r.persona_identificacion = p.identificacion','LEFT')
+          ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT')
+          ->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf')
+          ->join('tarifa AS tar', 'tar.itemf_iditemf = itf.iditemf')
+          ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tar.idvigencia_tarifas')
+          ->where('c.idcontrato', $idcontrato)
+          ->where('vg.idvigencia_tarifas = ( SELECT vigencia.idvigencia_tarifas FROM vigencia_tarifas AS vigencia WHERE vigencia.fecha_inicio_vigencia >= rd.fecha_reporte AND vigencia.fecha_fin_vigencia <= rd.fecha_reporte )')
+          ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ');
+    if( isset( $centros_operacion ) ){
+      $this->db->where_in('OT.base_idbase', $centros_operacion);
+    }
+    if( isset( $ordenes ) ){
+      $this->db->where_in('OT.idOT', $ordenes);
+    }
+    return $this->db->get();
+  }
   #=============================================================================
   public function get($idfactura)
   {

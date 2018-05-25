@@ -136,6 +136,7 @@ class Factura extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
     $this->load->model(array('factura_db'=>'fac'));
+    $this->fac->getrecursos();
   }
 
   #=============================================================================
