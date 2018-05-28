@@ -363,7 +363,7 @@ class Factura_db extends CI_Model{
           ->join('tarifa AS tar', 'tar.itemf_iditemf = itf.iditemf')
           ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tar.idvigencia_tarifas')
           ->where('c.idcontrato', $idcontrato)
-          ->where('vg.idvigencia_tarifas = ( SELECT vigencia.idvigencia_tarifas FROM vigencia_tarifas AS vigencia WHERE vigencia.fecha_inicio_vigencia >= rd.fecha_reporte AND vigencia.fecha_fin_vigencia <= rd.fecha_reporte )')
+          ->where('vg.idvigencia_tarifas = ( SELECT vigencia.idvigencia_tarifas FROM vigencia_tarifas AS vigencia WHERE vigencia.fecha_inicio_vigencia <= rd.fecha_reporte AND vigencia.fecha_fin_vigencia >= rd.fecha_reporte )')
           ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ');
     if( isset( $centros_operacion ) ){
       $this->db->where_in('OT.base_idbase', $centros_operacion);

@@ -135,7 +135,7 @@ class Factura extends CI_Controller{
   {
     $factura = json_decode( file_get_contents('php://input') );
     $this->load->model(array('factura_db'=>'fac'));
-    $recursos = $this->fac->getrecursos($factura->idcontrato, $factura->fecha_inicio, $factura->fecha_fin, $factura->centros_operacion, ($factura->ordenes_excluidas?$factura->ordenes_excluidas:NULL) );
+    $recursos = $this->fac->getrecursos($factura->idcontrato, $factura->fecha_inicio, $factura->fecha_fin, NULL, ($factura->ordenes_excluidas?$factura->ordenes_excluidas:NULL) );
     $ret = new stdClass();
     if($recursos->num_rows() > 0){
       $ret->success = TRUE;
