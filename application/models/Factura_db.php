@@ -331,6 +331,7 @@ class Factura_db extends CI_Model{
   // Mantener
   public function getRecursos($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL, $ordenes=NULL)
   {
+    $this->load->database('ot');
     $this->db->select('
     c.idcontrato,
     OT.idOT,
@@ -367,7 +368,7 @@ class Factura_db extends CI_Model{
     if( isset( $centros_operacion ) ){
       $this->db->where_in('OT.base_idbase', $centros_operacion);
     }
-    if( isset( $ordenes ) ){      
+    if( isset( $ordenes ) ){
       $this->db->where_not_in('OT.idOT', $ordenes);
     }
     return $this->db->get();
