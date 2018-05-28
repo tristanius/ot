@@ -123,5 +123,5 @@
 </div>
 
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
-  <button type="button" class="btn" ng-click="getRecursos('factura/get_recursos')">Obtener recursos</button>
+  <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')">Obtener recursos</button>
 </div>
