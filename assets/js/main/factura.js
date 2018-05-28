@@ -116,9 +116,7 @@ var formFactura = function($scope, $http, $timeout){
   // Ajax http request
   // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
-    if ($scope.factura.no_factura == undefined || $scope.factura.no_factura == '' || $scope.factura.fecha_inicio == undefined || $scope.factura.fecha_fin == undefined || $scope.factura.bases.length == 0) {
-      alert('Debes selecionar los campos necesarios para realizar el ata de factura')
-    }else{
+
       $scope.$parent.loaders.formLoad = true;
 
       $http.post(link, $scope.factura)
@@ -136,7 +134,6 @@ var formFactura = function($scope, $http, $timeout){
         }
       );
 
-    }
   }
 
   $scope.getOrdenes = function(lnk){
