@@ -9,8 +9,7 @@ class Factura extends CI_Controller{
     //Codeigniter : Write Less Do More
   }
 
-  function index()
-  {
+  function index(){
   }
 
   public function gestion()
@@ -134,9 +133,17 @@ class Factura extends CI_Controller{
 
   public function get_recursos()
   {
-    $post = json_decode( file_get_contents('php://input') );
+    $factura = json_decode( file_get_contents('php://input') );
     $this->load->model(array('factura_db'=>'fac'));
-    $this->fac->getrecursos();
+    $recursos = $this->fac->getrecursos($factura->idcontrato, $factura->fecha_inicio, $factura->fecha_fin, $factura->centros_operacion, ($factura->ordenes_excluidas?$factura->ordenes_excluidas:NULL) );
+    $ret = new stdClass();
+    if($recursos->num_rows() > 0){
+      $ret->success = TRUE;
+      $ret->recursos = $recursos->result();
+    }else{
+      $ret->success = FALSE;
+    }
+    echo json_encode($ret);
   }
 
   #=============================================================================

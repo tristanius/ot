@@ -77,7 +77,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="rrd in orden.recursos | filter: filtroItems | startFrom:currentPage*pageSize | limitTo:pageSize">
+        <tr ng-repeat="rrd in factura.recursos | filter: filtroItems | startFrom:currentPage*pageSize | limitTo:pageSize">
           <td class="noMaterialStyles regularForm">
             <input type="checkbox" ng-model="rrd.isSelected" init="rrd.isSelected = false">
           </td>
@@ -88,8 +88,8 @@
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
           <td> <span ng-bind="rrd.clasificacion"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"><span ng-bind="rrd.cantidad_total" ng-init="rrd.cantidad_total = calcularCantidad(rrd)"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.valor_total | currency" ng-init="rrd.valor_total = (rrd.tarifa*rrd.cantidad_total)"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"><span ng-bind="rrd.cantidad"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.valor_total | currency" ng-init="rrd.valor_total = (rrd.tarifa*rrd.cantidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a = (rrd.valor_total*0.18)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i = (rrd.valor_total*0.01)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.u | currency" ng-init="rrd.u = (rrd.valor_total*0.04)"></span> </td>
@@ -97,7 +97,7 @@
           <td> <span ng-bind="rrd.identificacion"></span> </td>
           <td> <span ng-bind="rrd.nombre_completo"></span> </td>
           <td> <span ng-bind="rrd.codigo_siesa"></span> </td>
-          <td> <span ng-bind="rrd.dec_equipo"></span> </td>
+          <td> <span ng-bind="rrd.descripcion_equipo"></span> </td>
           <td><button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button></td>
         </tr>
       </tbody>

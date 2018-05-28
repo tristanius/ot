@@ -92,7 +92,8 @@ var formFactura = function($scope, $http, $timeout){
     actas:[],
     bases:[],
     recursos:[],
-    ordenes:[]
+    ordenes:[],
+    ordenes_excluidas: []
   };
   $scope.currentPage = 0;
   $scope.pageSize = 13;
@@ -119,6 +120,7 @@ var formFactura = function($scope, $http, $timeout){
       alert('Debes selecionar los campos necesarios para realizar el ata de factura')
     }else{
       $scope.$parent.loaders.formLoad = true;
+
       $http.post(link, $scope.factura)
       .then(
         function(response){
@@ -133,6 +135,7 @@ var formFactura = function($scope, $http, $timeout){
           alert("error al consultar recursos");
         }
       );
+
     }
   }
 
@@ -144,12 +147,12 @@ var formFactura = function($scope, $http, $timeout){
             $scope.factura.ordenes = resp.data.ordenes;
           }else{
             console.log(resp.data);
-            alert("Algo ha fallado al consultar Ordenes")
+            alert("Algo ha fallado al consultar Ordenes");
           }
         },
         function(resp){
           console.log(resp.data);
-          alert("Algo ha fallado al consultar Ordenes")
+          alert("Algo ha fallado al consultar Ordenes");
         }
       );
     }
