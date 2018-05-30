@@ -205,8 +205,8 @@ var formFactura = function($scope, $http, $timeout){
     $scope.panel_visible = $scope.$parent.toggleLoader($scope.panel_visible);
   }
   // Numero de paginas para las paginas de la tabla
-  $scope.numberOfPages=function(){
-    return Math.ceil($scope.orden.recursos.length/$scope.pageSize);
+  $scope.numberOfPages=function(lista){
+    return Math.ceil(lista.recursos.length/$scope.pageSize);
   }
 
   $scope.deleteElementFactura = function(listaPadre, elemento, tipo){

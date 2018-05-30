@@ -51,10 +51,10 @@
         <td ng-init="act.acumulado?act.acumulado:0;">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
         </td>
-        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 10ex;"> </td>
-        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 10ex;"> </td>
+        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 10ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 10ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td>
-          <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;">
+          <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;" ng-disabled="rd.info.estado == 'CERRADO'">
             <option value="N/A">N/A</option>
             <option value="Box Coulbert">Box Coulbert</option>
             <option value="Instalaciones Hidráulicas">Instalaciones Hidráulicas</option>

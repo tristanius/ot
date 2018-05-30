@@ -227,6 +227,7 @@ class Factura_db extends CI_Model{
     c.idcontrato,
     OT.idOT,
     OT.nombre_ot,
+    OT.base_idbase,
     rd.idreporte_diario,
     rd.fecha_reporte,
     rrd.idrecurso_reporte_diario,
@@ -238,7 +239,7 @@ class Factura_db extends CI_Model{
     tar.tarifa,
     p.identificacion,
     p.nombre_completo,
-    IFNULL(itf.tipo, "activiad") AS tipo,
+    IFNULL(rot.tipo, "activiad") AS tipo,
     IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
     IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo
     ');
