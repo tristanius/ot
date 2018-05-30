@@ -7,12 +7,18 @@
         <th style="max-width:6ex;">Sector</th>
         <th>item</th>
         <th>Descripcion</th>
-        <th>Unidad</th>
+        <th>UND</th>
         <th>Cant. día</th>
         <th>Acumulado</th>
+        <th>Abscisa Ini.</th>
+        <th>Abscisa fin.</th>
+        <th>Tipo instal.</th>
         <th data-icon="*"> </th>
       </tr>
       <tr style="background: #b9dae5">
+        <th></th>
+        <th></th>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -44,6 +50,16 @@
         <td> <input type="number" min=0 step=0.00001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
         <td ng-init="act.acumulado?act.acumulado:0;">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
+        </td>
+        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 10ex;"> </td>
+        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 10ex;"> </td>
+        <td>
+          <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;">
+            <option value="N/A">N/A</option>
+            <option value="Box Coulbert">Box Coulbert</option>
+            <option value="Instalaciones Hidráulicas">Instalaciones Hidráulicas</option>
+            <option value="Obra Civil">Obra Civil</option>
+          </select>
         </td>
         <td  class="font9">
           <span ng-if="act.item_asociado"> (<span ng-bind="act.item_asociado" style="color: #934B10"></span>)</span>

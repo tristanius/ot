@@ -95,6 +95,11 @@ class Reporte_db extends CI_Model{
        'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
        'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
        'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+
+       'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
+       'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
+       'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+
        'last_log'=>$log." - ".date('Y-m-d H:i:s')
      );
      $this->db->insert('recurso_reporte_diario', $data);
@@ -138,6 +143,11 @@ class Reporte_db extends CI_Model{
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+
+      'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
+      'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
+      'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+
       'last_log'=>$log." - ".date('Y-m-d H:i:s')
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
@@ -346,7 +356,9 @@ class Reporte_db extends CI_Model{
       IFNULL(rot.tipo, "actividad" ) AS tipo_recurso,
       itf.itemc_item AS item,
       itf.descripcion,
-      rrd.idsector_item_tarea,
+      rrd.abscisa_ini,
+      rrd.abscisa_fin,
+      rrd.tipo_instalacion,
       rrd.facturable,
       rrd.print,
       rrd.cantidad,

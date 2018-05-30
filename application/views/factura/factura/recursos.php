@@ -109,7 +109,7 @@
       Anterior
     </button>
     {{currentPage+1}}/{{numberOfPages()}}
-    <button ng-disabled="currentPage >= orden.recursos.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+    <button ng-disabled="currentPage >= factura.recursos.length/pageSize - 1" ng-click="currentPage=currentPage+1">
       Siguiente
     </button>
     &nbsp;
