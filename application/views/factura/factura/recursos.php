@@ -1,23 +1,4 @@
 <section ng-if="factura.fecha_inicio && factura.fecha_fin && factura.recursos.length > 0">
-  <div style="border: 1px solid #333; padding:1ex" class="noMaterialStyles regularForm row">
-    <div class="col s12 m6 l2">
-      <b>C.O.</b>
-      <select class="" ng-model="filtro_CO" ng-options="b for b in fac.bases | orderBy:b"  ng-change="changeSelectFac('base')">
-      </select>
-    </div>
-
-    <div class="col s12 m6 l5">
-      <b>Orden:</b>
-      <select ng-model="orden" ng-options="ot.No_OT for ot in fac.ordenes  | filter:{CO:filtro_CO}" ng-change="changeSelectFac('orden')">
-        <!-- <option ng-repeat="ot in fac.ordenes | filter: filtro" value="{{ ot.idOT}}"> {{ ot.No_OT+' - '+ot.CO }} </option> -->
-      </select>
-      &nbsp;&nbsp;
-      &nbsp;&nbsp;
-      <?php if (!$isMod): ?>
-        <button type="button" class="btn red mini-btn" style="margin-top: 0px" ng-click="deleteElementFactura(fac.ordenes, orden, 'orden')" >X</button>
-      <?php endif; ?>
-    </div>
-  </div>
 
   <style media="screen">
     table#tablaRecursos tr td span{
@@ -59,7 +40,7 @@
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.nombre_ot" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.base_idbase" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.fecha_reporte" ng-change="changeSelectFac('filtroItems')"> </th>
-          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.item" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.itemc_item" ng-change="changeSelectFac('filtroItems')"> </th>
           <th></th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.descripcion" ng-change="changeSelectFac('filtroItems')"> </th>
           <th></th>
@@ -73,15 +54,16 @@
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"></th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"></th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.dec_equipo" ng-change="changeSelectFac('filtroItems')"></th>
-          <th></th>
+          <th> </th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="rrd in factura.recursos | filter: filtroItems | startFrom:currentPage*pageSize | limitTo:pageSize">
+        <tr ng-repeat="rrd in filteredRecursos = (factura.recursos | filter: filtroItems) | startFrom:currentPage*pageSize | limitTo:pageSize">
           <td class="noMaterialStyles regularForm">
             <input type="checkbox" ng-model="rrd.isSelected" init="rrd.isSelected = false">
           </td>
           <td> <span ng-bind="rrd.nombre_ot"></span> </td>
+          <td> <span ng-bind="rrd.base_idbase"></span> </td>
           <td> <span ng-bind="rrd.fecha_reporte"></span> </td>
           <td> <span ng-bind="rrd.itemc_item"></span> </td>
           <td> <span ng-bind="rrd.facturable"></span> </td>
@@ -89,11 +71,11 @@
           <td> <span ng-bind="rrd.clasificacion"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
           <td style="background: #DCE8C0; text-align:right"><span ng-bind="rrd.cantidad"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.valor_total | currency" ng-init="rrd.valor_total = (rrd.tarifa*rrd.cantidad)"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a = (rrd.valor_total*0.18)"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i = (rrd.valor_total*0.01)"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.u | currency" ng-init="rrd.u = (rrd.valor_total*0.04)"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.total | currency" ng-init=""></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.cantidad)"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a = (rrd.subtotal*0.18)"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i = (rrd.subtotal*0.01)"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.u | currency" ng-init="rrd.u = (rrd.subtotal*0.04)"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.total | currency" ng-init="rrd.total = (rrd.total?rrd.total:(rrd.subtotal + rrd.a + rrd.i + rrd.u))"></span> </td>
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
           <td> <small ng-bind="rrd.descripcion_equipo"></small> </td>
@@ -108,7 +90,7 @@
       Anterior
     </button>
     {{currentPage+1}}/{{numberOfPages(factura)}}
-    <button ng-disabled="currentPage >= factura.recursos.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+    <button ng-disabled="currentPage >= filteredRecursos.length/pageSize - 1" ng-click="currentPage=currentPage+1">
       Siguiente
     </button>
     &nbsp;
