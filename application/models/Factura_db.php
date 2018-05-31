@@ -272,6 +272,26 @@ class Factura_db extends CI_Model{
     return $this->db->get();
   }
 
+  public function getOrdenesByCO($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL)
+  {
+    $this->load->database('ot');
+    $this->db->select('
+    OT.idOT,
+    OT.nombre_ot,
+    OT.base_idbase
+    ');
+    $this->db->from('contrato AS c');
+    $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
+          ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
+          ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
+          ->where('c.idcontrato', $idcontrato);
+    if( isset( $centros_operacion ) ){
+      $this->db->where_in('OT.base_idbase', $centros_operacion);
+    }
+    $this->db->group_by('OT.idOT');
+    return $this->db->get();
+  }
+
   #=============================================================================
   public function get($idfactura)
   {

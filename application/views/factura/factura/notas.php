@@ -20,24 +20,24 @@
       </thead>
       <tbody>
         <tr>
-          <th>Actividad $</th>
-          <td></td>
+          <th>Actividad </th>
+          <td>$ 0.0</td>
         </tr>
         <tr class="grey lighten-3">
-          <th>Personal $</th>
-          <td></td>
+          <th>Personal </th>
+          <td>$ 0.0</td>
         </tr>
         <tr>
-          <th>Equipo $</th>
-          <td></td>
+          <th>Equipo</th>
+          <td>$ 0.0</td>
         </tr>
         <tr class="grey lighten-3">
-          <th>Material $</th>
-          <td></td>
+          <th>Material</th>
+          <td>$ 0.0</td>
         </tr>
         <tr>
-          <th>Otros $</th>
-          <td></td>
+          <th>Otros </th>
+          <td>$ 0.0</td>
         </tr>
         <tr class="grey lighten-3">
           <th>Subtotal $</th>

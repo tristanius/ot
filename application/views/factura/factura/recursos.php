@@ -89,7 +89,7 @@
     <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
       Anterior
     </button>
-    {{currentPage+1}}/{{numberOfPages(factura)}}
+    {{currentPage+1}}/{{numberOfPages(filteredRecursos)}}
     <button ng-disabled="currentPage >= filteredRecursos.length/pageSize - 1" ng-click="currentPage=currentPage+1">
       Siguiente
     </button>
