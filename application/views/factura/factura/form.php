@@ -2,6 +2,8 @@
   <h4 class="card padding1ex" > <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" /> Acta de factura - {{ contrato.contratista }}</h4>
   <hr>
 
+  <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
+
   <section >
 
     <div class="card">
@@ -93,6 +95,8 @@
 
   <hr>
 
+  <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
+
   <div class="btnWindow">
     <?php if ($isMod): ?>
       <button id="guardar_reporte" ng-show="panel_visible" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="save('<?= site_url('factura/mod') ?>','mod')">
@@ -107,7 +111,3 @@
     <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="cerrarWindowLocal('#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
   </div>
 </section>
-
-<script>
-
-</script>

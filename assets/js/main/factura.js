@@ -37,24 +37,6 @@ var factura = function($scope, $http, $timeout){
     $scope.resetView(link);
     $scope.$parent.getAjaxWindowLocal(link, ventana, btnMostrar);
   }
-  // REEPLANTEAR
-  // Metodo para carcular una cantidad... con disponibilidad
-  $scope.calcularCantidad = function(rec){
-    var cant = 0;
-    if (rec.tipo == 3) {
-      if (rec.unidad == 'hr') {
-        cant = (rec.horas_operacion-4 > 0)? rec.horas_operacion: 4;
-      }else if (rec.horas_operacion == 0 && rec.hrdisp > 0) {
-        var disp  = (rec.hrdisp / rec.basedisp);
-        cant = (rec.horas_disponible > 0)?disp:0;
-      }else{
-        cant = (rec.horas_disponible > 0)?1:0;
-      }
-    }else{
-      cant = 1;
-    }
-    return cant.toFixed(6) * rec.cant_und;
-  }
 
   $scope.delAddFromList = function(list, base){
     $scope.$parent.delAddFromList(list, base);
@@ -117,7 +99,7 @@ var formFactura = function($scope, $http, $timeout){
   // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
 
-      $scope.$parent.loaders.formLoad = true;
+      $scope.$parent.loaders.spinner = true;
 
       $http.post(link, $scope.factura)
       .then(
@@ -127,8 +109,10 @@ var formFactura = function($scope, $http, $timeout){
           }else{
             console.log(response.data);
           }
+          $scope.$parent.loaders.spinner = false;
         },
         function(response){
+          $scope.$parent.loaders.spinner = false;
           console.log(response.data);
           alert("error al consultar recursos");
         }
@@ -208,12 +192,12 @@ var formFactura = function($scope, $http, $timeout){
   /// ==========================================================================
   // EDICION
   $scope.getFacturaData = function(link) {
-    $scope.$parent.loaders.formLoad = true;
+    $scope.$parent.loaders.spinner = true;
     $http.post(
       link, {}
     ).then(
       function(response){
-        $scope.$parent.loaders.formLoad = false;
+        $scope.$parent.loaders.spinner = false;
         if(response.data.success == 'success' ) {
           $scope.panel_visible = true;
           console.log( response.data.fac );
@@ -224,6 +208,7 @@ var formFactura = function($scope, $http, $timeout){
         }
       },
       function(response){
+        $scope.$parent.loaders.spinner = false;
         console.log(response.data);
           alert('Algo ha salido mal');
       }
@@ -298,13 +283,12 @@ var formFactura = function($scope, $http, $timeout){
       v.isSelected = estado;
     });
   }
-
-  $scope.addActa = function(myacta){
-    $scope.factura.actas.push(myacta);
-  }
-
+  // --------------------------------------------------------------------------
+  // Upload file
   $scope.isSelectedFile = false;
+
   $scope.cargandoConsulta = false;
+
   $scope.initAdjunto = function(ruta) {
     $scope.adjunto = $("#fileuploader").uploadFile({
       url:ruta,

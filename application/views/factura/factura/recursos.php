@@ -1,5 +1,7 @@
 <section ng-if="factura.fecha_inicio && factura.fecha_fin && factura.recursos.length > 0">
 
+  <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
+
   <style media="screen">
     table#tablaRecursos tr td span{
       height:26px;
