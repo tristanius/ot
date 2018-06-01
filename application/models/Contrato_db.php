@@ -9,11 +9,14 @@ class Contrato_db extends CI_Model{
     //Codeigniter : Write Less Do More
   }
 
-  public function getContratos($id=NULL)
+  public function getContratos($id=NULL, $estado=NULL)
   {
     $this->load->database('ot');
     if (isset($id)) {
       $this->db->where('idcontrato', $id);
+    }
+    if (isset($estado)) {
+      $this->db->where('estado', $estado);
     }
     return $this->db->from('contrato')->get();
   }

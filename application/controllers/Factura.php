@@ -192,25 +192,4 @@ class Factura extends CI_Controller{
     $this->db->delete('factura', array('idfactura'=>$idfac));
     echo "success";
   }
-
-  # =====================================================================================
-  # UTILIDADES
-
-  public function calcularCantidad($rec)
-  {
-    $cant = 0;
-    if ($rec->tipo == 3) {
-      if ($rec->unidad == 'hr') {
-        $cant = ($rec->horas_operacion-4 > 0)? $rec->horas_operacion: 4;
-      }else if ($rec->horas_operacion == 0 && $rec->hrdisp > 0) {
-        $disp  = ($rec->hrdisp / $rec->basedisp);
-        $cant = ($rec->horas_disponible > 0.00)?$disp:0;
-      }else{
-        $cant = 1;
-      }
-    }else{
-      $cant = 1;
-    }
-    return round($cant,6) * $rec->cant_und;
-  }
 }

@@ -57,7 +57,7 @@
           <th> </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody ng-init="filteredRecursos = []">
         <tr ng-repeat="rrd in filteredRecursos = (factura.recursos | filter: filtroItems) | startFrom:currentPage*pageSize | limitTo:pageSize">
           <td class="noMaterialStyles regularForm">
             <input type="checkbox" ng-model="rrd.isSelected" init="rrd.isSelected = false">

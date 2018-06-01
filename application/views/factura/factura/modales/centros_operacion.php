@@ -29,6 +29,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="btn mini-btn modal-close"> He seleccionado los C.O.´s deseados. </a>
+    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedCOs();"> He seleccionado los C.O.´s deseados. </a>
   </div>
 </div>

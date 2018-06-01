@@ -133,25 +133,55 @@ var formFactura = function($scope, $http, $timeout){
           alert("error al consultar recursos");
         }
       );
-
   }
 
+  //----------------------------------------------------------------------------
+  //Procedimientos para filtrar consultas
+
+  // Obtener ordenes de trabajo
   $scope.getOrdenes = function(lnk){
-    if (true) {
-      $http.post(lnk, { centros_operacion: $scope.factura.centros_operacion } ).then(
-        function(resp){
-          if(resp.data.success){
-            $scope.factura.ordenes = resp.data.ordenes;
-          }else{
-            console.log(resp.data);
-            alert("Algo ha fallado al consultar Ordenes");
-          }
-        },
-        function(resp){
+    $http.post(lnk, { centros_operacion: $scope.factura.centros_operacion } ).then(
+      function(resp){
+        if(resp.data.success){
+          $scope.factura.ordenes = resp.data.ordenes;
+        }else{
           console.log(resp.data);
           alert("Algo ha fallado al consultar Ordenes");
         }
-      );
+      },
+      function(resp){
+        console.log(resp.data);
+        alert("Algo ha fallado al consultar Ordenes");
+      }
+    );
+  }
+
+  //
+  $scope.selectedCOs = function(){
+    var i = 0;
+    $scope.factura.centros_operacion_excluidos = [];
+    angular.forEach($scope.factura.centros_operacion, function(v,k){
+      i++;
+      if (!v.isSelected) {
+        $scope.factura.centros_operacion_excluidos.push(v.idbase);
+      }
+    });
+    if(i<=0){
+      $scope.factura.centros_operacion_excluidos = undefined;
+    }
+  }
+
+  $scope.selectedOTs = function(){
+    var i = 0;
+    $scope.factura.ordenes_excluidas = [];
+    angular.forEach($scope.factura.ordenes, function(v,k){
+      i++;
+      if (!v.isSelected) {
+        $scope.factura.ordenes_excluidas.push(v.idOT);
+      }
+    });
+    if(i<=0){
+      $scope.factura.ordenes_excluidas = undefined;
     }
   }
 
@@ -206,7 +236,7 @@ var formFactura = function($scope, $http, $timeout){
   }
   // Numero de paginas para las paginas de la tabla
   $scope.numberOfPages=function(lista){
-    return Math.ceil(lista.recursos.length/$scope.pageSize);
+    return Math.ceil(lista.length/$scope.pageSize);
   }
 
   $scope.deleteElementFactura = function(listaPadre, elemento, tipo){

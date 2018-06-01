@@ -84,7 +84,7 @@ class Ot extends CI_Controller {
 		$items['material']  = $this->item_db->getBytipo('material')->result();
 		$items['otros']  = $this->item_db->getBytipo('otros')->result();
 		$vigencias = $this->item_db->getVigenciasActivas()->result();
-		$contratos = $this->contrato_db->getContratos()->result();
+		$contratos = $this->contrato_db->getContratos(NULL, TRUE)->result();
 		$this->load->helper('config');
 		$usuarios = getUsuarios(NULL, TRUE);
 		$arr =array(
