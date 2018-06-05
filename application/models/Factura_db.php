@@ -245,6 +245,7 @@ class Factura_db extends CI_Model{
     ');
     $this->db->from('contrato AS c');
     $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
+          ->join('base AS b','b.idbase = OT.base_idbase')
           ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
           ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
           ->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot')
@@ -264,7 +265,7 @@ class Factura_db extends CI_Model{
               )')
           ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ');
     if( isset( $centros_operacion ) ){
-      $this->db->where_in('OT.base_idbase', $centros_operacion);
+      $this->db->where_not_in('b.idbase', $centros_operacion);
     }
     if( isset( $ordenes ) ){
       $this->db->where_not_in('OT.idOT', $ordenes);

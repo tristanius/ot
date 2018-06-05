@@ -4,6 +4,7 @@ var factura = function($scope, $http, $timeout){
   $scope.loaders = {};
   $scope.enlaceGetFactura = '';
   $scope.linkDataContrato = '';
+  $scope.spinner = false;
 
   // Obtiene la informacion de un contrato macro
   $scope.getDataContrato = function(){
@@ -99,7 +100,7 @@ var formFactura = function($scope, $http, $timeout){
   // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
 
-      $scope.$parent.loaders.spinner = true;
+      $scope.$parent.spinner = true;
 
       $http.post(link, $scope.factura)
       .then(
@@ -109,10 +110,10 @@ var formFactura = function($scope, $http, $timeout){
           }else{
             console.log(response.data);
           }
-          $scope.$parent.loaders.spinner = false;
+          $scope.$parent.spinner = false;
         },
         function(response){
-          $scope.$parent.loaders.spinner = false;
+          $scope.$parent.spinner = false;
           console.log(response.data);
           alert("error al consultar recursos");
         }
@@ -124,6 +125,7 @@ var formFactura = function($scope, $http, $timeout){
 
   // Obtener ordenes de trabajo
   $scope.getOrdenes = function(lnk){
+    $scope.$parent.spinner = true;
     $http.post(lnk, { centros_operacion: $scope.factura.centros_operacion } ).then(
       function(resp){
         if(resp.data.success){
@@ -132,15 +134,18 @@ var formFactura = function($scope, $http, $timeout){
           console.log(resp.data);
           alert("Algo ha fallado al consultar Ordenes");
         }
+        $scope.$parent.spinner = false;
       },
       function(resp){
+        $scope.$parent.spinner = false;
         console.log(resp.data);
         alert("Algo ha fallado al consultar Ordenes");
       }
     );
   }
 
-  //
+  //-----------------------------------------------------------------------------
+  // Seleccion de centros de operacion excluidos
   $scope.selectedCOs = function(){
     var i = 0;
     $scope.factura.centros_operacion_excluidos = [];
@@ -154,7 +159,7 @@ var formFactura = function($scope, $http, $timeout){
       $scope.factura.centros_operacion_excluidos = undefined;
     }
   }
-
+  // Selecccion de ordenes de trabajo excluidas
   $scope.selectedOTs = function(){
     var i = 0;
     $scope.factura.ordenes_excluidas = [];
@@ -192,12 +197,12 @@ var formFactura = function($scope, $http, $timeout){
   /// ==========================================================================
   // EDICION
   $scope.getFacturaData = function(link) {
-    $scope.$parent.loaders.spinner = true;
+    $scope.$parent.spinner = true;
     $http.post(
       link, {}
     ).then(
       function(response){
-        $scope.$parent.loaders.spinner = false;
+        $scope.$parent.spinner = false;
         if(response.data.success == 'success' ) {
           $scope.panel_visible = true;
           console.log( response.data.fac );
@@ -208,7 +213,7 @@ var formFactura = function($scope, $http, $timeout){
         }
       },
       function(response){
-        $scope.$parent.loaders.spinner = false;
+        $scope.$parent.spinner = false;
         console.log(response.data);
           alert('Algo ha salido mal');
       }

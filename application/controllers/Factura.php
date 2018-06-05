@@ -143,8 +143,8 @@ class Factura extends CI_Controller{
   {
     $factura = json_decode( file_get_contents('php://input') );
     $this->load->model(array('factura_db'=>'fac'));
-    $cos = ($fectura->centros_operacion_excluidos?json_decode($fectura->centros_operacion_excluidos):NULL);
-    $ots = ($fectura->ordenes_excluidas?json_decode($fectura->ordenes_excluidas):NULL);
+    $cos = (isset($fectura->centros_operacion_excluidos)?json_decode($fectura->centros_operacion_excluidos):NULL);
+    $ots = (isset($fectura->ordenes_excluidas)?json_decode($fectura->ordenes_excluidas):NULL);
     $recursos = $this->fac->getrecursos($factura->idcontrato, $factura->fecha_inicio, $factura->fecha_fin, $cos, $ots );
     $ret = new stdClass();
     if($recursos->num_rows() > 0){
