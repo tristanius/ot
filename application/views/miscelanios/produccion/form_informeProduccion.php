@@ -21,7 +21,7 @@
 
           <span for=""> Selecciona informe:</span>
           <select class="" ng-model="tipo_informe">
-            <option value="1">Produccion MTTO</option>
+            <option value="1">Produccion MTTO (ECP)</option>
             <option value="2">Produccion Obras</option>
           </select>
 

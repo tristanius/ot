@@ -97,7 +97,7 @@
 
   <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
-  <div class="btnWindow">
+  <div class="btnWindow" ng-show="!spinner">
     <?php if ($isMod): ?>
       <button id="guardar_reporte" ng-show="panel_visible" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="save('<?= site_url('factura/mod') ?>','mod')">
         <b data-icon="&#xe015;"></b> Actualizar

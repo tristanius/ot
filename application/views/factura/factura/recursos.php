@@ -45,7 +45,7 @@
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.itemc_item" ng-change="changeSelectFac('filtroItems')"> </th>
           <th></th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.descripcion" ng-change="changeSelectFac('filtroItems')"> </th>
-          <th></th>
+          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.tipo" ng-change="changeSelectFac('filtroItems')">  </th>
           <th></th>
           <th></th>
           <th></th>
@@ -70,7 +70,7 @@
           <td> <span ng-bind="rrd.itemc_item"></span> </td>
           <td> <span ng-bind="rrd.facturable"></span> </td>
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
-          <td> <span ng-bind="rrd.clasificacion"></span> </td>
+          <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
           <td style="background: #DCE8C0; text-align:right"><span ng-bind="rrd.cantidad"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.cantidad)"></span> </td>
@@ -102,7 +102,7 @@
 
 
 <div ng-if="!factura.fecha_inicio || !factura.fecha_fin">
-  <p style="color:red">Hola, debes seleccionar fechas de inicio y final de factura para obtener los recursos de produccion dentro de un rango de fechas del contrato.</p>
+  <p class="panel" style="color:red">Hola, debes seleccionar fechas de inicio y final de factura para obtener los recursos de produccion dentro de un rango de fechas del contrato.</p>
 </div>
 
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">

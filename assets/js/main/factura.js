@@ -27,7 +27,7 @@ var factura = function($scope, $http, $timeout){
       alert('no has selecionado contrato')
     }
   }
-  // spiner .gif
+  // spinner .gif
   $scope.toggleLoader = function(loader){
     return loader?false:true;
   }
@@ -258,17 +258,13 @@ var formFactura = function($scope, $http, $timeout){
   }
 
   $scope.changeSelectFac = function(tipo){
-    if (tipo == 'orden') {
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
-    }else if (tipo == 'base') {
+    if (tipo == 'base') {
       $scope.orden = {recursos:[]};
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
-    }else if (tipo == 'filtroItems') {
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
     }
+    $timeout(function(){
+      $scope.currentPage =  0;
+      $scope.pgNum = 1;
+    });
   }
 
   $scope.setValRange = function(valmodel, prop, lista){
@@ -292,9 +288,8 @@ var formFactura = function($scope, $http, $timeout){
   // Upload file
   $scope.isSelectedFile = false;
 
-  $scope.cargandoConsulta = false;
-
   $scope.initAdjunto = function(ruta) {
+    // Se guarda en una variable el objeto retornado del inicio de la funcion de carga
     $scope.adjunto = $("#fileuploader").uploadFile({
       url:ruta,
       autoSubmit: false,
@@ -317,15 +312,15 @@ var formFactura = function($scope, $http, $timeout){
       },
       onError: function(files,status,errMsg,pd){
         alert(JSON.stringify(errMsg));
-        $scope.cargandoConsulta = false;
+        $scope.$parent.spinner = false;
       }
     });
   }
+  // 
   $scope.IniciarUploadAdjunto = function(){
-    $scope.cargandoConsulta = true;
+    $scope.$parent.spinner = true;
     $scope.adjunto.startUpload();
   }
-
   //Vendors
 	$scope.tinyMCE = function(selTag){
 		tinymce.init({

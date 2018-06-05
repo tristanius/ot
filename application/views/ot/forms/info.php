@@ -1,7 +1,7 @@
   <hr style="border:1px solid #33c633">
   <br>
 
-  <div class="col l12 row">
+  <div class="col l12 row noMaterialStyles regularForm">
     <div class="col l12 row">
       <div class="col s12 l6">
         <input type="checkbox" id="p1" ng-model="ot.json.p1" />
