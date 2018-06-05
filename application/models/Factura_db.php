@@ -69,10 +69,24 @@ class Factura_db extends CI_Model{
   public function getVigenciasContrato($idcontrato)
   {
     $this->load->database('ot');
-    return $this->db->from('contrato AS c')
-    ->join('vigencia_tarifas AS vfac','vfac.idcontrato = c.idcontrato')
+    return $this->db->select('
+    c.idcontrato,
+    c.no_contrato,
+    c.contratista,
+    c.estado,
+    vg.idvigencia_tarifas,
+    vg.descripcion_vigencia,
+    vg.estado,
+    vg.fecha_inicio_vigencia,
+    vg.fecha_fin_vigencia,
+    vg.a,
+    vg.i,
+    vg.u
+    ')
+    ->from('contrato AS c')
+    ->join('vigencia_tarifas AS vg','vg.idcontrato = c.idcontrato')
     ->where('c.idcontrato',$idcontrato)
-    ->order_by('vfac.idvigencia_tarifas','DESC')->get();
+    ->order_by('vg.idvigencia_tarifas','DESC')->get();
   }
 
   public function getFacturasContrato($idcontrato)
@@ -82,11 +96,11 @@ class Factura_db extends CI_Model{
     ->select(
       '
       f.*,
-      vtar.descripcion_vigencia
+      vg.descripcion_vigencia
       ')
     ->from('factura AS f')
-    ->join('vigencia_tarifas AS vtar','vtar.idvigencia_tarifas = f.idvigencia_tarifas')
-    ->join('contrato AS c','c.idcontrato = vtar.idcontrato')
+    ->join('vigencia_tarifas AS vg','vg.idvigencia_tarifas = f.idvigencia_tarifas')
+    ->join('contrato AS c','c.idcontrato = vg.idcontrato')
     ->where('c.idcontrato',$idcontrato)
     ->get();
   }
@@ -209,11 +223,11 @@ class Factura_db extends CI_Model{
 
     $this->db->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario');
     $this->db->join('factura AS f', 'f.idfactura = frrd.idfactura');
-    $this->db->join('vigencia_tarifas AS vtar', 'f.idvigencia_tarifas = vtar.idvigencia_tarifas');
+    $this->db->join('vigencia_tarifas AS vg', 'f.idvigencia_tarifas = vg.idvigencia_tarifas');
 
     $this->db->where('frrd.idfactura', $idfactura);
     $this->db->where('OT.idOT', $idOT);
-    $this->db->where('tr.idvigencia_tarifas = vtar.idvigencia_tarifas');
+    $this->db->where('tr.idvigencia_tarifas = vg.idvigencia_tarifas');
     $this->db->order_by('rd.fecha_reporte','ASC');
     $this->db->order_by('rd.idreporte_diario','ASC');
     return $this->db->get()->result();

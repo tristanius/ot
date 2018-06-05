@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="c in facura.ordenes | filter: seleccionOT" >
+          <tr ng-repeat="c in factura.ordenes | filter: seleccionOT" >
             <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected?c.isSelected:true)"></td>
             <td><span ng-bind="c.nombre_ot"></span> </td>
             <td><span ng-bind="c.base_idbase"></span> </td>
