@@ -316,7 +316,7 @@ var formFactura = function($scope, $http, $timeout){
       }
     });
   }
-  // 
+  // esta funcion es invocada al darle click al botón adjuntar/cargar
   $scope.IniciarUploadAdjunto = function(){
     $scope.$parent.spinner = true;
     $scope.adjunto.startUpload();

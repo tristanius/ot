@@ -10,6 +10,15 @@
       display:block;
     }
   </style>
+
+  <div class="panel">
+    <fieldset>
+
+      <button type="button" class="btn mini-btn">Esportar (xlsx)</button>
+
+    </fieldset>
+  </div>
+
   <div style="overflow:scroll; width: 100%; height: 530px; border: 1px solid #333">
     <?php if ($isMod){
       $this->load->view('factura/factura/form_selec_estado');

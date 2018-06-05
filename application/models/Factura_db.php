@@ -265,10 +265,10 @@ class Factura_db extends CI_Model{
               )')
           ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ');
     if( isset( $centros_operacion ) ){
-      $this->db->where_not_in('b.idbase', $centros_operacion);
+      $this->db->where_not_in('b.idbase', (array) $centros_operacion);
     }
     if( isset( $ordenes ) ){
-      $this->db->where_not_in('OT.idOT', $ordenes);
+      $this->db->where_not_in('OT.idOT', (array) $ordenes);
     }
     return $this->db->get();
   }
