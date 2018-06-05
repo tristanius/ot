@@ -287,7 +287,7 @@ class Factura_db extends CI_Model{
           ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
           ->where('c.idcontrato', $idcontrato);
     if( isset( $centros_operacion ) ){
-      $this->db->where_in('OT.base_idbase', $centros_operacion);
+      $this->db->where_not_in('OT.base_idbase', (array)  $centros_operacion);
     }
     $this->db->group_by('OT.idOT');
     return $this->db->get();

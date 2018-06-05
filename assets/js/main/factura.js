@@ -75,8 +75,7 @@ var formFactura = function($scope, $http, $timeout){
     actas:[],
     bases:[],
     recursos:[],
-    ordenes:[],
-    ordenes_excluidas: []
+    ordenes:[]
   };
   $scope.currentPage = 0;
   $scope.pageSize = 13;
@@ -107,9 +106,9 @@ var formFactura = function($scope, $http, $timeout){
         function(response){
           if(response.data.success){
             $scope.factura.recursos = response.data.recursos;
-          }else{
-            console.log(response.data);
+            $scope.factura.ordenes = response.data.ordenes;
           }
+          console.log(response.data);
           $scope.$parent.spinner = false;
         },
         function(response){
