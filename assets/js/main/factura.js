@@ -260,10 +260,8 @@ var formFactura = function($scope, $http, $timeout){
     if (tipo == 'base') {
       $scope.orden = {recursos:[]};
     }
-    $timeout(function(){
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
-    });
+    $scope.currentPage =  0;
+    $scope.pgNum = 1;
   }
 
   $scope.setValRange = function(valmodel, prop, lista){

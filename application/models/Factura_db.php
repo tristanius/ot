@@ -93,8 +93,7 @@ class Factura_db extends CI_Model{
   {
     $this->load->database('ot');
     return $this->db
-    ->select(
-      '
+    ->select('
       f.*,
       vg.descripcion_vigencia
       ')
@@ -109,31 +108,29 @@ class Factura_db extends CI_Model{
   {
     $this->load->database("ot");
     return $this->db->select("
-              c.idcontrato,
-              c.contratista,
-              b.idbase,
-              b.idsector,
-              cb.sector,
-              b.nombre_base
-            ")->from("contrato AS c")
-            ->join("contrato_base AS cb",'cb.idcontrato = c.idcontrato')
-            ->join("base AS b","b.idbase = cb.idbase")
-            ->where("c.idcontrato",$idcontrato)
-            ->get();
+    c.idcontrato,
+    c.contratista,
+    b.idbase,
+    b.idsector,
+    cb.sector,
+    b.nombre_base
+    ")->from("contrato AS c")
+    ->join("contrato_base AS cb",'cb.idcontrato = c.idcontrato')
+    ->join("base AS b","b.idbase = cb.idbase")
+    ->where("c.idcontrato",$idcontrato)
+    ->get();
   }
 
   #=============================================================================
   public function getOrdenes($obj)
   {
     $this->load->database('ot');
-    $this->db->select(
-      '
-      OT.idOT,
-      OT.nombre_ot AS No_OT,
-      b.idbase AS CO,
-      b.nombre_base AS base
-      '
-    );
+    $this->db->select('
+    OT.idOT,
+    OT.nombre_ot AS No_OT,
+    b.idbase AS CO,
+    b.nombre_base AS base
+    ');
     $this->db->from('OT');
     $this->db->join('base AS b', 'b.idbase = OT.base_idbase');
     $this->db->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT');

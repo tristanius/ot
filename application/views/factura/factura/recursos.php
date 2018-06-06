@@ -13,13 +13,12 @@
 
   <div class="panel">
     <fieldset>
-
-      <button type="button" class="btn mini-btn">Esportar (xlsx)</button>
-
+      <button type="button" class="btn mini-btn">Exportar (xlsx)</button>
+      <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')">Cargar recursos</button>
     </fieldset>
   </div>
 
-  <div style="overflow:scroll; width: 100%; height: 530px; border: 1px solid #333">
+  <div style="overflow:scroll; width: 100%; border: 1px solid #333">
     <?php if ($isMod){
       $this->load->view('factura/factura/form_selec_estado');
     } ?>
@@ -47,24 +46,24 @@
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
-          <th><input type="checkbox" ng-model="allitems" ng-click="modSeletionState(orden.recursos, allitems)"></th>
+          <th> <input type="checkbox" ng-model="allitems" ng-click="modSeletionState(orden.recursos, allitems)"> </th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.nombre_ot" ng-change="changeSelectFac('filtroItems')"> </th>
-          <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.base_idbase" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.base_idbase" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.fecha_reporte" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.itemc_item" ng-change="changeSelectFac('filtroItems')"> </th>
-          <th></th>
-          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.descripcion" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> </th>
+          <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.descripcion" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.tipo" ng-change="changeSelectFac('filtroItems')">  </th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"></th>
-          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"></th>
-          <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.dec_equipo" ng-change="changeSelectFac('filtroItems')"></th>
+          <th> </th>
+          <th> </th>
+          <th> </th>
+          <th> </th>
+          <th> </th>
+          <th> </th>
+          <th> </th>
+          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.dec_equipo" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> </th>
         </tr>
       </thead>
@@ -81,7 +80,7 @@
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"><span ng-bind="rrd.cantidad"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.cantidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a = (rrd.subtotal*factura.vigencia_tarifas.a)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i = (rrd.subtotal*factura.vigencia_tarifas.i)"></span> </td>
@@ -90,7 +89,7 @@
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
           <td> <small ng-bind="rrd.descripcion_equipo"></small> </td>
-          <td><button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button></td>
+          <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button> </td>
         </tr>
       </tbody>
     </table>
@@ -115,5 +114,5 @@
 </div>
 
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
-  <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')">Obtener recursos</button>
+  <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')">Cargar recursos</button>
 </div>
