@@ -176,20 +176,25 @@ var formFactura = function($scope, $http, $timeout){
   /// ==========================================================================
   // Guardar
   $scope.save = function(link, tipo){
-    if ($scope.factura.ordenes.length > 0) {
-      $http.post(link, $scope.factura)
-      .then(
-        function(response){
-          //$scope.cerrarWindowLocal('#ventanaFactura', $scope.$parent.enlaceGetFactura);
-        },
-        function(response){
+    $scope.$parent.spinner = true;
+    $http.post(link, $scope.factura)
+    .then(
+      function(response){
+        if(response.data.success == 'success' ) {
+          $scope.factura= response.data.factura;
+          alert("Procedimiento realizado conexito.")
+        }else{
           console.log(response.data);
-          alert('Algo ha salido mal');
+          alert('Se ha interrumpido el proceso');
         }
-      );
-    }else{
-      alert('No existen registros por agregar');
-    }
+        $scope.$parent.spinner = false;
+      },
+      function(response){
+        $scope.$parent.spinner = false;
+        console.log(response.data);
+        alert('Algo ha salido mal');
+      }
+    );
   }
 
 

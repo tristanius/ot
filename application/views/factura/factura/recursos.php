@@ -14,7 +14,7 @@
   <div class="panel">
     <fieldset>
       <button type="button" class="btn mini-btn">Exportar (xlsx)</button>
-      <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')">Cargar recursos</button>
+      <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
     </fieldset>
   </div>
 
@@ -114,5 +114,5 @@
 </div>
 
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
-  <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')">Cargar recursos</button>
+  <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
 </div>
