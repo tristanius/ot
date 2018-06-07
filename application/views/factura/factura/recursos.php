@@ -14,7 +14,6 @@
   <div class="panel">
     <fieldset>
       <button type="button" class="btn mini-btn">Exportar (xlsx)</button>
-      <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
     </fieldset>
   </div>
 
@@ -67,7 +66,7 @@
           <th> </th>
         </tr>
       </thead>
-      <tbody ng-init="filteredRecursos = []">
+      <tbody ng-init="filteredRecursos = []" ng-show="!spinner">
         <tr ng-repeat="rrd in filteredRecursos = (factura.recursos | filter: filtroItems) | startFrom:currentPage*pageSize | limitTo:pageSize">
           <td class="noMaterialStyles regularForm">
             <input type="checkbox" ng-model="rrd.isSelected" init="rrd.isSelected = false">
@@ -114,5 +113,5 @@
 </div>
 
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
-  <button type="button" class="btn" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
+  <button type="button" class="btn mini-btn blue darken-4 text-white" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
 </div>

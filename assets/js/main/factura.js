@@ -98,7 +98,6 @@ var formFactura = function($scope, $http, $timeout){
   // Ajax http request
   // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
-
       $scope.$parent.spinner = true;
 
       $http.post(link, $scope.factura)
@@ -124,8 +123,9 @@ var formFactura = function($scope, $http, $timeout){
 
   // Obtener ordenes de trabajo
   $scope.getOrdenes = function(lnk){
-    $scope.$parent.spinner = true;
-    $http.post(lnk, { centros_operacion: $scope.factura.centros_operacion } ).then(
+    $scope.$parent.spinner = true
+
+    $http.post(lnk, $scope.factura).then(
       function(resp){
         if(resp.data.success){
           $scope.factura.ordenes = resp.data.ordenes;

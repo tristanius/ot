@@ -29,6 +29,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedOTs();"> He seleccionado las O.T.´s deseadas. </a>
+    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedOTs(); getRecursos('<?= site_url('factura/get_recursos')  ?>')"> He seleccionado las O.T.´s deseadas. </a>
   </div>
 </div>

@@ -159,7 +159,7 @@ class Factura extends CI_Controller{
 
   public function get_ordenes()
   {
-    $post = json_decode( file_get_contents('php://input') );
+    $factura = json_decode( file_get_contents('php://input') );
     $this->load->model(array('factura_db'=>'fac'));
     $cos = ($factura->centros_operacion_excluidos?($factura->centros_operacion_excluidos):NULL);
     $ordenes = $this->fac->getOrdenesByCO($factura->idcontrato, $factura->fecha_inicio, $factura->fecha_fin, $cos);
