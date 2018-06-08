@@ -81,7 +81,7 @@
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> (<small ng-bind="rrd.disponibilidad"></small>) </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.cantidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a = (rrd.subtotal*factura.vigencia_tarifas.a)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i = (rrd.subtotal*factura.vigencia_tarifas.i)"></span> </td>
@@ -90,7 +90,7 @@
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
           <td> <small ng-bind="rrd.descripcion_equipo"></small> </td>
-          <td> <small ng-bind="rrd.cambio_cant"></small> </td>
+          <td> <small ng-bind="rrd.cambio_cant"></small> (<small ng-bind="rrd.disponibilidad+': '+rrd.horas_operacion+' - '+rrd.horas_disponible"></small>) </td>
           <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button> </td>
         </tr>
       </tbody>
