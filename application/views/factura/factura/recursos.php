@@ -42,7 +42,7 @@
           <th>C.C</th>
           <th>Cod. activo</th>
           <th>Equipo</th>
-          <th>Cambio</th>
+          <th class="tooltipped" data-position="bottom" data-tooltip="I am a tooltip">Disp.</th>
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
@@ -81,7 +81,7 @@
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad (rrd.disponibilidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.cantidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a = (rrd.subtotal*factura.vigencia_tarifas.a)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i = (rrd.subtotal*factura.vigencia_tarifas.i)"></span> </td>
@@ -118,3 +118,9 @@
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
   <button type="button" class="btn mini-btn blue darken-4 text-white" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.tooltipped').tooltip();
+});
+</script>
