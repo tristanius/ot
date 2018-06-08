@@ -149,8 +149,8 @@ var formFactura = function($scope, $http, $timeout){
     var i = 0;
     $scope.factura.centros_operacion_excluidos = [];
     angular.forEach($scope.factura.centros_operacion, function(v,k){
-      i++;
       if (!v.isSelected) {
+        i++;
         $scope.factura.centros_operacion_excluidos.push(v.idbase);
       }
     });
@@ -163,8 +163,8 @@ var formFactura = function($scope, $http, $timeout){
     var i = 0;
     $scope.factura.ordenes_excluidas = [];
     angular.forEach($scope.factura.ordenes, function(v,k){
-      i++;
       if (!v.isSelected) {
+        i++;
         $scope.factura.ordenes_excluidas.push(v.idOT);
       }
     });

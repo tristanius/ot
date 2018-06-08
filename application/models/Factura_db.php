@@ -150,8 +150,7 @@ class Factura_db extends CI_Model{
   public function getRecursosByFact($idOT, $idfactura)
   {
     $this->load->database('ot');
-    $this->db->select(
-      '
+    $this->db->select('
       frrd.idfactura_recurso_reporte,
       rrd.idrecurso_reporte_diario,
       bs.sector as sector,
@@ -252,7 +251,9 @@ class Factura_db extends CI_Model{
     p.nombre_completo,
     IFNULL(rot.tipo, "activiad") AS tipo,
     IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
-    IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo
+    IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo,
+    getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
+    If( (getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.hrdisp, itc.basedisp)*rrd.cantidad) <> rrd.cantidad, "SI", "NO" ) AS cambio_cant
     ');
     $this->db->from('contrato AS c');
     $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
@@ -264,6 +265,7 @@ class Factura_db extends CI_Model{
           ->join('persona AS p', 'r.persona_identificacion = p.identificacion','LEFT')
           ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT')
           ->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf')
+          ->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
           ->join('tarifa AS tar', 'tar.itemf_iditemf = itf.iditemf')
           ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tar.idvigencia_tarifas')
           ->where('c.idcontrato', $idcontrato)

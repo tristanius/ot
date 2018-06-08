@@ -42,6 +42,7 @@
           <th>C.C</th>
           <th>Cod. activo</th>
           <th>Equipo</th>
+          <th>Cambio</th>
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
@@ -63,6 +64,7 @@
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.dec_equipo" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> <input type="text" class="inputSmall" ng-model="filtroItems.cambio_cant"> </th>
           <th> </th>
         </tr>
       </thead>
@@ -88,6 +90,7 @@
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
           <td> <small ng-bind="rrd.descripcion_equipo"></small> </td>
+          <td> <small ng-bind="rrd.cambio_cant"></small> </td>
           <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button> </td>
         </tr>
       </tbody>

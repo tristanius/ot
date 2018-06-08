@@ -40,12 +40,6 @@
         </tr>
       </body>
     </table>
-
-    <div class="grey lighten-3 padding1ex" style="border-radius: 10px">
-      <div ng-init="factura.total = factura.total? factura.total: 0;">
-        <h5>Total: {{ factura.total | currency }}</h5>
-      </div>
-    </div>
   </div>
 
   <div class="col l8 m8 s12 ">
