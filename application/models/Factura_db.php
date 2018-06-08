@@ -252,8 +252,8 @@ class Factura_db extends CI_Model{
     IFNULL(rot.tipo, "activiad") AS tipo,
     IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
     IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo,
-    getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
-    If( (getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.hrdisp, itc.basedisp)*rrd.cantidad) <> rrd.cantidad, "SI", "NO" ) AS cambio_cant
+    getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
+    If( (getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad) <> rrd.cantidad, "SI", "NO" ) AS cambio_cant
     ');
     $this->db->from('contrato AS c');
     $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
