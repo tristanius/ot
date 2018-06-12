@@ -183,51 +183,26 @@ var formFactura = function($scope, $http, $timeout){
   // Guardar
   $scope.save = function(link, tipo){
     $scope.$parent.spinner = true;
-    $http.post(link, $scope.factura)
-    .then(
-      function(response){
-        if(response.data.success == 'success' ) {
-          $scope.factura= response.data.factura;
-          alert("Procedimiento realizado conexito.")
-        }else{
+    if($scope.factura.fecha_inicio && $scope.factura.fecha_fin) && (!$scope.factura.recursos || $scope.factura.recursos.length == 0) ){
+      $http.post(link, $scope.factura)
+      .then(
+        function(response){
+          if(response.data.success == 'success' ) {
+            $scope.factura= response.data.factura;
+            alert("Procedimiento realizado conexito.")
+          }else{
+            console.log(response.data);
+            alert('Se ha interrumpido el proceso');
+          }
+          $scope.$parent.spinner = false;
+        },
+        function(response){
+          $scope.$parent.spinner = false;
           console.log(response.data);
-          alert('Se ha interrumpido el proceso');
-        }
-        $scope.$parent.spinner = false;
-      },
-      function(response){
-        $scope.$parent.spinner = false;
-        console.log(response.data);
-        alert('Algo ha salido mal');
-      }
-    );
-  }
-
-
-  /// ==========================================================================
-  // EDICION
-  $scope.getFacturaData = function(link) {
-    $scope.$parent.spinner = true;
-    $http.post(
-      link, {}
-    ).then(
-      function(response){
-        $scope.$parent.spinner = false;
-        if(response.data.success == 'success' ) {
-          $scope.panel_visible = true;
-          console.log( response.data.fac );
-          $scope.factura = response.data.fac;
-        }else{
-          console.log(response.data);
-          alert('Se ha interrumpido el proceso');
-        }
-      },
-      function(response){
-        $scope.$parent.spinner = false;
-        console.log(response.data);
           alert('Algo ha salido mal');
-      }
-    );
+        }
+      );
+    }
   }
   // ===========================================================================
 

@@ -102,15 +102,9 @@
   <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
   <div class="btnWindow" ng-show="!spinner">
-    <?php if ($isMod): ?>
-      <button id="guardar_reporte" ng-show="panel_visible" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="save('<?= site_url('factura/mod') ?>','mod')">
-        <b data-icon="&#xe015;"></b> Actualizar
-      </button>
-    <?php else: ?>
-      <button id="guardar_reporte" ng-show="panel_visible" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="save('<?= site_url('factura/add') ?>','add')">
-        <b data-icon="&#xe015;"></b> Registrar
-      </button>
-    <?php endif; ?>
+    <button id="guardar_reporte" type="button" class="waves-effect waves-light green btn mini-btn2" ng-click="save('<?= site_url('factura/save') ?>')">
+      <b data-icon="&#xe015;"></b> Guardar Cambios
+    </button>
     <button type="button" class="waves-effect waves-light btn grey mini-btn2" ng-click="toggleWindow2('#ventanaFactura', '#ventanaFacturaOculta')" data-icon="&#xe036;"> Ocultar</button>
     <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="confirmarCerrar('¿Estas seguro de cerrar el formulario de factura?','#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
   </div>

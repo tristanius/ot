@@ -32,6 +32,12 @@ class Factura extends CI_Controller{
     }
   }
 
+  public function save($value='')
+  {
+    // code...
+    // Aqui se elige entre 
+  }
+
   public function add()
   {
     $post = json_decode( file_get_contents('php://input') );
