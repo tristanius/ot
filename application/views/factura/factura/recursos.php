@@ -120,7 +120,7 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){
-  $('.tooltipped').tooltip();
-});
+  $(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
 </script>

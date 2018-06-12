@@ -189,6 +189,17 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     $(tag).toggleClass(clase);
   }
 
+  $scope.confirmarCerrar  = function(msj, ventana, form){
+    var c = confirm(msj);
+    if(c){
+      if(ventana && form){
+        $scope.cerrarWindowLocal(ventana, form);
+      }else{
+        $scope.cerrarWindow();
+      }
+    }
+  }
+
   $scope.cerrarWindow = function(){
     $scope.form = '';
     //$("#VentanaContainer").empty();

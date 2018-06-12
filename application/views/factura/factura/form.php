@@ -52,18 +52,22 @@
           <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="factura.fecha_fin" placeholder="No. de fecha" ng-disabled="0" >
         </div>
 
-        <div class="padding1ex col s12 m6 l3 end" ng-if="factura.estado != 'CERRADO'">
+        <div class="padding1ex col s12 m6 l3" ng-if="factura.fecha_inicio && factura.fecha_fin && factura.estado != 'CERRADO'">
           <b>Centros de operación a facturar: </b>
           <div>
             <button type="button" class="btn mini-btn modal-trigger" href="#centros_operacion">1. Centros de Operación</button>
           </div>
         </div>
 
-        <div class="padding1ex col s12 m6 l3 end" ng-if="factura.estado != 'CERRADO'">
+        <div class="padding1ex col s12 m6 l3 end" ng-if="factura.fecha_inicio && factura.fecha_fin && factura.estado != 'CERRADO'">
           <b>O.T.´s a facturar:</b>
           <div>
             <button type="button" class="btn mini-btn modal-trigger" href="#ordenes">2. Ordenes de trabajo</button>
           </div>
+        </div>
+
+        <div class="padding1ex col s12 m12 l6 end"  ng-if="!factura.fecha_inicio || !factura.fecha_fin">
+          <p class="panel" style="color:orange">Hola, debes seleccionar fechas de inicio y final de factura para filtrar C.O´s y Ordenes de trabajo.</p>
         </div>
 
       </div>
@@ -108,6 +112,6 @@
       </button>
     <?php endif; ?>
     <button type="button" class="waves-effect waves-light btn grey mini-btn2" ng-click="toggleWindow2('#ventanaFactura', '#ventanaFacturaOculta')" data-icon="&#xe036;"> Ocultar</button>
-    <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="cerrarWindowLocal('#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
+    <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="confirmarCerrar('¿Estas seguro de cerrar el formulario de factura?','#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
   </div>
 </section>
