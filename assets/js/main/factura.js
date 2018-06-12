@@ -71,6 +71,8 @@ var factura = function($scope, $http, $timeout){
 }
 
 var formFactura = function($scope, $http, $timeout){
+
+  $scope.deteccionCambios = false;
   $scope.factura = {
     actas:[],
     bases:[],
@@ -107,10 +109,12 @@ var formFactura = function($scope, $http, $timeout){
             $scope.factura.recursos = response.data.recursos;
             $scope.factura.ordenes = response.data.ordenes;
           }
+          $scope.deteccionCambios = false;
           console.log(response.data);
           $scope.$parent.spinner = false;
         },
         function(response){
+          $scope.deteccionCambios = false;
           $scope.$parent.spinner = false;
           console.log(response.data);
           alert("error al consultar recursos");
@@ -133,9 +137,11 @@ var formFactura = function($scope, $http, $timeout){
           console.log(resp.data);
           alert("Algo ha fallado al consultar Ordenes");
         }
+        $scope.deteccionCambios = false;
         $scope.$parent.spinner = false;
       },
       function(resp){
+        $scope.deteccionCambios = false;
         $scope.$parent.spinner = false;
         console.log(resp.data);
         alert("Algo ha fallado al consultar Ordenes");

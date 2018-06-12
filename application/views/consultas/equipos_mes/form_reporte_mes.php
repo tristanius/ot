@@ -31,7 +31,7 @@ $meses = array(
               ng-model="consulta.base"
               value="{{ b.idbase }}"
             >
-            <span class="col s10 m11 l11 black-text">{{ b.idbase + ' - ' + b.nombre_base }}</span>
+            <b class="col s10 m11 l11 black-text">{{ b.idbase + ' - ' + b.nombre_base }}</b>
           </label>
         </div>
 

@@ -42,7 +42,7 @@
           <th>C.C</th>
           <th>Cod. activo</th>
           <th>Equipo</th>
-          <th class="tooltipped" data-position="bottom" data-tooltip="I am a tooltip">Disp.</th>
+          <th class="tooltipped" data-position="top" data-tooltip="I am a tooltip">Disp.</th>
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">

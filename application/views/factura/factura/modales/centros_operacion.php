@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="c in factura.centros_operacion | filter: seleccionCO" >
-            <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected?c.isSelected:true)"></td>
+            <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected?c.isSelected:true)" ng-change="deteccionCambios = true"></td>
             <td><span ng-bind="c.idbase"></span> </td>
             <td><span ng-bind="c.nombre_base"></span> </td>
           </tr>

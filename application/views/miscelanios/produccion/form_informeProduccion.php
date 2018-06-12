@@ -37,7 +37,7 @@
               name="<?= $b->idbase ?>"
               value="<?= $b->idbase ?>"
             >
-            <span class="black-text"><?= $b->idbase.' - '.$b->nombre_base ?></span>
+            <b class="black-text"><?= $b->idbase.' - '.$b->nombre_base ?></b>
           </label>
         <?php endforeach; ?>
       </div>
