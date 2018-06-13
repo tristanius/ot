@@ -21,17 +21,9 @@
         </div>
 
         <div class="padding1ex col s12 m6 l3">
-          <b>vigencia de tarifas: </b>
-          <select class="" ng-options="v as v.descripcion_vigencia for v in contrato.vigencias" ng-model="factura.vigencia_tarifas"
-                ng-init="factura.vigencia_tarifas = (factura.vigencia_tarifas?factura.vigencia_tarifas:contrato.vigencias[0])" disabled>
-          </select>
-        </div>
-
-        <div class="padding1ex col s12 m6 l3 end">
-          <b>Estado del acta: </b>
-
-          <div style="position: relative;">
-            <div class="fixed-action-btn">
+          <div style="position: relative">
+            <b>Aprobación:</b>
+            <div class="fixed-action-btn" style="position: absolute;">
               <a class="btn-floating"><i data-icon="&#xe01e;"></i> </a>
               <ul>
                 <li><a class="btn-floating green lighten-1"> <i data-icon="&#xe04c;"></i> </a></li>
@@ -39,6 +31,10 @@
               </ul>
             </div>
           </div>
+        </div>
+
+        <div class="padding1ex col s12 m6 l3 end">
+          <b>Estado del acta: </b>
 
           <select class="" ng-model="factura.estado_acta" ng-init="factura.estado_acta = (factura.estado_acta?factura.estado_acta:'EN CREACION')">
             <option value="EN CREACION">EN CREACION</option>
