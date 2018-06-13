@@ -29,6 +29,19 @@
 
         <div class="padding1ex col s12 m6 l3 end">
           <b>Estado del acta: </b>
+
+          <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red">
+              <i class="large material-icons">mode_edit</i>
+            </a>
+            <ul>
+              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+              <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+            </ul>
+          </div>
+
           <select class="" ng-model="factura.estado_acta" ng-init="factura.estado_acta = (factura.estado_acta?factura.estado_acta:'EN CREACION')">
             <option value="EN CREACION">EN CREACION</option>
             <option value="APROBADO">APROBADO</option>
@@ -109,3 +122,10 @@
     <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="confirmarCerrar('¿Estas seguro de cerrar el formulario de factura?','#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
   </div>
 </section>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.fixed-action-btn').floatingActionButton();
+})
+</script>

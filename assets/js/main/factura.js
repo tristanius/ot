@@ -183,7 +183,7 @@ var formFactura = function($scope, $http, $timeout){
   // Guardar
   $scope.save = function(link, tipo){
     $scope.$parent.spinner = true;
-    if($scope.factura.fecha_inicio && $scope.factura.fecha_fin) && (!$scope.factura.recursos || $scope.factura.recursos.length == 0) ){
+    if( ($scope.factura.fecha_inicio && $scope.factura.fecha_fin) && ($scope.factura.recursos || $scope.factura.recursos.length >= 0) ){
       $http.post(link, $scope.factura)
       .then(
         function(response){

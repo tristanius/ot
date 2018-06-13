@@ -34,8 +34,12 @@ class Factura extends CI_Controller{
 
   public function save($value='')
   {
-    // code...
-    // Aqui se elige entre 
+    $factura = json_decode( file_get_contents('php://input') );
+    $this->load->model('factura_db', 'fact');
+    $this->fact->add();
+    foreach ($factura->recursos as $key => $recurso) {
+      $this->fact->addRecurso();
+    }
   }
 
   public function add()
