@@ -30,14 +30,12 @@
         <div class="padding1ex col s12 m6 l3 end">
           <b>Estado del acta: </b>
 
-          <div style="position:relative">
+          <div style="position: relative;">
             <div class="fixed-action-btn">
-              <a class="btn-floating btn-large red">Estado</a>
+              <a class="btn-floating"><i data-icon="&#xe01e;"></i> </a>
               <ul>
-                <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-                <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-                <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-                <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+                <li><a class="btn-floating green lighten-1"> <i data-icon="&#xe04c;"></i> </a></li>
+                <li><a class="btn-floating red"> <i data-icon="&#xe04d;"></i> </a></li>
               </ul>
             </div>
           </div>
@@ -127,7 +125,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
   $('.fixed-action-btn').floatingActionButton({
-    direction: 'left',
     hoverEnabled: false
   });
 })
