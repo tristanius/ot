@@ -21,22 +21,19 @@
         </div>
 
         <div class="padding1ex col s12 m6 l3">
-          <div style="position: relative">
-            <b>Aprobación:</b>
-            <div class="fixed-action-btn" style="position: absolute;">
-              <a class="btn-floating"><i data-icon="&#xe01e;"></i> </a>
-              <ul>
-                <li><a class="btn-floating green lighten-1"> <i data-icon="&#xe04c;"></i> </a></li>
-                <li><a class="btn-floating red"> <i data-icon="&#xe04d;"></i> </a></li>
-              </ul>
-            </div>
-          </div>
+          <!--
+          <b>vigencia de tarifas: </b>
+          <select class="" ng-options="v as v.descripcion_vigencia for v in contrato.vigencias" ng-model="factura.vigencia_tarifas"
+                ng-init="factura.vigencia_tarifas = (factura.vigencia_tarifas?factura.vigencia_tarifas:contrato.vigencias[0])" disabled>
+          </select>
+          -->
+          <b>Validado:</b>
+          <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = (factura.validado?factura.validado:false)">
         </div>
 
         <div class="padding1ex col s12 m6 l3 end">
-          <b>Estado del acta: </b>
-
-          <select class="" ng-model="factura.estado_acta" ng-init="factura.estado_acta = (factura.estado_acta?factura.estado_acta:'EN CREACION')">
+          <b>Estado: </b>
+          <select class="" ng-model="factura.estado_factura" ng-init="factura.estado_factura = (factura.estado_factura?factura.estado_factura:'EN CREACION')">
             <option value="EN CREACION">EN CREACION</option>
             <option value="APROBADO">APROBADO</option>
             <option value="POR FIRMAR">POR FIRMAR</option>
@@ -121,6 +118,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
   $('.fixed-action-btn').floatingActionButton({
+    direction: 'left',
     hoverEnabled: false
   });
 })

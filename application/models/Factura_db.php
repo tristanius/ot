@@ -13,6 +13,11 @@ class Factura_db extends CI_Model{
   {
     // Pendiente
     $data = array(
+      'no_factura'=>$post->no_factura,
+      'descripcion'=>$post->descripcion,
+      'tipo_acta'=>$post->tipo_acta,
+      'estado_factura'=>$post->estado_factura,
+      'validado'=> $post->validado
     );
     $this->load->database('ot');
     $this->db->insert('factura', $data);
