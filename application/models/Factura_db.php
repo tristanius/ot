@@ -145,7 +145,7 @@ class Factura_db extends CI_Model{
       f.*
       ')
     ->from('factura AS f')
-    ->join('contrato AS c','c.idcontrato = vg.idcontrato')
+    ->join('contrato AS c','c.idcontrato = f.idcontrato')
     ->where('c.idcontrato',$idcontrato)
     ->get();
   }

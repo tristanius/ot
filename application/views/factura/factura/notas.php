@@ -19,15 +19,15 @@
       </thead>
       <body>
         <tr>
-          <td>% de administración</td>
+          <td>% de administración vigencia</td>
           <td>{{factura.vigencia_tarifas.a }}</td>
         </tr>
         <tr>
-          <td>% de utilidad</td>
+          <td>% de utilidad vigencia</td>
           <td>{{factura.vigencia_tarifas.i }}</td>
         </tr>
         <tr>
-          <td>% de imprevistos</td>
+          <td>% de imprevistos vigencia</td>
           <td>{{factura.vigencia_tarifas.u }}</td>
         </tr>
         <tr>
