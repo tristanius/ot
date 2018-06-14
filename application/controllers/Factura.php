@@ -11,7 +11,10 @@ class Factura extends CI_Controller{
 
   function index(){
   }
+  #=============================================================================
+  # Gestiones del panel principal
 
+  # Ingreso a la gestion de facturación de producción
   public function gestion()
   {
     $this->load->database('ot');
@@ -19,6 +22,7 @@ class Factura extends CI_Controller{
     $this->load->view('factura/gestion', array( 'contratos'=>$conts->result() ) );
   }
 
+  # ------ Formulario de ingreso de factura --------
   public function form($tipo, $idfactura = NULL)
   {
     $this->load->model('factura_db', 'fac');
@@ -32,58 +36,8 @@ class Factura extends CI_Controller{
     }
   }
 
-  public function save($value='')
-  {
-    $factura = json_decode( file_get_contents('php://input') );
-    $this->load->model('factura_db', 'fact');
-    $this->fact->add();
-    foreach ($factura->recursos as $key => $recurso) {
-      $this->fact->addRecurso();
-    }
-  }
-
-  public function add()
-  {
-    $post = json_decode( file_get_contents('php://input') );
-    $this->load->model('factura_db', 'fac');
-    $this->fac->init_transact();
-    $idf = $this->fac->add( $post );
-    $ordenes = $post->ordenes;
-    foreach ($ordenes as $key => $ot) {
-      foreach ($ot->recursos as $key => $rec) {
-        $rec->cantidad_total = $this->calcularCantidad($rec);
-        $rec->idfactura_recurso_reporte = $this->fac->addRecurso($rec, $idf);
-      }
-    }
-    $insertStatus = $this->fac->end_transact();
-    if ($insertStatus) {
-      echo 'success';
-    }else{
-      echo 'failed';
-    }
-  }
-
-  public function mod()
-  {
-    $post = json_decode( file_get_contents('php://input') );
-    $this->load->model('factura_db', 'fac');
-    $this->fac->init_transact();
-    $this->fac->mod( $post );
-    $ordenes = $post->ordenes;
-    foreach ($ordenes as $key => $ot) {
-      foreach ($ot->recursos as $key => $rec) {
-        $rec->cantidad_total = $this->calcularCantidad($rec);
-        $this->fac->modRecurso($rec);
-      }
-    }
-    $insertStatus = $this->fac->end_transact();
-    if ($insertStatus) {
-      echo 'success';
-    }else{
-      echo 'failed';
-    }
-  }
-
+  # ------ Listado de facturas ------
+  # Listar las facturas
   public function lista($idcontrato=NULL)
   {
     if($idcontrato == NULL){
@@ -93,30 +47,7 @@ class Factura extends CI_Controller{
     $this->getContratoInfo($idcontrato, TRUE);
   }
 
-  // Getters
-
-  public function get($idfactura)
-  {
-    $this->load->model('factura_db', 'fac');
-    $facts = $this->fac->get($idfactura);
-    if ($facts->num_rows() > 0 ) {
-      $fact=$facts->row();
-      $fact->bases = json_decode($fact->filtros);
-      $fact->actas = json_decode($fact->actas);
-      $fact->ordenes = $this->fac->getOrdenesFactura($idfactura);
-      $recursos = NULL;
-      foreach ($fact->ordenes as $key => $ot) {
-         $ot->recursos = $this->fac->getRecursosByFact($ot->idOT, $idfactura );
-      }
-      $obj = new stdClass();
-      $obj->success = "success";
-      $obj->fac = $fact;
-      echo json_encode($obj);
-    }else{
-      echo 'failed';
-    }
-  }
-
+  # Obtener información de contratos
   public function getContratoInfo($idcontrato, $JSON = FALSE)
   {
     $this->load->model(array('factura_db'=>'fact'));
@@ -129,26 +60,52 @@ class Factura extends CI_Controller{
     }
     return $contrato;
   }
-
-  public function getFacturablesByOT()
+  # Borrar una factura
+  public function delFactura($idfac)
   {
-    $post = json_decode( file_get_contents('php://input') );
-    $this->load->model(array('factura_db'=>'fac'));
-    $ots = $this->fac->getOrdenes($post);
-    foreach ($ots as $k => $o) {
-      $o->recursos = $this->fac->getRecursosByOt($o->idOT, $post->fecha_ini_factura, $post->fecha_fin_factura, $post->idvigencia_tarifas);
+    $this->load->database('ot');
+    $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfac));
+    $this->db->delete('factura', array('idfactura'=>$idfac));
+    echo "success";
+  }
+  # ============================================================================
+  # ------- Procesos de form factura -------
+  # Guardar factura
+  public function save($value='')
+  {
+    $factura = json_decode( file_get_contents('php://input') );
+    $this->load->model('factura_db', 'fact');
+    $ret = new stdClass();
+    if(isset($factura->idfactura)){
+      $ret->status = $this->mod($factura);
+    }else{
+      $ret->status = $this->add($factura);
     }
-    echo json_encode($ots);
+    $ret->factura = $factura;
+    echo json_encode($ret);
   }
-  public function getOrdenesFactura($centros_operacon=NULL)
+  # Agregar una nueva factura
+  private function add()
   {
-
+    $this->fact->init_transact();
+    $this->fact->add($factura);
+    foreach ($factura->recursos as $key => $recurso) {
+      $this->fact->addRecurso($recurso);
+    }
+    return $this->fact->end_transact();
   }
-
-
-  //-----------------------------------------------------------------------------
-  // Aqui obtenemos los recursos para crear una nueva factura
-  //Puede darse el caso que se use para modificar una factura en creacion
+  # Actualizar una factura
+  private function mod($factura)
+  {
+    $this->fact->init_transact();
+    $this->fact->mod($factura);
+    foreach ($factura->recursos as $key => $recurso) {
+      $this->fact->modRecurso($recurso);
+    }
+    return $this->fact->end_transact();
+  }
+  # -------------------------------------------------------------------------
+  # Obtener recursos reportados sin facturar
   public function get_recursos()
   {
     $factura = json_decode( file_get_contents('php://input') );
@@ -162,11 +119,10 @@ class Factura extends CI_Controller{
     $ret = new stdClass();
       $ret->success = TRUE;
       $ret->recursos = $recursos->result();
-      $ret->sql = $this->db->last_query();
       $ret->ordenes = $ordenes->result();
     echo json_encode($ret);
   }
-
+  # Obtener ordenes de trabajo por centros de operacion
   public function get_ordenes()
   {
     $factura = json_decode( file_get_contents('php://input') );
@@ -182,7 +138,7 @@ class Factura extends CI_Controller{
     }
     echo json_encode($ret);
   }
-  #=============================================================================
+  # Borrar 1 items de la factura
   public function delItemFactura()
   {
     $post = json_decode( file_get_contents('php://input') );
@@ -195,12 +151,5 @@ class Factura extends CI_Controller{
     }else {
       echo "fail";
     }
-  }
-  public function delFactura($idfac)
-  {
-    $this->load->database('ot');
-    $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfac));
-    $this->db->delete('factura', array('idfactura'=>$idfac));
-    echo "success";
   }
 }

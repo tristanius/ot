@@ -187,13 +187,13 @@ var formFactura = function($scope, $http, $timeout){
       $http.post(link, $scope.factura)
       .then(
         function(response){
-          if(response.data.success == 'success' ) {
+          if(response.data.status == true) {
             $scope.factura= response.data.factura;
             alert("Procedimiento realizado conexito.")
           }else{
-            console.log(response.data);
             alert('Se ha interrumpido el proceso');
           }
+          console.log(response.data);
           $scope.$parent.spinner = false;
         },
         function(response){

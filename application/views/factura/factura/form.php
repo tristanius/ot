@@ -16,8 +16,8 @@
 
         <div class="padding1ex col s12 m6 l3">
           <b>No. Contrato: </b>
-          <input type="text" ng-model="contrato.no_contrato" name="" disabled/>
-          <input type="hidden" ng-model="contrato.idcontrato" ng-init="factura.idcontrato = contrato.idcontrato">
+          <input type="text" ng-model="factura.no_contrato" ng-init="factura.no_contrato = (factura.no_contrato?factura.no_contrato:contrato.no_contrato)" disabled/>
+          <input type="hidden" ng-model="factura.idcontrato" ng-init="factura.idcontrato = (factura.idcontrato?factura.idcontrato:contrato.idcontrato)">
         </div>
 
         <div class="padding1ex col s12 m6 l3">
@@ -27,8 +27,10 @@
                 ng-init="factura.vigencia_tarifas = (factura.vigencia_tarifas?factura.vigencia_tarifas:contrato.vigencias[0])" disabled>
           </select>
           -->
-          <b>Validado:</b>
-          <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = (factura.validado?factura.validado:false)">
+          <label>
+            Validado:
+            <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = (factura.validado?factura.validado:false)">
+          </label>
         </div>
 
         <div class="padding1ex col s12 m6 l3 end">
@@ -56,14 +58,14 @@
           <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="factura.fecha_fin" placeholder="No. de fecha" ng-disabled="0" >
         </div>
 
-        <div class="padding1ex col s12 m6 l3" ng-if="factura.fecha_inicio && factura.fecha_fin && factura.estado != 'CERRADO'">
+        <div class="padding1ex col s12 m6 l3" ng-if="factura.fecha_inicio && factura.fecha_fin && !factura.validado">
           <b>Centros de operación a facturar: </b>
           <div>
             <button type="button" class="btn mini-btn modal-trigger" href="#centros_operacion">1. Centros de Operación</button>
           </div>
         </div>
 
-        <div class="padding1ex col s12 m6 l3 end" ng-if="factura.fecha_inicio && factura.fecha_fin && factura.estado != 'CERRADO'">
+        <div class="padding1ex col s12 m6 l3 end" ng-if="factura.fecha_inicio && factura.fecha_fin && !factura.validado">
           <b>O.T.´s a facturar:</b>
           <div>
             <button type="button" class="btn mini-btn modal-trigger" href="#ordenes">2. Ordenes de trabajo</button>
@@ -107,19 +109,9 @@
 
   <div class="btnWindow" ng-show="!spinner">
     <button id="guardar_reporte" type="button" class="waves-effect waves-light green btn mini-btn2" ng-click="save('<?= site_url('factura/save') ?>')">
-      <b data-icon="&#xe015;"></b> Guardar Cambios
+      <b data-icon="&#xe015;"></b> Guardar
     </button>
     <button type="button" class="waves-effect waves-light btn grey mini-btn2" ng-click="toggleWindow2('#ventanaFactura', '#ventanaFacturaOculta')" data-icon="&#xe036;"> Ocultar</button>
     <button type="button" class="waves-effect waves-light btn red mini-btn2" ng-click="confirmarCerrar('¿Estas seguro de cerrar el formulario de factura?','#ventanaFactura', enlaceGetFactura)" data-icon="n"> Cerrar</button>
   </div>
 </section>
-
-
-<script type="text/javascript">
-$(document).ready(function(){
-  $('.fixed-action-btn').floatingActionButton({
-    direction: 'left',
-    hoverEnabled: false
-  });
-})
-</script>

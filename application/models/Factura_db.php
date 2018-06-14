@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+'fecha_inicio'=>$
 
 class Factura_db extends CI_Model{
 
@@ -8,53 +9,78 @@ class Factura_db extends CI_Model{
     parent::__construct();
     //Codeigniter : Write Less Do More
   }
-
-  public function add($post)
+  ##############################################################################
+  # Agregar factura
+  public function add($factura)
   {
-    // Pendiente
     $data = array(
-      'no_factura'=>$post->no_factura,
-      'descripcion'=>$post->descripcion,
-      'tipo_acta'=>$post->tipo_acta,
-      'estado_factura'=>$post->estado_factura,
-      'validado'=> $post->validado
+      'no_factura'=>$factura->no_factura,
+      'fecha_inicio'=>$factura->fecha_inicio,
+      'fecha_fin'=>$factura->fecha_fin,
+      'descripcion'=>$factura->descripcion,
+      'tipo_acta'=>$factura->tipo_acta,
+      'total'=>$factura->total,
+      'idcontrato'=>$factura->idcontrato,
+      'tipo_acta'=>$factura->tipo_acta,
+      'estado_factura'=>$factura->estado_factura,
+      'validado'=> $factura->validado
     );
     $this->load->database('ot');
     $this->db->insert('factura', $data);
     return $this->db->insert_id();
   }
-
-  public function mod($post)
+  # Consulta una factura con su contrato
+  public function get($idfactura)
   {
-    // Pendiente
+    $this->load->database('ot');
+    return $this->db->select('f.*, c.idcontrato, c.no_contrato')
+      ->from('factura AS f')
+      ->join('contrato AS c','c.idcontrato = f.idcontrato')
+      ->where('f.idfactura', $idfactura)
+      ->get();
+  }
+  # Modificar/actualizar factura
+  public function mod($factura)
+  {
+    # No se modifican los campos de vigencias y contrato
     $data = array(
+      'no_factura'=>$factura->no_factura,
+      'fecha_inicio'=>$factura->fecha_inicio,
+      'fecha_fin'=>$factura->fecha_fin,
+      'descripcion'=>$factura->descripcion,
+      'tipo_acta'=>$factura->tipo_acta,
+      'total'=>$factura->total,
+      'tipo_acta'=>$factura->tipo_acta,
+      'estado_factura'=>$factura->estado_factura,
+      'validado'=> $factura->validado
     );
     $this->load->database('ot');
-    return $this->db->update('factura', $data, 'idfactura = '.$post->idfactura);
+    return $this->db->update('factura', $data, 'idfactura = '.$factura->idfactura);
   }
-
+  #============================================================================
+  # Recurso
   public function addRecurso($rec, $idfac)
   {
-    $this->load->database('ot');
     $data = array(
-      'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario,
-      'idfactura'=>$rec->idfactura,
       'cantidad'=>$rec->cantidad,
       'tarifa'=>$rec->tarifa,
       'a'=>$a,
       'i'=>$i,
       'u'=>$u,
       'total'=>$rec->total,
-      'estado'=>($rec->estado?$rec->estado:NULL)
+      'estado'=>($rec->estado?$rec->estado:NULL),
+      'idvigencia_tarifas'=>$rec->idvigencia_tarifas,
+      'idfactura'=>$rec->idfactura,
+      'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario
     );
+    $this->load->database('ot');
+    $this->db->insert('factura_recurso_reporte', $data);
     return $this->db->insert_id();
   }
 
-
-
   public function modRecurso($rec)
   {
-    $this->load->database('ot');
+    # No se habilita modificar el id de recurso reportado y de factura
     $data = array(
       'cantidad'=>$rec->cantidad,
       'tarifa'=>$rec->tarifa,
@@ -62,11 +88,25 @@ class Factura_db extends CI_Model{
       'i'=>$i,
       'u'=>$u,
       'total'=>$rec->total,
-      'estado'=>($rec->estado?$rec->estado:NULL)
+      'estado'=>($rec->estado?$rec->estado:NULL),
+      'idvigencia_tarifas'=>$rec->idvigencia_tarifas
     );
+    $this->load->database('ot');
     return $this->db->update('factura_recurso_reporte', $data, 'idfactura_recurso_reporte = '.$rec->idfactura_recurso_reporte);
   }
 
+  public function delRecurso($idfrd)
+  {
+    $this->load->database('ot');
+    return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd));
+  }
+
+  public function delRecursoBy($idfact)
+  {
+    $this->load->database('ot');
+    return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact));
+  }
+  
   #=============================================================================
   # Información de contrato
   public function getContrato($idcontrato)
@@ -131,6 +171,7 @@ class Factura_db extends CI_Model{
   }
 
   #=============================================================================
+  # Consultas para crear factura y modificar valores desde cero.
   # En uso
   public function getOrdenes($obj)
   {
@@ -216,7 +257,7 @@ class Factura_db extends CI_Model{
     }
     return $this->db->get();
   }
-
+  # En uso
   public function getOrdenesByCO($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL)
   {
     $this->load->database('ot');
@@ -236,49 +277,17 @@ class Factura_db extends CI_Model{
     $this->db->group_by('OT.idOT');
     return $this->db->get();
   }
-
-  #=============================================================================
-  public function get($idfactura)
-  {
-    $this->load->database('ot');
-    return $this->db->select('f.*a')
-      ->from('factura AS f')
-      ->where('f.idfactura', $idfactura)
-      ->get();
-  }
-  public function getOrdenesFactura($idfactura)
-  {
-    // Revisar
-    $this->load->database('ot');
-    return $this->db->select('OT.idOT, OT.nombre_ot AS No_OT, b.idbase AS CO, b.nombre_base AS base')
-      ->from('OT')
-      ->join('base As b','b.idbase = OT.base_idbase')
-      ->join('reporte_diario AS rd','rd.Ot_idOT = OT.idOT')
-      ->join('recurso_reporte_diario AS rrd','rrd.idreporte_diario = rd.idreporte_diario')
-      ->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario')
-      ->where('frrd.idfactura', $idfactura)
-      ->group_by('OT.idOT')
-      ->get()->result();
-  }
-
-  public function del($idfrd)
-  {
-    $this->load->database('ot');
-    return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd));
-  }
   # =================================================================================
   public function init_transact()
   {
     $this->load->database('ot');
     $this->db->trans_begin();
   }
-
   public function transac_status()
   {
     $this->load->database('ot');
     return $this->db->trans_status();
   }
-
   public function end_transact()
   {
     $this->load->database('ot');

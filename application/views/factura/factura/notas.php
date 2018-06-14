@@ -32,11 +32,11 @@
         </tr>
         <tr>
           <td>Subtotal recursos</td>
-          <td>{{ factura.subtotal | currency }}</td>
+          <td ng-init="factura.subtotal = (factura.subtotal?factura.subtotal:0)">{{ factura.subtotal | currency }}</td>
         </tr>
         <tr>
           <td>Total</td>
-          <td> <h5>{{ factura.total | currency }}</h5> </td>
+          <td> <h5 ng-init="factura.total = (factura.total?factura.total:0)">{{ factura.total | currency }}</h5> </td>
         </tr>
       </body>
     </table>
