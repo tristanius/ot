@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-'fecha_inicio'=>$
 
 class Factura_db extends CI_Model{
 
@@ -106,7 +105,7 @@ class Factura_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact));
   }
-  
+
   #=============================================================================
   # Información de contrato
   public function getContrato($idcontrato)
@@ -143,11 +142,9 @@ class Factura_db extends CI_Model{
     $this->load->database('ot');
     return $this->db
     ->select('
-      f.*,
-      vg.descripcion_vigencia
+      f.*
       ')
     ->from('factura AS f')
-    ->join('vigencia_tarifas AS vg','vg.idvigencia_tarifas = f.idvigencia_tarifas')
     ->join('contrato AS c','c.idcontrato = vg.idcontrato')
     ->where('c.idcontrato',$idcontrato)
     ->get();
