@@ -118,9 +118,3 @@
 <div ng-if="(factura.fecha_inicio && factura.fecha_fin) && (!factura.recursos || factura.recursos.length == 0)">
   <button type="button" class="btn mini-btn blue darken-4 text-white" ng-click="getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="factura.estado != 'CERRADO'">Cargar recursos</button>
 </div>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    
-  });
-</script>
