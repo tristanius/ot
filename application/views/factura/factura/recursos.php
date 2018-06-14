@@ -34,6 +34,7 @@
           <th style="width:100px;">Tipo</th>
           <th>Tarifa</th>
           <th>Cantidad</th>
+          <th class="tooltipped" data-position="top" data-tooltip="Disponibilidad">Disp.</th>
           <th>Subtotal</th>
           <th>A</th>
           <th>I</th>
@@ -42,7 +43,6 @@
           <th>C.C</th>
           <th>Cod. activo</th>
           <th>Equipo</th>
-          <th class="tooltipped" data-position="top" data-tooltip="I am a tooltip">Disp.</th>
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
@@ -56,6 +56,7 @@
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.tipo" ng-change="changeSelectFac('filtroItems')">  </th>
           <th> </th>
           <th> </th>
+          <th> <input type="text" class="inputSmall" ng-model="filtroItems.disponibilidad"> </th>
           <th> </th>
           <th> </th>
           <th> </th>
@@ -64,7 +65,6 @@
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.dec_equipo" ng-change="changeSelectFac('filtroItems')"> </th>
-          <th> <input type="text" class="inputSmall" ng-model="filtroItems.cambio_cant"> </th>
           <th> </th>
         </tr>
       </thead>
@@ -82,6 +82,7 @@
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
+          <td> <small ng-bind="rrd.disponibilidad"></small> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.disponibilidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a =  (rrd.a? rrd.a: (rrd.subtotal*factura.vigencia_tarifas.a) )"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i =  (rrd.i? rrd.i: (rrd.subtotal*factura.vigencia_tarifas.i) )"></span> </td>
@@ -90,7 +91,6 @@
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
           <td> <small ng-bind="rrd.descripcion_equipo"></small> </td>
-          <td> <small ng-bind="rrd.cambio_cant"></small> (<small ng-bind="rrd.disponibilidad+': '+rrd.horas_operacion+' - '+rrd.horas_disponible"></small>) </td>
           <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button> </td>
         </tr>
       </tbody>
@@ -121,6 +121,6 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $('.tooltipped').tooltip();
+    
   });
 </script>

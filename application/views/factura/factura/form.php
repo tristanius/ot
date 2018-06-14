@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    <div id="myTabs" ng-init="initTabs('#myTabs')">
+    <div id="myTabs" ng-init="initForm('#myTabs')">
       <ul>
         <li><a href="#tabs-1">Información</a></li>
         <li><a href="#tabs-2">Recursos</a></li>

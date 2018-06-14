@@ -85,9 +85,10 @@ var formFactura = function($scope, $http, $timeout){
   $scope.panel_visible = false;
 
   // Renderiza las pestañas de JQuery
-  $scope.initTabs = function(selector){
+  $scope.initForm = function(selector){
     $( function() {
       $( selector ).tabs();
+      $('.tooltipped').tooltip();
     } );
   }
 
