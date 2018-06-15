@@ -59,14 +59,17 @@ class Factura_db extends CI_Model{
   public function addRecurso($rec, $idfac)
   {
     $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
+    $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
+    $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
+    $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
     $data = array(
       'cantidad' => $rec->cantidad,
       'tarifa' => $rec->tarifa,
       'subtotal' => $rec->subtotal,
-      'a' => $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'i' => $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'u' => $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'total'=> isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u )),
+      'a' => $rec->a,
+      'i' => $rec->i,
+      'u' => $rec->u,
+      'total'=> (isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u ) ),
       'estado'=> (isset($rec->estado)?$rec->estado:NULL),
       'idvigencia_tarifas' => $rec->idvigencia_tarifas,
       'idfactura' => $idfac,
@@ -80,13 +83,16 @@ class Factura_db extends CI_Model{
   public function modRecurso($rec)
   {
     $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
+    $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
+    $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
+    $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
     $data = array(
       'cantidad '=> $rec->cantidad,
       'tarifa' => $rec->tarifa,
       'subtotal'=>$rec->subtotal,
-      'a' => $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'i' => $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'u' => $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'a' => $rec->a,
+      'i' => $rec->i,
+      'u' => $rec->u,
       'total' => isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u )),
       'estado' => (isset($rec->estado)?$rec->estado:NULL),
       'idvigencia_tarifas' => $rec->idvigencia_tarifas
