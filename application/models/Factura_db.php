@@ -69,7 +69,7 @@ class Factura_db extends CI_Model{
       'total'=>$rec->total,
       'estado'=>($rec->estado?$rec->estado:NULL),
       'idvigencia_tarifas'=>$rec->idvigencia_tarifas,
-      'idfactura'=>$rec->idfactura,
+      'idfactura'=>$idfac,
       'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario
     );
     $this->load->database('ot');
@@ -221,6 +221,7 @@ class Factura_db extends CI_Model{
     rrd.horas_operacion,
     rrd.horas_disponible,
     getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
+    vg.idvigencia_tarifas,
     If( getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad <> rrd.cantidad, "SI", "NO" ) AS cambio_cant
     ');
     $this->db->from('contrato AS c');

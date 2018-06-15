@@ -92,9 +92,9 @@ class Factura extends CI_Controller{
   private function add($factura)
   {
     $this->fact->init_transact();
-    $this->fact->add($factura);
+    $idfactura = $this->fact->add($factura);
     foreach ($factura->recursos as $key => $recurso) {
-      $this->fact->addRecurso($recurso);
+      $this->fact->addRecurso($recurso, $idfactura);
     }
     return $this->fact->end_transact();
   }
