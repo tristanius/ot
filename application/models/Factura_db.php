@@ -209,6 +209,7 @@ class Factura_db extends CI_Model{
     rrd.cantidad,
     IF(rrd.facturable,"SI","NO") AS facturable,
     itf.codigo,
+    itf.unidad,
     itf.itemc_item,
     itf.descripcion,
     tar.tarifa,

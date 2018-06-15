@@ -13,32 +13,42 @@
     <table>
       <thead>
         <tr>
-          <th>Concepto</th>
-          <th>Valor</th>
+          <th colspan="2"> Valores de la vigencias</th>
+        </tr>
+        <tr>
+          <th>Vigencia</th>
+          <th>A</th>
+          <th>I</th>
+          <th>U</th>
         </tr>
       </thead>
       <body>
-        <tr>
-          <td>% de administración vigencia</td>
-          <td>{{factura.vigencia_tarifas.a }}</td>
-        </tr>
-        <tr>
-          <td>% de utilidad vigencia</td>
-          <td>{{factura.vigencia_tarifas.i }}</td>
-        </tr>
-        <tr>
-          <td>% de imprevistos vigencia</td>
-          <td>{{factura.vigencia_tarifas.u }}</td>
-        </tr>
-        <tr>
-          <td>Subtotal recursos</td>
-          <td ng-init="factura.subtotal = (factura.subtotal?factura.subtotal:0)">{{ factura.subtotal | currency }}</td>
-        </tr>
-        <tr>
-          <td>Total</td>
-          <td> <h5 ng-init="factura.total = (factura.total?factura.total:0)">{{ factura.total | currency }}</h5> </td>
+        <tr ng-repeat="vg in contrato.vigencias">
+          <td ng-bind="vg.descripcion_vigencia"></td>
+          <td ng-bind="vg.a"></td>
+          <td ng-bind="vg.i"></td>
+          <td ng-bind="vg.u"></td>
         </tr>
       </body>
+      <thead>
+        <tr>
+          <th colspan="4"> Resumen de valores </th>
+        </tr>
+        <tr>
+          <th colspan="2">Concepto</th>
+          <th colspan="2">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="2">Subtotal recursos</td>
+          <td colspan="2" ng-init="factura.subtotal = (factura.subtotal?factura.subtotal:0)">{{ factura.subtotal | currency }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">Total</td>
+          <td colspan="2"> <h5 ng-init="factura.total = (factura.total?factura.total:0)">{{ factura.total | currency }}</h5> </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 

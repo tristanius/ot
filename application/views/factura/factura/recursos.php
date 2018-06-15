@@ -17,7 +17,7 @@
     </fieldset>
   </div>
 
-  <div style="overflow:scroll; width: 100%; border: 1px solid #333">
+  <div style="overflow:scroll; width: 100%; border: 1px solid #777">
     <?php if ($isMod){
       $this->load->view('factura/factura/form_selec_estado');
     } ?>
@@ -31,6 +31,7 @@
           <th>Item</th>
           <th>Fact.</th>
           <th style="max-width:300px;">Descripción</th>
+          <th>Und</th>
           <th style="width:100px;">Tipo</th>
           <th>Tarifa</th>
           <th>Cantidad</th>
@@ -42,7 +43,6 @@
           <th>Total</th>
           <th>C.C</th>
           <th>Cod. activo</th>
-          <th>Equipo</th>
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
@@ -53,6 +53,7 @@
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.itemc_item" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> </th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.descripcion" ng-change="changeSelectFac('filtroItems')"> </th>
+          <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.und" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.tipo" ng-change="changeSelectFac('filtroItems')">  </th>
           <th> </th>
           <th> </th>
@@ -64,7 +65,6 @@
           <th> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"> </th>
-          <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.dec_equipo" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> </th>
         </tr>
       </thead>
@@ -79,6 +79,7 @@
           <td> <span ng-bind="rrd.itemc_item"></span> </td>
           <td> <span ng-bind="rrd.facturable"></span> </td>
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
+          <td> <span ng-bind="rrd.unidad" style="width:300px;"></span>  </td>
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
@@ -90,7 +91,6 @@
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.total | currency" ng-init="rrd.total = (rrd.total?rrd.total:(rrd.subtotal + rrd.a + rrd.i + rrd.u))"></span> </td>
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
-          <td> <small ng-bind="rrd.descripcion_equipo"></small> </td>
           <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button> </td>
         </tr>
       </tbody>
