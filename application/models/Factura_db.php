@@ -58,17 +58,19 @@ class Factura_db extends CI_Model{
   # Recurso
   public function addRecurso($rec, $idfac)
   {
+    $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
     $data = array(
-      'cantidad'=>$rec->cantidad,
-      'tarifa'=>$rec->tarifa,
-      'a'=>$rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'i'=>$rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'u'=>$rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'total'=>$rec->total,
-      'estado'=>(isset($rec->estado)?$rec->estado:NULL),
-      'idvigencia_tarifas'=>$rec->idvigencia_tarifas,
-      'idfactura'=>$idfac,
-      'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario
+      'cantidad' => $rec->cantidad,
+      'tarifa' => $rec->tarifa,
+      'subtotal' => $rec->subtotal,
+      'a' => $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'i' => $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'u' => $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'total'=> isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u )),
+      'estado'=> (isset($rec->estado)?$rec->estado:NULL),
+      'idvigencia_tarifas' => $rec->idvigencia_tarifas,
+      'idfactura' => $idfac,
+      'idrecurso_reporte_diario' => $rec->idrecurso_reporte_diario
     );
     $this->load->database('ot');
     $this->db->insert('factura_recurso_reporte', $data);
@@ -77,16 +79,17 @@ class Factura_db extends CI_Model{
 
   public function modRecurso($rec)
   {
-    # No se habilita modificar el id de recurso reportado y de factura
+    $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
     $data = array(
-      'cantidad'=>$rec->cantidad,
-      'tarifa'=>$rec->tarifa,
-      'a'=>$rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'i'=>$rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'u'=>$rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
-      'total'=>$rec->total,
-      'estado'=>(isset($rec->estado)?$rec->estado:NULL),
-      'idvigencia_tarifas'=>$rec->idvigencia_tarifas
+      'cantidad '=> $rec->cantidad,
+      'tarifa' => $rec->tarifa,
+      'subtotal'=>$rec->subtotal,
+      'a' => $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'i' => $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'u' => $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'total' => isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u )),
+      'estado' => (isset($rec->estado)?$rec->estado:NULL),
+      'idvigencia_tarifas' => $rec->idvigencia_tarifas
     );
     $this->load->database('ot');
     return $this->db->update('factura_recurso_reporte', $data, 'idfactura_recurso_reporte = '.$rec->idfactura_recurso_reporte);
@@ -116,7 +119,7 @@ class Factura_db extends CI_Model{
       getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
       vg.a AS a_vigencia,
       vg.i AS i_vigencia,
-      vg.u AS u_vigencia
+      vg.u AS u_vigencia,
       frrd.*'
     )->from('contrato AS c')
     ->join('OT', 'OT.idcontrato = c.idcontrato')

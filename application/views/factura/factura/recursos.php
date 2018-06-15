@@ -79,7 +79,7 @@
           <td> <span ng-bind="rrd.itemc_item"></span> </td>
           <td> <span ng-bind="rrd.facturable"></span> </td>
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
-          <td> <span ng-bind="rrd.unidad" style="width:300px;"></span>  </td>
+          <td> <span ng-bind="rrd.unidad"></span> </td>
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
