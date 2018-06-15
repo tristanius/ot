@@ -61,9 +61,9 @@ class Factura_db extends CI_Model{
     $data = array(
       'cantidad'=>$rec->cantidad,
       'tarifa'=>$rec->tarifa,
-      'a'=>$a,
-      'i'=>$i,
-      'u'=>$u,
+      'a'=>$rec->a,
+      'i'=>$rec->i,
+      'u'=>$rec->u,
       'total'=>$rec->total,
       'estado'=>($rec->estado?$rec->estado:NULL),
       'idvigencia_tarifas'=>$rec->idvigencia_tarifas,
@@ -81,9 +81,9 @@ class Factura_db extends CI_Model{
     $data = array(
       'cantidad'=>$rec->cantidad,
       'tarifa'=>$rec->tarifa,
-      'a'=>$a,
-      'i'=>$i,
-      'u'=>$u,
+      'a'=>$rec->a,
+      'i'=>$rec->i,
+      'u'=>$rec->u,
       'total'=>$rec->total,
       'estado'=>($rec->estado?$rec->estado:NULL),
       'idvigencia_tarifas'=>$rec->idvigencia_tarifas
@@ -91,13 +91,54 @@ class Factura_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->update('factura_recurso_reporte', $data, 'idfactura_recurso_reporte = '.$rec->idfactura_recurso_reporte);
   }
-
+  public function getRecursoByFactura($idfactura)
+  {
+    $this->load->database('ot');
+    return $this->db->select(
+      'c.idcontrato,
+      OT.idOT,
+      OT.nombre_ot,
+      OT.base_idbase,
+      rd.idreporte_diario,
+      rd.fecha_reporte,
+      rrd.idrecurso_reporte_diario,
+      IF(rrd.facturable,"SI","NO") AS facturable,
+      itf.codigo,
+      itf.itemc_item,
+      itf.descripcion,
+      p.identificacion,
+      p.nombre_completo,
+      IFNULL(rot.tipo, "activiad") AS tipo,
+      IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
+      IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo,
+      rrd.horas_operacion,
+      rrd.horas_disponible,
+      getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
+      frrd.*'
+    )->from('contrato AS c')
+    ->join('OT', 'OT.idcontrato = c.idcontrato')
+    ->join('base AS b','b.idbase = OT.base_idbase')
+    ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
+    ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
+    ->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf')
+    ->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
+    ->join('tarifa AS tar', 'tar.itemf_iditemf = itf.iditemf')
+    ->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario')
+    ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = frrd.idvigencia_tarifas')
+    ->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT')
+    ->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT')
+    ->join('persona AS p', 'r.persona_identificacion = p.identificacion', 'LEFT')
+    ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo', 'LEFT')
+    ->where('frrd.idfactura', $idfactura)
+    ->get();
+  }
+  # borrar un recurso reportado de una factura por su id
   public function delRecurso($idfrd)
   {
     $this->load->database('ot');
     return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd));
   }
-
+  # borrar unos recursos reportados de una factura por el id de la factura
   public function delRecursoBy($idfact)
   {
     $this->load->database('ot');
@@ -219,8 +260,7 @@ class Factura_db extends CI_Model{
     rrd.horas_operacion,
     rrd.horas_disponible,
     getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
-    vg.idvigencia_tarifas,
-    If( getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad <> rrd.cantidad, "SI", "NO" ) AS cambio_cant
+    vg.idvigencia_tarifas
     ');
     $this->db->from('contrato AS c');
     $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
