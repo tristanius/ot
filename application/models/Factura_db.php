@@ -61,11 +61,11 @@ class Factura_db extends CI_Model{
     $data = array(
       'cantidad'=>$rec->cantidad,
       'tarifa'=>$rec->tarifa,
-      'a'=>$rec->a,
-      'i'=>$rec->i,
-      'u'=>$rec->u,
+      'a'=>$rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'i'=>$rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'u'=>$rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
       'total'=>$rec->total,
-      'estado'=>($rec->estado?$rec->estado:NULL),
+      'estado'=>(isset($rec->estado)?$rec->estado:NULL),
       'idvigencia_tarifas'=>$rec->idvigencia_tarifas,
       'idfactura'=>$idfac,
       'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario
@@ -81,11 +81,11 @@ class Factura_db extends CI_Model{
     $data = array(
       'cantidad'=>$rec->cantidad,
       'tarifa'=>$rec->tarifa,
-      'a'=>$rec->a,
-      'i'=>$rec->i,
-      'u'=>$rec->u,
+      'a'=>$rec->a_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'i'=>$rec->i_vigencia*($rec->tarifa*$rec->disponibilidad),
+      'u'=>$rec->u_vigencia*($rec->tarifa*$rec->disponibilidad),
       'total'=>$rec->total,
-      'estado'=>($rec->estado?$rec->estado:NULL),
+      'estado'=>(isset($rec->estado)?$rec->estado:NULL),
       'idvigencia_tarifas'=>$rec->idvigencia_tarifas
     );
     $this->load->database('ot');
@@ -114,6 +114,9 @@ class Factura_db extends CI_Model{
       rrd.horas_operacion,
       rrd.horas_disponible,
       getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
+      vg.a AS a_vigencia,
+      vg.i AS i_vigencia,
+      vg.u AS u_vigencia
       frrd.*'
     )->from('contrato AS c')
     ->join('OT', 'OT.idcontrato = c.idcontrato')
@@ -260,7 +263,10 @@ class Factura_db extends CI_Model{
     rrd.horas_operacion,
     rrd.horas_disponible,
     getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad AS disponibilidad,
-    vg.idvigencia_tarifas
+    vg.idvigencia_tarifas,
+    vg.a AS a_vigencia,
+    vg.i AS i_vigencia,
+    vg.u AS u_vigencia
     ');
     $this->db->from('contrato AS c');
     $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
@@ -285,7 +291,8 @@ class Factura_db extends CI_Model{
               AND vigencia.fecha_fin_vigencia >= rd.fecha_reporte
               ORDER BY vigencia.idvigencia_tarifas DESC LIMIT 1
               )')
-          ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ');
+          ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ')
+          ->order_by("rd.fecha_reporte","ASC");
     if( isset( $centros_operacion ) ){
       $this->db->where_not_in('b.idbase', (array) $centros_operacion);
     }

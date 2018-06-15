@@ -82,7 +82,7 @@ class Factura extends CI_Controller{
       }else{
         $ret->status = $this->add($factura);
       }
-      $ret->factura = $factura;
+      $ret->factura = $this->get($factura->idfactura);
       echo json_encode($ret);
     } catch (Exception $e) {
       echo $e->getMessage();
@@ -92,9 +92,9 @@ class Factura extends CI_Controller{
   private function add($factura)
   {
     $this->fact->init_transact();
-    $idfactura = $this->fact->add($factura);
+    $factura->idfactura = $this->fact->add($factura);
     foreach ($factura->recursos as $key => $recurso) {
-      $this->fact->addRecurso($recurso, $idfactura);
+      $this->fact->addRecurso($recurso, $factura->idfactura);
     }
     return $this->fact->end_transact();
   }
