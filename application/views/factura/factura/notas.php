@@ -13,7 +13,7 @@
     <table>
       <thead>
         <tr>
-          <th colspan="2"> Valores de la vigencias</th>
+          <th colspan="2" class="center-align"> Valores de la vigencias</th>
         </tr>
         <tr>
           <th>Vigencia</th>
@@ -24,7 +24,7 @@
       </thead>
       <body>
         <tr ng-repeat="vg in contrato.vigencias">
-          <td ng-bind="vg.descripcion_vigencia"></td>
+          <td> <span ng-bind="vg.descripcion_vigencia"></span> <small ng-bind="vg.fecha_inicio"></small> <span ng-if="vg.fecha_inicio >= factura.fecha_inicio">OK</span> </td>
           <td ng-bind="vg.a"></td>
           <td ng-bind="vg.i"></td>
           <td ng-bind="vg.u"></td>
@@ -32,7 +32,7 @@
       </body>
       <thead>
         <tr>
-          <th colspan="4"> Resumen de valores </th>
+          <th colspan="4" class="center-align"> Resumen de valores </th>
         </tr>
         <tr>
           <th colspan="2">Concepto</th>

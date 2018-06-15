@@ -76,13 +76,17 @@ class Factura extends CI_Controller{
     $factura = json_decode( file_get_contents('php://input') );
     $this->load->model('factura_db', 'fact');
     $ret = new stdClass();
-    if(isset($factura->idfactura)){
-      $ret->status = $this->mod($factura);
-    }else{
-      $ret->status = $this->add($factura);
+    try {
+      if(isset($factura->idfactura)){
+        $ret->status = $this->mod($factura);
+      }else{
+        $ret->status = $this->add($factura);
+      }
+      $ret->factura = $factura;
+      echo json_encode($ret);
+    } catch (Exception $e) {
+      echo $e->getMessage();
     }
-    $ret->factura = $factura;
-    echo json_encode($ret);
   }
   # Agregar una nueva factura
   private function add()
