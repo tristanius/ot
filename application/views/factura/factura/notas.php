@@ -54,7 +54,7 @@
 
   <div class="col l8 m8 s12 ">
     <p> Notas:</p>
-    <textarea id="notas" ng-model="factura.descripcion" ng-init="tinymce('#notas')" ng-disabled="factura.estado != 'CERRADO'"
+    <textarea id="notas" ng-model="factura.descripcion" ng-init="tinyMCE('#notas')" ng-disabled="factura.estado != 'CERRADO'"
         style="border:1px solid #555; box-shadow: 0px 0px 3px #999 inset; min-height:90px; width: 100%">
     </textarea>
   </div>

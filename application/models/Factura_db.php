@@ -16,8 +16,7 @@ class Factura_db extends CI_Model{
       'no_factura'=>$factura->no_factura,
       'fecha_inicio'=>$factura->fecha_inicio,
       'fecha_fin'=>$factura->fecha_fin,
-      'descripcion'=>$factura->descripcion,
-      'tipo_acta'=>$factura->tipo_acta,
+      'descripcion'=>isset($factura->descripcion)?$factura->descripcion:NULL,
       'total'=>$factura->total,
       'idcontrato'=>$factura->idcontrato,
       'tipo_acta'=>$factura->tipo_acta,
@@ -46,10 +45,9 @@ class Factura_db extends CI_Model{
       'no_factura'=>$factura->no_factura,
       'fecha_inicio'=>$factura->fecha_inicio,
       'fecha_fin'=>$factura->fecha_fin,
-      'descripcion'=>$factura->descripcion,
+      'descripcion'=>isset($factura->descripcion)?$factura->descripcion:NULL,
       'tipo_acta'=>$factura->tipo_acta,
       'total'=>$factura->total,
-      'tipo_acta'=>$factura->tipo_acta,
       'estado_factura'=>$factura->estado_factura,
       'validado'=> $factura->validado
     );

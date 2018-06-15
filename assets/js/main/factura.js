@@ -313,4 +313,7 @@ var formFactura = function($scope, $http, $timeout){
   	   selector: selTag
   	});
 	}
+  $scope.removeTinyMCE = function(tag){
+    tinymce.remove(tag);
+  }
 }
