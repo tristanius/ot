@@ -89,7 +89,7 @@ class Factura extends CI_Controller{
     }
   }
   # Agregar una nueva factura
-  private function add()
+  private function add($factura)
   {
     $this->fact->init_transact();
     $this->fact->add($factura);

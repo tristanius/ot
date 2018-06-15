@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col l4 m4 s12">
 
-    <table>
+    <table class="highlight striped">
       <thead>
         <tr>
           <th colspan="2" class="center-align"> Valores de la vigencias</th>
@@ -24,7 +24,7 @@
       </thead>
       <body>
         <tr ng-repeat="vg in contrato.vigencias">
-          <td> <span ng-bind="vg.descripcion_vigencia"></span> <small ng-bind="vg.fecha_inicio"></small> <span ng-if="vg.fecha_inicio >= factura.fecha_inicio">OK</span> </td>
+          <td> <span ng-bind="vg.descripcion_vigencia"></span> <small ng-bind="vg.fecha_inicio_vigencia"></small> <span ng-if="vg.fecha_inicio_vigencia >= factura.fecha_inicio">OK</span> </td>
           <td ng-bind="vg.a"></td>
           <td ng-bind="vg.i"></td>
           <td ng-bind="vg.u"></td>
