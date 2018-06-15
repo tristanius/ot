@@ -29,10 +29,10 @@ class Factura extends CI_Controller{
     $this->load->model('miscelanio_db', 'misc');
     $sectores = $this->misc->getBasesBySector();
     if($tipo == 'add'){
-      $this->load->view('factura/factura/form', array('sectores'=>$sectores, 'isMod'=>FALSE));
+      $this->load->view('factura/factura/form', array('isMod'=>FALSE));
     }elseif ($tipo == 'mod') {
       $post = json_decode( file_get_contents('php://input') );
-      $this->load->view('factura/factura/form', array('sectores'=>$sectores, 'idfactura'=>$idfactura, 'isMod'=>TRUE));
+      $this->load->view('factura/factura/form', array('idfactura'=>$idfactura, 'isMod'=>TRUE));
     }
   }
 
@@ -114,7 +114,7 @@ class Factura extends CI_Controller{
     $ret = new stdClass();
     $this->load->model('factura_db','fact');
     $factura = $this->fact->get($idfactura);
-    if($factura->num_rows == 1){
+    if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
       $recursos = $this->fact->getRecursoByFactura($idfactura);
       if($recursos->num_rows() > 0  ){

@@ -27,6 +27,7 @@ var factura = function($scope, $http, $timeout){
       alert('no has selecionado contrato')
     }
   }
+
   // spinner .gif
   $scope.toggleLoader = function(loader){
     return loader?false:true;
@@ -84,6 +85,17 @@ var formFactura = function($scope, $http, $timeout){
   $scope.orden = {recursos:[]};
   $scope.panel_visible = false;
 
+
+  // ---------- Obtener una factura ya exitente ----------------------
+  $scope.getFactura = function(lnk, id){
+    $scope.$parent.spinner = true;
+    $http.post(lnk, {idfactura: id})
+    .then(
+      function(){},
+      function(){}
+    );
+  }
+
   // Renderiza las pestañas de JQuery
   $scope.initForm = function(selector){
     $( function() {
@@ -102,7 +114,6 @@ var formFactura = function($scope, $http, $timeout){
   // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
       $scope.$parent.spinner = true;
-
       $http.post(link, $scope.factura)
       .then(
         function(response){

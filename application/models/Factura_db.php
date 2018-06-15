@@ -93,7 +93,7 @@ class Factura_db extends CI_Model{
       'a' => $rec->a,
       'i' => $rec->i,
       'u' => $rec->u,
-      'total' => isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u )),
+      'total' => (isset($rec->total)?$rec->total:( $rec->subtotal + $rec->a + $rec->i + $rec->u )),
       'estado' => (isset($rec->estado)?$rec->estado:NULL),
       'idvigencia_tarifas' => $rec->idvigencia_tarifas
     );
