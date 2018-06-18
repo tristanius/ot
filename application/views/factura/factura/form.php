@@ -1,10 +1,10 @@
-<section id="formFactura" class="windowCentered2 row" ng-controller="formFactura" <?php if($isMod): ?> ng-init="getFacturaData('<?= site_url('factura/get/'.$idfactura) ?>')" <?php endif; ?> >
+<section id="formFactura" class="windowCentered2 row" ng-controller="formFactura" >
   <h4 class="card padding1ex" > <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" /> Acta de factura - {{ contrato.contratista }}</h4>
   <hr>
 
   <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
-  <section >
+  <section <?php if($isMod): ?> ng-init="getFactura('<?= site_url('factura/get/'.$idfactura) ?>', <?= $idfactura ?>)" <?php endif; ?>  >
 
     <div class="card">
       <div class="inputs row noMaterialStyles padding1ex">

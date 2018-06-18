@@ -91,8 +91,16 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = true;
     $http.post(lnk, {idfactura: id})
     .then(
-      function(){},
-      function(){}
+      function(resp){
+        if(resp.data.status){
+          $scope.factura = resp.data.factura;
+        }
+        console.log(resp.data)
+      },
+      function(resp){
+        alert('algo salio mal');
+        console.log(resp.data);
+      }
     );
   }
 
@@ -196,6 +204,7 @@ var formFactura = function($scope, $http, $timeout){
   $scope.save = function(link, tipo){
     if( ($scope.factura.fecha_inicio && $scope.factura.fecha_fin) && ($scope.factura.recursos || $scope.factura.recursos.length >= 0) ){
       $scope.$parent.spinner = true;
+      $scope.factura.descripcion = tinymce.get('notas').getContent();
       $http.post(link, $scope.factura)
       .then(
         function(response){
@@ -320,6 +329,7 @@ var formFactura = function($scope, $http, $timeout){
   }
   //Vendors
 	$scope.tinyMCE = function(selTag){
+    // evaluar si es necesario remover tinymce primero
 		tinymce.init({
   	   selector: selTag
   	});

@@ -23,8 +23,8 @@
         </tr>
       </thead>
       <body>
-        <tr ng-repeat="vg in contrato.vigencias">
-          <td> <span ng-bind="vg.descripcion_vigencia"></span> <small ng-bind="vg.fecha_inicio_vigencia"></small> <span ng-if="vg.fecha_inicio_vigencia >= factura.fecha_inicio">OK</span> </td>
+        <tr ng-repeat="vg in contrato.vigencias" ng-if="vg.fecha_inicio_vigencia >= factura.fecha_inicio">
+          <td> <span ng-bind="vg.descripcion_vigencia"></span> <small ng-bind="vg.fecha_inicio_vigencia"></small> </td>
           <td ng-bind="vg.a"></td>
           <td ng-bind="vg.i"></td>
           <td ng-bind="vg.u"></td>
@@ -53,7 +53,7 @@
   </div>
 
   <div class="col l8 m8 s12 ">
-    <p> Notas:</p>
+    <p> Comentario / Descripción:</p>
     <textarea id="notas" ng-model="factura.descripcion" ng-init="tinyMCE('#notas')" ng-disabled="factura.estado != 'CERRADO'"
         style="border:1px solid #555; box-shadow: 0px 0px 3px #999 inset; min-height:90px; width: 100%">
     </textarea>

@@ -82,7 +82,7 @@ class Factura extends CI_Controller{
       }else{
         $ret->status = $this->add($factura);
       }
-      $ret->factura = $this->get($factura->idfactura);
+      $ret->factura = $this->get($factura->idfactura, FALSE);
       echo json_encode($ret);
     } catch (Exception $e) {
       echo $e->getMessage();
@@ -109,7 +109,7 @@ class Factura extends CI_Controller{
     return $this->fact->end_transact();
   }
 
-  private function get($idfactura)
+  public function get($idfactura, $json = TRUE)
   {
     $ret = new stdClass();
     $this->load->model('factura_db','fact');
@@ -117,6 +117,7 @@ class Factura extends CI_Controller{
     if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
       $recursos = $this->fact->getRecursoByFactura($idfactura);
+      // faltantes otros conceptos y archivos adjuntos
       if($recursos->num_rows() > 0  ){
         $ret->factura->recursos =$recursos->result();
       }
@@ -124,7 +125,11 @@ class Factura extends CI_Controller{
     }else{
       $ret->status = false;
     }
-    return $ret;
+    if($json){
+      echo json_encode($ret);
+    }else{
+      return $ret;
+    }
   }
   # -------------------------------------------------------------------------
   # Obtener recursos reportados sin facturar

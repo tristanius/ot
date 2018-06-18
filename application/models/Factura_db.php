@@ -21,7 +21,9 @@ class Factura_db extends CI_Model{
       'idcontrato'=>$factura->idcontrato,
       'tipo_acta'=>$factura->tipo_acta,
       'estado_factura'=>$factura->estado_factura,
-      'validado'=> $factura->validado
+      'validado'=> $factura->validado,
+      'ordenes' => isset($factua->ordenes)?$factura->ordenes:NULL,
+      'centros_operacion' => isset($factura->centros_operacion)?$factura->centros_operacion:NULL
     );
     $this->load->database('ot');
     $this->db->insert('factura', $data);
@@ -49,7 +51,9 @@ class Factura_db extends CI_Model{
       'tipo_acta'=>$factura->tipo_acta,
       'total'=>$factura->total,
       'estado_factura'=>$factura->estado_factura,
-      'validado'=> $factura->validado
+      'validado'=> $factura->validado,
+      'ordenes' => isset($factua->ordenes)?$factura->ordenes:NULL,
+      'centros_operacion' => isset($factura->centros_operacion)?$factura->centros_operacion:NULL
     );
     $this->load->database('ot');
     return $this->db->update('factura', $data, 'idfactura = '.$factura->idfactura);
@@ -155,6 +159,19 @@ class Factura_db extends CI_Model{
   {
     $this->load->database('ot');
     return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact));
+  }
+
+  public function getTotalRecursos($idfactura)
+  {
+    $this->load->database('ot');
+    $rows = $this->db->select('SUM(frrd.total) AS total')
+      ->from('factura_recurso_reporte AS frrd')
+      ->where('frrd.idfactura',$idfactura)
+      ->get();
+    if($rows->num_rows() > 0){
+      return $rows->row()->total;
+    }
+    return 0;
   }
 
   #=============================================================================
