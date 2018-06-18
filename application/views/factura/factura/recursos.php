@@ -81,14 +81,14 @@
           <td> <span ng-bind="rrd.descripcion" style="width:300px;"></span> </td>
           <td> <span ng-bind="rrd.unidad"></span> </td>
           <td> <span ng-bind="rrd.tipo"></span> </td>
-          <td> <span ng-bind="rrd.tarifa | currency"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad"></span> </td>
-          <td> <small ng-bind="rrd.disponibilidad"></small> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.disponibilidad)"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.a | currency" ng-init="rrd.a =  (rrd.a? rrd.a: (rrd.subtotal*factura.vigencia_tarifas.a) )"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.i | currency" ng-init="rrd.i =  (rrd.i? rrd.i: (rrd.subtotal*factura.vigencia_tarifas.i) )"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.u | currency" ng-init="rrd.u =  (rrd.u? rrd.u: (rrd.subtotal*factura.vigencia_tarifas.u) )"></span> </td>
-          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.total | currency" ng-init="rrd.total = (rrd.total?rrd.total:(rrd.subtotal + rrd.a + rrd.i + rrd.u))"></span> </td>
+          <td> <span ng-bind="rrd.tarifa | currency" class="right-align"></span> </td>
+          <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad" class="right-align"></span> </td>
+          <td> <small ng-bind="rrd.disponibilidad" class="right-align"></small> </td>
+          <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.disponibilidad)"></span> </td>
+          <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.a | currency" ng-init="rrd.a =  (rrd.a? rrd.a: (rrd.subtotal*factura.vigencia_tarifas.a) )"></span> </td>
+          <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.i | currency" ng-init="rrd.i =  (rrd.i? rrd.i: (rrd.subtotal*factura.vigencia_tarifas.i) )"></span> </td>
+          <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.u | currency" ng-init="rrd.u =  (rrd.u? rrd.u: (rrd.subtotal*factura.vigencia_tarifas.u) )"></span> </td>
+          <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.total | currency" ng-init="rrd.total = (rrd.total?rrd.total:(rrd.subtotal + rrd.a + rrd.i + rrd.u))"></span> </td>
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
           <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteElementFactura(orden.recursos, rrd, 'recurso')" >x</button> </td>

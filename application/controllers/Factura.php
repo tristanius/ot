@@ -82,7 +82,7 @@ class Factura extends CI_Controller{
       }else{
         $ret->status = $this->add($factura);
       }
-      $ret->factura = $this->get($factura->idfactura, FALSE);
+      $ret->factura = $this->get($factura->idfactura, FALSE)->factura;
       echo json_encode($ret);
     } catch (Exception $e) {
       echo $e->getMessage();

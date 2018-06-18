@@ -26,13 +26,13 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="c in contrato.facturas">
+      <tr ng-repeat="c in contrato.facturas | filter: filtroFactura">
         <td> </td>
         <td> <span ng-bind="c.no_factura"></span> </td>
         <td ng-bind="c.descripcion"></td>
-        <td ng-bind="c.total | currency"></td>
-        <td ng-bind="c.fecha_inicio"></td>
-        <td ng-bind="c.fecha_fin"></td>
+        <td ng-bind="c.total | currency" class="right-align"></td>
+        <td ng-bind="c.fecha_inicio" class="right-align"></td>
+        <td ng-bind="c.fecha_fin" class="right-align"></td>
         <td ng-bind="c.estado_factura"></td>
         <td ng-bind="c.tipo_acta"></td>
         <td>
