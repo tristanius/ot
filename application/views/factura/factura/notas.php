@@ -45,6 +45,10 @@
           <td colspan="2" ng-init="factura.subtotal = (factura.subtotal?factura.subtotal:0)">{{ factura.subtotal | currency }}</td>
         </tr>
         <tr>
+          <td colspan="2">Subtotal otros</td>
+          <td colspan="2" ng-init="factura.otros = (factura.otros?factura.otros:0)">{{ factura.otros | currency }}</td>
+        </tr>
+        <tr>
           <td colspan="2">Total</td>
           <td colspan="2"> <h5 ng-init="factura.total = (factura.total?factura.total:0)">{{ factura.total | currency }}</h5> </td>
         </tr>

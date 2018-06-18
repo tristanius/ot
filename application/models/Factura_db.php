@@ -13,10 +13,12 @@ class Factura_db extends CI_Model{
   public function add($factura)
   {
     $data = array(
-      'no_factura'=>$factura->no_factura,
-      'fecha_inicio'=>$factura->fecha_inicio,
-      'fecha_fin'=>$factura->fecha_fin,
-      'descripcion'=>isset($factura->descripcion)?$factura->descripcion:NULL,
+      'no_factura' => $factura->no_factura,
+      'fecha_inicio' => $factura->fecha_inicio,
+      'fecha_fin' => $factura->fecha_fin,
+      'descripcion' => isset($factura->descripcion)?$factura->descripcion:NULL,
+      'subtotal' => $factura->subtotal,
+      'otros' => $factura->otros,
       'total'=>$factura->total,
       'idcontrato'=>$factura->idcontrato,
       'tipo_acta'=>$factura->tipo_acta,
@@ -44,14 +46,16 @@ class Factura_db extends CI_Model{
   {
     # No se modifican los campos de vigencias y contrato
     $data = array(
-      'no_factura'=>$factura->no_factura,
-      'fecha_inicio'=>$factura->fecha_inicio,
-      'fecha_fin'=>$factura->fecha_fin,
+      'no_factura' => $factura->no_factura,
+      'fecha_inicio' => $factura->fecha_inicio,
+      'fecha_fin' => $factura->fecha_fin,
       'descripcion'=>isset($factura->descripcion)?$factura->descripcion:NULL,
-      'tipo_acta'=>$factura->tipo_acta,
-      'total'=>$factura->total,
-      'estado_factura'=>$factura->estado_factura,
-      'validado'=> $factura->validado,
+      'tipo_acta'=> $factura->tipo_acta,
+      'subtotal' => $factura->subtotal,
+      'otros' => $factura->otros,
+      'total' => $factura->total,
+      'estado_factura' => $factura->estado_factura,
+      'validado' => $factura->validado,
       'ordenes' => isset($factua->ordenes)?$factura->ordenes:NULL,
       'centros_operacion' => isset($factura->centros_operacion)?$factura->centros_operacion:NULL
     );
@@ -161,18 +165,8 @@ class Factura_db extends CI_Model{
     return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact));
   }
 
-  public function getTotalFactura($idfactura)
-  {
-    $this->load->database('ot');
-    $rows = $this->db->select('SUM(frrd.total) AS total')
-      ->from('factura_recurso_reporte AS frrd')
-      ->where('frrd.idfactura',$idfactura)
-      ->get();
-    if($rows->num_rows() > 0){
-      return $rows->row()->total;
-    }
-    return 0;
-  }
+  #=============================================================================
+  # Conceptos de factura
 
   #=============================================================================
   # Información de contrato
@@ -262,7 +256,7 @@ class Factura_db extends CI_Model{
     $this->db->order_by('OT.nombre_ot', 'DESC');
     return $this->db->get()->result();
   }
-  // En uso
+  // Obtener recursos reportados - En uso
   public function getRecursos($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL, $ordenes=NULL)
   {
     $this->load->database('ot');
@@ -327,7 +321,7 @@ class Factura_db extends CI_Model{
     }
     return $this->db->get();
   }
-  # En uso
+  # Obtener ordenes de trabajo por centro de operacion -  En uso
   public function getOrdenesByCO($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL)
   {
     $this->load->database('ot');

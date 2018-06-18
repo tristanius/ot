@@ -92,20 +92,35 @@ class Factura extends CI_Controller{
   private function add($factura)
   {
     $this->fact->init_transact();
+    $subtotal = 0;
+    $otros = 0;
+    # guardamos primero la factura para obtener el ID
     $factura->idfactura = $this->fact->add($factura);
     foreach ($factura->recursos as $key => $recurso) {
       $this->fact->addRecurso($recurso, $factura->idfactura);
+      $subtotal += $recurso->total;
     }
+    $factura->subtotal = $subototal;// calculo de totales por concepto
+    $factura->otros = $otros;// calculo de totales por concepto
+    $factura->total = $subsubtotal + $otros;// calculo de totales por concepto
+    $this->fact->mod($factura); // volvemos a guardar la factura con los totales y subtotales
     return $this->fact->end_transact();
   }
   # Actualizar una factura
   private function mod($factura)
   {
     $this->fact->init_transact();
-    $this->fact->mod($factura);
+    $subtotal = 0;
+    $otros = 0;
+    # Invertimos el orden para actualizar, primero los recursos y luego la factura
     foreach ($factura->recursos as $key => $recurso) {
       $this->fact->modRecurso($recurso);
+      $subtotal += $recurso->total;
     }
+    $factura->subtotal = $subototal; // calculo de totales por concepto
+    $factura->otros = $otros; // calculo de totales por concepto
+    $factura->total = $subsubtotal + $otros; // calculo de totales por concepto
+    $this->fact->mod($factura); // guardamos de ultimo la factura ya que no necesitamos primero el ID y ya tenemos los subtotales
     return $this->fact->end_transact();
   }
 
@@ -117,7 +132,6 @@ class Factura extends CI_Controller{
     if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
       $recursos = $this->fact->getRecursoByFactura($idfactura);
-      $ret->factura->total = $this->fact->getTotalFactura($idfactura);
       // faltantes otros conceptos y archivos adjuntos
       if($recursos->num_rows() > 0  ){
         $ret->factura->recursos =$recursos->result();

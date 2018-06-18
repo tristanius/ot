@@ -4,7 +4,7 @@
 
   <button type="button" class="btn btn-floating"> <i data-icon="i"></i> </button>
 
-  <table>
+  <table class="mytabla">
     <thead>
       <tr>
         <th>No.</th>
