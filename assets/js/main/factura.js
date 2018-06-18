@@ -239,33 +239,11 @@ var formFactura = function($scope, $http, $timeout){
     return Math.ceil(lista.length/$scope.pageSize);
   }
 
-  $scope.deleteElementFactura = function(listaPadre, elemento, tipo){
-    if (elemento) {
-      var i = listaPadre.indexOf(elemento);
-      if (tipo == 'orden') {
-        listaPadre.splice( i, 1 );
-        var x = listaPadre.length;
-        if(x==i){ i = 0; }
-        $scope.orden = listaPadre[i];
-      }else if (tipo =='recurso'){
-        if ( elemento.idfactura_recurso_reporte ) {
-            $http.post( $scope.$parent.site_url+'/factura/delItemFactura/',   {idfactura_recurso_reporte: elemento.idfactura_recurso_reporte})
-            .then(
-              function(response) {
-                if (response.data == "success") {
-                    listaPadre.splice( i, 1 );
-                }else{
-                  console.log(response.data);
-                  alert('Elemento NO eliminado');
-                }
-              },function(response) { alert(response.data) }
-            );
-        }else{
-          listaPadre.splice( i, 1 );
-        }
-      }
-    }
+  $scope.deleteRecurso = function(listaPadre, elemento, tipo){
+
   }
+
+  $scope.deleteCeoncepto = function(){}
 
   $scope.changeSelectFac = function(tipo){
     if (tipo == 'base') {
