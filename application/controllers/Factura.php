@@ -104,11 +104,11 @@ class Factura extends CI_Controller{
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
 
       $this->fact->addRecurso($rec, $factura->idfactura);
-      $subtotal += $rec->total;
+      $subtotal = $subtotal + $rec->total;
     }
-    $factura->subtotal = $subototal;// calculo de totales por concepto
+    $factura->subtotal = $subtotal;// calculo de totales por concepto
     $factura->otros = $otros;// calculo de totales por concepto
-    $factura->total = $subsubtotal + $otros;// calculo de totales por concepto
+    $factura->total = $subtotal + $otros;// calculo de totales por concepto
     $this->fact->mod($factura); // volvemos a guardar la factura con los totales y subtotales
     return $this->fact->end_transact();
   }
@@ -127,11 +127,11 @@ class Factura extends CI_Controller{
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
 
       $this->fact->modRecurso($rec);
-      $subtotal += $rec->total;
+      $subtotal = $subtotal + $rec->total;
     }
-    $factura->subtotal = $subototal; // calculo de totales por concepto
+    $factura->subtotal = $subtotal; // calculo de totales por concepto
     $factura->otros = $otros; // calculo de totales por concepto
-    $factura->total = $subsubtotal + $otros; // calculo de totales por concepto
+    $factura->total = $subtotal + $otros; // calculo de totales por concepto
     $this->fact->mod($factura); // guardamos de ultimo la factura ya que no necesitamos primero el ID y ya tenemos los subtotales
     return $this->fact->end_transact();
   }
