@@ -18,7 +18,7 @@
   </div>
 
   <div style="overflow:scroll; width: 100%; border: 1px solid #777">
-    <?php if ($isMod){
+    <?php if ($isMod && FALSE){
       $this->load->view('factura/factura/form_selec_estado');
     } ?>
     <table id="tablaRecursos" class="mytabla font10" style="min-width:1270px; max-width:2500px;">

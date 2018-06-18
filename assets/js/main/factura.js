@@ -95,11 +95,13 @@ var formFactura = function($scope, $http, $timeout){
         if(resp.data.status){
           $scope.factura = resp.data.factura;
         }
-        console.log(resp.data)
+        console.log(resp.data);
+        $scope.$parent.spinner = false;
       },
       function(resp){
         alert('algo salio mal');
         console.log(resp.data);
+        $scope.$parent.spinner = false;
       }
     );
   }

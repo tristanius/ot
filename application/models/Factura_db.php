@@ -161,7 +161,7 @@ class Factura_db extends CI_Model{
     return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact));
   }
 
-  public function getTotalRecursos($idfactura)
+  public function getTotalFactura($idfactura)
   {
     $this->load->database('ot');
     $rows = $this->db->select('SUM(frrd.total) AS total')

@@ -81,7 +81,8 @@
       <ul>
         <li><a href="#tabs-1">Información</a></li>
         <li><a href="#tabs-2">Recursos</a></li>
-        <li><a href="#tabs-3">Adjuntos</a></li>
+        <li><a href="#tabs-3">Otros conceptos</a></li>
+        <li><a href="#tabs-4">Adjuntos</a></li>
       </ul>
       <div id="tabs-1" class="noMaterialStyles">
         <?php $this->load->view("factura/factura/notas"); ?>
@@ -90,6 +91,9 @@
         <?php $this->load->view("factura/factura/recursos"); ?>
       </div>
       <div id="tabs-3">
+        <?php $this->load->view("factura/factura/conceptos_facturables"); ?>
+      </div>
+      <div id="tabs-4">
         <?php $this->load->view("factura/factura/adjuntos"); ?>
       </div>
     </div>

@@ -117,6 +117,7 @@ class Factura extends CI_Controller{
     if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
       $recursos = $this->fact->getRecursoByFactura($idfactura);
+      $ret->factura->total = $this->fact->getTotalFactura($idfactura);
       // faltantes otros conceptos y archivos adjuntos
       if($recursos->num_rows() > 0  ){
         $ret->factura->recursos =$recursos->result();
