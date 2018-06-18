@@ -66,6 +66,3 @@
 
 </div>
 <br>
-
-
-<script>tinymce.init({ selector:'#notas' });</script>

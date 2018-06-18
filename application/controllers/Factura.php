@@ -96,9 +96,15 @@ class Factura extends CI_Controller{
     $otros = 0;
     # guardamos primero la factura para obtener el ID
     $factura->idfactura = $this->fact->add($factura);
-    foreach ($factura->recursos as $key => $recurso) {
-      $this->fact->addRecurso($recurso, $factura->idfactura);
-      $subtotal += $recurso->total;
+    foreach ($factura->recursos as $key => $rec) {
+      $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
+      $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
+      $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
+      $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
+      $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
+
+      $this->fact->addRecurso($rec, $factura->idfactura);
+      $subtotal += $rec->total;
     }
     $factura->subtotal = $subototal;// calculo de totales por concepto
     $factura->otros = $otros;// calculo de totales por concepto
@@ -113,9 +119,15 @@ class Factura extends CI_Controller{
     $subtotal = 0;
     $otros = 0;
     # Invertimos el orden para actualizar, primero los recursos y luego la factura
-    foreach ($factura->recursos as $key => $recurso) {
-      $this->fact->modRecurso($recurso);
-      $subtotal += $recurso->total;
+    foreach ($factura->recursos as $key => $rec) {
+      $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
+      $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
+      $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
+      $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
+      $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
+
+      $this->fact->modRecurso($rec);
+      $subtotal += $rec->total;
     }
     $factura->subtotal = $subototal; // calculo de totales por concepto
     $factura->otros = $otros; // calculo de totales por concepto

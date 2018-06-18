@@ -66,10 +66,6 @@ class Factura_db extends CI_Model{
   # Recurso
   public function addRecurso($rec, $idfac)
   {
-    $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
-    $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
-    $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
-    $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
     $data = array(
       'cantidad' => $rec->cantidad,
       'tarifa' => $rec->tarifa,
@@ -90,10 +86,6 @@ class Factura_db extends CI_Model{
 
   public function modRecurso($rec)
   {
-    $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
-    $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
-    $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
-    $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
     $data = array(
       'cantidad '=> $rec->cantidad,
       'tarifa' => $rec->tarifa,
