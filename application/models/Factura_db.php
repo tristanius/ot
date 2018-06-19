@@ -134,14 +134,15 @@ class Factura_db extends CI_Model{
     ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
     ->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf')
     ->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
-    ->join('tarifa AS tar', 'tar.itemf_iditemf = itf.iditemf')
     ->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario')
     ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = frrd.idvigencia_tarifas')
+    ->join('tarifa AS tar', 'tar.idvigencia_tarifas = vg.idvigencia_tarifas')
     ->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT')
     ->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT')
     ->join('persona AS p', 'r.persona_identificacion = p.identificacion', 'LEFT')
     ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo', 'LEFT')
     ->where('frrd.idfactura', $idfactura)
+    ->where('tar.itemf_iditemf = itf.iditemf');
     ->get();
   }
   # borrar un recurso reportado de una factura por su id
