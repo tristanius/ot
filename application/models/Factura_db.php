@@ -142,7 +142,7 @@ class Factura_db extends CI_Model{
     ->join('persona AS p', 'r.persona_identificacion = p.identificacion', 'LEFT')
     ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo', 'LEFT')
     ->where('frrd.idfactura', $idfactura)
-    ->where('tar.itemf_iditemf = itf.iditemf');
+    ->where('tar.itemf_iditemf = itf.iditemf')
     ->get();
   }
   # borrar un recurso reportado de una factura por su id

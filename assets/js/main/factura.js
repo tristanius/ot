@@ -200,7 +200,7 @@ var formFactura = function($scope, $http, $timeout){
       $scope.factura.ordenes_excluidas = undefined;
     }
   }
-
+  // ---- form recursos ----
   $scope.calcularRecursos = function(){
     var subtotal = 0;
     var i = 0;
@@ -217,6 +217,27 @@ var formFactura = function($scope, $http, $timeout){
     });
     $scope.$parent.spinner = false;
     alert("Registros: "+i+" - Total recursos: $ "+subtotal);
+  }
+  // ---- form otros ----
+  $scope.addConceptoFactura = function(obj){
+    if(obj.item && obj.concepo && obj.valor && obj.){
+      $scope.factura.otros_conceptos.push(obj);
+    }else{
+      alert("Hay campos necesarios por llenar");
+    }
+  }
+
+  $scope.removeConceptoFactura = function(obj){
+
+  }
+  $scope.calcularOtros = function(){
+    var otros = 0;
+    var i = 0;
+    angular.forEach($scope.factura.otros_conceptos, function(v,k){
+      otros += v.valor;
+    });
+    $scope.$parent.spinner = false;
+    $scope.factura.otros = otros;
   }
 
   /// ==========================================================================
