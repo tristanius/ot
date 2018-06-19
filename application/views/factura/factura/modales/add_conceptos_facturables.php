@@ -17,13 +17,16 @@
       <div class="col m4 l3 s6">
         <label for="">
           Tipo:
-          <input type="text" ng-model="otro_concepto.tipo" value="">
+          <select class="" ng-model="otro_concepto.tipo" >
+            <option value="descuento">descuento</option>
+            <option value="adicional">adicional</option>
+          </select>
         </label>
       </div>
       <div class="col m4 l3 s6">
         <label for="">
           Valor:
-          <input type="number" ng-model="otro_concepto.total" value="">
+          <input type="number" ng-model="otro_concepto.valor" value="">
         </label>
       </div>
     </div>
