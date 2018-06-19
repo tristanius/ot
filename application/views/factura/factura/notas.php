@@ -11,7 +11,7 @@
   <div class="col l4 m4 s12">
     <br>
 
-    <table class="highlight striped">
+    <table class="highlight striped cooltable">
       <thead>
         <tr>
           <th colspan="2" class="center-align"> Valores de la vigencias</th>
@@ -66,3 +66,11 @@
 
 </div>
 <br>
+
+<style media="screen">
+  table.cooltable th, table.cooltable td{
+    padding: 5px;
+    border: 1px solid #AAA;
+    border-collapse: collapse;
+  }
+</style>
