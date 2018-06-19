@@ -25,7 +25,7 @@ $meses = array(
         <div class="col m6 l6 s12 row" style="border: 1px solid #eee">
           <h6>Bases/ C.O. :</h6>
 
-          <b class="col s6 l6 m6 row" ng-repeat="b in log.bases">
+          <div class="col s6 l6 m6 row" ng-repeat="b in log.bases">
             <input class="col s2 m1 l1"
               type="checkbox"
               ng-init="b.horizontalQuery = false"
@@ -35,7 +35,8 @@ $meses = array(
               value="{{ b.idbase }}"
             >
             <span class="col s10 m11 l11 black-text">{{ b.idbase + ' - ' + b.nombre_base }}</span>
-          </b>
+          </div>
+
 
         </div>
 
