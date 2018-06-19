@@ -221,7 +221,6 @@ var formFactura = function($scope, $http, $timeout){
   $scope.save = function(link, tipo){
     if( ($scope.factura.fecha_inicio && $scope.factura.fecha_fin) && ($scope.factura.recursos || $scope.factura.recursos.length >= 0) ){
       $scope.$parent.spinner = true;
-      $scope.factura.descripcion = tinymce.get('notas').getContent();
       $http.post(link, $scope.factura)
       .then(
         function(response){

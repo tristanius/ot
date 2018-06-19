@@ -11,10 +11,10 @@
   <div class="col l4 m4 s12">
     <br>
 
-    <table class="highlight striped">
+    <table class="highlight striped cooltable">
       <thead>
         <tr>
-          <th colspan="2" class="center-align"> Valores de la vigencias</th>
+          <th colspan="4" class="center-align"> Valores de la vigencias</th>
         </tr>
         <tr>
           <th>Vigencia</th>
@@ -51,7 +51,7 @@
         </tr>
         <tr>
           <td colspan="2">Total</td>
-          <td colspan="2"> <h5 ng-init="factura.total = (factura.total?factura.total:0)">{{ factura.total | currency }}</h5> </td>
+          <td colspan="2" ng-init="factura.total = (factura.total?factura.total:0)"> <b ng-bind="factura.total | currency"></b> </td>
         </tr>
       </tbody>
     </table>
@@ -66,3 +66,11 @@
 
 </div>
 <br>
+
+<style media="screen">
+  table.cooltable th, table.cooltable td{
+    padding: 5px;
+    border: 1px solid #AAA;
+    border-collapse: collapse;
+  }
+</style>

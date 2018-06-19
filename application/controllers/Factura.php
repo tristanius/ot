@@ -102,9 +102,9 @@ class Factura extends CI_Controller{
       $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
+      $subtotal = $subtotal + $rec->total;
 
       $this->fact->addRecurso($rec, $factura->idfactura);
-      $subtotal = $subtotal + $rec->total;
     }
     $factura->subtotal = $subtotal;// calculo de totales por concepto
     $factura->otros = $otros;// calculo de totales por concepto
@@ -125,9 +125,9 @@ class Factura extends CI_Controller{
       $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
-
-      $this->fact->modRecurso($rec);
       $subtotal = $subtotal + $rec->total;
+      
+      $this->fact->modRecurso($rec);
     }
     $factura->subtotal = $subtotal; // calculo de totales por concepto
     $factura->otros = $otros; // calculo de totales por concepto
