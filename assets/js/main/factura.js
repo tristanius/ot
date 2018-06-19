@@ -201,6 +201,21 @@ var formFactura = function($scope, $http, $timeout){
     }
   }
 
+  $scope.calcularRecursos = function(){
+    var subtotal = 0;
+    $scope.$parent.spinner = true;
+    angular.forEach($scope.factura.recursos, function(v,k){
+      v.subtotal = v.tarifa * v.disponibilidad;
+      v.a = v.a_vigencia*(v.subtotal);
+      v.i = v.i_vigencia*(v.subtotal);
+      v.u = v.u_vigencia*(v.subtotal);
+      v.total = ( v.subtotal + v.a + v.i + v.u );
+      subtotal += v.total;
+    });
+    $scope.$parent.spinner = false;
+    alert(subtotal);
+  }
+
   /// ==========================================================================
   // Guardar
   $scope.save = function(link, tipo){

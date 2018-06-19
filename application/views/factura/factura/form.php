@@ -21,10 +21,10 @@
         </div>
 
         <div class="padding1ex col s12 m6 l3">
-          <b>vigencia de tarifas: </b>
-          <select class="" ng-options="v as v.descripcion_vigencia for v in contrato.vigencias" ng-model="factura.vigencia_tarifas"
-                ng-init="factura.vigencia_tarifas = (factura.vigencia_tarifas?factura.vigencia_tarifas:contrato.vigencias[0])" disabled>
-          </select>
+          <b>
+            Validado:
+            <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = (factura.validado?factura.validado:false)">
+          </b>
         </div>
 
         <div class="padding1ex col s12 m6 l3 end">
@@ -36,10 +36,6 @@
             <option value="POR PAGAR">POR PAGAR</option>
             <option value="PAGADO">PAGADO</option>
           </select>
-          <b>
-            Validado:
-            <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = (factura.validado?factura.validado:false)">
-          </b>
         </div>
 
       </div>

@@ -108,6 +108,8 @@
     &nbsp;
     Ir a: <input type="number" max="numberOfPages" ng-model="pgNum" ng-change="currentPage = (pgNum-1 > 0)?(pgNum-1):0">
   </div>
+
+  <button type="button" class="btn btn-small" ng-click="calcularRecursos()">Calcular recursos</button>
 </section>
 
 
