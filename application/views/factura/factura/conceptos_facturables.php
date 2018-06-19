@@ -2,8 +2,8 @@
 
   <h5>Otros conceptos facturables</h5>
 
-  <button type="button" class="btn btn-floating"> <i data-icon="i"></i> </button>
-
+  <button type="button" class="btn btn-floating modal-trigger" href="#ordenes"> <i data-icon="i"></i> </button>
+  <?php $this->load->view('factura/modales/add_conceptos_facturables'); ?>
   <table class="mytabla">
     <thead>
       <tr>
