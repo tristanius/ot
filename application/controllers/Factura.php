@@ -141,6 +141,8 @@ class Factura extends CI_Controller{
     $ret = new stdClass();
     $this->load->model('factura_db','fact');
     $factura = $this->fact->get($idfactura);
+    $factura->recursos = array();
+    $factura->otros_conceptos = array();
     if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
       $recursos = $this->fact->getRecursoByFactura($idfactura);
@@ -171,7 +173,7 @@ class Factura extends CI_Controller{
   {
     # code...
   }
-  
+
   # -------------------------------------------------------------------------
   # Obtener recursos reportados sin facturar
   public function get_recursos()

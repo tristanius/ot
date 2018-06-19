@@ -78,7 +78,8 @@ var formFactura = function($scope, $http, $timeout){
     actas:[],
     bases:[],
     recursos:[],
-    ordenes:[]
+    ordenes:[],
+    otros_conceptos:[]
   };
   $scope.currentPage = 0;
   $scope.pageSize = 13;
