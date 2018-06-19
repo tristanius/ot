@@ -218,7 +218,7 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = false;
     alert("Registros: "+i+" - Total recursos: $ "+subtotal);
   }
-  
+
   $scope.deleteRecurso = function(listaPadre, elemento, tipo){
 
   }
@@ -235,14 +235,14 @@ var formFactura = function($scope, $http, $timeout){
   }
 
   $scope.addConceptoFactura = function(obj){
-    if(obj.item && obj.concepo && obj.valor){
+    if(obj.item && obj.concepto && obj.valor){
       $scope.factura.otros_conceptos.push(obj);
     }else{
       alert("Hay campos necesarios por llenar");
     }
   }
 
-  $scope.removeConceptoFactura = function(obj){
+  $scope.removeConceptoFactura = function(obj, lnk){
     var i = $scope.factura.otros_conceptos.indexOf(obj);
     var otr = $scope.factura.otros_conceptos[i];
     if(otr.idconcepto_factura){

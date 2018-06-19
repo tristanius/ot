@@ -2,7 +2,8 @@
 
   <h5>Otros conceptos facturables</h5>
 
-  <button type="button" class="btn btn-floating modal-trigger" href="#add_conceptos_facturables"> <i data-icon="i"></i> </button>
+  <button type="button" class="btn light-blue accent-4 modal-trigger" href="#add_conceptos_facturables"> <i data-icon="i"></i> </button>
+  <br>
   <?php $this->load->view('factura/factura/modales/add_conceptos_facturables'); ?>
   <table class="mytabla">
     <thead>
@@ -28,7 +29,7 @@
         <td ng-bind="otr.concepto"></td>
         <td ng-bind="otr.tipo"></td>
         <td ng-bind="otr.valor"></td>
-        <td> <button type="button" class="btn mini-bt2 red" ng-click="">X</button> </td>
+        <td> <button type="button" class="btn mini-bt2 red" ng-click="removeConceptoFactura(otr, '<?= site_url('factura/remove_concepto_factura') ?>')">X</button> </td>
       </tr>
     </tbody>
   </table>

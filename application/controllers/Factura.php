@@ -126,7 +126,7 @@ class Factura extends CI_Controller{
       $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
       $subtotal = $subtotal + $rec->total;
-      
+
       $this->fact->modRecurso($rec);
     }
     $factura->subtotal = $subtotal; // calculo de totales por concepto
@@ -158,6 +158,20 @@ class Factura extends CI_Controller{
       return $ret;
     }
   }
+  # ----------------------------------------------------------------------------
+  # recursos factura
+  public function remove_recurso_factura()
+  {
+    // code...
+  }
+
+  # ----------------------------------------------------------------------------
+  # conceptos factura
+  public function remove_concepto_factura()
+  {
+    # code...
+  }
+  
   # -------------------------------------------------------------------------
   # Obtener recursos reportados sin facturar
   public function get_recursos()
