@@ -33,7 +33,7 @@
 
   </fieldset>
   <div class="modal-footer">
-    <button type="button" class="btn btn-floating green" ng-click="addConceptoFactura(otro_concepto); otro_concepto={}"> <i data-icon="&#xe04c;"></i> </button>
-    <button type="button" class="btn btn-floating red" ng-click="addConceptoFactura(otro_concepto); otro_concepto={}"> <i data-icon="&#xe04d;"></i> </button>
+    <button type="button" class="btn btn-floating green modal-close" ng-click="addConceptoFactura(otro_concepto); otro_concepto={}"> <i data-icon="&#xe04c;"></i> </button>
+    <button type="button" class="btn btn-floating red modal-close" ng-click="addConceptoFactura(otro_concepto); otro_concepto={}"> <i data-icon="&#xe04d;"></i> </button>
   </div>
 </div>

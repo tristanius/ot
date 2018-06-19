@@ -130,7 +130,7 @@
 					<th colspan="11" rowspan="" style="background:#ddedd0">ACTIVIDADES DE MTTO.</th>
 				</tr>
 				<tr ng-repeat="act in tr.actividades | orderBy: 'codigo'">
-					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+act.codigo)"></span> {{ act.itemc_item }}</td>
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+act.codigo)"></span> <span ng-bind="act.itemc_item"></span> </td>
 					<td>{{ act.descripcion }}</td>
 					<th>
 						<select class="font9" style="width:60px;" ng-model="act.idsector_item_tarea" ng-init="act.idsector_item_tarea = (act.idsector_item_tarea)">
@@ -228,7 +228,7 @@
 					<th colspan="11" rowspan="" style="background:#ddedd0">MATERIAL: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
 				</tr>
 				<tr ng-repeat="m in tr.material | orderBy: 'codigo'">
-					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+m.codigo)"></span> {{ m.itemc_item }}</td>
+					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+m.codigo)"></span> {{ m.itemc_item }} (<small ng-bind="m.codigo"></small>)</td>
 					<td>{{ m.descripcion }}</td>
 					<th>
 						<select class="font9" style="width:60px;" ng-model="m.idsector_item_tarea" ng-init="m.idsector_item_tarea = (''+m.idsector_item_tarea)" disabled>

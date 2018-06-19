@@ -161,6 +161,20 @@ class Factura_db extends CI_Model{
   #=============================================================================
   # Conceptos de factura
 
+  public function addConcepto($concepto)
+  {
+    // code...
+  }
+  public function delConcepto($idconcepto)
+  {
+    // code...
+  }
+
+  public function getConceptosByFactura($value='')
+  {
+    // code...
+  }
+
   #=============================================================================
   # Información de contrato
   public function getContrato($idcontrato)
