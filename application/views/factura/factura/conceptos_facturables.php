@@ -28,6 +28,7 @@
         <td ng-bind="otr.concepto"></td>
         <td ng-bind="otr.tipo"></td>
         <td ng-bind="otr.valor"></td>
+        <td> <button type="button" class="btn mini-bt2 red" ng-click="">X</button> </td>
       </tr>
     </tbody>
   </table>

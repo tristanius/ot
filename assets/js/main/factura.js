@@ -218,18 +218,12 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = false;
     alert("Registros: "+i+" - Total recursos: $ "+subtotal);
   }
+  
+  $scope.deleteRecurso = function(listaPadre, elemento, tipo){
+
+  }
+
   // ---- form otros ----
-  $scope.addConceptoFactura = function(obj){
-    if(obj.item && obj.concepo && obj.valor && obj.){
-      $scope.factura.otros_conceptos.push(obj);
-    }else{
-      alert("Hay campos necesarios por llenar");
-    }
-  }
-
-  $scope.removeConceptoFactura = function(obj){
-
-  }
   $scope.calcularOtros = function(){
     var otros = 0;
     var i = 0;
@@ -238,6 +232,34 @@ var formFactura = function($scope, $http, $timeout){
     });
     $scope.$parent.spinner = false;
     $scope.factura.otros = otros;
+  }
+
+  $scope.addConceptoFactura = function(obj){
+    if(obj.item && obj.concepo && obj.valor){
+      $scope.factura.otros_conceptos.push(obj);
+    }else{
+      alert("Hay campos necesarios por llenar");
+    }
+  }
+
+  $scope.removeConceptoFactura = function(obj){
+    var i = $scope.factura.otros_conceptos.indexOf(obj);
+    var otr = $scope.factura.otros_conceptos[i];
+    if(otr.idconcepto_factura){
+      $http.post(
+        lnk, otr
+      ).then(
+        function(resp){
+          if(resp.status){
+            $scope.factura.otros_conceptos.splice(i, 1);
+            $scope.calcularOtros();
+          }else{
+            alert("Fallo al eliminar");
+            console.log(resp.data);
+          }
+        }
+      );
+    }
   }
 
   /// ==========================================================================
@@ -276,12 +298,6 @@ var formFactura = function($scope, $http, $timeout){
   $scope.numberOfPages=function(lista){
     return Math.ceil(lista.length/$scope.pageSize);
   }
-
-  $scope.deleteRecurso = function(listaPadre, elemento, tipo){
-
-  }
-
-  $scope.deleteCeoncepto = function(){}
 
   $scope.changeSelectFac = function(tipo){
     if (tipo == 'base') {
