@@ -174,7 +174,7 @@ class Reporte_db extends CI_Model{
          'alto' => isset($recurso->alto)?$recurso->alto:NULL,
          'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
          'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
-         'diametro_acero' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+         'diametro_acero' => isset($recurso->diametro_acerodiametro_acero)?$recurso->diametro_acerodiametro_acero:NULL,
          'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL,
          'idrecurso_reporte_diario' => $idrecurso_repo,
        );
@@ -195,7 +195,7 @@ class Reporte_db extends CI_Model{
       'alto' => isset($recurso->alto)?$recurso->alto:NULL,
       'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
       'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
-      'diametro_acero' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'diametro_acero' => isset($recurso->diametro_acero)?$recurso->diametro_acero:NULL,
       'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL
     );
     return $this->db->update('avance_reporte', $data, 'idavance_reporte = '.$recurso->idavance_reporte);
@@ -284,7 +284,7 @@ class Reporte_db extends CI_Model{
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
       frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente,
       avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
-      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und'
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
