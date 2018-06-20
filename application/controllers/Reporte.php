@@ -395,7 +395,7 @@ class Reporte extends CI_Controller{
       }else{
         if ( $this->repo->editRecursoRepo($rec, $idr) ) {
           array_push($cambios, $rec);
-          $this->avanceRecurso($rec); # Agregamos avance de actividad si lo tiene
+          $this->avanceRecurso($rec, $idr); # Agregamos avance de actividad si lo tiene
         }
       }
     }

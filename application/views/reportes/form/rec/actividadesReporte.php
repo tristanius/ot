@@ -5,7 +5,7 @@
       <tr style="background: #EEE">
         <th>#</th>
         <th style="background: #F4F9FD ">Fact.</th>
-        <th style="max-width:6ex;">Sector</th>
+        <!--<th style="max-width:6ex;">Sector</th>-->
         <th>item</th>
         <th>Descripcion</th>
         <th>UND</th>
@@ -27,13 +27,13 @@
 
 
         <th class="yellow lighten-4">Cant. item</th>
-        <th>Acumulado</th>
+        <th ng-show="!vista_extendida">Acumulado</th>
         <th data-icon="*"> </th>
       </tr>
       <tr style="background: #b9dae5">
         <th></th>
         <th></th>
-        <th></th>
+        <!--<th></th>-->
         <th></th>
         <th></th>
         <th></th>
@@ -54,7 +54,7 @@
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
 
         <th class="yellow lighten-4"></th>
-        <th></th>
+        <th ng-show="!vista_extendida"></th>
         <th>
           <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
             <input type="hidden" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
@@ -69,14 +69,16 @@
         <td class="noMaterialStyles" style="background: #F4F9FD ">
           <input type="checkbox" ng-model="act.facturable" ng-init="act.facturable = parseBool(act.facturable) " ng-disabled="rd.info.estado == 'CERRADO' ">
         </td>
-        <td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>
+        <!--<td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>-->
         <td ng-bind="act.itemc_item">
         </td>
-        <td ng-bind="act.descripcion" style="min-width: 150px;"></td>
+        <td ng-bind="act.descripcion" style="min-width: 200px;"></td>
         <td ng-bind="act.unidad"></td>
         <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td>
+
+        <!-- AVANCE DE OBRA -->
+        <td  class="light-blue lighten-5" ng-show="vista_extendida">
           <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;" ng-disabled="rd.info.estado == 'CERRADO'">
             <option value="N/A">N/A</option>
             <option value="Box Coulbert">Box Coulbert</option>
@@ -84,8 +86,6 @@
             <option value="Obra Civil">Obra Civil</option>
           </select>
         </td>
-
-        <!-- AVANCE DE OBRA -->
         <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ubicacion"> </td>
         <td class="light-blue lighten-5" ng-show="vista_extendida">
           <select class="" style="width: 10ex;" ng-model="act.margen">
@@ -106,7 +106,7 @@
 
 
         <td class="yellow lighten-4"> <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
-        <td ng-init="act.acumulado?act.acumulado:0;">
+        <td ng-init="act.acumulado?act.acumulado:0;" ng-show="!vista_extendida">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
         </td>
         <td  class="font9">
