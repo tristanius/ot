@@ -174,7 +174,7 @@ class Reporte_db extends CI_Model{
          'alto' => isset($recurso->alto)?$recurso->alto:NULL,
          'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
          'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
-         'diametro_acero' => isset($recurso->diametro_acerodiametro_acero)?$recurso->diametro_acerodiametro_acero:NULL,
+         'diametro_acero' => isset($recurso->diametro_acero)?$recurso->diametro_acero:NULL,
          'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL,
          'idrecurso_reporte_diario' => $idrecurso_repo,
        );
