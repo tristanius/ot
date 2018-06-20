@@ -174,7 +174,7 @@ class Factura_db extends CI_Model{
     $data = (array) $concepto;
     $id = $data['idconcepto_factura'];
     $data['idconcepto_factura'] = NULL;
-    $this->db->insert('concepto_factura', $data, 'idconcepto_factura = '.$id );
+    $this->db->update('concepto_factura', $data, 'idconcepto_factura = '.$id );
   }
 
   public function delConcepto($idconcepto)
@@ -381,5 +381,10 @@ class Factura_db extends CI_Model{
         $this->db->trans_commit();
     }
     return $status;
+  }
+  public function rollback($value='')
+  {
+    $this->load->database('ot');
+    $this->db->trans_rollback();
   }
 }

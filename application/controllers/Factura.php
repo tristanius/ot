@@ -86,6 +86,7 @@ class Factura extends CI_Controller{
       echo json_encode($ret);
     } catch (Exception $e) {
       echo $e->getMessage();
+      $this->fact->rollback();
     }
   }
   # Agregar una nueva factura
@@ -95,7 +96,9 @@ class Factura extends CI_Controller{
     $subtotal = 0;
     $otros = 0;
     # guardamos primero la factura para obtener el ID
+    #Creamos la factura
     $factura->idfactura = $this->fact->add($factura);
+    #agregamos los recursos
     foreach ($factura->recursos as $key => $rec) {
       $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
       $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
@@ -103,8 +106,11 @@ class Factura extends CI_Controller{
       $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
       $subtotal = $subtotal + $rec->total;
-
       $this->fact->addRecurso($rec, $factura->idfactura);
+    }
+    # guardamos conceptos facturables
+    foreach ($factura->conceptos_factura as $key => $con) {
+      $this->fact->addConcepto($con);
     }
     $factura->subtotal = $subtotal;// calculo de totales por concepto
     $factura->otros = $otros;// calculo de totales por concepto
@@ -126,8 +132,20 @@ class Factura extends CI_Controller{
       $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
       $subtotal = $subtotal + $rec->total;
+      if(){
+        $this->fact->modRecurso($rec);
+      }else{
+        $this->fact->addRecurso($rec, $factura->idfactura);
+      }
 
-      $this->fact->modRecurso($rec);
+    }
+    # guardamos conceptos facturables
+    foreach ($factura->conceptos_factura as $key => $con) {
+      if(isset($con->idconcepto_factura)){
+        $this->fact->modConcepto($con);
+      }else{
+        $this->fact->addConcepto($con);
+      }
     }
     $factura->subtotal = $subtotal; // calculo de totales por concepto
     $factura->otros = $otros; // calculo de totales por concepto

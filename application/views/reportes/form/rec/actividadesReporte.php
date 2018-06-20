@@ -61,7 +61,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (!act.idrecurso_reporte_diario)?'newrow':''; }}">
+      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (!act.idrecurso_reporte_diario && act.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.actividades, act, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>
@@ -71,7 +71,7 @@
         <td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>
         <td ng-bind="act.itemc_item">
         </td>
-        <td ng-bind="act.descripcion"></td>
+        <td ng-bind="act.descripcion" style="min-width: 150px;"></td>
         <td ng-bind="act.unidad"></td>
         <td class="yellow lighten-4"> <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
         <td ng-init="act.acumulado?act.acumulado:0;">
@@ -89,12 +89,12 @@
         </td>
 
         <!-- AVANCE DE OBRA -->
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" ng-model="act.ubicacion"> </td>
+        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ubicacion"> </td>
         <td class="light-blue lighten-4" ng-show="vista_extendida">
-          <select class="" ng-model="act.margen">
-            <option value="derecho"></option>
-            <option value="central"></option>
-            <option value="izquierdo"></option>
+          <select class="" style="width: 8ex;" ng-model="act.margen">
+            <option value="derecho">derecho</option>
+            <option value="central">central</option>
+            <option value="izquierdo">izquierdo</option>
           </select>
         </td>
         <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_inicio"> </td>
