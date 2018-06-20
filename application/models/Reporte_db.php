@@ -103,6 +103,7 @@ class Reporte_db extends CI_Model{
        'last_log'=>$log." - ".date('Y-m-d H:i:s')
      );
      $this->db->insert('recurso_reporte_diario', $data);
+     return $this->db->insert_id();
    }
   #Actualiar un recurso reporte
   public function editRecursoRepo($recurso, $idrepo)
@@ -153,24 +154,55 @@ class Reporte_db extends CI_Model{
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;
   }
-  # Avance actividades reportadas
-  public function addAvance($recurso, $id)
+  # -------------------------------------------------------------------
+  # Avance de actividad
+  # Agregar Avance actividad reportada
+  public function addAvance($recurso, $idrecurso_repo)
+  {
+    if(
+      isset($value->ubicacion) || isset($value->margen) || isset($value->MH_inicio) || isset($value->MH_fin) || isset($value->longitud) ||
+      isset($value->ancho) || isset($value->alto) || isset($value->cant_elementos) || isset($value->cant_varillas) || isset($value->diametro_acero) ||
+      isset($value->peso_und)
+     ){
+       $data = array(
+         'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+         'margen' => isset($recurso->margen)?$recurso->margen:NULL,
+         'MH_inicio' => isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
+         'MH_fin' => isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
+         'longitud' => isset($recurso->longitud)?$recurso->longitud:NULL,
+         'ancho' => isset($recurso->ancho)?$recurso->ancho:NULL,
+         'alto' => isset($recurso->alto)?$recurso->alto:NULL,
+         'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
+         'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
+         'diametro_acero' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+         'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL,
+         'idrecurso_reporte_diario' => $idrecurso_repo,
+       );
+       $this->db->insert('avance_reporte', $data);
+       return $this->db->insert_id();
+    }
+  }
+  # Modificar avance de actividad reportada
+  public function modAvance($recurso)
   {
     $data = array(
-      'ubicacion'=>isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
-      'margen'=>isset($recurso->margen)?$recurso->margen:NULL,
-      'MH_inicio'=>isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
-      'MH_fin'=>isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
-      'longitud'=>isset($recurso->longitud)?$recurso->longitud:NULL,
-      'ancho'=>isset($recurso->ancho)?$recurso->ancho:NULL,
-      'alto'=>isset($recurso->alto)?$recurso->alto:NULL,
-      'cant_elementos'=>isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
-      'cant_varillas'=>isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
-      'diametro_acero'=>isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
-      'peso_und'=>isset($recurso->peso_und)?$recurso->peso_und:NULL,
+      'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'margen' => isset($recurso->margen)?$recurso->margen:NULL,
+      'MH_inicio' => isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
+      'MH_fin' => isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
+      'longitud' => isset($recurso->longitud)?$recurso->longitud:NULL,
+      'ancho' => isset($recurso->ancho)?$recurso->ancho:NULL,
+      'alto' => isset($recurso->alto)?$recurso->alto:NULL,
+      'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
+      'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
+      'diametro_acero' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL
     );
+    return $this->db->update('avance_reporte', $data, 'idavance_reporte = '.$recurso->idavance_reporte);
   }
 
+  #-------------------------------------------------------------
+  # Consultas de reportes diarios
   public function recursoRepoFecha($idRecOt, $fecha)
   {
     $this->load->database('ot');
@@ -412,12 +444,13 @@ class Reporte_db extends CI_Model{
       '
     );
     $this->db->from('reporte_diario AS rd');
+    $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
+    #$this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
     $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
     $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
     $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
-    $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
     $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if (isset($idOT)) {

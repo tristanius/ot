@@ -124,7 +124,9 @@ class Reporte extends CI_Controller{
   public function insertarRecursoRep($list, $idr){
     $this->load->library('session');
     foreach ($list as $key => $value) {
-      $this->repo->addRecursoRepo($value, $idr);
+      $idrrd = $this->repo->addRecursoRepo($value, $idr);
+      // agregar avance de obra
+      $this->avanceRecurso($rec, $idrrd);
     }
   }
   #===========================================================================================================
@@ -387,15 +389,26 @@ class Reporte extends CI_Controller{
     $cambios = array();
     foreach ($recursos as $key => $rec) {
       if( !isset($rec->idrecurso_reporte_diario) ){
-        $this->repo->addRecursoRepo($rec, $idr);
+        $idrrd = $this->repo->addRecursoRepo($rec, $idr);
         array_push($cambios, $rec);
+        $this->avanceRecurso($rec, $idrrd); # Agregamos avance de actividad si lo tiene
       }else{
         if ( $this->repo->editRecursoRepo($rec, $idr) ) {
           array_push($cambios, $rec);
+          $this->avanceRecurso($rec); # Agregamos avance de actividad si lo tiene
         }
       }
     }
     return $cambios;
+  }
+
+  public function avanceRecurso($rec, $idrrd=NULL)
+  {
+    if (!isset($rec->idavance_reporte)) {
+      $this->repo->addAvance($rec, $idrrd);
+    }else{
+      $this->repo->modAvance($rec);
+    }
   }
 
 
