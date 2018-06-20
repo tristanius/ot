@@ -11,8 +11,8 @@
         <th>UND</th>
         <th>Abscisa Ini.</th>
         <th>Abscisa fin.</th>
-        <th>Tipo instal.</th>
 
+        <th class="light-blue lighten-5" ng-show="vista_extendida">Tipo instal.</th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Ubicacion </small></th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Margen </small></th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> MH ini </small></th>
@@ -39,8 +39,8 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
 
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th> <!-- tipo instalacion -->
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
