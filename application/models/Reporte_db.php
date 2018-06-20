@@ -160,9 +160,9 @@ class Reporte_db extends CI_Model{
   public function addAvance($recurso, $idrecurso_repo)
   {
     if(
-      isset($value->ubicacion) || isset($value->margen) || isset($value->MH_inicio) || isset($value->MH_fin) || isset($value->longitud) ||
-      isset($value->ancho) || isset($value->alto) || isset($value->cant_elementos) || isset($value->cant_varillas) || isset($value->diametro_acero) ||
-      isset($value->peso_und)
+      isset($recurso->ubicacion) || isset($recurso->margen) || isset($recurso->MH_inicio) || isset($recurso->MH_fin) || isset($recurso->longitud) ||
+      isset($recurso->ancho) || isset($recurso->alto) || isset($recurso->cant_elementos) || isset($recurso->cant_varillas) || isset($recurso->diametro_acero) ||
+      isset($recurso->peso_und)
      ){
        $data = array(
          'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,

@@ -9,24 +9,25 @@
         <th>item</th>
         <th>Descripcion</th>
         <th>UND</th>
-        <th class="yellow lighten-4">Cant. item</th>
-        <th>Acumulado</th>
         <th>Abscisa Ini.</th>
         <th>Abscisa fin.</th>
         <th>Tipo instal.</th>
 
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Ubicacion </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Margen </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> MH ini </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> MH fin </small> </th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Longitud </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Ancho </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Alto </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> # Elmentos </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> # Varillas </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Diametro </small></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"><small> Peso Unit. </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Ubicacion </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Margen </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> MH ini </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> MH fin </small> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Longitud </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Ancho </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Alto </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> # Elmentos </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> # Varillas </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Diametro </small></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Peso Unit. </small></th>
 
+
+        <th class="yellow lighten-4">Cant. item</th>
+        <th>Acumulado</th>
         <th data-icon="*"> </th>
       </tr>
       <tr style="background: #b9dae5">
@@ -36,24 +37,24 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+
         <th class="yellow lighten-4"></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"> </th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-4" ng-show="vista_extendida"></th>
-
         <th>
           <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
             <input type="hidden" ng-init="actividadFilter.idfrente_ot = myfrente" disabled="disabled">
@@ -73,10 +74,6 @@
         </td>
         <td ng-bind="act.descripcion" style="min-width: 150px;"></td>
         <td ng-bind="act.unidad"></td>
-        <td class="yellow lighten-4"> <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
-        <td ng-init="act.acumulado?act.acumulado:0;">
-          <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
-        </td>
         <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td>
@@ -89,24 +86,29 @@
         </td>
 
         <!-- AVANCE DE OBRA -->
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ubicacion"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida">
-          <select class="" style="width: 8ex;" ng-model="act.margen">
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ubicacion"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida">
+          <select class="" style="width: 10ex;" ng-model="act.margen">
             <option value="derecho">derecho</option>
             <option value="central">central</option>
             <option value="izquierdo">izquierdo</option>
           </select>
         </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_inicio"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_fin"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.longitud"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ancho"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.alto"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.cant_elementos"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.cant_varillas"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.diametro_acero"> </td>
-        <td class="light-blue lighten-4" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.peso_und"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_inicio"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_fin"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.longitud"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ancho"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.alto"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.cant_elementos"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.cant_varillas"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.diametro_acero"> </td>
+        <td class="light-blue lighten-5" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.peso_und"> </td>
 
+
+        <td class="yellow lighten-4"> <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
+        <td ng-init="act.acumulado?act.acumulado:0;">
+          <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
+        </td>
         <td  class="font9">
           <span ng-if="act.item_asociado"> (<span ng-bind="act.item_asociado" style="color: #934B10"></span>)</span>
           <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(act, '#asociarItem')"
