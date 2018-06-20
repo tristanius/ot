@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="c in factura.centros_operacion | filter: seleccionCO" >
-            <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected?c.isSelected:true)" ng-change="deteccionCambios = true"></td>
+            <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected?c.isSelected:true)" ng-change="deteccionCambios = true" ng-disabled="factura.validado"></td>
             <td><span ng-bind="c.idbase"></span> </td>
             <td><span ng-bind="c.nombre_base"></span> </td>
           </tr>
@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedCOs(); getRecursos('<?= site_url('factura/get_recursos')  ?>')"> Filtrar los C.O.´s seleccionados. </a>
+    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedCOs(); getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="!factura.validado"> Filtrar los C.O.´s seleccionados. </a>
     <a href="#!" class="btn mini-btn modal-close red darken-3" > Salir sin filtrar </a>
   </div>
 </div>

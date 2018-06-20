@@ -1,5 +1,5 @@
 <div class="noMaterialStyles">
-  <button type="button" class="btn mini-btn deep-purple lighten-4" ng-click="vista_extendida=true" ng-init="vista_extendida=false">vista extendida de avance obra</button>
+  <button type="button" class="btn mini-btn deep-purple lighten-4" ng-click="vista_extendida=true" ng-init="vista_extendida=false">vista extendida actividades</button>
   <table class="mytabla font10" ng-hide="isOnPeticion" style="max-width:100%; overflow: auto">
     <thead>
       <tr style="background: #EEE">
