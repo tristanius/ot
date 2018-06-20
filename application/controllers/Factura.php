@@ -132,7 +132,7 @@ class Factura extends CI_Controller{
       $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
       $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
       $subtotal = $subtotal + $rec->total;
-      if(){
+      if( isset($rec->idfactura_recurso_reporte) ){
         $this->fact->modRecurso($rec);
       }else{
         $this->fact->addRecurso($rec, $factura->idfactura);
