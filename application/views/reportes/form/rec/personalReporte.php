@@ -9,7 +9,7 @@
         <th></th>
         <th></th>
         <th></th>
-        <th>Base</th>
+        <th></th>
 
         <th style="background: #F4F9FD "></th>
         <th></th>
@@ -34,7 +34,7 @@
           <th>Nombre Completo</th>
           <th>Cargo</th>
           <th>Est.</th>
-          <th>Base</th>
+          <th>C.O.</th>
 
           <th style="background: #F4F9FD ">Fact.</th>
           <th><small data-icon="x"></small></th>

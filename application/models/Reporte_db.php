@@ -153,6 +153,24 @@ class Reporte_db extends CI_Model{
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;
   }
+  # Avance actividades reportadas
+  public function addAvance($recurso, $id)
+  {
+    $data = array(
+      'ubicacion'=>isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'margen'=>isset($recurso->margen)?$recurso->margen:NULL,
+      'MH_inicio'=>isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
+      'MH_fin'=>isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
+      'longitud'=>isset($recurso->longitud)?$recurso->longitud:NULL,
+      'ancho'=>isset($recurso->ancho)?$recurso->ancho:NULL,
+      'alto'=>isset($recurso->alto)?$recurso->alto:NULL,
+      'cant_elementos'=>isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
+      'cant_varillas'=>isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
+      'diametro_acero'=>isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'peso_und'=>isset($recurso->peso_und)?$recurso->peso_und:NULL,
+    );
+  }
+
   public function recursoRepoFecha($idRecOt, $fecha)
   {
     $this->load->database('ot');
@@ -232,13 +250,14 @@ class Reporte_db extends CI_Model{
     $this->db->select('
       rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
-      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente'
+      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente, avance.*'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
+    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
+    $this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
     $this->db->join('itemf AS itf', 'rrd.itemf_iditemf = itf.iditemf', 'LEFT');
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc', 'LEFT');
-    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT');
     $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT');
     $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');

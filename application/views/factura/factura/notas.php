@@ -63,7 +63,7 @@
 
   <div class="col l8 m8 s12 ">
     <p> Comentario / Descripción:</p>
-    <textarea id="notas" ng-model="factura.descripcion" ng-disabled="factura.validado"
+    <textarea id="notas" ng-model="factura.descripcion" ng-disabled="!factura.validado"
         style="border:1px solid #555; box-shadow: 0px 0px 3px #999 inset; min-height:90px; max-width: 100%; max-height: 500px;">
     </textarea>
   </div>

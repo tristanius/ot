@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="otr in factura.otros_conceptos track by $index">
+      <tr ng-repeat="otr in factura.conceptos_factura track by $index">
         <td ng-bind="$index"></td>
         <td ng-bind="otr.item"></td>
         <td ng-bind="otr.concepto"></td>

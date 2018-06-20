@@ -79,7 +79,7 @@ var formFactura = function($scope, $http, $timeout){
     bases:[],
     recursos:[],
     ordenes:[],
-    otros_conceptos:[]
+    conceptos_factura:[]
   };
   $scope.currentPage = 0;
   $scope.pageSize = 13;
@@ -228,7 +228,7 @@ var formFactura = function($scope, $http, $timeout){
   $scope.calcularOtros = function(){
     var otros = 0;
     var i = 0;
-    angular.forEach($scope.factura.otros_conceptos, function(v,k){
+    angular.forEach($scope.factura.conceptos_factura, function(v,k){
       otros += v.valor;
     });
     $scope.$parent.spinner = false;
@@ -237,22 +237,22 @@ var formFactura = function($scope, $http, $timeout){
 
   $scope.addConceptoFactura = function(obj){
     if(obj.item && obj.concepto && obj.valor){
-      $scope.factura.otros_conceptos.push(obj);
+      $scope.factura.conceptos_factura.push(obj);
     }else{
       alert("Hay campos necesarios por llenar");
     }
   }
 
   $scope.removeConceptoFactura = function(obj, lnk){
-    var i = $scope.factura.otros_conceptos.indexOf(obj);
-    var otr = $scope.factura.otros_conceptos[i];
+    var i = $scope.factura.conceptos_factura.indexOf(obj);
+    var otr = $scope.factura.conceptos_factura[i];
     if(otr.idconcepto_factura){
       $http.post(
         lnk, otr
       ).then(
         function(resp){
           if(resp.status){
-            $scope.factura.otros_conceptos.splice(i, 1);
+            $scope.factura.conceptos_factura.splice(i, 1);
             $scope.calcularOtros();
           }else{
             alert("Fallo al eliminar");

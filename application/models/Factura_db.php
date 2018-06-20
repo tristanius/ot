@@ -149,13 +149,13 @@ class Factura_db extends CI_Model{
   public function delRecurso($idfrd)
   {
     $this->load->database('ot');
-    return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd));
+    return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd) );
   }
   # borrar unos recursos reportados de una factura por el id de la factura
   public function delRecursoBy($idfact)
   {
     $this->load->database('ot');
-    return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact));
+    return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact) );
   }
 
   #=============================================================================
@@ -163,18 +163,29 @@ class Factura_db extends CI_Model{
 
   public function addConcepto($concepto)
   {
-    // code...
+    $this->load->database('ot');
+    $data = (array) $concepto;
+    $this->db->insert('concepto_factura', $data);
   }
+
+  public function modConcepto($concepto)
+  {
+    $this->load->database('ot');
+    $data = (array) $concepto;
+    $id = $data['idconcepto_factura'];
+    $data['idconcepto_factura'] = NULL;
+    $this->db->insert('concepto_factura', $data, 'idconcepto_factura = '.$id );
+  }
+
   public function delConcepto($idconcepto)
   {
-    // code...
+    $this->db->delete('concepto_factura', array('idconcepto_factura'=>$idconcepto));
   }
 
   public function getConceptosByFactura($value='')
   {
     // code...
   }
-
   #=============================================================================
   # Información de contrato
   public function getContrato($idcontrato)
