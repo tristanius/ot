@@ -282,7 +282,9 @@ class Reporte_db extends CI_Model{
     $this->db->select('
       rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
-      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente, avance.*'
+      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente,
+      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
