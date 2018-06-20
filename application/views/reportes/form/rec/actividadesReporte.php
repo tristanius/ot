@@ -1,6 +1,6 @@
-<div class="noMaterialStyles">
-  <button type="button" class="btn mini-btn deep-purple lighten-4" ng-click="vista_extendida=!vista_extendida" ng-init="vista_extendida=false">vista extendida actividades</button>
-  <table class="mytabla font10" ng-hide="isOnPeticion" style="max-width:100%; overflow: auto">
+<div class="noMaterialStyles" style="max-width:100%; overflow: auto">
+  <button type="button" class="btn mini-btn indigo darken-1" ng-click="vista_extendida=!vista_extendida" ng-init="vista_extendida=false">vista extendida actividades</button>
+  <table class="mytabla font10" ng-hide="isOnPeticion">
     <thead>
       <tr style="background: #EEE">
         <th>#</th>
@@ -61,7 +61,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (act.idrecurso_reporte_diario)?'newrow':''; }}">
+      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (!act.idrecurso_reporte_diario)?'newrow':''; }}">
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.actividades, act, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>
