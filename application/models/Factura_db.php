@@ -181,6 +181,7 @@ class Factura_db extends CI_Model{
 
   public function delConcepto($idconcepto)
   {
+    $this->load->database('ot');
     return $this->db->delete('concepto_factura', array('idconcepto_factura'=>$idconcepto));
   }
 

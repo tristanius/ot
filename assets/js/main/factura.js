@@ -217,8 +217,30 @@ var formFactura = function($scope, $http, $timeout){
     });
   }
 
-  $scope.deleteRecurso = function(listaPadre, elemento, tipo){
-
+  $scope.deleteRecurso = function(elemento, lnk){
+    $scope.$parent.spinner = true;
+    var i = $scope.factura.recursos.indexOf(elemento);
+    if(elemento.idfactura_recurso_reporte){
+      $http.post().then(
+        function(resp){
+          if(resp.data.status){
+            $scope.factura.recursos.splice(i, 1);
+          }else{
+            console.log(resp.data)
+            alert('Algo ha salido mal al eliminar un recurso.')
+            $scope.$parent.spinner = false;
+          }
+          $scope.$parent.spinner = false;
+        },
+        function(resp){
+          alert("Error de servidor");
+          $scope.$parent.spinner = false;
+          console.log(resp.data)
+        }
+      );
+    }else{
+      $scope.factura.recursos.splice(i, 1);
+    }
   }
 
   // ---- form otros ----
@@ -246,11 +268,9 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = true;
     var i = $scope.factura.conceptos_factura.indexOf(otr);
     if(otr.idconcepto_factura){
-      $http.post(
-        lnk, otr
-      ).then(
+      $http.post(lnk, otr).then(
         function(resp){
-          if(resp.status){
+          if(resp.data.status){
             $scope.factura.conceptos_factura.splice(i, 1);
             $scope.calcularOtros();
           }else{
