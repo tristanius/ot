@@ -163,9 +163,9 @@ class Factura extends CI_Controller{
     $factura = $this->fact->get($idfactura);
     if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
-      $ret->factura->centros_operacion = json_decode($ret->factura->centros_operacion);
+      $ret->factura->centros_operacion = json_encode($ret->factura->centros_operacion);
       $ret->factura->recursos = array();
-      $ret->factura->otros_conceptos = array();
+      $ret->factura->conceptos_factura = array();
 
       $recursos = $this->fact->getRecursoByFactura($idfactura);
       if($recursos->num_rows() > 0  ){ $ret->factura->recursos = $recursos->result(); }
@@ -186,14 +186,14 @@ class Factura extends CI_Controller{
   # recursos factura
   public function remove_recurso_factura()
   {
-    // code...
+    $post = json_decode( file_get_contents('php://input') );
   }
 
   # ----------------------------------------------------------------------------
   # conceptos factura
   public function remove_concepto_factura()
   {
-    # code...
+    $post = json_decode( file_get_contents('php://input') );
   }
 
   # -------------------------------------------------------------------------

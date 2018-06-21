@@ -263,6 +263,7 @@ var formFactura = function($scope, $http, $timeout){
     }
   }
 
+
   /// ==========================================================================
   // Guardar
   $scope.save = function(link, tipo){
@@ -325,7 +326,8 @@ var formFactura = function($scope, $http, $timeout){
       v.isSelected = estado;
     });
   }
-  // --------------------------------------------------------------------------
+
+  // ------------------------ Adjuntos ---------------------------------------
   // Upload file
   $scope.isSelectedFile = false;
 
@@ -348,6 +350,7 @@ var formFactura = function($scope, $http, $timeout){
       onSuccess: function(file, data){
         // actualizar listado de adjuntos
         $timeout(function(){
+          console.log(data);
           $scope.isSelectedFile = false;
         });
       },
