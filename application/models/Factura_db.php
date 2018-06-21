@@ -187,7 +187,7 @@ class Factura_db extends CI_Model{
   public function getConceptosByFactura($idfactura)
   {
     $this->load->database('ot');
-    return $this->db->select('concep.concepto, concep.item, concep.valor, concep.estado, concep.idconcepto_factura')
+    return $this->db->select('concep.concepto, concep.item, concep.valor, concep.tipo, concep.idconcepto_factura')
       ->from('concepto_factura AS concep')
       ->where('concep.idfactura',$idfactura)
       ->get();

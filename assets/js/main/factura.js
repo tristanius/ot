@@ -131,6 +131,7 @@ var formFactura = function($scope, $http, $timeout){
           if(response.data.success){
             $scope.factura.recursos = response.data.recursos;
             $scope.factura.ordenes = response.data.ordenes;
+            $scope.calcularRecursos();
           }
           $scope.deteccionCambios = false;
           console.log(response.data);
@@ -205,7 +206,6 @@ var formFactura = function($scope, $http, $timeout){
   $scope.calcularRecursos = function(){
     var subtotal = 0;
     var i = 0;
-    $scope.$parent.spinner = true;
     angular.forEach($scope.factura.recursos, function(v,k){
       i++;
       v.subtotal = v.tarifa * v.disponibilidad;
@@ -214,10 +214,7 @@ var formFactura = function($scope, $http, $timeout){
       v.u = v.u_vigencia*(v.subtotal);
       v.total = ( v.subtotal + v.a + v.i + v.u );
       subtotal += v.total;
-      console.log('Registro: '+i+', subtotal: '+v.subtotal+", tota: "+v.total+" - acumulado: "+subtotal);
     });
-    $scope.$parent.spinner = false;
-    alert("Registros: "+i+" - Total recursos: $ "+subtotal);
   }
 
   $scope.deleteRecurso = function(listaPadre, elemento, tipo){
@@ -231,20 +228,22 @@ var formFactura = function($scope, $http, $timeout){
     angular.forEach($scope.factura.conceptos_factura, function(v,k){
       otros += v.valor;
     });
-    $scope.$parent.spinner = false;
     $scope.factura.otros = otros;
   }
 
   $scope.addConceptoFactura = function(obj){
+    $scope.$parent.spinner = true;
     if(obj.item && obj.concepto && obj.valor){
       $scope.factura.conceptos_factura.push(obj);
     }else{
       alert("Hay campos necesarios por llenar");
     }
     $scope.calcularOtros();
+    $scope.$parent.spinner = false;
   }
 
   $scope.removeConceptoFactura = function(otr, lnk){
+    $scope.$parent.spinner = true;
     var i = $scope.factura.conceptos_factura.indexOf(otr);
     if(otr.idconcepto_factura){
       $http.post(
@@ -267,6 +266,7 @@ var formFactura = function($scope, $http, $timeout){
     }else{
       $scope.factura.conceptos_factura.splice(i, 1);
     }
+    $scope.$parent.spinner = false;
   }
 
 
