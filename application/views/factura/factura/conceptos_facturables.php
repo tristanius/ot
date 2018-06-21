@@ -25,7 +25,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="otr in factura.conceptos_factura | filter: filtroConceptoFactura  track by $index">
-        <td ng-bind="$index"></td>
+        <td ng-bind="$index+1"></td>
         <td ng-bind="otr.item"></td>
         <td ng-bind="otr.concepto"></td>
         <td ng-bind="otr.tipo"></td>

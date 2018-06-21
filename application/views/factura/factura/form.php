@@ -23,7 +23,7 @@
         <div class="padding1ex col s12 m6 l3">
           <b>
             Validado:
-            <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = (factura.validado?factura.validado:false)">
+            <input type="checkbox" ng-model="factura.validado" ng-init="factura.validado = ((factura.validado==true)?true:false)">
           </b>
         </div>
 

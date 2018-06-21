@@ -241,6 +241,7 @@ var formFactura = function($scope, $http, $timeout){
     }else{
       alert("Hay campos necesarios por llenar");
     }
+    $scope.calcularOtros();
   }
 
   $scope.removeConceptoFactura = function(otr, lnk){
