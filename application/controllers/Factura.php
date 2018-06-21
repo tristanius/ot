@@ -93,38 +93,39 @@ class Factura extends CI_Controller{
   private function add($factura)
   {
     $this->fact->init_transact();
-    $subtotal = 0;
-    $otros = 0;
     # guardamos primero la factura para obtener el ID
     #Creamos la factura
     $factura->idfactura = $this->fact->add($factura);
     #agregamos los recursos
-    foreach ($factura->recursos as $key => $rec) {
-      $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
-      $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
-      $rec->i = $rec->i_vigencia*($rec->tarifa*$rec->disponibilidad);
-      $rec->u = $rec->u_vigencia*($rec->tarifa*$rec->disponibilidad);
-      $rec->total = ( $rec->subtotal + $rec->a + $rec->i + $rec->u );
-      $subtotal = $subtotal + $rec->total;
-      $this->fact->addRecurso($rec, $factura->idfactura);
-    }
+    $subtotal = $this->saveRecursos($factura);
     # guardamos conceptos facturables
-    foreach ($factura->conceptos_factura as $key => $con) {
-      $this->fact->addConcepto($con);
-    }
+    $otros = $this->saveConceptos($factura);
     $factura->subtotal = $subtotal;// calculo de totales por concepto
     $factura->otros = $otros;// calculo de totales por concepto
     $factura->total = $subtotal + $otros;// calculo de totales por concepto
     $this->fact->mod($factura); // volvemos a guardar la factura con los totales y subtotales
     return $this->fact->end_transact();
   }
+
   # Actualizar una factura
   private function mod($factura)
   {
     $this->fact->init_transact();
-    $subtotal = 0;
-    $otros = 0;
     # Invertimos el orden para actualizar, primero los recursos y luego la factura
+    $subtotal = $this->saveRecursos($factura);
+    # guardamos conceptos facturables
+    $otros = $this->saveConceptos($factura);
+    $factura->subtotal = $subtotal; // calculo de totales por concepto
+    $factura->otros = $otros; // calculo de totales por concepto
+    $factura->total = $subtotal + $otros; // calculo de totales por concepto
+    $this->fact->mod($factura); // guardamos de ultimo la factura ya que no necesitamos primero el ID y ya tenemos los subtotales
+    return $this->fact->end_transact();
+  }
+
+  # guardas Recursos
+  private function saveRecursos($factura)
+  {
+    $subtotal = 0;
     foreach ($factura->recursos as $key => $rec) {
       $rec->subtotal = $rec->tarifa * $rec->disponibilidad;
       $rec->a = $rec->a_vigencia*($rec->tarifa*$rec->disponibilidad);
@@ -137,21 +138,22 @@ class Factura extends CI_Controller{
       }else{
         $this->fact->addRecurso($rec, $factura->idfactura);
       }
-
     }
-    # guardamos conceptos facturables
+    return $subtotal;
+  }
+  #guardar otros conceptos
+  public function saveConceptos($factura)
+  {
+    $otros = 0;
     foreach ($factura->conceptos_factura as $key => $con) {
       if(isset($con->idconcepto_factura)){
         $this->fact->modConcepto($con);
       }else{
-        $this->fact->addConcepto($con);
+        $this->fact->addConcepto($con, $factura->idfactura);
       }
+      $otros += $con->valor;
     }
-    $factura->subtotal = $subtotal; // calculo de totales por concepto
-    $factura->otros = $otros; // calculo de totales por concepto
-    $factura->total = $subtotal + $otros; // calculo de totales por concepto
-    $this->fact->mod($factura); // guardamos de ultimo la factura ya que no necesitamos primero el ID y ya tenemos los subtotales
-    return $this->fact->end_transact();
+    return $otros;
   }
 
   public function get($idfactura, $json = TRUE)
@@ -164,11 +166,12 @@ class Factura extends CI_Controller{
       $ret->factura->centros_operacion = json_decode($ret->factura->centros_operacion);
       $ret->factura->recursos = array();
       $ret->factura->otros_conceptos = array();
+
       $recursos = $this->fact->getRecursoByFactura($idfactura);
-      // faltantes otros conceptos y archivos adjuntos
-      if($recursos->num_rows() > 0  ){
-        $ret->factura->recursos =$recursos->result();
-      }
+      if($recursos->num_rows() > 0  ){ $ret->factura->recursos = $recursos->result(); }
+
+      $otros = $this->fact->getConceptosByFactura($idfactura);
+      if ($otros->num_rows() > 0) { $ret->factura->conceptos_factura = $otros->result(); }
       $ret->status = true;
     }else{
       $ret->status = false;

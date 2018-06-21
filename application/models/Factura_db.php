@@ -161,11 +161,13 @@ class Factura_db extends CI_Model{
   #=============================================================================
   # Conceptos de factura
 
-  public function addConcepto($concepto)
+  public function addConcepto($concepto, $idfactura)
   {
     $this->load->database('ot');
     $data = (array) $concepto;
+    $data['idfactura'] = $idfactura;
     $this->db->insert('concepto_factura', $data);
+    return $this->db->insert_id();
   }
 
   public function modConcepto($concepto)
@@ -174,17 +176,21 @@ class Factura_db extends CI_Model{
     $data = (array) $concepto;
     $id = $data['idconcepto_factura'];
     $data['idconcepto_factura'] = NULL;
-    $this->db->update('concepto_factura', $data, 'idconcepto_factura = '.$id );
+    return $this->db->update('concepto_factura', $data, 'idconcepto_factura = '.$id );
   }
 
   public function delConcepto($idconcepto)
   {
-    $this->db->delete('concepto_factura', array('idconcepto_factura'=>$idconcepto));
+    return $this->db->delete('concepto_factura', array('idconcepto_factura'=>$idconcepto));
   }
 
-  public function getConceptosByFactura($value='')
+  public function getConceptosByFactura($idfactura)
   {
-    // code...
+    $this->load->database('ot');
+    return $this->db->select('concep.concepto, concep.item, concep.valor, concep.estado, concep.idconcepto_factura')
+      ->from('concepto_factura AS concep')
+      ->where('concep.idfactura',$idfactura)
+      ->get();
   }
   #=============================================================================
   # Información de contrato
