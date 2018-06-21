@@ -13,6 +13,7 @@
         <th>Concepto</th>
         <th>Tipo</th>
         <th>Valor</th>
+        <th></th>
       </tr>
       <tr style="background: #EEE">
         <th></th>

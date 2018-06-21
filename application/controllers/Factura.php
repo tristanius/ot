@@ -187,6 +187,10 @@ class Factura extends CI_Controller{
   public function remove_recurso_factura()
   {
     $post = json_decode( file_get_contents('php://input') );
+    $this->load->model(array('factura_db'=>'fact'));
+    $ret = new stdClass();
+    $ret->status = $this->fact->delRecurso($post->idfactura_recurso_reporte);
+    echo json_encode($ret);
   }
 
   # ----------------------------------------------------------------------------
@@ -197,7 +201,7 @@ class Factura extends CI_Controller{
     $this->load->model(array('factura_db'=>'fact'));
     $ret = new stdClass();
     $ret->status = $this->fact->delConcepto($post->idconcepto_factura);
-    echo $ret;
+    echo json_encode($ret);
   }
 
   # -------------------------------------------------------------------------
