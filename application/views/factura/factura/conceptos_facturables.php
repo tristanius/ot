@@ -16,14 +16,14 @@
       </tr>
       <tr>
         <th></th>
-        <th> <input type="text" placeholder="Filtro item" value=""> </th>
-        <th> <input type="text" placeholder="Filtro concepto" value=""> </th>
-        <th> <input type="text" placeholder="Filtro tipo" value=""> </th>
+        <th> <input type="text" placeholder="Filtro item" ng-model="filtroConceptoFactura.item"> </th>
+        <th> <input type="text" placeholder="Filtro concepto" ng-model="filtroConceptoFactura.concepto"> </th>
+        <th> <input type="text" placeholder="Filtro tipo" ng-model="filtroConceptoFactura.tipo"> </th>
         <th> </th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="otr in factura.conceptos_factura track by $index">
+      <tr ng-repeat="otr in factura.conceptos_factura | filter: filtroConceptoFactura  track by $index">
         <td ng-bind="$index"></td>
         <td ng-bind="otr.item"></td>
         <td ng-bind="otr.concepto"></td>

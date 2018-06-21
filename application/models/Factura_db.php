@@ -24,8 +24,8 @@ class Factura_db extends CI_Model{
       'tipo_acta'=>$factura->tipo_acta,
       'estado_factura'=>$factura->estado_factura,
       'validado'=> $factura->validado,
-      'ordenes' => isset($factua->ordenes)?($factura->ordenes):NULL,
-      'centros_operacion' => isset($factura->centros_operacion)?($factura->centros_operacion):NULL
+      'ordenes' => isset($factua->ordenes)?json_encode($factura->ordenes):NULL,
+      'centros_operacion' => isset($factura->centros_operacion)?json_encode($factura->centros_operacion):NULL
     );
     $this->load->database('ot');
     $this->db->insert('factura', $data);
@@ -56,8 +56,8 @@ class Factura_db extends CI_Model{
       'total' => $factura->total,
       'estado_factura' => $factura->estado_factura,
       'validado' => $factura->validado,
-      'ordenes' => isset($factua->ordenes)?($factura->ordenes):NULL,
-      'centros_operacion' => isset($factura->centros_operacion)?($factura->centros_operacion):NULL
+      'ordenes' => isset($factua->ordenes)?json_encode($factura->ordenes):NULL,
+      'centros_operacion' => isset($factura->centros_operacion)?json_encode($factura->centros_operacion):NULL
     );
     $this->load->database('ot');
     return $this->db->update('factura', $data, 'idfactura = '.$factura->idfactura);

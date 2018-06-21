@@ -243,9 +243,8 @@ var formFactura = function($scope, $http, $timeout){
     }
   }
 
-  $scope.removeConceptoFactura = function(obj, lnk){
-    var i = $scope.factura.conceptos_factura.indexOf(obj);
-    var otr = $scope.factura.conceptos_factura[i];
+  $scope.removeConceptoFactura = function(otr, lnk){
+    var i = $scope.factura.conceptos_factura.indexOf(otr);
     if(otr.idconcepto_factura){
       $http.post(
         lnk, otr
@@ -258,8 +257,14 @@ var formFactura = function($scope, $http, $timeout){
             alert("Fallo al eliminar");
             console.log(resp.data);
           }
+        },
+        function(resp){
+          alert("Fallo al eliminar");
+          console.log(resp.data);
         }
       );
+    }else{
+      $scope.factura.conceptos_factura.splice(i, 1);
     }
   }
 

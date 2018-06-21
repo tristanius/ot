@@ -194,6 +194,10 @@ class Factura extends CI_Controller{
   public function remove_concepto_factura()
   {
     $post = json_decode( file_get_contents('php://input') );
+    $this->load->model(array('factura_db'=>'fact'));
+    $ret = new stdClass();
+    $ret->status = $this->fact->delConcepto($post->idconcepto_factura);
+    echo $ret;
   }
 
   # -------------------------------------------------------------------------
