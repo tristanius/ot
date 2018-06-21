@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="c in factura.ordenes | filter: seleccionOT" >
-            <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected?c.isSelected:true)" ng-change="deteccionCambios = true" ng-disabled="factura.validado"></td>
+            <td><input type="checkbox" ng-model="c.isSelected" ng-init="c.isSelected = (c.isSelected==undefined?true:c.isSelected)" ng-change="deteccionCambios = true" ng-disabled="factura.validado"></td>
             <td><span ng-bind="c.nombre_ot"></span> </td>
             <td><span ng-bind="c.base_idbase"></span> </td>
           </tr>

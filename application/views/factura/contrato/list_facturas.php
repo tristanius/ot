@@ -1,4 +1,4 @@
-<section>
+<section style="max-width:100%; overflow: auto;">
   <table class="mytabla font10">
     <thead>
       <tr>
