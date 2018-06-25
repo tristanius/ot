@@ -18,7 +18,7 @@ class Adjunto extends CI_Controller {
     $ret = new stdClass();
     $this->load->library('upload', $config);
     if ( ! $this->upload->do_upload('myfile') ) {
-      $error = $this->upload->display_errors();
+      $ret->error = $this->upload->display_errors();
       $ret->status = FALSE;
       echo json_encode($ret);
     }
@@ -32,12 +32,12 @@ class Adjunto extends CI_Controller {
         'gestion' => $gestion,
         'referencia' => $referencia
       );
+      $this->adjunto->init_transact(); // se gestiona un posible rollback
       $id = $this->adjunto->add($data);
-
       $rows = $this->adjunto->get($id);
       if($rows->num_rows() > 0){
         $ret->adjunto = $rows->row();
-        $ret->status = TRUE;
+        $ret->status = $this->db->end_transact(); // Si la operacion ha sido exitosa se hace commit y se da estatus positivo
         echo json_encode($ret);
       }
     }

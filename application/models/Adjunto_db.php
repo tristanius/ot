@@ -27,4 +27,32 @@ class Adjunto_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->delete('adjunto','idadjunto'=>$id);
   }
+  # =================================================================================
+  public function init_transact()
+  {
+    $this->load->database('ot');
+    $this->db->trans_begin();
+  }
+  public function transac_status()
+  {
+    $this->load->database('ot');
+    return $this->db->trans_status();
+  }
+  public function end_transact()
+  {
+    $this->load->database('ot');
+    $status = $this->db->trans_status();
+    if ($status === FALSE){
+        $this->db->trans_rollback();
+    }
+    else{
+        $this->db->trans_commit();
+    }
+    return $status;
+  }
+  public function rollback($value='')
+  {
+    $this->load->database('ot');
+    $this->db->trans_rollback();
+  }
 }
