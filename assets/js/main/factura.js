@@ -389,7 +389,7 @@ var formFactura = function($scope, $http, $timeout){
         data = JSON.parse(data);
         $timeout(function(){
           if(data.status){
-            $scope.factura.factura_adjuntos = data.adjunto;
+            $scope.factura.factura_adjuntos.push(data.adjunto);
           }
         });
         $scope.isSelectedFile = false;
