@@ -25,7 +25,7 @@ class Adjunto_db extends CI_Model{
   public function remove($id)
   {
     $this->load->database('ot');
-    return $this->db->delete('adjunto',array('idadjunto'=>$id);
+    return $this->db->delete('adjunto',array('idadjunto'=>$id) );
   }
   # =================================================================================
   public function init_transact()

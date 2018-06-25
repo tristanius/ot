@@ -79,7 +79,8 @@ var formFactura = function($scope, $http, $timeout){
     bases:[],
     recursos:[],
     ordenes:[],
-    conceptos_factura:[]
+    conceptos_factura:[],
+    factura_adjuntos:[]
   };
   $scope.currentPage = 0;
   $scope.pageSize = 13;
@@ -220,27 +221,30 @@ var formFactura = function($scope, $http, $timeout){
   $scope.deleteRecurso = function(elemento, lnk){
     $scope.$parent.spinner = true;
     var i = $scope.factura.recursos.indexOf(elemento);
-    if(elemento.idfactura_recurso_reporte && confirm("Desea continuar borrando este recurso de la factura "+$scope.factura.no_factura+"?")){
-      $http.post(lnk, elemento).then(
-        function(resp){
-          if(resp.data.status){
-            $scope.factura.recursos.splice(i, 1);
-          }else{
-            console.log(resp.data);
-            alert('Algo ha salido mal al eliminar un recurso.');
+    var conf = confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?");
+    if(conf){
+      if( elemento.idfactura_recurso_reporte ){
+        $http.post(lnk, elemento).then(
+          function(resp){
+            if(resp.data.status){
+              $scope.factura.recursos.splice(i, 1);
+            }else{
+              console.log(resp.data);
+              alert('Algo ha salido mal al eliminar un recurso.');
+            }
+            $scope.$parent.spinner = false;
+          },
+          function(resp){
+            alert("Error de servidor");
+            $scope.$parent.spinner = false;
+            console.log(resp.data)
           }
-          $scope.$parent.spinner = false;
-        },
-        function(resp){
-          alert("Error de servidor");
-          $scope.$parent.spinner = false;
-          console.log(resp.data)
-        }
-      );
-    }else{
-      $scope.factura.recursos.splice(i, 1);
-      $scope.$parent.spinner = false;
+        );
+      }else{
+        $scope.factura.recursos.splice(i, 1);
+      }
     }
+    $scope.$parent.spinner = false;
   }
 
   // ---- form otros ----
@@ -267,24 +271,27 @@ var formFactura = function($scope, $http, $timeout){
   $scope.removeConceptoFactura = function(otr, lnk){
     $scope.$parent.spinner = true;
     var i = $scope.factura.conceptos_factura.indexOf(otr);
-    if(otr.idconcepto_factura && confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?") ){
-      $http.post(lnk, otr).then(
-        function(resp){
-          if(resp.data.status){
-            $scope.factura.conceptos_factura.splice(i, 1);
-            $scope.calcularOtros();
-          }else{
+    var conf = confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?");
+    if (conf) {
+      if(otr.idconcepto_factura && conf ){
+        $http.post(lnk, otr).then(
+          function(resp){
+            if(resp.data.status){
+              $scope.factura.conceptos_factura.splice(i, 1);
+              $scope.calcularOtros();
+            }else{
+              alert("Fallo al eliminar");
+              console.log(resp.data);
+            }
+          },
+          function(resp){
             alert("Fallo al eliminar");
             console.log(resp.data);
           }
-        },
-        function(resp){
-          alert("Fallo al eliminar");
-          console.log(resp.data);
-        }
-      );
-    }else{
-      $scope.factura.conceptos_factura.splice(i, 1);
+        );
+      }else{
+        $scope.factura.conceptos_factura.splice(i, 1);
+      }
     }
     $scope.$parent.spinner = false;
   }
@@ -379,16 +386,17 @@ var formFactura = function($scope, $http, $timeout){
       },
       onSuccess: function(file, data, xhr){
         // actualizar listado de adjuntos
+        data = JSON.parse(data);
         $timeout(function(){
-          console.log(data);
-          $scope.isSelectedFile = false;
+          if(data.status){
+            $scope.factura.factura_adjuntos = data.adjunto;
+          }
         });
         $scope.$parent.spinner = false;
       },
       onError: function(files,status,errMsg,pd){
         console.log(status);
         console.log(errMsg);
-        console.log(pd);
         $scope.$parent.spinner = false;
       }
     });
