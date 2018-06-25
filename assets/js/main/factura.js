@@ -409,6 +409,31 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = true;
     $scope.adjunto.startUpload();
   }
+  // borrar un adjunto
+  $scope.deleteAdjunto = function(lnk, adj){
+    $scope.$parent.spinner = true;
+    $http.post(lnk,
+      {
+        id: idj.idadjunto,
+        nombre_adjunto: adj.nombre_adjunto
+      }
+    ).then(
+      function(resp){
+        if(resp.data.status){
+          var i = $scope.factura.factura_adjuntos.indexOf(adj);
+          $scope.factura.factura_adjuntos.splice(i, 1);
+        }
+        $scope.$parent.spinner = false;
+        console.log(resp.data)
+      },
+      function(resp){
+        $scope.$parent.spinner = false;
+        alert("Error al borrar adjunto");
+        console.log(resp.data);
+      }
+    );
+  }
+
   //Vendors
 	$scope.tinyMCE = function(selTag){
     // evaluar si es necesario remover tinymce primero

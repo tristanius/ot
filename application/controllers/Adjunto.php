@@ -66,7 +66,31 @@ class Adjunto extends CI_Controller {
 
   public function remove($id)
   {
-    // code...
+    $ret = new stdClass();
+    $info = json_decode( file_get_contents('php://input') );
+    $this->load->model('adjunto_db','adjunto');
+    try {
+      $this->adjunto->init_transact();
+      $rows = $this->adjunto->get($id);
+      if($rows->num_rows() > 0){
+        $adj = $rows->row();
+        if($info->nombre_adjunto == $adj->nombre_adjunto){
+          $this->adjunto->remove($id);
+          $ret->status = $this->adjunto->end_transact();
+          if($ret->status){
+            unlink($adj->path);
+          }
+        }else{
+          $ret->status = FALSE;
+        }
+      }else{
+        $ret->status = FALSE;
+      }
+    } catch (Exception $e) {
+      $ret->status = FALSE;
+      $ret->msj = $e->getMessage();
+    }
+    echo json_encode($ret);
   }
 }
 
