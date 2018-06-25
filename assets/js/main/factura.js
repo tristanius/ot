@@ -306,7 +306,7 @@ var formFactura = function($scope, $http, $timeout){
         function(response){
           if(response.data.status == true) {
             $scope.factura= response.data.factura;
-            alert("Procedimiento realizado conexito.")
+            alert("Procedimiento realizado con exito.")
           }else{
             alert('Se ha interrumpido el proceso');
           }
@@ -371,7 +371,7 @@ var formFactura = function($scope, $http, $timeout){
       fileName:"myfile",
       dynamicFormData: function(){
         var data ={
-          usuario:$scope.$parent.log.nombre_usuario,
+          usuario: $scope.$parent.log.nombre_usuario,
           path: 'factura/adjunto/',
           gestion: '',
           referencia: ''
@@ -392,11 +392,14 @@ var formFactura = function($scope, $http, $timeout){
             $scope.factura.factura_adjuntos = data.adjunto;
           }
         });
+        $scope.isSelectedFile = false;
         $scope.$parent.spinner = false;
       },
       onError: function(files,status,errMsg,pd){
+        alert("Erro de cargue de archivo");
         console.log(status);
         console.log(errMsg);
+        $scope.isSelectedFile = false;
         $scope.$parent.spinner = false;
       }
     });

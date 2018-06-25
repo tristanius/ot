@@ -3,8 +3,8 @@
   <div class="row" ng-if="factura.idfactura">
     <div class="col s12 m8 l5" ng-init="initAdjunto('<?= site_url("adjunto/upload") ?>')">
       <div id="fileuploader">Adjuntar archivo</div>
-      <button type="button" class="btn mini-btn" ng-click="IniciarUploadAdjunto()" ng-if="isSelectedFile">Subir archivo</button>
     </div>
+    <button type="button" class="btn mini-btn" ng-click="IniciarUploadAdjunto()" ng-if="isSelectedFile">Subir archivo</button>
   </div>
 
   <p class="orange" ng-if="!factura.idfactura">
@@ -24,12 +24,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr ng-repeat="a in factura.factura_adjuntos">
+        <td ng-bind="a.idadjunto"></td>
+        <td ng-bind="a.nombre_adjunto"></td>
+        <td ng-bind="a.fecha_subida"></td>
+        <td ng-bind="a.idadjunto"></td>
+        <td > <a ng-href="<?= base_url() ?>+'/'+a.url_adjunto+a.nombre_adjunto" class="btn green" data-icon="&#xe031;"></a> </td>
       </tr>
     </tbody>
   </table>

@@ -83,7 +83,7 @@
           <td> <span ng-bind="rrd.tipo"></span> </td>
           <td> <span ng-bind="rrd.tarifa | currency" class="right-align"></span> </td>
           <td style="background: #DCE8C0; text-align:right"> <span ng-bind="rrd.cantidad" class="right-align"></span> </td>
-          <td> <small ng-bind="rrd.disponibilidad" class="right-align"></small> </td>
+          <td> <small ng-bind="rrd.disponibilidad*1" class="right-align"></small> </td>
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.subtotal | currency" ng-init="rrd.subtotal = (rrd.tarifa*rrd.disponibilidad)"></span> </td>
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.a | currency" ng-init="rrd.a =  (rrd.a? rrd.a: (rrd.subtotal*factura.vigencia_tarifas.a) )"></span> </td>
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.i | currency" ng-init="rrd.i =  (rrd.i? rrd.i: (rrd.subtotal*factura.vigencia_tarifas.i) )"></span> </td>

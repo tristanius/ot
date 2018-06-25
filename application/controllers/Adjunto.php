@@ -13,6 +13,7 @@ class Adjunto extends CI_Controller {
   {
     $path = $this->input->post('path');
     $gestion = $this->input->post('gestion');
+    $usuario = $this->input->post('usuario');
     $referencia = $this->input->post('referencia');
     $config['upload_path'] = './uploads/'.$path;
     $config['allowed_types'] = '*';
@@ -31,6 +32,7 @@ class Adjunto extends CI_Controller {
         'path' => $upload_data['full_path'],
         'url_adjunto' => 'uploads/'.$path,
         'gestion' => $gestion,
+        'usuario' =>$usuario,
         'referencia' => $referencia
       );
       $this->adjunto->init_transact(); // se gestiona un posible rollback
