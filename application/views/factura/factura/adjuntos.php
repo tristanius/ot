@@ -1,7 +1,7 @@
 <section class="padding1ex" >
   <h5>Archivos adjuntos</h5>
   <div class="row">
-    <div class="col s12 m8 l5" ng-init="initAdjunto('<?= site_url("recurso/uploadFile/personal") ?>')">
+    <div class="col s12 m8 l5" ng-init="initAdjunto('<?= site_url("adjunto/upload") ?>')">
       <div id="fileuploader">Adjuntar archivo</div>
       <button type="button" class="btn mini-btn" ng-click="IniciarUploadAdjunto()" ng-if="isSelectedFile">Subir archivo</button>
     </div>

@@ -164,14 +164,19 @@ class Factura extends CI_Controller{
     if($factura->num_rows() > 0 ){
       $ret->factura = $factura->row();
       $ret->factura->centros_operacion = json_decode($ret->factura->centros_operacion);
+      $ret->factura->ordenes = json_decode($ret->factura->ordenes);
+      $ret->factura->factura_adjuntos = json_decode($ret->factura->factura_adjuntos);
+
       $ret->factura->recursos = array();
       $ret->factura->conceptos_factura = array();
-
       $recursos = $this->fact->getRecursoByFactura($idfactura);
-      if($recursos->num_rows() > 0  ){ $ret->factura->recursos = $recursos->result(); }
-
+      if($recursos->num_rows() > 0  ){
+        $ret->factura->recursos = $recursos->result();
+      }
       $otros = $this->fact->getConceptosByFactura($idfactura);
-      if ($otros->num_rows() > 0) { $ret->factura->conceptos_factura = $otros->result(); }
+      if ($otros->num_rows() > 0) {
+        $ret->factura->conceptos_factura = $otros->result();
+      }
       $ret->status = true;
     }else{
       $ret->status = false;

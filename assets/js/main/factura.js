@@ -221,14 +221,13 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = true;
     var i = $scope.factura.recursos.indexOf(elemento);
     if(elemento.idfactura_recurso_reporte){
-      $http.post().then(
+      $http.post(lnk, elemento).then(
         function(resp){
           if(resp.data.status){
             $scope.factura.recursos.splice(i, 1);
           }else{
-            console.log(resp.data)
-            alert('Algo ha salido mal al eliminar un recurso.')
-            $scope.$parent.spinner = false;
+            console.log(resp.data);
+            alert('Algo ha salido mal al eliminar un recurso.');
           }
           $scope.$parent.spinner = false;
         },
@@ -288,7 +287,6 @@ var formFactura = function($scope, $http, $timeout){
     }
     $scope.$parent.spinner = false;
   }
-
 
   /// ==========================================================================
   // Guardar
@@ -364,7 +362,12 @@ var formFactura = function($scope, $http, $timeout){
       autoSubmit: false,
       fileName:"myfile",
       dynamicFormData: function(){
-        var data ={usuario:$scope.$parent.log.nombre_usuario}
+        var data ={
+          usuario:$scope.$parent.log.nombre_usuario,
+          path: 'factura/adjunto/',
+          gestion: '',
+          referencia: ''
+        }
         return data;
       },
       onSelect: function(files){
@@ -373,12 +376,13 @@ var formFactura = function($scope, $http, $timeout){
         });
         return true;
       },
-      onSuccess: function(file, data){
+      onSuccess: function(file, data, xhr){
         // actualizar listado de adjuntos
         $timeout(function(){
           console.log(data);
           $scope.isSelectedFile = false;
         });
+        $scope.$parent.spinner = false;
       },
       onError: function(files,status,errMsg,pd){
         alert(JSON.stringify(errMsg));

@@ -91,7 +91,7 @@
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.total | currency" ng-init="rrd.total = (rrd.total?rrd.total:(rrd.subtotal + rrd.a + rrd.i + rrd.u))"></span> </td>
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
-          <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="" >x</button> </td>
+          <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteRecurso(rrd, '<?= site_url('factura/remove_recurso_factura') ?>')" >x</button> </td>
         </tr>
       </tbody>
     </table>

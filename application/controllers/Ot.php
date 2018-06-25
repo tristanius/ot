@@ -755,17 +755,25 @@ class Ot extends CI_Controller {
 	}
 
 	// BORRADOS
-
 	public function delete($idOT)
 	{
 		$this->load->database('ot');
+		$this->db->trans_begin();
 		$trs = $this->db->get_where('tarea_ot', array('OT_idOT'=>$idOT));
 		foreach ($trs->result() as $key => $value) {
 			$this->delete_tarea($value->idtarea_ot);
 		}
 		$this->del_costos_mes($idOT);
+		$this->del_frentes_ot($id);
 		$this->db->delete('OT', array('idOT'=>$idOT));
-		echo "success";
+		if ($status === FALSE){
+        $this->db->trans_rollback();
+				echo "failed";
+    }
+    else{
+        $this->db->trans_commit();
+				echo "success";
+    }
 	}
 	public function delete_tarea($id)
 	{
