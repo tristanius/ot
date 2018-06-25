@@ -386,7 +386,9 @@ var formFactura = function($scope, $http, $timeout){
         $scope.$parent.spinner = false;
       },
       onError: function(files,status,errMsg,pd){
-        alert(JSON.stringify(errMsg));
+        console.log(status);
+        console.log(errMsg);
+        console.log(pd);
         $scope.$parent.spinner = false;
       }
     });

@@ -38,7 +38,7 @@ class Adjunto extends CI_Controller {
       $rows = $this->adjunto->get($id);
       if($rows->num_rows() > 0){
         $ret->adjunto = $rows->row();
-        $ret->status = $this->db->end_transact(); // Si la operacion ha sido exitosa se hace commit y se da estatus positivo
+        $ret->status = $this->adjunto->end_transact(); // Si la operacion ha sido exitosa se hace commit y se da estatus positivo
         echo json_encode($ret);
       }
     }
