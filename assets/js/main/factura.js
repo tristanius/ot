@@ -239,6 +239,7 @@ var formFactura = function($scope, $http, $timeout){
       );
     }else{
       $scope.factura.recursos.splice(i, 1);
+      $scope.$parent.spinner = false;
     }
   }
 
