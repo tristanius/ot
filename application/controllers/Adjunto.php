@@ -15,7 +15,7 @@ class Adjunto extends CI_Controller {
     $gestion = $this->input->post('gestion');
     $referencia = $this->input->post('referencia');
     $config['upload_path'] = './uploads/'.$path;
-    echo $config['upload_path'];
+    $config['allowed_types'] = '*';
     $ret = new stdClass();
     $this->load->library('upload', $config);
     if ( ! $this->upload->do_upload('myfile') ) {
