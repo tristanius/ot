@@ -220,7 +220,7 @@ var formFactura = function($scope, $http, $timeout){
   $scope.deleteRecurso = function(elemento, lnk){
     $scope.$parent.spinner = true;
     var i = $scope.factura.recursos.indexOf(elemento);
-    if(elemento.idfactura_recurso_reporte){
+    if(elemento.idfactura_recurso_reporte && confirm("Desea continuar borrando este recurso de la factura "+$scope.factura.no_factura+"?")){
       $http.post(lnk, elemento).then(
         function(resp){
           if(resp.data.status){
@@ -267,7 +267,7 @@ var formFactura = function($scope, $http, $timeout){
   $scope.removeConceptoFactura = function(otr, lnk){
     $scope.$parent.spinner = true;
     var i = $scope.factura.conceptos_factura.indexOf(otr);
-    if(otr.idconcepto_factura){
+    if(otr.idconcepto_factura && confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?") ){
       $http.post(lnk, otr).then(
         function(resp){
           if(resp.data.status){
