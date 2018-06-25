@@ -7,7 +7,9 @@ class Adjunto extends CI_Controller {
     parent::__construct();
   }
 
-  public function index(){}
+  public function index(){
+    $this->load->model('adjunto_db','adjunto');
+  }
 
   public function upload()
   {
