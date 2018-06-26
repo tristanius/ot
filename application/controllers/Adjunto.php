@@ -76,7 +76,8 @@ class Adjunto extends CI_Controller {
         $adj = $rows->row();
         if($info->nombre_adjunto == $adj->nombre_adjunto){
           $this->adjunto->remove($id);
-          $ret->status = $this->adjunto->end_transact(); // Esperamos un TRUE
+          $ret->status =  $this->adjunto->transac_status();// Esperamos un TRUE
+          $this->adjunto->end_transact();
           if($ret->status){
             unlink('./'.$adj->url_adjunto.$adj->nombre_adjunto);
           }
