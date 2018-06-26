@@ -105,7 +105,7 @@
 
   <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
-  <p class="orange" ng-if="doc_status == 'modificado'"> Documento modificado </p>
+  <p class="orange" ng-if="doc_status == 'modificado'"> Documento modificado, recuerda guardar los cambios. </p>
   <p class="green" ng-if="doc_status == 'guardado'"> Documento guardado </p>
 
   <div class="btnWindow" ng-show="!spinner">
