@@ -60,7 +60,7 @@ class Adjunto extends CI_Controller {
     $rows = $this->adjunto->get($id);
     if($rows->num_rows() > 0){
       $adj = $rows->row();
-      force_download( base_url($adj->url_adjunto), NULL);
+      force_download( './'.$adj->url_adjunto.$adj->nombre_adjunto, NULL);
     }
   }
 
