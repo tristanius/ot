@@ -401,6 +401,10 @@ var formFactura = function($scope, $http, $timeout){
         console.log(errMsg);
         $scope.isSelectedFile = false;
         $scope.$parent.spinner = false;
+      },
+      onCancel: function(files,pd){
+        $scope.isSelectedFile = false;
+        $scope.$parent.spinner = false;
       }
     });
   }
@@ -414,7 +418,7 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = true;
     $http.post(lnk,
       {
-        id: idj.idadjunto,
+        id: adj.idadjunto,
         nombre_adjunto: adj.nombre_adjunto
       }
     ).then(

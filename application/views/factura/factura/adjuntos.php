@@ -4,7 +4,9 @@
     <div class="col s12 m8 l5" ng-init="initAdjunto('<?= site_url("adjunto/upload") ?>')">
       <div id="fileuploader">Adjuntar archivo</div>
     </div>
-    <button type="button" class="btn mini-btn" ng-click="IniciarUploadAdjunto()" ng-if="isSelectedFile">Subir archivo</button>
+    <div class="col m12 l12 s12">
+      <button type="button" class="btn mini-btn" ng-click="IniciarUploadAdjunto()" ng-if="isSelectedFile">Subir archivo</button>
+    </div>
   </div>
 
   <p class="orange" ng-if="!factura.idfactura">
