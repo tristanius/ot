@@ -385,10 +385,10 @@ var formFactura = function($scope, $http, $timeout){
         return true;
       },
       onSuccess: function(file, data, xhr){
-        // actualizar listado de adjuntos
+        console.log(data);
         data = JSON.parse(data);
         $timeout(function(){
-          if(data.status){
+          if(data.status == true){
             $scope.factura.factura_adjuntos.push(data.adjunto);
           }
         });
@@ -423,7 +423,7 @@ var formFactura = function($scope, $http, $timeout){
       }
     ).then(
       function(resp){
-        if(resp.data.status){
+        if(resp.data.status==true){
           var i = $scope.factura.factura_adjuntos.indexOf(adj);
           $scope.factura.factura_adjuntos.splice(i, 1);
         }

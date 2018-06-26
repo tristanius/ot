@@ -32,7 +32,7 @@
         <td ng-bind="a.fecha_subida"></td>
         <td ng-bind="a.usuario"></td>
         <td >
-          <a ng-href="<?= base_url() ?>+'/'+a.url_adjunto+a.nombre_adjunto" class="btn green btn-small" data-icon="&#xe031;"></a> &nbsp;
+          <a ng-href="<?= base_url('adjunto/download') ?>+'/'+a.idadjunto" target="_blank" class="btn green btn-small" data-icon="&#xe031;"></a> &nbsp;
           <button type="button" class="btn red btn-small" ng-click="deleteAdjunto()">X</button>
         </td>
       </tr>

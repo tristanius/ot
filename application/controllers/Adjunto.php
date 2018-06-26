@@ -60,7 +60,7 @@ class Adjunto extends CI_Controller {
     $rows = $this->adjunto->get($id);
     if($rows->num_rows() > 0){
       $adj = $rows->row();
-      force_download( base_url($adj->url), NULL);
+      force_download( base_url($adj->url_adjunto), NULL);
     }
   }
 
@@ -76,9 +76,9 @@ class Adjunto extends CI_Controller {
         $adj = $rows->row();
         if($info->nombre_adjunto == $adj->nombre_adjunto){
           $this->adjunto->remove($id);
-          $ret->status = $this->adjunto->end_transact();
+          $ret->status = $this->adjunto->end_transact(); // Esperamos un TRUE
           if($ret->status){
-            unlink($adj->path);
+            unlink('.'.$adj->url_adjunto);
           }
         }else{
           $ret->status = FALSE;
