@@ -72,7 +72,7 @@ var factura = function($scope, $http, $timeout){
 }
 
 var formFactura = function($scope, $http, $timeout){
-
+  $scope.doc_status = 'sin cambios';
   $scope.deteccionCambios = false;
   $scope.factura = {
     actas:[],
@@ -133,6 +133,7 @@ var formFactura = function($scope, $http, $timeout){
             $scope.factura.recursos = response.data.recursos;
             $scope.factura.ordenes = response.data.ordenes;
             $scope.calcularRecursos();
+            $scope.doc_status = 'modificado';
           }
           $scope.deteccionCambios = false;
           console.log(response.data);
@@ -158,6 +159,7 @@ var formFactura = function($scope, $http, $timeout){
       function(resp){
         if(resp.data.success){
           $scope.factura.ordenes = resp.data.ordenes;
+          $scope.doc_status = 'modificado';
         }else{
           console.log(resp.data);
           alert("Algo ha fallado al consultar Ordenes");
@@ -228,6 +230,7 @@ var formFactura = function($scope, $http, $timeout){
           function(resp){
             if(resp.data.status){
               $scope.factura.recursos.splice(i, 1);
+              $scope.doc_status = 'modificado';
             }else{
               console.log(resp.data);
               alert('Algo ha salido mal al eliminar un recurso.');
@@ -261,6 +264,7 @@ var formFactura = function($scope, $http, $timeout){
     $scope.$parent.spinner = true;
     if(obj.item && obj.concepto && obj.valor){
       $scope.factura.conceptos_factura.push(obj);
+      $scope.doc_status = 'modificado';
     }else{
       alert("Hay campos necesarios por llenar");
     }
@@ -279,6 +283,7 @@ var formFactura = function($scope, $http, $timeout){
             if(resp.data.status){
               $scope.factura.conceptos_factura.splice(i, 1);
               $scope.calcularOtros();
+              $scope.doc_status = 'modificado';
             }else{
               alert("Fallo al eliminar");
               console.log(resp.data);
@@ -306,7 +311,8 @@ var formFactura = function($scope, $http, $timeout){
         function(response){
           if(response.data.status == true) {
             $scope.factura= response.data.factura;
-            alert("Procedimiento realizado con exito.")
+            $scope.doc_status = 'guardado';
+            alert("Procedimiento realizado con exito.");
           }else{
             alert('Se ha interrumpido el proceso');
           }
@@ -390,6 +396,7 @@ var formFactura = function($scope, $http, $timeout){
         $timeout(function(){
           if(data.status == true){
             $scope.factura.factura_adjuntos.push(data.adjunto);
+            $scope.doc_status = 'modificado';
           }
         });
         $scope.isSelectedFile = false;
@@ -426,6 +433,7 @@ var formFactura = function($scope, $http, $timeout){
         if(resp.data.status==true){
           var i = $scope.factura.factura_adjuntos.indexOf(adj);
           $scope.factura.factura_adjuntos.splice(i, 1);
+          $scope.doc_status = 'modificado';
         }
         $scope.$parent.spinner = false;
         console.log(resp.data)

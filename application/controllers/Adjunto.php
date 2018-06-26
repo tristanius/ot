@@ -78,7 +78,7 @@ class Adjunto extends CI_Controller {
           $this->adjunto->remove($id);
           $ret->status = $this->adjunto->end_transact(); // Esperamos un TRUE
           if($ret->status){
-            unlink('.'.$adj->url_adjunto);
+            unlink('./'.$adj->url_adjunto);
           }
         }else{
           $ret->status = FALSE;

@@ -105,6 +105,9 @@
 
   <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" ng-show="spinner" alt="">
 
+  <p class="orange" ng-if="doc_status == 'modificado'"> Documento modificado </p>
+  <p class="green" ng-if="doc_status == 'guardado'"> Documento guardado </p>
+
   <div class="btnWindow" ng-show="!spinner">
     <button id="guardar_reporte" type="button" class="waves-effect waves-light green btn mini-btn2" ng-click="save('<?= site_url('factura/save') ?>')">
       <b data-icon="&#xe015;"></b> Guardar
