@@ -72,7 +72,9 @@ table.mytabla tbody tr:active, table.mytabla tbody tr:hover, table.mytabla tbody
   height: 3ex;
   width: auto;
 }
-
+section .font14, section .font14 *, section .font14 label, .font14, .font14 *{
+  font-size: 14px;
+}
 section .font12, section .font12 *, section .font12 label, .font12, .font12 *{
   font-size: 12px;
 }

@@ -24,11 +24,23 @@ nav ul a{
   height: 2.5em;
 }
 /* sobreescribe las propiedades de materialize */
-nav .sidenav-trigger{
+.sidenav li, .sidenav li > a{
   height: auto;
+  line-height: 35px;
+}
+.sidenav li{
+  margin-top: 1px;
+}
+.sidenav .collapsible-header:first-child{
+  margin: 0;
+}
+.sidenav .collapsible-header, .sidenav .collapsible-body li a, .sidenav .collapsible-header a{
+  color: #0d47a1;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
 }
 .collapsible, .collapsible .collapsible-body, .sidenav li > a{
-  font-size: 12px;
+  font-size: 13px;
 }
 .collapsible .collapsible-body{
   margin: auto;

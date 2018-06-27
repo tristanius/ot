@@ -2,7 +2,7 @@
 		<table class="noMaterialStyles mytabla font12 striped">
 		    <thead>
 		      <tr style="background: #D8DAFF;">
-		        <th>Base</th>
+		        <th>C.O.</th>
 		        <th>No. orden de trabajo</th>
 		        <th>fecha creacion en sistema</th>
 		        <th># Tareas</th>
@@ -32,11 +32,11 @@
 			    		<td ng-bind="ot.nombre_tipo_ot"></td>
 		          <td ng-bind="ot.estado_doc"></td>
 		          <td>
-		            <button type="button" class="btn mini-btn" name="button" data-icon="&#xe03e;"  ng-click="getAjaxWindow('<?= site_url('ot/edit') ?>/'+ot.idOT, $event, 'Editar OT');"></button>
+		            <button type="button" class="btn btn-small font10" ng-click="getAjaxWindow('<?= site_url('ot/edit') ?>/'+ot.idOT, $event, 'Editar OT');" data-icon="&#xe03e;"> Modificar</button>
 
-								<button type="button" class="btn blue mini-btn" ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"></button>
+								<button type="button" class="btn blue btn-small font10" ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"> Duplicar</button>
 
-								<button ng-if="validPriv(69)" class="btn mini-btn red" ng-click="deleteOT('<?= site_url('ot/delete') ?>/', ot.idOT)" > X </button>
+								<button ng-if="validPriv(69)" class="btn btn-small red font10" ng-click="deleteOT('<?= site_url('ot/delete') ?>/', ot.idOT)" > X </button>
 		          </td>
 		        </tr>
 		    </tbody>

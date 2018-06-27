@@ -53,11 +53,11 @@
             <div ng-show="historialByOT">
               <button type="button" class="btn mini-btn" style="margin:0px;" ng-click="getReportesView('<?= site_url() ?>')"> Actualizar </button>
 
-              <a target="_blank" ng-if="validPriv(68)" ng-href="<?= site_url('export/historyRepoByOT') ?>/{{consulta.idOT}}/{{consulta.nombre_ot}}" class="btn mini-btn" style="margin:0px;">historial Prod.</a>
-              <a target="_blank" ng-if="!validPriv(68)" ng-href="<?= site_url('export/historyRepoByOT') ?>/{{consulta.idOT}}/{{consulta.nombre_ot}}/1" class="btn mini-btn" style="margin:0px;">historial</a>
+              <a target="_blank" ng-if="validPriv(68)" ng-href="<?= site_url('export/historyRepoByOT') ?>/{{consulta.idOT}}/{{consulta.nombre_ot}}" class="btn mini-btn" style="margin:0px;">historial reportes</a>
+              <a target="_blank" ng-if="!validPriv(68)" ng-href="<?= site_url('export/historyRepoByOT') ?>/{{consulta.idOT}}/{{consulta.nombre_ot}}/1" class="btn mini-btn" style="margin:0px;">historial reportes</a>
               <button type="button" style="margin:0px;" class="btn orange lighten-2 mini-btn "
                   ng-click="clickeableLink('<?=  site_url('ot/resumenOT') ?>/'+consulta.idOT, $event, 'Resumen OT '+consulta.nombre_ot);">
-                  Resumen de OT
+                  Avance de obra
                 </button>
             </div>
           </div>
@@ -76,10 +76,10 @@
 
       <div class="row col l12" ng-show="ot.selected" ng-init="ot.selected = false">
         <div class="col l12" style="margin:0px;padding:0px;">
+          <div ng-if="validPriv(38)" class="col" ng-include="calendarLink" ng-controller="calendar"> </div>
           <div class="col l9">
             <?php $this->load->view('reportes/lista/list'); ?>
           </div>
-          <div ng-if="validPriv(38)" class="col l3" ng-include="calendarLink" ng-controller="calendar"> </div>
         </div>
       </div>
 

@@ -47,7 +47,7 @@
         <td ng-bind="rd.estado"></td>
         <td ng-bind="rd.validado_pyco"></td>
         <td>
-          <button type="button" class="btn mini-btn2" data-icon="," ng-click="getReporte('<?= site_url('reporte/get/') ?>/'+rd.idreporte_diario, '#ventanaReporte', '#ventanaReporteOCulta')"> </button>
+          <button type="button" class="btn mini-btn2" data-icon="," ng-click="getReporte('<?= site_url('reporte/get/') ?>/'+rd.idreporte_diario, '#ventanaReporte', '#ventanaReporteOCulta')"> <small class="font10">Modificar</small> </button>
         </td>
         <td>
           <a class="btn light-blue darken-3 mini-btn2" ng-href="<?= site_url('export/rdPDF')?>/{{rd.OT_idOT}}/{{rd.idreporte_diario}}"

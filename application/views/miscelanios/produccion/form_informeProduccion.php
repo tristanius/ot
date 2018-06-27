@@ -1,6 +1,6 @@
 <section>
   <fieldset>
-    <h5>Informe de produccion por periodos</h5>
+    <h5>Reporte de control de producción por periodos</h5>
     <hr>
 
     <p>Vista de consulta del informe de excel de producción, por favor selecciona el rango de fechas que deseas generar en formato xlxs.</p>
@@ -20,9 +20,9 @@
         <div class="regularForm">
 
           <span for=""> Selecciona informe:</span>
-          <select class="" ng-model="tipo_informe">
-            <option value="1">Produccion MTTO (ECP)</option>
-            <option value="2">Produccion Obras</option>
+          <select class="" ng-model="tipo_informe" ng-init="tipo_informe = '2'">
+            <option value="1">Sabana de control de MTTO (ECP)</option>
+            <option value="2">Sabana de control Obras</option>
           </select>
 
         </div>

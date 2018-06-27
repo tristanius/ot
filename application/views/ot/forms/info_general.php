@@ -54,7 +54,7 @@
     </div>
 
     <br>
-    <section ng-if="validPriv(37)">
+    <section ng-if="0 && validPriv(37)">
 
         <div class="">
           <button type="button" class="btn mini-btn" ng-click="add_new_costo_mes_ot = true">+</button> Add. año de costos

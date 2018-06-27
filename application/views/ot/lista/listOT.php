@@ -4,7 +4,7 @@
     <h4>Gestion de ordenes de trabajo:</h4>
 
     <div class="row botonera" ng-if="validPriv(37)">
-      Add. OT: <button type="button" class="btn mini-btn" data-icon="&#xe052;" ng-click="getAjaxWindow('<?= site_url('ot/addNew') ?>', $event, 'Gestion de OTs');"></button>
+      <button type="button" class="btn btn-small blue" data-icon="&#xe052;" ng-click="getAjaxWindow('<?= site_url('ot/addNew') ?>', $event, 'Gestion de OTs');"> Crear O.T.</button>
     </div>
 
     <div class="row" style="margin:2px; padding:2px; border:1px solid #999;border-radius:7px;">

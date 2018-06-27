@@ -127,6 +127,9 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
   $scope.showMenu = function(){
     $scope.sidenav.open();
   }
+  $scope.closeMenu = function(){
+    $scope.sidenav.close();
+  }
 
   $scope.imprimir = function(text){console.log(text);}
   //============================================================================

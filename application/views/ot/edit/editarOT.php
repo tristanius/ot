@@ -160,16 +160,16 @@
 				</div>
 
 				<div class="col s6 m6 l6" style="border:1px solid #CCC; padding:3px;">
-					<h6>Gestiones de la tarea:</h6>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')" ng-show="ot.estado_doc !='FINALIZÓ' ">Planeación</button>
+					<h6>Planeación Tarea:</h6>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')" ng-show="ot.estado_doc !='FINALIZÓ' ">Recursos</button>
 					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#indirectos_ot', 'nodisplay', '.mypanel > div')">G.V. / H.E / Otros</button>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')">validaciones</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')">Requisitos</button>
 				</div>
 
 				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
-					<h6>Vista general:</h6>
+					<h6>Consulta:</h6>
 					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#general', 'nodisplay', '.mypanel > div')">General</button>
-					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')">Info / Estados</button>
+					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')">Inf. adicional de O.T.</button>
 				</div>
 
 				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">

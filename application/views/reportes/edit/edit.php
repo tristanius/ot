@@ -6,7 +6,7 @@
         <div class="btnWindow">
           <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" />
           <button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindowLocal('#ventanaReporte', enlaceGetReporte)">Salir</button>
-          <button type="button" class="waves-effect waves-light btn" ng-click="formDuplicar()" ng-if="validPriv(38)">Duplicar</button>
+          <button type="button" class="waves-effect waves-light btn" ng-click="formDuplicar()" ng-if="validPriv(38)">Duplicar reporte</button>
           <img ng-if="validPriv(56)" src="<?= base_url('assets/img/info.png') ?>" width="15" ng-click="getLogMovimientos( '<?= site_url('miscelanio/getLog') ?>' , <?= $r->idreporte_diario ?>, 'reporte_diario')">
 
           <small class=""> Documento creado por: <?= $r->usuario_creacion ?> </small>
