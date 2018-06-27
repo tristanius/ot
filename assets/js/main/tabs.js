@@ -4,11 +4,12 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
   $scope.estructura = [];
   $scope.myform = '';
   $scope.countertab = 0;
-  $scope.tabs = [{ id:$scope.countertab, linkto:"options", titulo:$sce.trustAsHtml("Menu general"), content: '', include:task.url, class: 'active', active: true}];
+  $scope.tabs = [{ id:$scope.countertab, linkto:"options", titulo:$sce.trustAsHtml(" Panel inicial "), content: '', include:task.url, class: 'active', active: true}];
   $scope.bigHtml = '',
   $scope.estructuras = [];
   $scope.uploader = undefined;
   $scope.showSlideState = true;
+  $scope.sidenav = undefined;
   //============================================================================
   //Funcion que carga una vista de pestaña desde un boton de enlace en la vista de inicio
   $scope.clickeableLink = function(myurl, evt, titulo){
@@ -119,8 +120,14 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
     }
   }
   $scope.initMenu = function(){
-    $('.sidenav').sidenav();
+    var e = $('.sidenav').sidenav();
+    $('.collapsible').collapsible();
+    $scope.sidenav = instance = M.Sidenav.getInstance(e);
   }
+  $scope.showMenu = function(){
+    $scope.sidenav.open();
+  }
+
   $scope.imprimir = function(text){console.log(text);}
   //============================================================================
   // validaciones de permisos

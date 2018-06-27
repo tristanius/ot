@@ -52,6 +52,7 @@ class Welcome extends CI_Controller {
 
 	public function permisos_visualizacion()
 	{
+		/*CORREGIR*/
 		$this->load->library('session');
 		$this->load->database('ot');
 		$idbase = $this->session->userdata('base_idbase');

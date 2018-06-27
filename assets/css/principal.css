@@ -23,6 +23,18 @@ nav ul a{
   color:#486EAE;
   height: 2.5em;
 }
+/* sobreescribe las propiedades de materialize */
+nav .sidenav-trigger{
+  height: auto;
+}
+.collapsible, .collapsible .collapsible-body, .sidenav li > a{
+  font-size: 12px;
+}
+.collapsible .collapsible-body{
+  margin: auto;
+  padding-left: 0px;
+}
+/* -------------------------------------------- */
 .controles a i{
   display: block;
   font-size: 4ex;
