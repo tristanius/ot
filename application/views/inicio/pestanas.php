@@ -1,4 +1,4 @@
-<section id="tabs"  class="contenidos" ng-controller="test" ng-init='log = <?= json_encode($this->session->userdata()) ?> '>
+<section id="tabs"  class="contenidos" ng-init='log = <?= json_encode($this->session->userdata()) ?> '>
 
   <div class="tabs_aplier" ng-init="site_url = '<?= site_url('') ?>'">
 
@@ -41,7 +41,7 @@
       <small>Aceptar</small>
     </button>
   </div>
-  
+
 </section>
 
 

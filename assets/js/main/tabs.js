@@ -1,5 +1,5 @@
 var app = angular.module("myapp", ['ui.tinymce']);
-app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $timeout){
+app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $timeout){
   $scope.site_url = '';
   $scope.estructura = [];
   $scope.myform = '';
@@ -117,6 +117,9 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
     }else{
       $scope.showSlideState = true;
     }
+  }
+  $scope.initMenu = function(){
+    $('.sidenav').sidenav();
   }
   $scope.imprimir = function(text){console.log(text);}
   //============================================================================

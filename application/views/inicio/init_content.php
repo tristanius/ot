@@ -6,25 +6,25 @@
 	    </div>
 
 			<div id="MenuOT">
-	      <?= $this->load->view('inicio/Menu/MenuOT', NULL, TRUE); ?>
+	      <?= $this->load->view('inicio/Menu_ant/MenuOT', NULL, TRUE); ?>
 	    </div>
 
 			<div id="MenuReportes">
-	      <?= $this->load->view('inicio/Menu/MenuReportes', NULL, TRUE); ?>
+	      <?= $this->load->view('inicio/Menu_ant/MenuReportes', NULL, TRUE); ?>
 	    </div>
 
 			<div id="MenuInforme">
-	      <?= $this->load->view('inicio/Menu/MenuInformes', NULL, TRUE); ?>
+	      <?= $this->load->view('inicio/Menu_ant/MenuInformes', NULL, TRUE); ?>
 	    </div>
 
 			<div id="MenuFacturacion">
-	      <?= $this->load->view('inicio/Menu/MenuFacturacion', NULL, TRUE); ?>
+	      <?= $this->load->view('inicio/Menu_ant/MenuFacturacion', NULL, TRUE); ?>
 	    </div>
 
 			<div id="MenuAsociaciones">
-	      <?= $this->load->view('inicio/Menu/MenuAsociaciones', NULL, TRUE); ?>
+	      <?= $this->load->view('inicio/Menu_ant/MenuAsociaciones', NULL, TRUE); ?>
 	    </div>
 
 	    <div id="MenuMaestros">
-	    	<?php $this->load->view('inicio/Menu/MenuMaestros') ?>
+	    	<?php $this->load->view('inicio/Menu_ant/MenuMaestros') ?>
 	    </div>
