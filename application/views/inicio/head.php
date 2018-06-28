@@ -55,6 +55,7 @@
     var task = {url:'<?= site_url('welcome/loadOptions') ?>'}
     var baseUrl = '<?= site_url() ?>';
     </script>
+    <script src="<?= base_url('assets/js/main/contrato.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/OT.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/consulta.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/reportes.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>

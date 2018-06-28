@@ -15,11 +15,21 @@
       <div class="collapsible-header">1. Información contratos</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="sidenav-close font11">1.1. Contratos creados</a> </li>
-          <li> <a href="#" class="sidenav-close font11">1.2. Items contratuales</a> </li>
-          <li> <a href="#" class="sidenav-close font11">1.3. Vigencias de contrato</a> </li>
-          <li> <a href="#" class="sidenav-close font11">1.4. Tarifas por vigencia</a> </li>
-          <li> <a href="#" class="sidenav-close font11">1.5. Inf. general contrato</a> </li>
+          <li> <a href="#" class="sidenav-close font11">1.2. Maestro de contratos</a> </li>
+          <li> <a href="#" class="sidenav-close font11">1.3. Items contratuales</a> </li>
+          <li> <a href="#" class="sidenav-close font11">1.4. Vigencias de contrato</a> </li>
+          <li> <a href="#" class="sidenav-close font11">1.5 Tarifas por vigencia</a> </li>
+          <li> <a href="#" class="sidenav-close font11">1.6. Inf. general contrato</a> </li>
+        </ul>
+      </div>
+    </li>
+
+    <li ng-if="validGestion('contrato')"> <!-- Revisar -->
+      <div class="collapsible-header">1.1. Centros de operacion</div>
+      <div class="collapsible-body">
+        <ul class="blue lighten-5">
+          <li> <a href="#" class="sidenav-close font11">1.1.1. Maestro de centros operacion</a> </li>
+          <li> <a href="#" class="sidenav-close font11">1.1.2. Relacionar C.O. a contratos </a> </li>
         </ul>
       </div>
     </li>
@@ -31,7 +41,7 @@
       <div class="collapsible-body">
         <ul class="blue lighten-5">
           <li ng-if"validPriv(37) || validPriv(59)">
-            <a href="#" class="sidenav-close font11" ng-click="clickeableLink('<?= site_url('ot/listOT') ?>', $event, 'Gestion de OTs'); closeMenu()">2.1. Ordenes Planeadas</a>
+            <a href="#" class="sidenav-close font11" ng-click="clickeableLink('<?= site_url('ot/listOT') ?>', $event, 'Gestion de OTs'); closeMenu()">2.1. Gestión ordenes planeadas</a>
           </li>
           <!--<li> <a href="#" class="sidenav-close font11">2.2. Resumen de O.T. </a> </li>-->
         </ul>
@@ -126,7 +136,7 @@
       <div class="collapsible-header">7. Personal</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(64)">7.1. Ver persona</a> </li>
+          <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(64)" ng-click="clickeableLink('<?= site_url('persona/listado') ?>', $event, 'Personal'); closeMenu()">7.1. Ver persona</a> </li>
           <li> <a href="#" class="sidenav-close font11" ng-if="validGestion('apps')">7.2. Ver O.T. asociadas</a> </li>
         </ul>
       </div>
@@ -136,7 +146,7 @@
       <div class="collapsible-header">8. Equipo</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(48) || validPriv(65)" >7.1. Ver Equipo</a> </li>
+          <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(48) || validPriv(65)" ng-click="clickeableLink('<?= site_url('equipo/listado') ?>', $event, 'Equipos'); closeMenu()">7.1. Ver Equipo</a> </li>
           <li> <a href="#" class="sidenav-close font11" ng-if="validGestion('apps')">7.2. Ver O.T. asociadas</a> </li>
         </ul>
       </div>

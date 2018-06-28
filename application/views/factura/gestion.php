@@ -30,7 +30,7 @@
 
   <div class="resultset">
     <br>
-    <?php $this->load->view('factura/contrato/list_facturas'); ?>
+    <?php $this->load->view('factura/list_facturas'); ?>
   </div>
 
 

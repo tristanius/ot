@@ -439,6 +439,12 @@ app.controller("condensado_rd", function($scope, $http, $timeout){
 app.controller("frentes", function($scope, $http, $timeout){
   frentes($scope, $http, $timeout);
 });
+app.controller("contrato", function($scope, $http, $timeout){
+  contrato($scope, $http, $timeout);
+});
+app.controller("form_contrato", function($scope, $http, $timeout){
+  form_contrato($scope, $http, $timeout);
+});
 
 
 //let's make a startFrom filter
