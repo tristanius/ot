@@ -10,7 +10,7 @@
     </li>
 
     <li><div class="divider"></div></li>
-    <li ng-if="validGestion('contrato')"><a class="subheader">Contrato</a></li>
+
     <li ng-if="validGestion('contrato')"> <!-- Revisar -->
       <div class="collapsible-header">1. Información contratos</div>
       <div class="collapsible-body">
@@ -35,7 +35,7 @@
     </li>
 
     <li><div class="divider"></div></li>
-    <li ng-if="validGestion('planeacion_ot') || validGestion('maestros_ot') || validGestion('reporte_diario') || validGestion('facturacion') || validGestion('informes_generales')"><a class="subheader">Producción / Obra</a></li>
+
     <li ng-if="validGestion('planeacion_ot')">
       <div class="collapsible-header"> 2. Planeación de O.T.</div>
       <div class="collapsible-body">
@@ -130,10 +130,9 @@
 
 
     <li><div class="divider"></div></li>
-    <li><a class="subheader" ng-if="validGestion('maestros_generales')">Maestros</a></li>
 
-    <li>
-      <div class="collapsible-header">7. Personal</div>
+    <li ng-if="validGestion('maestros_generales')">
+      <div class="collapsible-header">7. Maestro personal</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
           <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(64)" ng-click="clickeableLink('<?= site_url('persona/listado') ?>', $event, 'Personal'); closeMenu()">7.1. Ver persona</a> </li>
@@ -142,8 +141,8 @@
       </div>
     </li>
 
-    <li>
-      <div class="collapsible-header">8. Equipo</div>
+    <li ng-if="validGestion('maestros_generales')">
+      <div class="collapsible-header">8. Maestro equipo</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
           <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(48) || validPriv(65)" ng-click="clickeableLink('<?= site_url('equipo/listado') ?>', $event, 'Equipos'); closeMenu()">7.1. Ver Equipo</a> </li>
