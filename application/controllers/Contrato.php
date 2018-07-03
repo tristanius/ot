@@ -13,19 +13,34 @@ class Contrato extends CI_Controller{
   {
 
   }
-  public function form($value='')
+  public function gestion($value='')
   {
     $this->load->view('contrato/gestion');
+  }
+
+  public function form($value='')
+  {
+    // code...
+  }
+
+  public function save($value='')
+  {
+    // code...
   }
 
   public function add($value='')
   {
     // code...
   }
-  
-  public function lista()
+
+  public function mod($value='')
   {
     // code...
+  }
+
+  public function lista()
+  {
+
   }
 
   public function remove($id)

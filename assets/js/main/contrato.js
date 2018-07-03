@@ -18,10 +18,16 @@ var contrato = function($scope, $http, $timeout){
   $scope.getContratos = function(lnk){
     $http.post(lnk,{}).then(
       function(resp){
-
+        if(resp.data.status){
+          $scope.contratos = resp.data.contratos;
+        }else{
+          alert("Error Al cargar los contratos");
+          console.log(resp.data);
+        }
       },
       function(resp){
-
+        alert("Error al cargar los contratos");
+        console.log(resp.data);
       }
     );
   }
@@ -29,10 +35,10 @@ var contrato = function($scope, $http, $timeout){
   $scope.eliminar = function(){
     $http.post().then(
       function(resp){
-
       },
       function(resp){
-
+        alert("Error al eliminar");
+        console.log(resp.data);
       }
     );
   }

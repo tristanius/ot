@@ -6,7 +6,7 @@
 
   <fieldset class="padding1ex">
 
-    <button type="button" class="btn btn-small">Crear contrato</button>
+    <button type="button" class="btn btn-small" ng-click="form('<?= site_url('contrato/form/') ?>', '#ventanaContrato', #ventanaContratoOculta')">Crear contrato</button>
 
     <table>
       <thead>
