@@ -1,30 +1,125 @@
+  <div class="row" style="display:block">
+  	<h4>Sistema de Información y Control operativo</h4>
+		<h5>S.I.C.O. App</h5>
 
-	    <div class="row" style="display:block">
-	    	<h4>Sistema de Información y Control operativo</h4>
-				<h5>S.I.C.O. App</h5>
-	      <img src="<?= base_url('assets/img/ot.png') ?>" alt="" style="max-width:500px" />
-	    </div>
+		<div class="row">
 
-			<div id="MenuOT">
-	      <?= $this->load->view('inicio/Menu_ant/MenuOT', NULL, TRUE); ?>
-	    </div>
+			<div class="col s12 m4 l4 padding1ex card-panel">
 
-			<div id="MenuReportes">
-	      <?= $this->load->view('inicio/Menu_ant/MenuReportes', NULL, TRUE); ?>
-	    </div>
+				<div class="row padding1ex">
 
-			<div id="MenuInforme">
-	      <?= $this->load->view('inicio/Menu_ant/MenuInformes', NULL, TRUE); ?>
-	    </div>
+					<div class="row">
+						<div class="col s1 m1 l3"> </div>
+				    <div class="col s11 m10 l6">
+				      <div class="card">
+				        <div class="card-image">
+				          <img src="<?= base_url("assets/img/icons/icon-user-by.png") ?>">
+				          <span class="card-title text-shadow" ng-bind="log.nombre_usuario"></span>
+				        </div>
+								<div>
+									<ul class="left-align browser-default">
+										<li>Rol: XYZ</li>
+										<li>C.O.: Asignado</li>
+										<li>Estado: Activo</li>
+									</ul>
+								</div>
+				        <div class="card-action">
+				          <a href="#">Ir al panel de sesion</a>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
 
-			<div id="MenuFacturacion">
-	      <?= $this->load->view('inicio/Menu_ant/MenuFacturacion', NULL, TRUE); ?>
-	    </div>
+				</div>
 
-			<div id="MenuAsociaciones">
-	      <?= $this->load->view('inicio/Menu_ant/MenuAsociaciones', NULL, TRUE); ?>
-	    </div>
+			</div>
 
-	    <div id="MenuMaestros">
-	    	<?php $this->load->view('inicio/Menu_ant/MenuMaestros') ?>
-	    </div>
+			<div class="col s12 m4 l4 padding1ex">
+
+			  <div class="row">
+			    <div class="col s12 m12">
+			      <div class="card">
+			        <div class="card-image">
+			          <img src="<?= base_url('assets/img/ot.png') ?>">
+			          <span class="card-title"> <!-- --> </span>
+			        </div>
+			        <div class="card-content">
+			          <p>
+									SICO es un sistema de información para el control de obra.
+									<br>Bienvenido.
+								</p>
+			        </div>
+			        <div class="card-action">
+			          <a href="#">Instructivos</a>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+
+			</div>
+
+			<div class="col s12 m8 l8 padding1ex card-panel" ng-if="false">
+				<h5>Registros en SICO</h5>
+
+				<div class="row padding1ex">
+
+					<div class="col s12 m6 l3">
+						<div class="card light-blue darken-4">
+							<div class="card-content white-text">
+								<div class="card-title">
+									<small>Contratos:</small>
+								</div>
+								<div class="white black-text">
+									<h4> - </h4>
+								</div>
+							</div>
+						</div>
+				  </div>
+
+					<div class="col s12 m6 l3">
+						<div class="card red accent-3">
+							<div class="card-content white-text">
+								<div class="card-title">
+									<small>Ordenes de trabajo:</small>
+								</div>
+								<div class="white black-text">
+									<h4> - </h4>
+								</div>
+							</div>
+						</div>
+				  </div>
+
+					<div class="col s12 m6 l3">
+						<div class="card teal accent-3">
+							<div class="card-content white-text">
+								<div class="card-title">
+									<small>Reportes diarios:</small>
+								</div>
+								<div class="white black-text">
+									<h4> - </h4>
+								</div>
+							</div>
+						</div>
+				  </div>
+
+					<div class="col s12 m6 l3">
+						<div class="card orange darken-4">
+							<div class="card-content white-text">
+								<div class="card-title">
+									<small>Actas de factura:</small>
+								</div>
+								<div class="white black-text">
+									<h4> - </h4>
+								</div>
+							</div>
+						</div>
+				  </div>
+
+				</div>
+
+
+			</div>
+
+		</div>
+
+  </div>

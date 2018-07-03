@@ -1,4 +1,4 @@
-  <ul id="slide-out" class="sidenav collapsible font12 " ng-class="initMenu()">
+  <ul id="slide-out" class="sidenav collapsible font12" ng-class="initMenu()">
     <li>
       <div class="user-view">
         <div class="background">
@@ -11,6 +11,7 @@
 
     <li><div class="divider"></div></li>
 
+    <li ng-if="validGestion('contrato')"> <small class="groupItems">Contrato</small> </li>
     <li ng-if="validGestion('contrato')"> <!-- Revisar -->
       <div class="collapsible-header">1. Información contratos</div>
       <div class="collapsible-body">
@@ -35,6 +36,9 @@
     </li>
 
     <li><div class="divider"></div></li>
+    <li ng-if="validGestion('planeacion_ot') || validGestion('maestros_ot') || validGestion('reporte_diario') || validGestion('facturacion')">
+      <small class="groupItems">Ordenes de trabajo</small>
+    </li>
 
     <li ng-if="validGestion('planeacion_ot')">
       <div class="collapsible-header"> 2. Planeación de O.T.</div>
@@ -104,6 +108,8 @@
       </div>
     </li>
 
+    <li><div class="divider"></div></li>
+    <li ng-if="validGestion('informes_generales')"> <small class="groupItems">Informes:</small> </li>
     <li ng-if="validGestion('informes_generales')">
       <div class="collapsible-header">6. Informes generales</div>
       <div class="collapsible-body">
@@ -131,8 +137,9 @@
 
     <li><div class="divider"></div></li>
 
+    <li ng-if="validGestion('maestros_generales')"> <small class="groupItems">Maestros:</small> </li>
     <li ng-if="validGestion('maestros_generales')">
-      <div class="collapsible-header">7. Maestro personal</div>
+      <div class="collapsible-header">7. Maestros personal</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
           <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(64)" ng-click="clickeableLink('<?= site_url('persona/listado') ?>', $event, 'Personal'); closeMenu()">7.1. Ver persona</a> </li>
@@ -142,7 +149,7 @@
     </li>
 
     <li ng-if="validGestion('maestros_generales')">
-      <div class="collapsible-header">8. Maestro equipo</div>
+      <div class="collapsible-header">8. Maestros equipos</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
           <li> <a href="#" class="sidenav-close font11" ng-if="validPriv(48) || validPriv(65)" ng-click="clickeableLink('<?= site_url('equipo/listado') ?>', $event, 'Equipos'); closeMenu()">7.1. Ver Equipo</a> </li>
@@ -152,8 +159,16 @@
     </li>
 
     <li><div class="divider"></div></li>
-    <li><a class="subheader">Sesión</a></li>
+    <li> <small class="groupItems">Sesion:</small> </li>
     <li>
-      <a href="<?= app_termo().'index.php/panel/sesion' ?>" class="collapsible-header font11">X. Panel de sesión </a>
+      <a href="<?= app_termo().'index.php/panel/sesion' ?>" class="collapsible-header font11">10. Panel de sesión </a>
     </li>
   </ul>
+
+
+<style>
+  li small.groupItems{
+    font-size: 10px;
+    color:gray;
+  }
+</style>
