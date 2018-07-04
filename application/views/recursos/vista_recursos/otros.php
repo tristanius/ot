@@ -1,11 +1,13 @@
-<h5>Otros: <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-otros')"></button></h5>
+<h5>Otros:
+  <!-- <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-otros')"></button> -->
+</h5>
 
-<div id="tabla-otros" class="nodisplay">
+<div id="tabla-otros" class="">
   <ul class="col s12 m6 l6">
     <li>
-      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue black-text" ng-click="showSection('#addOtros')"
-        data-icon="N" style="margin-top:0; font-size: 2.1ex">
-      </button> Add. otros
+      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-3 white-text" ng-click="showSection('#addOtros')"
+        data-icon="&#xe052;" style="margin-top:0; font-size: 2.1ex"> Add. otros elementos
+      </button>
     </li>
     <!-- <li><button type="button" class="btn mini-btn light-blue black-text" ng-click="showSection('#findEquipo')" data-icon="C" style="margin-top:0; font-size: 2.1ex"></button> Relacionar equipo siesa.</li> -->
   </ul>

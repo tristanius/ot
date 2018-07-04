@@ -17,7 +17,7 @@ class Recurso extends CI_Controller{
   # Fomulario para la gestión de recursos de una orden
   public function recursosOT()
   {
-    $this->load->view('recursos/recursos_ot');
+    $this->load->view('recursos/vista_recursos/recursos_ot');
   }
 
   public function getByOT()

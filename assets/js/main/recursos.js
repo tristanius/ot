@@ -16,6 +16,9 @@ var recursosOT = function($scope, $http, $timeout){
   $scope.addEquipo = {};
   $scope.itemsOT = [];
 
+  // ----------------------------------------------------------
+  // Obtencion de informacion
+
   $scope.getOTs= function(url, link){
     $http.post(url+"/", $scope.consulta)
     .then(
@@ -58,6 +61,9 @@ var recursosOT = function($scope, $http, $timeout){
     );
   }
 
+  // ----------------------------------------------------------
+  // Procesos visuales
+
   $scope.enableViewRelacion = function(viewModel, status, optionDisable){
     if(viewModel){$scope[viewModel] = status;}
     if(optionDisable){$scope[optionDisable] = !status;}
@@ -66,6 +72,13 @@ var recursosOT = function($scope, $http, $timeout){
   $scope.showSection = function(tag){
     $(tag).toggleClass('nodisplay');
   }
+
+  $scope.initTabs = function(selector){
+    $( selector ).tabs();
+  }
+
+  // ----------------------------------------------------------
+  // Agregar recursos a la OT
 
   $scope.addPersonalOT =  function(pers, lnk){
     $http.post(lnk, pers).then(

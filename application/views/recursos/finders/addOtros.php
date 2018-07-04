@@ -4,7 +4,7 @@
   <div class="row noMaterialStyles regularForm">
     <div class="col l4 m6 s12">
       <p>
-        <label>Codigo item:</label>
+        <label>Referencia / Serial:</label>
         <input type="text" ng-model="addOtro.codigo_temporal">
       </p>
 

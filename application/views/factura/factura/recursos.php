@@ -41,8 +41,10 @@
           <th>I</th>
           <th>U</th>
           <th>Total</th>
+          <!--
           <th>C.C</th>
           <th>Cod. activo</th>
+          -->
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
@@ -63,8 +65,10 @@
           <th> </th>
           <th> </th>
           <th> </th>
+          <!--
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.identificacion" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.codigo_siesa" ng-change="changeSelectFac('filtroItems')"> </th>
+          -->
           <th> </th>
         </tr>
       </thead>
@@ -89,8 +93,10 @@
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.i | currency" ng-init="rrd.i =  (rrd.i? rrd.i: (rrd.subtotal*factura.vigencia_tarifas.i) )"></span> </td>
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.u | currency" ng-init="rrd.u =  (rrd.u? rrd.u: (rrd.subtotal*factura.vigencia_tarifas.u) )"></span> </td>
           <td style="background: #DCE8C0; text-align:right" class="right-align"> <span ng-bind="rrd.total | currency" ng-init="rrd.total = (rrd.total?rrd.total:(rrd.subtotal + rrd.a + rrd.i + rrd.u))"></span> </td>
+          <!--
           <td> <small ng-bind="rrd.identificacion"></small> </td>
           <td> <small ng-bind="rrd.codigo_siesa"></small> </td>
+          -->
           <td> <button type="button" class="btn red mini-btn2" style="margin-top: 0px" ng-click="deleteRecurso(rrd, '<?= site_url('factura/remove_recurso_factura') ?>')" >x</button> </td>
         </tr>
       </tbody>

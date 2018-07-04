@@ -1,22 +1,17 @@
-<h5>Personal: <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-personal')"></button></h5>
+<h5>Personal:
+  <!-- <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-personal')"></button> -->
+</h5>
 
-<div id="tabla-personal" class="nodisplay">
+<div id="tabla-personal" class="">
   <div class="row">
     <ul class="col s12 m7 l7">
       <li>
-        <button type="button" class="btn mini-btn indigo lighten-2 black-text" data-icon="&#xe045;"
-          ng-click="enableViewRelacion('findPersonal', true, 'addPersonaExterno')" style="margin-top:0; font-size: 2.1ex"></button> Agregar personal basico de otra OT.
-      </li>
-      <li>
-        <button type="button" class="btn mini-btn lighten-2 black-text" data-icon="&#xe045;"
-          ng-click="enableViewRelacion('addPersonaExterno', true, 'findPersonal')" style="margin-top:0; font-size: 2.1ex"></button> Agregar personal <b>externo</b>.
+        <button type="button" class="btn mini-btn blue darken-3 white-text" data-icon="&#xe045;"
+          ng-click="enableViewRelacion('findPersonal', true, 'addPersonaExterno')" style="margin-top:0; font-size: 2.1ex"> Agregar personal basico de otra O.T.</button>
       </li>
     </ul>
-    <div ng-show="findPersonal"  class="col s12 m12 l12 " style="background:#FAFAFA; padding:4px; border:1px solid #999;">
+    <div ng-show="findPersonal"  class="col s12 m12 l12" style="background:#FAFAFA; padding:4px; border:1px solid #999;">
       <?php $this->load->view('recursos/finders/personal'); ?>
-    </div>
-    <div ng-show="addPersonaExterno" class="col s12 m12 l12 " style="background:#FAFAFA; padding:4px; border:1px solid #999;">
-      <?php $this->load->view('recursos/finders/addPersonalExterno'); ?>
     </div>
   </div>
 

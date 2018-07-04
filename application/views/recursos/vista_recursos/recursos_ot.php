@@ -35,7 +35,7 @@
         </div>
       </section>
 
-      <div class="col s12 l6 m6" style="border-left:1px solid #AAA">
+      <div class="col s12 l6 m6 card-panel">
         <?php $this->load->view('reportes/lista/otSelection'); ?>
       </div>
     </fieldset>
@@ -44,6 +44,6 @@
   <br>
 
   <section  style="background:#FFF; padding:1ex; border: 1px solid #AAA">
-    <?php $this->load->view('recursos/vistaRecursosOT'); ?>
+    <?php $this->load->view('recursos/vista_recursos/vistaRecursosOT'); ?>
   </section>
 </div>

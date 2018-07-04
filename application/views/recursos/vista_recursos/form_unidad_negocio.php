@@ -1,35 +1,3 @@
-<div id="ot-recursos" class="nodisplay">
-
-  <h4> No. OT: <span ng-bind="consulta.nombre_ot"></span>  </h4>
-  <button type="button" ng-click="clickeableLink('<?=  site_url('ot/resumenOT') ?>/'+consulta.idOT, $event, 'Resumen OT '+consulta.nombre_ot);">Ver resumen de cant. de la Orden</button>
-  <br>
-
-  <!-- --------------------------------------------------------------------------------- -->
-
-  <section class="card-panel">
-    <?php $this->load->view('recursos/vista_recursos/personal'); ?>
-  </section>
-
-  <br>
-
-  <section class="card-panel">
-    <?php $this->load->view('recursos/vista_recursos/equipos'); ?>
-  </section>
-
-  <br>
-
-  <section class="card-panel">
-    <?php $this->load->view('recursos/vista_recursos/material'); ?>
-  </section>
-
-  <br>
-
-  <section class="card-panel">
-    <?php $this->load->view('recursos/vista_recursos/otros'); ?>
-  </section>
-
-</div>
-
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
   <div class="modal-content">
@@ -83,12 +51,3 @@
     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="cambio_un.data = undefined" style="color:red">Salir</a>
   </div>
 </div>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-  // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-  $('.modal').modal();
-});
-
-</script>
