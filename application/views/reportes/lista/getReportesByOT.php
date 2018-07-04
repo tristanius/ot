@@ -77,7 +77,7 @@
       <div class="row col l12" ng-show="ot.selected" ng-init="ot.selected = false">
         <div class="col l12" style="margin:0px;padding:0px;">
           <div ng-if="validPriv(38)" class="col" ng-include="calendarLink" ng-controller="calendar"> </div>
-          <div class="col l9">
+          <div class="col s12 m9 card padding1ex">
             <?php $this->load->view('reportes/lista/list'); ?>
           </div>
         </div>

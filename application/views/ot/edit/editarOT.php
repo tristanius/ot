@@ -104,12 +104,9 @@
 					</td>
 					<td>
 						<select class="noMaterialStyles" ng-model="ot.departamento_ecp">
-							<option value="PCL">PCL</option>
-							<option value="OBC">OBC</option>
-							<option value="PNO">PNO</option>
-							<option value="PFL">PFL</option>
-							<option value="POR">POR</option>
-							<option value="N/A">N/A</option>
+							<?php foreach ($this->nombre_departamento_ecp as $key => $value): ?>
+								<option value="<?= $key ?>"><?= $value ?></option>
+							<?php endforeach; ?>
 						</select>
 					</td>
 					<td colspan="2"> <span ng-bind="ot.no_contrato"></span> <span ng-bind="ot.contratista"></span> </td>

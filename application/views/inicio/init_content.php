@@ -18,8 +18,9 @@
 				        </div>
 								<div>
 									<ul class="left-align browser-default">
-										<li>Rol: XYZ</li>
-										<li>C.O.: Asignado</li>
+										<li>Rol: <span ng-bind="log.nombre_rol"></span> </li>
+                    <li>C.O. asociado: <span ng-bind="log.base"></span> </li>
+                    <li>Tipo visualizacion: <span ng-bind="log.tipo_visualizacion"></span> </li>
 										<li>Estado: Activo</li>
 									</ul>
 								</div>

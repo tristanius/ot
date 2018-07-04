@@ -1,4 +1,4 @@
-<div id="calendario">
+<div id="calendario" class="card padding1ex">
   <h5>Crear reporte diario nuevo:</h5>
   <p>Seleciona una fecha para crear un reporte diario</p>
   <style media="screen">

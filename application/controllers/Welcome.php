@@ -55,7 +55,7 @@ class Welcome extends CI_Controller {
 		/*CORREGIR*/
 		$this->load->library('session');
 		$this->load->database('ot');
-		$idbase = $this->session->userdata('base_idbase');
+		$idbase = $this->session->userdata('base');
 		$row = $this->db->from('base')->where( 'idbase', $idbase )->get()->row();
 		$data = array(
 			'sector' => $row->sector,

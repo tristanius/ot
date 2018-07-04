@@ -72,28 +72,34 @@ var OT = function($scope, $http, $timeout){
 
 	}
 	$scope.delete_item = function(lista, tr, item){
-		if(lista == tr.personal){
-			lista.splice(lista.indexOf(item),1);
-			alert('Has modificado personal, debes modificar tambien horas extra y gastos de viaje de la tarea actual de ese item, si los ha calculado previamente');
-		}else {
-			lista.splice(lista.indexOf(item),1);
+		var proceder = confirm('¿Esta seguro de eliminar este Item?');
+		if(proceder){
+			if(lista == tr.personal){
+				lista.splice(lista.indexOf(item),1);
+				alert('Has modificado personal, debes modificar tambien horas extra y gastos de viaje de la tarea actual de ese item, si los ha calculado previamente');
+			}else {
+				lista.splice(lista.indexOf(item),1);
+			}
 		}
 	}
 
 	$scope.deleteOT = function(url, id){
 		console.log(url+id);
-		$http.get(url+id).then(
-			function(response){
-				if(response.data == 'success'){
-					alert('Borrado exitosamente, recarga la consulta.');
-				}else {
-					alert('No encontrada')
+		var proceder = confirm('¿Esta seguro de eliminar esta orden de trabajo?');
+		if(proceder){
+			$http.get(url+id).then(
+				function(response){
+					if(response.data == 'success'){
+						alert('Borrado exitosamente, recarga la consulta.');
+					}else {
+						alert('No encontrada')
+					}
+				},
+				function(response){
+					alert('Algo ha fallado');
 				}
-			},
-			function(response){
-				alert('Algo ha fallado');
-			}
-		);
+			);
+		}
 	}
 
 	$scope.consola = function(tr){console.log(tr)}
