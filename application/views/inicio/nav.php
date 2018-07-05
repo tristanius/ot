@@ -14,7 +14,7 @@
       <li class="brand-logo center"><a href="<?= app_termo() ?>"><img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" style="max-width:150px;" /></a></li>
     </ul>
     <ul class="right hide-on-med-and-down">
-      <li class="right valign-wrapper"><a href="<?= app_termo().'index.php/panel/sesion' ?>" class="padding1ex"> <?= $this->session->userdata('nombre_usuario'); ?> </a></li>
+      <li class="right valign-wrapper"><a href="<?= app_termo().'index.php/' ?>" class="padding1ex" data-icon="K"> <b>Volver</b> </a></li>
     </ul>
   </div>
 </nav>
