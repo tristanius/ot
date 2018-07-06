@@ -5,7 +5,7 @@
 <div id="tabla-material" class="">
   <ul class="col s12 m6 l6">
     <li>
-      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-3 white-text" ng-click="showSection('#addMaterial')"
+      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-1 white-text" ng-click="showSection('#addMaterial')"
         data-icon="&#xe02e;" style="margin-top:0; font-size: 2.1ex">
         Add. material nuevo
       </button>
@@ -18,7 +18,7 @@
   </div>
 
   <table class="mytabla tabla-recursos font10">
-    <thead>
+    <thead class="blue-grey lighten-4">
       <tr>
         <th></th>
         <th>Item</th>

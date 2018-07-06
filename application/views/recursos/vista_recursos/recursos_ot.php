@@ -1,12 +1,12 @@
-<div ng-controller="recursosOT" style="background: #FAFAFA; padding:3px">
+<div ng-controller="recursosOT" style="padding:3px">
 
   <h5 class="center-align">Gestión de recursos por OT:</h5>
   <form class="" action="#" method="post">
     <small>Aquí podras gestionar los recursos para reportar por una orden de trabajo</small>
-    <fieldset class="row noMaterialStyles">
+    <fieldset class="row noMaterialStyles blue-grey lighten-5">
 
-      <section style="padding:1ex;">
-        <h6><b>Consulta:</b></h6>
+      <section class="col s12">
+        <h6><b>Consultar orden de trabajo:</b></h6>
         <div class="noMaterialStyles row col l3 m4 s12">
           <b class="col l3 m4 s4">No. OT:</b>
           <input class="col l8 m8 s8" type="text" ng-model="consulta.indicio_nombre_ot" style="padding: 5px;" placeholder="Ej: 350-16">
@@ -35,7 +35,7 @@
         </div>
       </section>
 
-      <div class="col s12 l6 m6 card-panel">
+      <div class="col s12 l6 m6">
         <?php $this->load->view('reportes/lista/otSelection'); ?>
       </div>
     </fieldset>

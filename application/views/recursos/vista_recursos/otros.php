@@ -5,7 +5,7 @@
 <div id="tabla-otros" class="">
   <ul class="col s12 m6 l6">
     <li>
-      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-3 white-text" ng-click="showSection('#addOtros')"
+      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-1 white-text" ng-click="showSection('#addOtros')"
         data-icon="&#xe052;" style="margin-top:0; font-size: 2.1ex"> Add. otros elementos
       </button>
     </li>
@@ -17,7 +17,7 @@
   </div>
 
   <table class="mytabla tabla-recursos font10">
-    <thead>
+    <thead class="blue-grey lighten-4">
       <tr>
         <th></th>
         <th>Item</th>

@@ -1,7 +1,7 @@
 	<div>
 		<table class="noMaterialStyles mytabla font12 striped">
 		    <thead>
-		      <tr style="background: #D8DAFF;">
+		      <tr class="blue-grey lighten-4">
 		        <th>C.O.</th>
 		        <th>No. orden de trabajo</th>
 		        <th>fecha creacion en sistema</th>
@@ -11,10 +11,10 @@
 		        <th>Estado</th>
 		        <th>Opciones</th>
 		      </tr>
-					<tr style="background:#D7F1F4">
+					<tr class="blue-grey lighten-2">
 		    		<td></td>
-		    		<td><input type="text" ng-model="filtro.nombre_ot" placeholder="Filtro " =""></td>
-		    		<td><input type="text" ng-model="filtro.fecha_creacion"> </td>
+		    		<td><input type="text" ng-model="filtro.nombre_ot" placeholder="Filtro "></td>
+		    		<td><input type="text" ng-model="filtro.fecha_creacion" placeholder="Filtro "> </td>
 		    		<td></td>
 		    		<td><input type="text" ng-model="filtro.nombre_especialidad" placeholder="Filtro " =""></td>
 		    		<td><input type="text" ng-model="filtro.nombre_tipo_ot" placeholder="Filtro " =""></td>

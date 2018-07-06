@@ -19,7 +19,7 @@
   </div>
   <table class="mytabla font11 striped">
     <thead>
-      <tr style="background:#D7F1F4">
+      <tr class="blue-grey lighten-4">
         <th></th>
         <th>Fecha</th>
         <th>O.T.</th>

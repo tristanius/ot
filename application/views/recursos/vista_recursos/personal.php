@@ -6,8 +6,8 @@
   <div class="row">
     <ul class="col s12 m7 l7">
       <li>
-        <button type="button" class="btn mini-btn blue darken-3 white-text" data-icon="&#xe045;"
-          ng-click="enableViewRelacion('findPersonal', true, 'addPersonaExterno')" style="margin-top:0; font-size: 2.1ex"> Agregar personal basico de otra O.T.</button>
+        <button type="button" class="btn mini-btn blue darken-1 white-text" data-icon="&#xe045;"
+          ng-click="enableViewRelacion('findPersonal', true, 'addPersonaExterno')" style="margin-top:0;"> Agregar personal basico de otra O.T.</button>
       </li>
     </ul>
     <div ng-show="findPersonal"  class="col s12 m12 l12" style="background:#FAFAFA; padding:4px; border:1px solid #999;">
@@ -17,7 +17,7 @@
 
   <table class="mytabla tabla-recursos font10">
     <thead>
-      <tr>
+      <tr class="blue-grey lighten-4">
         <th></th>
         <th>Identificacion</th>
         <th>Nombre completo</th>

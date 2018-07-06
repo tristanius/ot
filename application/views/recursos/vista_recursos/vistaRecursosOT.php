@@ -1,4 +1,4 @@
-<div id="ot-recursos" class="card-panel nodisplay">
+<div id="ot-recursos" class="nodisplay">
 
   <h5> Orden de trabajo : <span ng-bind="consulta.nombre_ot"></span>  </h5>
   <button type="button" ng-click="clickeableLink('<?=  site_url('ot/resumenOT') ?>/'+consulta.idOT, $event, 'Resumen OT '+consulta.nombre_ot);">Ver resumen de cant. de la Orden</button>

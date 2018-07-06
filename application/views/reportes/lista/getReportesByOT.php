@@ -4,7 +4,8 @@
     <div class="row">
       <h5 class="center-align">Manejo de reportes diarios:</h5>
         <div class="col l12 regularForm row">
-          <fieldset style="padding:1ex;">
+
+          <fieldset style="padding:1ex;" class="blue lighten-5">
             <h6><b>Consulta de orden de trabajo a reportar:</b></h6>
             <div class="noMaterialStyles row col l3 m4 s12">
               <b class="col l3 m4 s4">No. OT:</b>

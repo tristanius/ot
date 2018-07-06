@@ -47,7 +47,9 @@
     <script src="<?= base_url('assets/js/vendor/tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
 
     <!-- Charts JS -->
-    <script src="<?= base_url('assets/js/vendor/Chart.min.js') ?>" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"> </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"> </script>
+
     <!-- FileSaverAs -->
     <script src="<?= base_url('assets/js/vendor/FileSaver.min.js') ?>" type="text/javascript"></script>
     <!-- Mainer JS -->

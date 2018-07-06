@@ -5,7 +5,7 @@
 <div id="tabla-equipos" class="">
   <ul class="col s12 m6 l6">
     <li>
-      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-3 white-text" ng-click="showSection('#addEquipo')"
+      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-1 white-text" ng-click="showSection('#addEquipo')"
         data-icon="N" style="margin-top:0; font-size: 2.1ex">
         Crear equipo provisonal
       </button>
@@ -19,7 +19,7 @@
 
   <table class="mytabla tabla-recursos font10">
     <thead>
-      <tr>
+      <tr class="blue-grey lighten-4">
         <th>Codigo ERP / Temporal</th>
         <th>Referencia</th>
         <th>Descripción equipo</th>

@@ -38,8 +38,11 @@
   </p>
 
   <div>
-      <button type="button" name="btn mini-btn" ng-click="addRecursoOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>', 'equipo', myitemf_eq); showSection('#addEquipo')">Crear</button>
-      <button type="button" name="btn mini-btn" ng-click="showSection('#addEquipo'); addEquipo = {} ">Ocultar</button>
+      <button type="button" class="btn mini-btn green" ng-click="addRecursoOT(addequipo, '<?= site_url('recurso/addRecursoOT') ?>', 'equipo', myitemf_eq); showSection('#addEquipo')"
+        ng-disabled="!addequipo.codigo_temporal || !myitemf_eq">
+        Crear
+      </button>
+      <button type="button" class="btn mini-btn orange" ng-click="showSection('#addEquipo'); addEquipo = {} ">Ocultar</button>
   </div>
 </fieldset>
 <br>
