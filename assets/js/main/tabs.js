@@ -414,10 +414,6 @@ app.controller("consulta_nom",function($scope, $http, $timeout){
   consulta_nom($scope, $http, $timeout);
 });
 
-app.controller("migracion_recursos",function($scope, $http, $timeout){
-  migracion_recursos($scope, $http, $timeout);
-});
-
 app.controller("factura",function($scope, $http, $timeout){
   factura($scope, $http, $timeout);
 });
@@ -445,7 +441,9 @@ app.controller("contrato", function($scope, $http, $timeout){
 app.controller("form_contrato", function($scope, $http, $timeout){
   form_contrato($scope, $http, $timeout);
 });
-
+app.controller("itemc",function($scope, $http, $timeout){
+  itemc($scope, $http, $timeout);
+});
 
 //let's make a startFrom filter
 app.filter('startFrom', function() {

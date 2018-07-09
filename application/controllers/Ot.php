@@ -766,6 +766,7 @@ class Ot extends CI_Controller {
 		$this->del_costos_mes($idOT);
 		$this->del_frentes_ot($id);
 		$this->db->delete('OT', array('idOT'=>$idOT));
+		$status = $this->db->trans_status();
 		if ($status === FALSE){
         $this->db->trans_rollback();
 				echo "failed";

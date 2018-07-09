@@ -18,29 +18,83 @@ class Contrato extends CI_Controller{
     $this->load->view('contrato/gestion');
   }
 
-  public function form($value='')
+  public function form($id=NULL)
   {
-    // code...
+    $this->load->view('contrato/form', array('id'=>$id));
   }
 
-  public function save($value='')
+  public function save()
   {
-    // code...
+    $contrato = json_decode( file_get_contents('php://input'));
+    $ret = new stdClass();
+    if (isset($contrato->idcontrato)) {
+      $id = $contrato->idcontrato;
+      $this->mod($contrato, $id);
+      $ret->status = TRUE;
+      $ret->contrato = $contrato;
+    } else {
+      if(!$this->existe_contrato($contrato->no_contrato)){
+        $contrato->idcontrato = $this->add($contrato);
+        $ret->status = TRUE;
+        $ret->contrato = $contrato;
+      }else {
+        $ret->status = FALSE;
+        $ret->msj = 'Ya existe el No. de contrato.';
+      }
+    }
+    echo json_encode($ret);
   }
 
-  public function add($value='')
+  public function existe_contrato($no_contrato)
   {
-    // code...
+    $this->load->model('contrato_db', 'cont');
+    $rows = $this->cont->getBy('no_contrato', $no_contrato);
+    if($rows->num_rows() > 0){
+      return TRUE;
+    }
+    return FALSE;
   }
 
-  public function mod($value='')
+  public function add($contrato)
   {
-    // code...
+    $this->load->model('contrato_db', 'c');
+    $this->c->init_transact();
+    $id = $this->c->add($contrato);
+    $this->c->end_transact();
+    return $id;
   }
 
-  public function lista()
+  public function mod($contrato, $id)
   {
+    $this->load->model('contrato_db', 'c');
+    $this->c->init_transact();
+    $bandera = $this->c->update($contrato, $id);
+    $this->c->end_transact();
+    return $bandera;
+  }
 
+  public function get_contratos()
+  {
+    $this->load->model('contrato_db', 'c');
+    $contratos = $this->c->getContratos();
+    $ret = new stdClass();
+    $ret->contratos = $contratos->result();
+    $ret->status = TRUE;
+    echo json_encode($ret);
+  }
+
+  public function get($id)
+  {
+    $this->load->model('contrato_db', 'c');
+    $contratos = $this->c->getBy('idcontrato', $id);
+    $ret = new stdClass();
+    if($contratos->num_rows() > 0){
+      $ret->contrato = $contratos->row();
+      $ret->status = TRUE;
+    }else{
+      $ret->status = FALSE;
+    }
+    echo json_encode($ret);
   }
 
   public function remove($id)

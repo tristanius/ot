@@ -21,7 +21,7 @@
       <div class="collapsible-header">1. Información contratos  &nbsp; <span data-icon="~"></span> </div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('contrato/gestion') ?>', $event, 'Maestro de contrato'); closeMenu()">1.2. Maestro de contratos</a> </li>
+          <li> <a href="#" class="font12" ng-click="clickeableLink('<?= site_url('contrato/gestion') ?>', $event, 'Maestro de contrato'); closeMenu()">1.2. Maestro de contratos</a> </li>
           <li> <a href="#" class="sidenav-close font12">1.3. Items contratuales</a> </li>
           <li> <a href="#" class="sidenav-close font12">1.4. Vigencias de contrato</a> </li>
           <li> <a href="#" class="sidenav-close font12">1.5 Tarifas por vigencia</a> </li>

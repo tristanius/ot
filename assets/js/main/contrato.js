@@ -26,7 +26,7 @@ var contrato = function($scope, $http, $timeout){
         }
       },
       function(resp){
-        alert("Error al cargar los contratos");
+        alert("Error de servidor");
         console.log(resp.data);
       }
     );
@@ -45,14 +45,16 @@ var contrato = function($scope, $http, $timeout){
 }
 
 var form_contrato = function($scope, $http, $timeout){
-  $scope.contrato = {};
+  $scope.cont = {};
 
-  $scope.save = function(){
-    $http.post().then(
+  $scope.save = function(lnk, contrato, lnk2){
+    $http.post(lnk, contrato).then(
       function(resp){
         if(resp.data.status){
-          $scope.contrato = resp.data.contrato;
+          $scope.$parent.getContratos(lnk2);
           alert("Contrato guardado con exito");
+        }else if (resp.data.status == false) {
+          alert(resp.data.msj);
         }else{
           alert("Error al guardar");
           console.log(resp.data);
@@ -65,14 +67,22 @@ var form_contrato = function($scope, $http, $timeout){
     );
   }
 
-  $scope.getContrato = function(){
-    $http.post().then(
-      function(resp){
-
-      },
-      function(resp){
-
-      }
-    );
+  $scope.getContrato = function(lnk, id){
+    if(id){
+      $http.get(lnk+'/'+id).then(
+        function(resp){
+          if(resp.data.status){
+            $scope.cont = resp.data.contrato;
+          }else{
+            alert('No encontro contrato');
+            console.log(resp.data);
+          }
+        },
+        function(resp){
+          alert("Error");
+          console.log(resp.data);
+        }
+      );
+    }
   }
 }
