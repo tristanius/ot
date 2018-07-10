@@ -46,7 +46,7 @@
     <fieldset>
       <legend>Opciones:</legend>
 
-      <button type="button" class="btn btn-small blue darken-4 white-text">Agregar nuevo item</button>
+      <button type="button" data-target="formItem" class="modal-trigger btn btn-small blue darken-4">Agregar nuevo item</button>
 
       <button type="button" class="btn btn-small purple darken-1"> Importar items</button>
 
@@ -54,11 +54,9 @@
     </fieldset>
 
     <?php
-    //$this->load->view('items/itemc/lista');
+      $this->load->view('items/itemc/lista');
     ?>
   </div>
-
-  <button data-target="formItem" class="btn modal-trigger">Modal</button>
 
   <?php  $this->load->view('items/itemc/form_item'); ?>
 </section>
