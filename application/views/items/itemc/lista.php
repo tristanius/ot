@@ -2,14 +2,14 @@
   <table class="mytabla font11 striped">
     <thead>
       <tr>
-        <th class="red lighten-2" colspan="4">Items de contrato</th>
-        <th class="red lighten-3" colspan="9">Items internos equivalentes</th>
+        <th class="blue-grey lighten-4" colspan="4">Items de contrato</th>
+        <th class="blue-grey lighten-5" colspan="9">Items internos equivalentes</th>
       </tr>
-      <tr class="blue lighten-4">
-        <th>#</th>
-        <th class="blue lighten-3">Item</th>
-        <th class="blue lighten-3">Descripcion</th>
-        <th class="blue lighten-3">Tipo</th>
+      <tr class="blue-grey lighten-5">
+        <th class="blue-grey lighten-4">#</th>
+        <th class="blue-grey lighten-4">Item</th>
+        <th class="blue-grey lighten-4">Descripcion</th>
+        <th class="blue-grey lighten-4">Tipo</th>
         <th>Codigo Interno</th>
         <th>Descripcion interna</th>
         <th>unidad</th>
@@ -20,10 +20,10 @@
         <th>Mod</th>
         <th>Del.</th>
       </tr>
-      <tr class="blue-grey lighten-4">
+      <tr class="blue-grey darken-3">
         <th></th>
-        <th> <input type="text" ng-model="filtroItems.item" /> </th>
-        <th> <input type="text" ng-model="filtroItems.descripcion" /> </th>
+        <th> <input type="text" ng-model="filtroItems.item" placeholder="filtro" /> </th>
+        <th> <input type="text" ng-model="filtroItems.descripcion" placeholder="filtro" /> </th>
         <th class="noMaterialStyles">
           <select ng-model="filtroItems.tipo">
             <option value="actividad">actividad</option>
@@ -34,9 +34,9 @@
             <option value="">Sin selección</option>
           </select>
         </th>
-        <th> <input type="text" ng-model="filtroItems.codigo" /> </th>
-        <th> <input type="text" ng-model="filtroItems.descripcion_interna" /> </th>
-        <th> <input type="text" ng-model="filtroItems.unidad" /> </th>
+        <th> <input type="text" ng-model="filtroItems.codigo" placeholder="filtro" /> </th>
+        <th> <input type="text" ng-model="filtroItems.descripcion_interna" placeholder="filtro" /> </th>
+        <th> <input type="text" ng-model="filtroItems.unidad" placeholder="filtro" /> </th>
         <th></th>
         <th></th>
         <th></th>

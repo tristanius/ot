@@ -1,6 +1,6 @@
-<section id="formItem"  class="modal modal-fixed-footer font12" ng-init="initModals('#formItem.modal')">
+<section id="formItem"  class="modal modal-fixed-footer" ng-init="initModals('#formItem.modal')">
 
-  <fieldset class="modal-content noMaterialStyles">
+  <div class="modal-content noMaterialStyles">
     <h4 class="grey lighten-5"> <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" style="max-width:100px;" /> Formulario de items de contrato</h4>
 
     <hr class="hr-termo">
@@ -38,6 +38,7 @@
           <option value="turno">turno</option>
           <option value="gal">gal</option>
           <option value="Litro">Litro (L)</option>
+          <option value="LT">Litro (LT)</option>
           <option value="rollo">Rollo</option>
           <option value="kit">kit</option>
         </select>
@@ -107,7 +108,7 @@
 
     </div>
 
-  </fieldset>
+  </div>
 
 
   <div class="modal-footer">
