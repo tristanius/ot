@@ -17,8 +17,15 @@ class Item extends CI_Controller {
 	{
 		$ret = new stdClass();
 		$this->load->model('itemc_db','item');
-		$ret->items = $this->item->getByContrato($idcontrato)->result();
-		$ret->status = TRUE;
+		$this->load->model('contrato_db','c');
+		$rows = $this->c->getBy('idcontrato',$idcontrato);
+		if ($rows->num_rows() > 0) {
+			$ret->contrato = $rows->row();
+			$ret->items = $this->item->getByContrato($idcontrato)->result();
+			$ret->status = TRUE;
+		}else{
+			$ret->status = FALSE;
+		}
 		echo json_encode($ret);
 	}
 
