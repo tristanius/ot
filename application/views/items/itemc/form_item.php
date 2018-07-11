@@ -36,6 +36,7 @@
               <option value="dia/m3">dia/m3</option>
               <option value="día">día</option>
               <option value="mes">mes</option>
+              <option value="UN">UN</option>
               <option value="und">und</option>
               <option value="ton">ton</option>
               <option value="kg">Kg</option>
