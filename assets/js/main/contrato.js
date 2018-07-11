@@ -21,7 +21,7 @@ var contrato = function($scope, $http, $timeout){
         if(resp.data.status){
           $scope.contratos = resp.data.contratos;
         }else{
-          alert("Error Al cargar los contratos");
+          alert("Error al cargar los contratos");
           console.log(resp.data);
         }
       },

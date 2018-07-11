@@ -9,6 +9,17 @@ class Tarifa_db extends CI_Model{
     //Codeigniter : Write Less Do More
   }
 
+  public function add($tarifa)
+  {
+    // code...
+  }
+
+  public function add($tarifa, $id = NULL)
+  {
+    // code...
+  }
+
+  #=============================================================================
   public function getTarifasByItemc($itemc)
   {
     $this->load->database('ot');

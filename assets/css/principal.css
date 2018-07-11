@@ -46,6 +46,9 @@ nav ul a{
   margin: auto;
   padding-left: 0px;
 }
+.modal{
+  width: 80%;
+}
 /* -------------------------------------------- */
 .text-shadow{
   text-shadow: 0px 0px 3px #000;
@@ -132,6 +135,10 @@ section.area select, .windowCentered select{
   height: auto;
 }
 
+.panel{
+  background: #FFF;
+  margin: 1ex;
+}
 /* ventana emergente */
 
 .nodisplay{

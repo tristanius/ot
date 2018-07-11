@@ -43,12 +43,12 @@
   <div class="card padding1ex">
     <h5>Listado general de items del contrato</h5>
 
-    <fieldset>
+    <fieldset ng-show="contrato != undefined">
       <legend>Opciones:</legend>
 
       <button type="button" data-target="formItem" class="modal-trigger btn btn-small blue darken-4">Agregar nuevo item</button>
 
-      <button type="button" class="btn btn-small purple darken-1"> Importar items</button>
+      <button type="button" class="btn btn-small indigo darken-4"> Importar items</button>
 
       <button type="button" class="btn btn-small green">Exportar (xlsx)</button>
     </fieldset>

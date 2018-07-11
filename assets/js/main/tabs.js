@@ -324,6 +324,12 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
       list.push(obj);
     });
   }
+  // ------ PAGINACION ------
+  // Numero de paginas para paginación con AngularJS
+  $scope.numberOfPages=function(lista, pageSize){
+    return Math.ceil(lista.length/pageSize);
+  }
+
 
   $scope.datatable = function(selector){
 

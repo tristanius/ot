@@ -15,7 +15,9 @@ class Contrato extends CI_Controller{
   }
   public function gestion($value='')
   {
-    $this->load->view('contrato/gestion');
+    if( $this->sesion_iniciada() ){
+      $this->load->view('contrato/gestion');
+    }
   }
 
   public function form($id=NULL)
@@ -25,24 +27,26 @@ class Contrato extends CI_Controller{
 
   public function save()
   {
-    $contrato = json_decode( file_get_contents('php://input'));
-    $ret = new stdClass();
-    if (isset($contrato->idcontrato)) {
-      $id = $contrato->idcontrato;
-      $this->mod($contrato, $id);
-      $ret->status = TRUE;
-      $ret->contrato = $contrato;
-    } else {
-      if(!$this->existe_contrato($contrato->no_contrato)){
-        $contrato->idcontrato = $this->add($contrato);
+    if( $this->sesion_iniciada() ){
+      $contrato = json_decode( file_get_contents('php://input'));
+      $ret = new stdClass();
+      if (isset($contrato->idcontrato)) {
+        $id = $contrato->idcontrato;
+        $this->mod($contrato, $id);
         $ret->status = TRUE;
         $ret->contrato = $contrato;
-      }else {
-        $ret->status = FALSE;
-        $ret->msj = 'Ya existe el No. de contrato.';
+      } else {
+        if(!$this->existe_contrato($contrato->no_contrato)){
+          $contrato->idcontrato = $this->add($contrato);
+          $ret->status = TRUE;
+          $ret->contrato = $contrato;
+        }else {
+          $ret->status = FALSE;
+          $ret->msj = 'Ya existe el No. de contrato.';
+        }
       }
+      echo json_encode($ret);
     }
-    echo json_encode($ret);
   }
 
   public function existe_contrato($no_contrato)
@@ -55,7 +59,7 @@ class Contrato extends CI_Controller{
     return FALSE;
   }
 
-  public function add($contrato)
+  private function add($contrato)
   {
     $this->load->model('contrato_db', 'c');
     $this->c->init_transact();
@@ -64,7 +68,7 @@ class Contrato extends CI_Controller{
     return $id;
   }
 
-  public function mod($contrato, $id)
+  private function mod($contrato, $id)
   {
     $this->load->model('contrato_db', 'c');
     $this->c->init_transact();
@@ -75,26 +79,30 @@ class Contrato extends CI_Controller{
 
   public function get_contratos()
   {
-    $this->load->model('contrato_db', 'c');
-    $contratos = $this->c->getContratos();
-    $ret = new stdClass();
-    $ret->contratos = $contratos->result();
-    $ret->status = TRUE;
-    echo json_encode($ret);
+    if( $this->sesion_iniciada() ){
+      $this->load->model('contrato_db', 'c');
+      $contratos = $this->c->getContratos();
+      $ret = new stdClass();
+      $ret->contratos = $contratos->result();
+      $ret->status = TRUE;
+      echo json_encode($ret);
+    }
   }
 
   public function get($id)
   {
-    $this->load->model('contrato_db', 'c');
-    $contratos = $this->c->getBy('idcontrato', $id);
-    $ret = new stdClass();
-    if($contratos->num_rows() > 0){
-      $ret->contrato = $contratos->row();
-      $ret->status = TRUE;
-    }else{
-      $ret->status = FALSE;
+    if($this->sesion_iniciada()){
+      $this->load->model('contrato_db', 'c');
+      $contratos = $this->c->getBy('idcontrato', $id);
+      $ret = new stdClass();
+      if($contratos->num_rows() > 0){
+        $ret->contrato = $contratos->row();
+        $ret->status = TRUE;
+      }else{
+        $ret->status = FALSE;
+      }
+      echo json_encode($ret);
     }
-    echo json_encode($ret);
   }
 
   public function remove($id)
@@ -104,5 +112,16 @@ class Contrato extends CI_Controller{
 
   # ----------------------------------------------
   # Vigencias
+
+  # ------------------------
+  private function sesion_iniciada()
+	{
+		$this->load->library('session');
+    $isess = $this->session->userdata("isess");
+		if($isess){
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 }
