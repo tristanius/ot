@@ -766,7 +766,7 @@ class Ot extends CI_Controller {
 			$this->delete_tarea($value->idtarea_ot);
 		}
 		$this->del_costos_mes($idOT);
-		$this->del_frentes_ot($id);
+		$this->del_frentes_ot($idOT);
 		$this->db->delete('OT', array('idOT'=>$idOT));
 		$status = $this->db->trans_status();
 		$ret = new stdClass();
