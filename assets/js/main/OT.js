@@ -94,9 +94,11 @@ var OT = function($scope, $http, $timeout){
 					}else {
 						alert('No encontrada')
 					}
+					console.log(response.data);
 				},
 				function(response){
 					alert('Algo ha fallado');
+					console.log(response.data);
 				}
 			);
 		}

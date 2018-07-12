@@ -13,7 +13,7 @@
 			<thead>
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Nombre de OT</th>
-					<th>Base</th>
+					<th>C.O./Oficina</th>
 					<th>Zona</th>
 					<th>Especialidad</th>
 					<th>Tipo OT</th>

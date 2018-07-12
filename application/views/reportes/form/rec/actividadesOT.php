@@ -32,14 +32,14 @@
                 <big ng-if="fil_acOT.add == true" data-icon="&#xe04c;"></big>
               </button>
             </td>
-            <td><input type="text" ng-click="fil_acOT.itemc_item" placeholder="filtrar"></td>
-            <td><input type="text" ng-click="fil_acOT.codigo" placeholder="filtrar"></td>
-            <td><input type="text" ng-click="fil_acOT.descripcion" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_acOT.itemc_item" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_acOT.codigo" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_acOT.descripcion" placeholder="filtrar"></td>
             <td></td>
-            <td><input type="text" ng-click="fil_acOT.planeado" placeholder="filtrar"></td>
-            <td><input type="text" ng-click="fil_acOT.nombre_ot" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_acOT.planeado" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_acOT.nombre_ot" placeholder="filtrar"></td>
           </tr>
-          <tr ng-repeat="ac in actividadesOT | orderBy: 'itemc_item'  | filter: fil_acOT">
+          <tr ng-repeat="ac in actividadesOT | filter: fil_acOT">
             <td class="noMaterialStyles"> <input type="checkbox" ng-model="ac.add" ng-init="ac.add=false"> </td>
             <td class="noMaterialStyles"> <span ng-bind="ac.itemc_item"></span> </td>
             <td class="noMaterialStyles"> <span ng-bind="ac.codigo"></span> </td>

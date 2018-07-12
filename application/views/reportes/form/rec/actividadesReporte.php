@@ -75,7 +75,7 @@
         <td ng-bind="act.descripcion" style="min-width: 200px;"></td>
         <td ng-bind="act.unidad"></td>
         <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td> <input type="text" ng-model="act.abscisa_fin" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <!-- AVANCE DE OBRA -->
         <td  class="light-blue lighten-5" ng-show="vista_extendida">

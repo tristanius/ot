@@ -251,7 +251,7 @@ class Ot_db extends CI_Model {
 	# Consulta de items de OT
 	# ===========================================================================
 
-	# Obetner items por tipo de un OT
+	# Obtener items por tipo de un OT
 	public function getItemByTipeOT($idOT, $tipo=NULL)	{
 		$this->load->database('ot');
 		$this->db->select(
@@ -272,7 +272,8 @@ class Ot_db extends CI_Model {
 				titc.BO,
 				titc.CL,
 				SUM(itt.cantidad) AS planeado,
-				itt.idfrente_ot
+				itt.idfrente_ot,
+				itt.subtarifa
 				'
 			);
 		$this->db->from('item_tarea_ot AS itt');

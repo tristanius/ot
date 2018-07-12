@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Facturacion_db extends CI_Controller{
+class Facturacion_db extends CI_Model{
 
   public function __construct()
   {
@@ -17,6 +17,7 @@ class Facturacion_db extends CI_Controller{
     $this->db->select( $this->consultaTipo($tipo) );
     $this->db->from('reporte_diario AS rd');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario','LEFT');
+    $this->db->join('avance_obra AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
 
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
     $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
@@ -109,6 +110,7 @@ class Facturacion_db extends CI_Controller{
         IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und,
         rrd.abscisa_ini,
         rrd.abscisa_fin,
+        avance.*,
         rrd.tipo_instalacion
       ';
     }else{

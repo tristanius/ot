@@ -521,7 +521,7 @@ class Ot extends CI_Controller {
 				$it->duracion,
 				$it->unidad,
 				$it->tarifa,
-				isset($item->subtarifa)?$item->subtarifa:NULL,
+				isset($it->subtarifa)?$it->subtarifa:NULL,
 				($it->tarifa * ($it->cantidad * $it->duracion)),
 				date('Y-m-d H:i:s'),
 				$it->itemf_iditemf,
@@ -769,9 +769,10 @@ class Ot extends CI_Controller {
 		$this->del_frentes_ot($id);
 		$this->db->delete('OT', array('idOT'=>$idOT));
 		$status = $this->db->trans_status();
+		$ret = new stdClass();
 		if ($status === FALSE){
         $this->db->trans_rollback();
-				echo "failed";
+				echo 'fail';
     }
     else{
         $this->db->trans_commit();
