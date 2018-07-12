@@ -115,6 +115,7 @@ class Tarea_db extends CI_Model{
         itt.unidad,
         itt.fecha_agregado,
         itt.valor_plan,
+        itt.subtarifa,
         itt.itemf_iditemf,
         itt.itemf_codigo,
         itt.tarea_ot_idtarea_ot,

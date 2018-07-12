@@ -681,8 +681,6 @@ var agregarOT = function($scope, $http, $timeout){
 		console.log($scope.ot);
 		if($scope.isOnPeticion){
 			alert('Ya has presiondo guardar previamente, debes ir a editar para agregar cambios');
-		}else	if($scope.ot.vereda == undefined || $scope.ot.vereda == '' || $scope.ot.tareas.length == 0){
-			alert('Faltan datos por registrar');
 		}else if ($scope.ot.nombre_ot == '' || $scope.ot.nombre_ot == undefined
 						|| $scope.ot.tipo_ot == undefined || $scope.ot.tipo_ot == ''
 						|| $scope.ot.especialidad == undefined || $scope.ot.especialidad == '' || $scope.ot.idcontrato == undefined) {
