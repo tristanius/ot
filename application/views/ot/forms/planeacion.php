@@ -147,7 +147,7 @@
 					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=0.1 ng-model="act.cantidad" ng-init="act.cantidad = strtonum(act.cantidad)" style="width:8ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right" ng-bind="act.tarifa | currency:'$':0"></td>
-					<td style="text-align: right" ng-bind="act.tarifa_subcontrato | currency:'$':0"></td>
+					<td style="text-align: right" ng-bind="act.subtarifa | currency:'$':0"></td>
 					<td style="text-align: right">
 						{{ ( act.facturable?(act.cantidad * act.duracion)*act.tarifa: 0 ) | currency:'$':0  }}
 						<button ng-show=" ( act.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true )" type="button" ng-click="unset_item(tr.actividades, act, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
@@ -181,7 +181,7 @@
 					<td><input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="per.cantidad" ng-init="per.cantidad = strtonum(per.cantidad)" style="width:7ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td><input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="per.duracion" ng-init="per.duracion = strtonum(per.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right" ng-bind="per.tarifa | currency:'$':0"></td>
-					<td style="text-align: right" ng-bind="per.tarifa_subcontrato | currency:'$':0"></td>
+					<td style="text-align: right" ng-bind="per.subtarifa | currency:'$':0"></td>
 					<td style="text-align: right">
 						{{ ( per.facturable? (per.cantidad * per.duracion)*per.tarifa :0 ) | currency:'$':0  }}
 						<button ng-show=" ( per.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.personal, per, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
@@ -215,7 +215,7 @@
 					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="eq.cantidad" ng-init="eq.cantidad = strtonum(eq.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right" ng-bind="eq.tarifa | currency:'$':0"></td>
-					<td style="text-align: right" ng-bind="eq.tarifa_subcontrato | currency:'$':0"></td>
+					<td style="text-align: right" ng-bind="eq.subtarifa | currency:'$':0"></td>
 					<td style="text-align: right">
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$':0 }}
 						<button ng-show=" ( eq.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.equipos, eq, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
@@ -251,7 +251,7 @@
 					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="m.cantidad" ng-init="m.cantidad = strtonum(m.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="m.duracion" ng-init="m.duracion = strtonum(m.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right" ng-bind="m.tarifa | currency:'$':0"></td>
-					<td style="text-align: right" ng-bind="m.tarifa_subcontrato | currency:'$':0"></td>
+					<td style="text-align: right" ng-bind="m.subtarifa | currency:'$':0"></td>
 					<td style="text-align: right">
 						{{ ( m.facturable?(m.cantidad * m.duracion)*m.tarifa:0 ) | currency:'$':0 }}
 						<button ng-show=" ( m.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.material, m, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
@@ -285,7 +285,7 @@
 					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="o.cantidad" ng-init="o.cantidad = strtonum(o.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="o.duracion" ng-init="o.duracion = strtonum(o.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right" ng-bind="o.tarifa | currency:'$':0"></td>
-					<td style="text-align: right" ng-bind="o.tarifa_subcontrato | currency:'$':0"></td>
+					<td style="text-align: right" ng-bind="o.subtarifa | currency:'$':0"></td>
 					<td style="text-align: right">
 						{{ ( o.facturable?(o.cantidad * o.duracion)*o.tarifa:0 ) | currency:'$':0 }}
 						<button ng-show=" ( o.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.otros, o, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>

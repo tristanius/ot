@@ -84,7 +84,15 @@ class Facturacion_db extends CI_Controller{
         titc.descripcion as clasifica_deta,
         if(rrd.facturable,"SI","NO") AS facturable,
         tr.tarifa,
-        IFNULL(tr.tarifa_subcontrato,tr.tarifa) AS tarifa_subcontrato,
+        (
+          SELECT itt.subtarifa
+          FROM item_tarea_ot AS itt
+          JOIN tarea_ot AS tarea ON tarea.idtarea_ot = itt.tarea_ot_idtarea_ot
+          WHERE tarea.OT_idOT = OT.idOT
+          AND itt.itemf_iditemf = itf.iditemf
+          ORDER BY itf.iditemf DESC
+          LIMIT 1
+        ) AS subtatifa,
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
