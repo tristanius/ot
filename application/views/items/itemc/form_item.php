@@ -141,7 +141,7 @@
       ng-click="save('<?= site_url('item/save') ?>', myitem, '<?= site_url('item/get_itemc') ?>')">
       Guardar
     </button>
-    <button type="button" class="btn btn-small red" ng-click="closeForm()"> Salir</button>
+    <button type="button" class="btn btn-small red" ng-click="closeForm('#formItem')"> Salir</button>
   </div>
 
 </section>

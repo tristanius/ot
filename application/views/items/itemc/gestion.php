@@ -6,7 +6,7 @@
       <div class="col s12 m6 l4">
         <span>No. Contrato: </span>
         <b ng-bind="contrato.no_contrato"></b>
-        <button type="button" class="btn btn-small teal accent-3">Selec. contrato</button>
+        <button type="button" class="btn btn-small blue-grey darken-4">Selecionar contrato</button>
       </div>
 
       <div class="col s12 m6 l5">
@@ -48,7 +48,7 @@
 
       <button type="button" data-target="formItem" class="modal-trigger btn btn-small blue darken-4">Agregar nuevo item</button>
 
-      <button type="button" class="btn btn-small indigo darken-4"> Importar items</button>
+      <button type="button" data-target="formUploadItems" class="modal-trigger btn btn-small indigo darken-4"> Importar items</button>
 
       <button type="button" class="btn btn-small green">Exportar (xlsx)</button>
     </fieldset>
@@ -59,4 +59,5 @@
   </div>
 
   <?php  $this->load->view('items/itemc/form_item'); ?>
+  <?php  $this->load->view('items/itemc/form_cargue'); ?>
 </section>

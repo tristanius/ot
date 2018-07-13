@@ -3,25 +3,27 @@ var itemc = function($scope, $http, $timeout){
   $scope.items = [];
   $scope.validateItem = false;
 
-  $scope.ventanaModal = undefined;
+  $scope.ventanaModal = [];
   $scope.pageSize = 20;
 
   // ------ formulario de items -------
   $scope.initModals = function(el){
     M.Modal.init( $(el) );
-    $scope.ventanaModal = M.Modal.getInstance($(el));
+    $scope.ventanaModal.push( M.Modal.getInstance($(el)) );
   }
 
-  $scope.openForm = function(item){
-    $scope.ventanaModal.open();
+  $scope.openForm = function(item, el){
+    var i = $scope.ventanaModal.indexOf(M.Modal.getInstance($(el)));
+    $scope.ventanaModal[i].open();
     if(item){
       $scope.myitem = item;
     }
   }
 
-  $scope.closeForm = function(){
+  $scope.closeForm = function(el){
     if(confirm('¿Desea cerrar el formulario?')){
-      $scope.ventanaModal.close();
+      var i = $scope.ventanaModal.indexOf(M.Modal.getInstance($(el)));
+      $scope.ventanaModal[i].close();
       $scope.myitem = {};
     }
   }
@@ -51,7 +53,7 @@ var itemc = function($scope, $http, $timeout){
   $scope.validacionItem = function(iditc){
     $http.post($scope.$parent.site_url+'/item/exist', {iditemc: iditc}).then(
       function(resp){
-        
+
         console.log(resp.data);
       },
       function(resp){
@@ -95,6 +97,57 @@ var itemc = function($scope, $http, $timeout){
       $scope.itemCounter = 0;
     }
     return false;
+  }
+
+
+  // ---------------------------- UPLOAD FILE -----------------------------------
+  $scope.isSelectedFile = false;
+  $scope.spinner = false;
+  $scope.initAdjunto = function(ruta) {
+    console.log(ruta)
+    // Se guarda en una variable el objeto retornado del inicio de la funcion de carga
+    $scope.adjunto = $("#fileuploader").uploadFile({
+      url:ruta,
+      autoSubmit: false,
+      allowedTypes:'xlsx',
+      fileName:"myfile",
+      dynamicFormData: function(){
+        var data = {
+          idcontrato : $scope.contrato.idcontrato
+        }
+        return data;
+      },
+      onSelect: function(files){
+        $timeout(function(){
+          $scope.isSelectedFile = true;
+        });
+        return true;
+      },
+      onSuccess: function(file, data, xhr){
+        console.log(data);
+        //data = JSON.parse(data);
+        $timeout(function(){
+
+        });
+        $scope.isSelectedFile = false;
+        $scope.spinner = false;
+      },
+      onError: function(files,status,errMsg,pd){
+        alert("Erro de cargue de archivo");
+        console.log(errMsg);
+        $scope.isSelectedFile = false;
+        $scope.spinner = false;
+      },
+      onCancel: function(files,pd){
+        $scope.isSelectedFile = false;
+        $scope.spinner = false;
+      }
+    });
+  }
+  // esta funcion es invocada al darle click al botón adjuntar/cargar
+  $scope.IniciarUploadAdjunto = function(){
+    $scope.spinner = true;
+    $scope.adjunto.startUpload();
   }
 
 }

@@ -59,7 +59,7 @@
         <td ng-bind="i.basedisp"> </td>
         <td ng-bind="i.incidencia_salarial"> </td>
         <td>
-          <button type="button" class="btn btn-small orange font10" ng-click="openForm(i)" data-icon="&#xe01e;"> </button>
+          <button type="button" class="btn btn-small orange font10" ng-click="openForm(i, '#formItem')" data-icon="&#xe01e;"> </button>
         </td>
         <td>
           <button type="button" class="btn btn-small red font10"> X</button>

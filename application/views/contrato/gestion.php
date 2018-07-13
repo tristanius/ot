@@ -10,7 +10,7 @@
       <button type="button" class="btn btn-small blue darken-3 white-text" ng-click="form('<?= site_url('contrato/form/') ?>', '#ventanaContrato', '#ventanaContratoOculta')">Crear contrato</button>
     </p>
 
-    <table class="mytabla">
+    <table class="mytabla striped">
       <thead>
         <tr class="blue-grey lighten-4">
           <th>ID</th>
