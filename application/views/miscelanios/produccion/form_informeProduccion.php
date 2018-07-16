@@ -34,6 +34,7 @@
               type="checkbox"
               ng-model="b.inf_produccion"
               ng-change="delAddFromList( lasbases , b.idbase )"
+              ng-init="b.inf_produccion = false"
             >
             <b class="black-text">{{ b.idbase+' - '+b.nombre_base }}</b>
           </label>
