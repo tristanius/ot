@@ -28,18 +28,17 @@
         </div>
       </div>
       <div class="col s12 m12 l2 noMaterialStyles" ng-init="lasbases = []" style="max-heigth: 25ex">
-        <?php foreach ($bases->result() as $k => $b): ?>
+        <div ng-repeat="b in log.bases">
           <label class="regularForm" style="width: 100%; display: block">
             <input class=""
               type="checkbox"
-              ng-model="base<?= $b->idbase ?>"
-              ng-change="delAddFromList( lasbases , <?= $b->idbase ?>  )"
-              name="<?= $b->idbase ?>"
-              value="<?= $b->idbase ?>"
+              ng-model="b.inf_produccion"
+              ng-change="delAddFromList( lasbases , b.idbase )"
+              ng-init="b.inf_produccion = true"
             >
-            <b class="black-text"><?= $b->idbase.' - '.$b->nombre_base ?></b>
+            <b class="black-text">{{ b.idbase+' - '+b.nombre_base }}</b>
           </label>
-        <?php endforeach; ?>
+        </div>          
       </div>
     </div>
     <form ng-if="(fecha_ini != undefined && fecha_fin != undefined  )" action='<?= site_url('export/informeProduccion') ?>' method="post">

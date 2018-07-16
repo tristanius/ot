@@ -27,7 +27,7 @@
 					<td>
 						<select class="col m7" ng-model="ot.base_idbase" id="bases">
 							<option value=""> Seleccione una base </option>
-							<option ng-repeat="base in bases" value="{{ base.idbase }}">{{base.idbase + " - "+ base.nombre_base}}</option>
+							<option ng-repeat="base in log.bases" value="{{ base.idbase }}">{{base.idbase + " - "+ base.nombre_base}}</option>
 						</select>
 					</td>
 					<td>

@@ -61,10 +61,13 @@ class Welcome extends CI_Controller {
 			'sector' => $row->sector,
 			'idsector' => $row->idsector
 		);
-		if ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
-			$data['bases'] = $this->db->from('base')->where( 'idsector', $row->idsector )->get()->result();
+		if ($this->session->userdata('tipo_visualizacion') == 'contrato' ) {
+			$contratos = $idbase = $this->session->userdata('contratos');
+			$data['bases'] = $this->db->select('b.idbase, b.nombre_base')->from('contrato_base AS cb')->join('base AS b','b.idbase = cb.idbase')->where_in('idcontrato',$contratos)->get()->result();
+		}elseif ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
+			$data['bases'] = $this->db->select('idbase, nombre_base')->from('base')->where( 'idsector', $row->idsector )->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'base' ) {
-			$data['bases'] = $this->db->from('base')->where( 'idsector', $idbase )->get()->result();
+			$data['bases'] = $this->db->select('idbase, nombre_base')->from('base')->where( 'idsector', $idbase )->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'general' ){
 			$data['bases'] = $this->db->get('base')->result();
 		}

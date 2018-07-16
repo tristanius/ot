@@ -17,9 +17,7 @@
         <label style="color: #332" class="col m5 right-align">C.O. (base):</label>
         <select ng-model="consulta.base" class="col m4" style="height:4ex;">
           <option value="">Sin selección</option>
-          <?php foreach ($bases->result() as $b): ?>
-            <option value="<?= $b->idbase ?>"><?= $b->idbase." - ".$b->nombre_base ?></option>
-          <?php endforeach; ?>
+          <option ng-repeat="b in log.bases" value="{{b.idbase}}"> {{ b.idbase + ' - ' + b.nombre_base }} </option>
         </select>
       </div>
 

@@ -30,9 +30,7 @@
 					<td>
 						<span ng-show="!validPriv(54)" ng-bind="ot.base_idbase"></span>
 						<select ng-show="validPriv(54)" class="col m7" ng-model="ot.base_idbase" >
-							<?php foreach ($bases->result() as $key => $base): ?>
-								<option value="<?= $base->idbase ?>"><?= $base->idbase." - ". $base->nombre_base ?> </option>
-							<?php endforeach; ?>
+							<option ng-repeat="base in log.bases" value="{{ base.idbase }}">{{base.idbase + " - "+ base.nombre_base}}</option>
 						</select>
 					</td>
 					<td ng-bind="ot.zona"></td>
