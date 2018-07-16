@@ -34,11 +34,10 @@
               type="checkbox"
               ng-model="b.inf_produccion"
               ng-change="delAddFromList( lasbases , b.idbase )"
-              ng-init="b.inf_produccion = true"
             >
             <b class="black-text">{{ b.idbase+' - '+b.nombre_base }}</b>
           </label>
-        </div>          
+        </div>
       </div>
     </div>
     <form ng-if="(fecha_ini != undefined && fecha_fin != undefined  )" action='<?= site_url('export/informeProduccion') ?>' method="post">
@@ -47,7 +46,7 @@
       <input type="hidden" name="fecha_ini" value="{{fecha_ini}}">
       <input type="hidden" name="fecha_fin" value="{{fecha_fin}}">
       <input type="hidden" name="tipo_informe" value="{{tipo_informe}}">
-      <button type="submit" target="_blank" class="btn mini-btn"> Exportar <span data-icon="&#xe03b;"></span> </button>
+      <button type="submit" target="_blank" class="btn mini-btn" ng-disabled="lasbases.length == 0"> Exportar <span data-icon="&#xe03b;"></span> </button>
     </form>
 
   </fieldset>
