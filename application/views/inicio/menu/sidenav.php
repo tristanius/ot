@@ -163,11 +163,12 @@
       </div>
     </li>
 
+    <li><div class="divider"></div></li>
     <li ng-if="validGestion('asociaciones_externas')">
       <div class="collapsible-header">9. Validaciones y asociaciones externas</div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="sidenav-close font12" ng-if="" ng-click="clickeableLink('<?= site_url('persona/view_cargue_horas') ?>', $event, 'Personal asociado'); closeMenu()">7.1. Ver Equipo</a> </li>
+          <li> <a href="#" class="sidenav-close font12" ng-if="validPriv(66)" ng-click="clickeableLink('<?= site_url('persona/view_cargue_horas') ?>', $event, 'Personal asociado'); closeMenu()">9.1. Asociación de nomina</a> </li>
         </ul>
       </div>
     </li>
