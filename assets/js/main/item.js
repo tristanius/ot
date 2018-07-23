@@ -34,7 +34,6 @@ var itemc = function($scope, $http, $timeout){
       function(resp) {
         if( resp.status ){
           $scope.getItemsByContrato(lnk2, $scope.contrato.idcontrato);
-          $scope.closeForm();
         }else if ( resp.status == false ) {
           alert( resp.msj );
         }else{
