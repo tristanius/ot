@@ -62,14 +62,15 @@ class Welcome extends CI_Controller {
 			'idsector' => isset($row->idsector)?$row->idsector:NULL
 		);
 		if ($this->session->userdata('tipo_visualizacion') == 'contrato' ) {
-			//$contratos = $idbase = $this->session->userdata('contratos');
-			//$data['bases'] = $this->db->select('b.idbase, b.nombre_base')->from('contrato_base AS cb')->join('base AS b','b.idbase = cb.idbase')->where_in('idcontrato',$contratos)->group_by('b.idbase')->get()->result();
 			$contratos = $this->db->select('cb.idcontrato')->from('contrato_base AS cb')->where('cb.idbase', $idbase)->get()->result();
 			$where = array();
-			foreach ($contrato as $key => $value) {
+			foreach ($contratos as $key => $val) {
 				array_push($where, $val);
 			}
-			$data['bases'] = $this->db->from('base AS b')->join('contrato_base AS cb','cb.idbase = b.idbase')->where_in('cb.idbase',$where)->group_by('b.idbase')->get()->result();
+			$data['bases'] = $this->db->select('b.idbase, b.nombre_base, cb.idcontrato, b.idsector, b.sector, b.departamento_base')
+											->from('base AS b')->join('contrato_base AS cb','cb.idbase = b.idbase')
+											->where_in('cb.idbase',$where)->group_by('b.idbase')
+											->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
 			$data['bases'] = $this->db->select('idbase, nombre_base')->from('base')->where( 'idsector', $row->idsector )->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'base' ) {
