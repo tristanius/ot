@@ -69,7 +69,7 @@ class Welcome extends CI_Controller {
 			}
 			$data['bases'] = $this->db->select('b.idbase, b.nombre_base, cb.idcontrato, b.idsector, b.sector, b.departamento_base')
 											->from('base AS b')->join('contrato_base AS cb','cb.idbase = b.idbase')
-											->where_in('cb.idbase',$where)->group_by('b.idbase')
+											->where_in('cb.idcontrato',$where)->group_by('b.idbase')
 											->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
 			$data['bases'] = $this->db->select('idbase, nombre_base')->from('base')->where( 'idsector', $row->idsector )->get()->result();
