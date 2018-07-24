@@ -65,7 +65,7 @@ class Welcome extends CI_Controller {
 			$contratos = $this->db->select('cb.idcontrato')->from('contrato_base AS cb')->where('cb.idbase', $idbase)->get()->result();
 			$where = array();
 			foreach ($contratos as $key => $val) {
-				array_push($where, $val);
+				array_push($where, $val->idcontrato);
 			}
 			$data['bases'] = $this->db->select('b.idbase, b.nombre_base, cb.idcontrato, b.idsector, b.sector, b.departamento_base')
 											->from('base AS b')->join('contrato_base AS cb','cb.idbase = b.idbase')
