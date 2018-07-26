@@ -144,11 +144,10 @@
 					</th>
 					<td class="noMaterialStyles"> <input type="checkbox" ng-model="act.facturable" ng-init="act.facturable = toboolean(act.facturable)"> </td>
 					<td ng-bind="act.unidad"></td>
-					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=0.1 ng-model="act.cantidad" ng-init="act.cantidad = strtonum(act.cantidad)" style="width:8ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
-					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=0.01 ng-model="act.cantidad" ng-init="act.cantidad = strtonum(act.cantidad)" style="width:8ex" ng-change="calcularSubtotales(); act.cantidad = strtonum(act.cantidad)" ng-readonly="!tr.editable"> </td>
+					<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales(); act.duracion = strtonum(act.duracion)" ng-readonly="!tr.editable"> </td>
 					<td style="text-align: right" ng-bind="act.tarifa | currency:'$':0"></td>
 					<td style="text-align: right">
-						<small ng-bind="act.subtarifa | currency"></small>
 						<input type="text" ng-model="act.subtarifa" style="max-width:10ex;" v ng-init="act.subtarifa = act.subtarifa?act.subtarifa:act.tarifa">
 					</td>
 					<td style="text-align: right">
@@ -239,7 +238,7 @@
 				<!-- MATERIAL Y OTROS -->
 
 				<tr>
-					<th colspan="12" rowspan="" style="background:#ddedd0">MATERIAL: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
+					<th colspan="12" rowspan="" style="background:#ddedd0">MATERIAL: </th>
 				</tr>
 				<tr ng-repeat="m in tr.material | orderBy: 'codigo'">
 					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+m.codigo)"></span> <span ng-bind="m.itemc_item"></span> </td>
@@ -273,7 +272,7 @@
 				</tr>
 
 				<tr>
-					<th colspan="12" rowspan="" style="background:#ddedd0">OTROS: <a ng-href="<?= site_url('export/formatoEquiposTareaOT') ?>/{{ tr.idtarea_ot }}" class="btn mini-btn2" data-icon="&#xe030;"></a></th>
+					<th colspan="12" rowspan="" style="background:#ddedd0">OTROS: </th>
 				</tr>
 				<tr ng-repeat="o in tr.otros | orderBy: 'codigo'">
 					<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+o.codigo)"></span> <span ng-bind="o.itemc_item"></span> </td>
