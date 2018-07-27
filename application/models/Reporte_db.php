@@ -96,9 +96,9 @@ class Reporte_db extends CI_Model{
        'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
        'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
 
-       'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
-       'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
-       'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+       'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
+       'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
+       'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
 
        'last_log'=>$log." - ".date('Y-m-d H:i:s')
      );
@@ -145,9 +145,9 @@ class Reporte_db extends CI_Model{
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
 
-      'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
-      'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
-      'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+      'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
+      'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
+      'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
 
       'last_log'=>$log." - ".date('Y-m-d H:i:s')
     );
@@ -166,6 +166,11 @@ class Reporte_db extends CI_Model{
      ){
        $data = array(
          'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+
+         'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
+         'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
+         'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+
          'margen' => isset($recurso->margen)?$recurso->margen:NULL,
          'MH_inicio' => isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
          'MH_fin' => isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
@@ -187,6 +192,11 @@ class Reporte_db extends CI_Model{
   {
     $data = array(
       'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+
+      'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
+      'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
+      'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+
       'margen' => isset($recurso->margen)?$recurso->margen:NULL,
       'MH_inicio' => isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
       'MH_fin' => isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
