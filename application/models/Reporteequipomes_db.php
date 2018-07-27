@@ -169,7 +169,10 @@ class Reporteequipomes_db extends CI_Model{
       CONCAT(rrd.horometro_ini, "-", rrd.horometro_fin),
       ft.nombre AS frente,
       rot.propietario_observacion AS asignacion,
-      if(rot.propietario_recurso, "SI", "NO") AS propio,'
+      if(rot.propietario_recurso, "SI", "NO") AS propio,
+      rrd.combustible_cantidad,
+      rrd.combustible_valor,
+      rrd.combustible_und,'
     );
     $this->db->from('reporte_diario AS rd');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');

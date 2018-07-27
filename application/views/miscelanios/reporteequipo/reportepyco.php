@@ -55,6 +55,9 @@ if(!$nodownload){
       <th>FRENTE</th>
       <th>ASINADO COMO</th>
       <th>PROPIO</th>
+      <th>Cant. Combustible</th>
+      <th>Importe Combustible</th>
+      <th>Und. Combustible</th>
     </tr>
   </thead>
   <tbody>
