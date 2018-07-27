@@ -16,7 +16,7 @@
         <th></th>
         <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
-        <th colspan="3"></th>
+        <th colspan="3">Combustible</th>
         <th></th>
       </tr>
       <tr class="background:#EEE; color:#EEE;">
@@ -112,9 +112,9 @@
         <td class="inputSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_disponible" ng-init="eq.horas_disponible = parseNumb(eq.horas_disponible)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputSmall noMaterialStyles"> <input type="checkbox" ng-model="eq.varado" ng-init="eq.varado = parseBool(eq.varado)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
 
-        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_cantidad" value=""> </td>
-        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_valor" value=""> </td>
-        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_und" value=""> </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_cantidad" placeholder="cantidad"> </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_valor" placeholder="valor $"> </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_und" placeholder="Unidad"> </td>
 
         <td class="font9">
           <span ng-if="eq.item_asociado">  (<span ng-bind="eq.item_asociado" style="color: #934B10"></span>)</span>
@@ -142,6 +142,7 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
+        <th colspan="3">Combustible</th>
         <th data-icon="*"></th>
       </tr>
     </tbody>
