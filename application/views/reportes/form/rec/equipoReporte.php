@@ -16,7 +16,7 @@
         <th></th>
         <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
-        <th colspan="3">Combustible</th>
+        <th colspan="3" class="yellow lighten-4">Combustible</th>
         <th></th>
       </tr>
       <tr class="background:#EEE; color:#EEE;">
@@ -38,9 +38,9 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
-        <th> <small>Cant.</small> </th>
-        <th> <small>Valor</small> </th>
-        <th> <small>Und</small> </th>
+        <th class="yellow lighten-4"> <small>Cant.</small> </th>
+        <th class="yellow lighten-4"> <small>Valor</small> </th>
+        <th class="yellow lighten-4"> <small>Und</small> </th>
         <th data-icon="*"></th>
       </tr>
     </thead>
@@ -68,7 +68,7 @@
             <input type="hidden" ng-init="equipoFilter.idfrente_ot = myfrente" disabled="disabled">
           <?php endif; ?>
         </td>
-        <td colspan="3"></td>
+        <td colspan="3" class="yellow lighten-4"></td>
         <td data-icon="*"></td>
       </tr>
 
@@ -142,7 +142,7 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
-        <th colspan="3">Combustible</th>
+        <th colspan="3" class="yellow lighten-4">Combustible</th>
         <th data-icon="*"></th>
       </tr>
     </tbody>
