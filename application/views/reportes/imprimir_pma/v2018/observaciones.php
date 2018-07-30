@@ -40,20 +40,15 @@
     $y = 0;
     foreach ($observaciones as $key => $v): ?>
       <?php $y=$y+1; ?>
-        <tr>
-          <td> <?= $v->msj ?> <br> </td>
-        </tr>
+      <tr>
+        <td> <?= $v->msj ?> <br> </td>
+      </tr>
     <?php endforeach; ?>
+    
+      <tr>
+        <td> &nbsp; </td>
+      </tr>
 
-    <?php
-    for ($i=0; $i <= (2-$y) ; $i++) {
-    ?>
-    <tr>
-      <td> &nbsp; </td>
-    </tr>
-    <?php
-    }
-    ?>
   </tbody>
 </table>
 

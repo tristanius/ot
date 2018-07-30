@@ -67,7 +67,7 @@
               <td>
                 <b ng-bind="rd.info.fecha_reporte"></b>
                 <input type="hidden" ng-model="rd.fecha_reporte" ng-init="rd.fecha_reporte = '<?= $r->fecha_reporte ?>'">
-                -  ( <?= $diasemana ?> )
+                -  ( <span ng-bind="dia_semana" ng-init="dia_semana = '<?= $diasemana ?>'"></span> )
               </td>
               <td class="noMaterialStyles">
                 <?php if (TRUE): ?>

@@ -488,9 +488,15 @@ var addReporte = function($scope, $http, $timeout) {
         val.hora_inicio = '7:00';
         val.hora_fin = '12:00';
         val.hora_inicio2 = '13:00';
-        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
+        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174 || $scope.rd.idbase == 262){
           val.hora_fin2 = '17:00';
           val.horas_ordinarias = 9;
+          if ($scope.dia_semana == 'sábado') {
+            val.hora_fin = '-';
+            val.hora_inicio2 = '-';
+            val.hora_fin2 = '10:00';
+            val.horas_ordinarias = 3;
+          }
         }else{
           val.hora_fin2 = '16:00';
           val.horas_ordinarias = 8;
@@ -966,9 +972,16 @@ var editReporte = function($scope, $http, $timeout){
         val.hora_inicio = '7:00';
         val.hora_fin = '12:00';
         val.hora_inicio2 = '13:00';
-        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
+        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174 || $scope.rd.idbase == 262){
           val.hora_fin2 = '17:00';
           val.horas_ordinarias = 9;
+
+          if ($scope.dia_semana == 'sábado') {
+            val.hora_fin = '-';
+            val.hora_inicio2 = '-';
+            val.hora_fin2 = '10:00';
+            val.horas_ordinarias = 3;
+          }
         }else{
           val.hora_fin2 = '16:00';
           val.horas_ordinarias = 8;

@@ -18,7 +18,7 @@ class Reporte extends CI_Controller{
     $date1=date_create($fecha);
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
-    if($diff->y == 0 && $diff->m == 0 && $diff->d <= 30){
+    if($diff->y == 0 && $diff->m <= 4){
       if( date( 'Y-m-d', strtotime($fecha) ) <= date( 'Y-m-d', strtotime('2018-01-30') )  ) {
         echo 'toolong';
       }else{

@@ -46,9 +46,9 @@
             <tr>
               <td><b><?= $ot->nombre_ot ?></b> <input type="hidden" ng-model="rd.info.nombre_ot" ng-init="rd.info.nombre_ot = '<?= $ot->nombre_ot ?>'"> </td>
               <td>
-                <b><?= date('Y/m/d',strtotime($fecha)) ?></b>
+                <b ng-init="rd.fecha_reporte = '<?= $fecha ?>'"><?= date('Y/m/d',strtotime($fecha)) ?></b>
                 <input type="hidden" ng-model="rd.info.fecha_reporte" ng-init="rd.info.fecha_reporte = '<?= $fecha ?>'"> -
-                ( <?= $diasemana ?> )
+                -  ( <span ng-bind="dia_semana" ng-init="dia_semana = '<?= $diasemana ?>'"></span> )
               </td>
               <td>
                 <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#info', 'nodisplay', '.mypanel > div')" data-icon="&#xe021;"> Detalles Reporte</button>

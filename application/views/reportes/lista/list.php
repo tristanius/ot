@@ -15,7 +15,7 @@
       </select>
     </span>
     <span> Día: <input type="text" ng-if="filtroReportes.mes" style="width:8ex" ng-model="filtroReportes.dia"></span>
-    <span ng-if="!validPriv(68)"> <span ng-init="filtroReportes.validado_pyco = (!validPriv(68)?'VALIDO':'')"></span> Usuario de validación externa</span>
+    <span ng-if="!validPriv(68)"> <span ng-init="filtroReportes.validado_pyco = (validPriv(100)?'VALIDO':'')"></span> Usuario de validación externa</span>
   </div>
   <table class="mytabla font11 striped">
     <thead>
