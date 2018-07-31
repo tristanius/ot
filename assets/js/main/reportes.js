@@ -46,7 +46,7 @@ var reportes = function($scope, $http, $timeout) {
   }
 
   $scope.setSelecteState = function(add){
-		if( !add ){
+    if( !add ){
 			add = true;
 		}else{
 			add = false;
@@ -393,29 +393,7 @@ var addReporte = function($scope, $http, $timeout) {
   $scope.actividadesOT = [];
   $scope.listStatus = [];
 
-  //Busque de equipos no relacionados
-  $scope.consultaEquiposOT = {};
-  $scope.resultEquiposBusqueda = [];
-
-	$scope.isOnPeticion = false;
-
-  $scope.buscarEquiposBy = function(link){
-    console.log(link)
-    $http.post(link, {
-      codigo_siesa: $scope.consultaEquiposOT.codigo_siesa,
-      referencia: $scope.consultaEquiposOT.referencia,
-      descripcion: $scope.consultaEquiposOT.descripcion,
-      un: $scope.consultaEquiposOT.un
-    }).then(
-      function(response){
-        console.log(response.data)
-        $scope.resultEquiposBusqueda = response.data;
-      },
-      function(response){
-        alert('Falló la consulta');
-      }
-    );
-  }
+  $scope.isOnPeticion = false;
 
   // Utilidades
   $scope.toggleContent = function(tag, clase, section){
@@ -488,14 +466,18 @@ var addReporte = function($scope, $http, $timeout) {
         val.hora_inicio = '7:00';
         val.hora_fin = '12:00';
         val.hora_inicio2 = '13:00';
-        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174 || $scope.rd.idbase == 262){
+        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
           val.hora_fin2 = '17:00';
           val.horas_ordinarias = 9;
+        }else if ($scope.rd.idbase == 262) {
           if ($scope.dia_semana == 'sábado') {
             val.hora_fin = '-';
             val.hora_inicio2 = '-';
             val.hora_fin2 = '10:00';
             val.horas_ordinarias = 3;
+          }else{
+            val.hora_fin2 = '17:00';
+            val.horas_ordinarias = 9;
           }
         }else{
           val.hora_fin2 = '16:00';
@@ -877,26 +859,7 @@ var editReporte = function($scope, $http, $timeout){
       v.validacion_he = false;
     });
   }
-  //Busque de equipos no relacionados
-  $scope.consultaEquiposOT = {};
-  $scope.resultEquiposBusqueda = [];
-  $scope.buscarEquiposBy = function(link){
-    console.log(link)
-    $http.post(link, {
-      codigo_siesa: $scope.consultaEquiposOT.codigo_siesa,
-      referencia: $scope.consultaEquiposOT.referencia,
-      descripcion: $scope.consultaEquiposOT.descripcion,
-      un: $scope.consultaEquiposOT.un
-    }).then(
-      function(response){
-        console.log(response.data)
-        $scope.resultEquiposBusqueda = response.data;
-      },
-      function(response){
-        alert('Falló la consulta');
-      }
-    );
-  }
+
   // Utilidades
   $scope.toggleContent = function(tag, clase, section, myfun=undefined){
     if(section != undefined){
@@ -972,15 +935,18 @@ var editReporte = function($scope, $http, $timeout){
         val.hora_inicio = '7:00';
         val.hora_fin = '12:00';
         val.hora_inicio2 = '13:00';
-        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174 || $scope.rd.idbase == 262){
+        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
           val.hora_fin2 = '17:00';
           val.horas_ordinarias = 9;
-
+        }else if ($scope.rd.idbase == 262) {
           if ($scope.dia_semana == 'sábado') {
             val.hora_fin = '-';
             val.hora_inicio2 = '-';
             val.hora_fin2 = '10:00';
             val.horas_ordinarias = 3;
+          }else{
+            val.hora_fin2 = '17:00';
+            val.horas_ordinarias = 9;
           }
         }else{
           val.hora_fin2 = '16:00';
@@ -1069,12 +1035,6 @@ var editReporte = function($scope, $http, $timeout){
     });
   }
 
-  // Relacionar equipos desde esta vista
-  $scope.relacionarEquipoAOt = function(it, url){
-    console.log($scope.rd.info)
-    $scope.$parent.relacionarEquipoAOt(it, url, $scope);
-  }
-
   $scope.quitarRegistroLista = function( lista, item, url, prop){
     if(url!='' && ( item.idrecurso_reporte_diario != undefined && item.idrecurso_reporte_diario != '' ) && $scope.tipoGuardado == 1 ){
       $http.post(url+'/'+item.idrecurso_reporte_diario, { idrecurso_reporte_diario: item.idrecurso_reporte_diario } ).then(
@@ -1132,6 +1092,8 @@ var editReporte = function($scope, $http, $timeout){
         );
     }
   }
+
+  // CORREGIR
   $scope.addObservacion = function(tipo){
     var f = new Date();
     if (tipo=='proveedor') {
@@ -1140,7 +1102,7 @@ var editReporte = function($scope, $http, $timeout){
       $scope.rd.info.observaciones_cliente.push( {msj:'', tipo:'cliente', fecha: f.toLocaleString()} );
     }
   }
-
+  // CORREGIR
   $scope.addObservacion2 = function(obspyco){
     var f = new Date();
     var data = {
@@ -1150,7 +1112,7 @@ var editReporte = function($scope, $http, $timeout){
       };
     $scope.rd.observaciones_pyco.push(data);
   }
-
+  // CORREGIR
   $scope.addActividad = function(tipo){
     var f = new Date();
     if($scope.rd.info.actividades == undefined){
@@ -1162,7 +1124,7 @@ var editReporte = function($scope, $http, $timeout){
       $scope.rd.info.actividades.push( { msj:'', tipo:'cliente', fecha: f.toLocaleString() } );
     }
   }
-
+  // CORREGIR
   $scope.getStatusLaboral = function(idstst, per){
     var adicion = false;
     if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){

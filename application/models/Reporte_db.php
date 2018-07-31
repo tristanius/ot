@@ -226,9 +226,12 @@ class Reporte_db extends CI_Model{
         ->where('rrd.idrecurso_reporte_diario',$id)->where('rd.fecha_reporte',$fecha)->order_by('rrd.idrecurso_reporte_diario', 'DESC')->get();
   }
 
-  public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL, $facturable = NULL)
+  public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL, $facturable = NULL, $select=NULL)
   {
     $this->load->database('ot');
+    if (isset($select)) {
+      $this->db->select($select);
+    }
     $this->db->select('OT.nombre_ot');
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');

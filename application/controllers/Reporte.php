@@ -126,7 +126,7 @@ class Reporte extends CI_Controller{
     foreach ($list as $key => $value) {
       $idrrd = $this->repo->addRecursoRepo($value, $idr);
       // agregar avance de obra
-      $this->avanceRecurso($rec, $idrrd);
+      $this->avanceRecurso($value, $idrrd);
     }
   }
   #===========================================================================================================
@@ -137,31 +137,31 @@ class Reporte extends CI_Controller{
   {
     $identificacion = ( $conjunto == "equipos" )? $val->codigo_siesa: $val->identificacion;
     $val->valid = TRUE;
-    $rows = array();
-    /*
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    Corregir: lista de excepciones no debe ser exluyente de coincidencia de reportes.
-    Corregir: la cantidad del item a validar se debe validar no en este metodo sino en el de nivel superior (REVISAR PRIMERO)
-    Corregir: Optimizar en funcion de rendimiento y no reproceso.
-    */
-    if ( !$this->exceptionValidarRecurso($val) ) { // SI NO ESTA DENTRO DE LAS EXCEPCIONES
-      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
-      $rows2 = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
-      if( $rows->num_rows() > 0){ // SI ESTA CANT > 1 y FACTURABLE
+    # Consultamos registros el mismo día en otras OT
+    $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
+    # Si existe
+    if($rows->num_rows() > 0){
+      # si NO es un codigo excepto continuamos
+      if(!$this->exceptionValidarRecurso($val)){
+        $fact= FALSE;
+        $select='SUM(rrd.cantidad) AS cantidad_acumulada';
+        $facturable = NULL;
+        $acumulados = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, $facturable, $select)->row();
+        # Validamos
+        if($acumulados->cantidad_acumulada() >= 1){
           $val->valid = FALSE;
-          $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
-      }elseif ($rows2->num_rows() > 0 && $val->cantidad > 0) { // CANTIDAD MAYOR QUE 0 Y NO FACTURABLE
-        if($conjunto == "equipos"){
-          $val->valid = FALSE;
-          $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo como NO facturable. ".json_encode($rows->result());
-        }else{
-          $val->msj = "CUIDADO! El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
+          $val->msj = 'Este registro acumula '.$acumulados->cantidad_acumulada().' unidades en reportes. ';
         }
+        $val->msj .= 'Se encuentra reportado en las OT: '.json_encode($rows->result());s
+      }else{
+        # Sí esta excepto de todos modos avisamos.
+        $val->msj = "Recurso excepto de validación. Pero ya reportado: ".json_encode($rows->result());
       }
     }
     return $val;
   }
 
+  # CORREGIR: generar tabla de excepciones por contrato y consultar
   public function exceptionValidarRecurso($val)
   {
     $this->load->database('ot');
@@ -187,26 +187,28 @@ class Reporte extends CI_Controller{
     $post->succ = TRUE;
     foreach ($post->recursos as $k => $v) {
       if($k != 'actividades' && $k != 'material' && $k != 'otros'){
-        foreach ($v as $key => $value) {
-          /*
-          Corregir: revisar primero las cantidades y estado facturable antes de ir a validar los items.
-          */
-          $value->msj = '';
-          $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
-          $value =  $this->validarRecurso( $post->fecha, $value, $k, $post->idOT );
-          if($value->cantidad <= 0 && !$value->facturable){
-            $value->valid = TRUE;
-            $value->msj = "Este registro NO es facturable y sin cantidad.";
-          }elseif ($k=='personal' && !$value->valid && $value->cantidad <= 0 ){
-            $value->valid = TRUE;
-          }
-          if(!$value->valid){
+        foreach ($v as $key => $rec) {
+          $rec->msj = '';
+          # Validamos primero que el codigo del item exista en la OT
+          $rec->valid_item = $this->validarItemByOT($post->idOT, $rec->codigo);
+          if(!$rec->valid_item){
+            $rec->msj .= ' El item no existe en la planificación OT';
+            $rec->valid = FALSE;
             $post->succ = FALSE;
-          }
-          if(!$value->valid_item){
-            $value->msj .= ' El item no existe en la planificación OT';
-            $value->valid = FALSE;
-            $post->succ = FALSE;
+          }else{
+            #inicio de validacion de item
+            if($rec->cantidad <= 0){
+              $rec->valid = TRUE;
+              $rec->msj .= "Registro sin cantidad. ";
+            }else{
+              $rec =  $this->validarRecurso( $post->fecha, $rec, $k, $post->idOT );
+              $rec->valid = !$rec->facturable?TRUE:FALSE;
+            }
+            # Si el item no es valido el resultado general tampoco
+            if(!$rec->valid){
+              $post->succ = FALSE;
+            }
+            # fin de validacion de item
           }
         }
       }
