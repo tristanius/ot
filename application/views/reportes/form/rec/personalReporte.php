@@ -150,9 +150,9 @@
           </table>
         </td>
 
-        <td class="inputSmall">
-          <div class="">
-            <input type="number" style="border: green 1px solid; width:6ex;" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "  min=0 max=1>
+        <td style="border: green 1px solid;" >
+          <div class="inputSmall">
+            <input type="number" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-change="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "  min=0 max=1>
           </div>
         </td>
         <td class="inputSmall" style="background: #F4F9FD "> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true"> </td>

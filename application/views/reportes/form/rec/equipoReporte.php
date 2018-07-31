@@ -102,7 +102,9 @@
         <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="noMaterialStyles"> <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:9ex;"> </td>
 
-        <td class="inputSmall"> <input type="number" min=0 ng-model="eq.cantidad" step=any ng-init="eq.cantidad = parseNumb(eq.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td class="inputSmall">
+          <input type="number" ng-model="eq.cantidad"  ng-init="eq.cantidad = parseNumb(eq.cantidad)"  ng-change="eq.cantidad = parseNumb(eq.cantidad)" step=any min=0  ng-readonly="rd.info.estado == 'CERRADO' ">
+        </td>
         <td class="inputSmall"> <input type="text" ng-model="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <td class="inputSmall"> <input type="text" ng-model="eq.horometro_ini" ng-readonly="rd.info.estado == 'CERRADO' "> </td>

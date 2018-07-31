@@ -105,7 +105,9 @@
         <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.peso_und"> </td>
 
 
-        <td class="yellow lighten-4"> <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
+        <td class="yellow lighten-4">
+          <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)"  ng-change="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> 
+        </td>
         <td ng-init="act.acumulado?act.acumulado:0;" ng-show="!vista_extendida">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>
         </td>
