@@ -77,13 +77,10 @@
       <br>
 
       <div class="btnWindow" ng-show="!isOnPeticion">
-        <!--
-        <button type="button" class="waves-effect waves-light btn green mini-btn2" ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')" data-icon="&#xe02d;">
-           Validar recursos
+        <button type="button" class="light-green waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
+          ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')">
+          <b data-icon="&#xe04c;"></b>
         </button>
-        <br>
-        <br>
-        -->
 
         <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="guardarRD('<?= site_url('reporte/insert') ?>')">
           <b data-icon="&#xe015;"></b> Guardar

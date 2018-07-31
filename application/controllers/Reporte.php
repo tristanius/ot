@@ -148,15 +148,18 @@ class Reporte extends CI_Controller{
         $facturable = NULL;
         $acumulados = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, $facturable, $select)->row();
         # Validamos
-        if($acumulados->cantidad_acumulada() >= 1){
+        $acumulado = $acumulados->cantidad_acumulada + $val->cantidad;
+        if($acumulado >= 1){
           $val->valid = FALSE;
-          $val->msj = 'Este registro acumula '.$acumulados->cantidad_acumulada().' unidades en reportes. ';
+          $val->msj = 'Este registro acumularía '.$acumulado.' unidades en reportes. ';
         }
-        $val->msj .= 'Se encuentra reportado en las OT: '.json_encode($rows->result());s
+        $val->msj .= 'Se encuentra reportado en las OT: '.json_encode($rows->result());
       }else{
         # Sí esta excepto de todos modos avisamos.
         $val->msj = "Recurso excepto de validación. Pero ya reportado: ".json_encode($rows->result());
       }
+    }else {
+      $val->valid = TRUE;
     }
     return $val;
   }
@@ -192,17 +195,17 @@ class Reporte extends CI_Controller{
           # Validamos primero que el codigo del item exista en la OT
           $rec->valid_item = $this->validarItemByOT($post->idOT, $rec->codigo);
           if(!$rec->valid_item){
-            $rec->msj .= ' El item no existe en la planificación OT';
+            $rec->msj = ' El item no existe en la planificación OT';
             $rec->valid = FALSE;
             $post->succ = FALSE;
           }else{
             #inicio de validacion de item
             if($rec->cantidad <= 0){
               $rec->valid = TRUE;
-              $rec->msj .= "Registro sin cantidad. ";
+              $rec->msj = "Registro sin cantidad. ";
             }else{
               $rec =  $this->validarRecurso( $post->fecha, $rec, $k, $post->idOT );
-              $rec->valid = !$rec->facturable?TRUE:FALSE;
+              $rec->valid = (!$rec->facturable && !$rec->valid)?TRUE:FALSE;
             }
             # Si el item no es valido el resultado general tampoco
             if(!$rec->valid){
