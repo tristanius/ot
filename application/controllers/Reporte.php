@@ -205,7 +205,7 @@ class Reporte extends CI_Controller{
               $rec->msj = "Registro sin cantidad. ";
             }else{
               $rec =  $this->validarRecurso( $post->fecha, $rec, $k, $post->idOT );
-              $rec->valid = (!$rec->facturable && !$rec->valid)?TRUE:FALSE;
+              #$rec->valid = (!$rec->facturable && !$rec->valid)?TRUE:FALSE;
             }
             # Si el item no es valido el resultado general tampoco
             if(!$rec->valid){

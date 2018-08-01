@@ -9,8 +9,8 @@
 				<div class="row padding1ex">
 
 					<div class="row">
-						<div class="col s1 m1 l3"> </div>
-				    <div class="col s11 m10 l6">
+						<div class="col s1 m1 l2"> </div>
+				    <div class="col s11 m10 l8">
 				      <div class="card">
 				        <div class="card-image">
 				          <img src="<?= base_url("assets/img/icons/icon-user-by.png") ?>">
