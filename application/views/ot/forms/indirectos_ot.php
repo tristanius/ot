@@ -35,7 +35,7 @@
 				<tr>
 					<td colspan="2">
 						<b>Gastos de viaje:</b>
-						<button type="button" ng-click="setViaticos('#addViaticosOT', tr)" class="btn brown lighten-1 mini-btn2" name="button">Calcular</button>
+						<button type="button" ng-click="setViaticos('#addViaticosOT', tr)" class="btn brown lighten-1 mini-btn2" name="button" ng-disabled="true">Calcular</button>
 					</td>
 				</tr>
 			</thead>
@@ -59,7 +59,7 @@
 				<tr>
 					<td colspan="2">
 						<b>Reembolsables:</b>
-						<button type="button" ng-click="setReembolsables('#reembolsablesOT', tr)" class="btn brown lighten-1 mini-btn2" name="button">Calcular</button>
+						<button type="button" ng-click="setReembolsables('#reembolsablesOT', tr)" class="btn brown lighten-1 mini-btn2" name="button" ng-disabled="true">Calcular</button>
 					</td>
 				</tr>
 			</thead>
@@ -87,7 +87,7 @@
 				<tr>
 					<td colspan="2">
 						<b>Horas extra y raciones:</b>
-						<button type="button" ng-click="setHorasExtra('#addHorasExtra', tr)" class="btn brown lighten-1 mini-btn2" name="button">Calcular</button>
+						<button type="button" ng-click="setHorasExtra('#addHorasExtra', tr)" class="btn brown lighten-1 mini-btn2" name="button" ng-disabled="true">Calcular</button>
 					</td>
 				</tr>
 			</thead>

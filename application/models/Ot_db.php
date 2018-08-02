@@ -128,7 +128,6 @@ class Ot_db extends CI_Model {
 		$this->db->join('contrato AS c', 'c.idcontrato = OT.idcontrato');
 		$this->db->where('OT.idOT', $idot);
 		return $this->db->get();
-
 	}
 	//Obtener un listado de todas las OT
 	public function getAllOTs($base = NULL, $nom = NULL, $estado = NULL){
@@ -256,6 +255,7 @@ class Ot_db extends CI_Model {
 		$this->load->database('ot');
 		$this->db->select(
 				'
+				itc.item,
 				itt.iditem_tarea_ot,
 				itt.facturable,
 				itf.iditemf,

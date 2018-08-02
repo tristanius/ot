@@ -109,6 +109,7 @@ class Tarea_db extends CI_Model{
   {
     $this->load->database('ot');
     $this->db->select('
+        itc.item,
         itt.iditem_tarea_ot,
         itt.cantidad,
         itt.duracion,

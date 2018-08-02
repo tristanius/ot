@@ -1,5 +1,15 @@
 var OT = function($scope, $http, $timeout){
 
+	$scope.enlaceGetOT = '';
+	$scope.loader = false;
+	$scope.getAjaxWindowLocal = function(lnk, ventana, titulo){
+		$scope.enlaceGetOT = '';
+		$timeout(function(){
+			$scope.enlaceGetOT = lnk;
+		});
+		$scope.$parent.getAjaxWindowLocal(lnk, ventana, titulo);
+	}
+
 	$scope.getResumenGeneral = function(link){
 		$.ajax({
 			url: link,
@@ -160,33 +170,39 @@ var OT = function($scope, $http, $timeout){
 	}
 	//==============================================================================
 	// Gestion de items de OT
+	// selecciona los items de la OT
+	$scope.getItemsVg = function(lnk, ambito){
+		$scope.loader = true;
+		$http.get(lnk).then(
+			function(resp){
+				console.log(resp.data)
+				ambito.items = resp.data;
+				$scope.loader = false;
+			},
+			function(resp){
+				alert('algo ha fallado');
+				console.log(resp.data);
+				$scope.loader = false;
+			}
+		);
+	}
 	//Muestra items por agregar de un tipo en la ventana. Debe llamarse desde un controller hijo.
 	$scope.selectItemsType =  function(type, ambito){
-		switch (type) {
-			case 1:
-				ambito.myItems = angular.copy(ambito.items['actividad']);
-				break;
-			case 2:
-				ambito.myItems = angular.copy(ambito.items['personal']);
-				break;
-			case 3:
-				ambito.myItems = angular.copy(ambito.items['equipo']);
-				break;
-			case 'material':
-				ambito.myItems = angular.copy(ambito.items['material']);
-				break;
-			case 'otros':
-				ambito.myItems = angular.copy(ambito.items['otros']);
-				break;
-			default:
-				ambito.myItems = [{}];
-				alert('no se encuentran elementos de el tipo seleccionado.');
+		try {
+				ambito.myItems = angular.copy(ambito.items[type]);
+		} catch (e) {
+			ambito.myItems = [];
+			console.log(e)
 		}
 	}
 	//Muestra la ventana para add items. Debe llamarse desde un controller hijo.
 	$scope.VwITems = function(tipo, ambito){
-		$scope.selectItemsType(tipo, ambito);
+		$scope.loader = true;
+		$timeout(function(){
+			$scope.selectItemsType(tipo, ambito);
+		});
 		$("#ventana_add_items").removeClass('nodisplay');
+		$scope.loader = false;
 	}
 	$scope.setSelecteState = function(add){
 		if(!add){
@@ -203,27 +219,27 @@ var OT = function($scope, $http, $timeout){
 			i++;
 			ambito.indexer++;
 			if (v.add == true) {
-				//console.log(v);
+				console.log(v);
 				v.id = ambito.indexer;
 				v.fecha_agregado = '';
 				v.cantidad = v.cantidad==undefined?1:v.cantidad;
 				v.duracion = v.duracion==undefined?1:v.duracion;
 				v.facturable = true;
 				v.idsector_item_tarea = '1';
-				if (v.tipo_item == 1){
+				if (v.tipo == 1){
 					tr.actividades.push(v);
-				}else if(v.tipo_item == 2) {
+				}else if(v.tipo == 2) {
 					tr.personal.push(v);
 					//generar listado de items de personal para calc. gastos de viaje.
 					tr.json_viaticos.json_viaticos.push(v);
 					tr.json_horas_extra.json_horas_extra.push(v);
-				}else if(v.tipo_item == 3){
+				}else if(v.tipo == 3){
 					tr.equipos.push(v);
-				}else if (v.tipo_item == 'material') {
+				}else if (v.tipo == 'material') {
 					if (!tr.material)
 						tr.material = [];
 					tr.material.push(v);
-				}else if(v.tipo_item == 'otros'){
+				}else if(v.tipo == 'otros'){
 					if (!tr.otros)
 						tr.otros = [];
 					tr.otros.push(v);
@@ -255,9 +271,9 @@ var OT = function($scope, $http, $timeout){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 			//Redondeado de totales
 			tr.valor_recursos = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
-			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * 0.18);//desde el contrato
-			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * 0.01);//desde el contrato
-			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * 0.04);//desde el contrato
+			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
+			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
+			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
 		}
 	}
 	$scope.setTareaAdministracion = function(value, tr){
@@ -284,7 +300,7 @@ var OT = function($scope, $http, $timeout){
 		};
 		return valor;
 	}
-		//====================================================================================
+	//====================================================================================
 	// Viaticos
 	$scope.setViaticos = function(tag, tr, ambito){
 		$(tag).removeClass("nodisplay");
@@ -595,7 +611,7 @@ var OT = function($scope, $http, $timeout){
 var listaOT = function($scope, $http, $timeout){
 	$scope.linkLista = '';
 	$scope.consulta = {};
-	$scope.findOTsByBase = function(url){
+	$scope.findOTsBy = function(url){
 		if($scope.consulta.indicio_nombre_ot || $scope.consulta.base || $scope.consulta.estado){
 			$http.post(url, $scope.consulta ).then(
 					function(response) {
@@ -633,7 +649,7 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.ot.frentes = [];
 	////$scope.$parent.tinyMCE();
 
-	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope); }
+	$scope.getFormData = function(url){ $scope.$parent.getDataITems(url, $scope); }
 	$scope.getData = function(url){ $scope.$parent.getData(url, $scope, false); }
 	$scope.selectTarea = function(ot, indice){
 		$timeout(function(){
@@ -648,6 +664,10 @@ var agregarOT = function($scope, $http, $timeout){
 		$scope.calcularSubtotales();
 	}
 	// procesos para items added a la OT
+	// Obtener items de una vigencia seleccionada
+	$scope.getItemsVg = function(lnk){
+		$scope.$parent.getItemsVg(lnk, $scope);
+	}
 	//items planeación
 	$scope.VwITems = function(tipo){
 		if($scope.ot.tareas != undefined && $scope.ot.tareas.length > 0){ $scope.$parent.VwITems(tipo, $scope); }
@@ -676,7 +696,7 @@ var agregarOT = function($scope, $http, $timeout){
 		//$scope.$parent.getMapa($scope);
 	}
 	//===================================================================================================================
-	$scope.guardarOT = function(url){
+	$scope.guardarOT = function(url, lnkConsulta){
 		$scope.calcularSubtotales();
 		$scope.ot.justificacion = $('#justificacion').val();
 		$scope.ot.actividad = $('#actividad').val();
@@ -694,11 +714,11 @@ var agregarOT = function($scope, $http, $timeout){
 					if(response.data == 'Orden de trabajo guardada correctamente'){
 						alert('Orden de trabajo guardada correctamente, BASE: '+$scope.ot.base_idbase);
 						$timeout(function(){
-							$scope.$parent.cerrarWindow();
-							$scope.$parent.refreshTabs();
+							$scope.$parent.cerrarWindowLocal('#ventanaOT', $scope.$parent.enlaceGetOT);
+							//$scope.$parent.refreshTabs();
+							$scope.$parent.findOTsBy(lnkConsulta);
 							$scope.isOnPeticion = false;
 						});
-						$http.post($scope.$parent.site_url+"/sesion/sendMail2",{msj: " Una nueva orden de trabajo <b>"+$scope.ot.nombre_ot+"</b> se ha creado. "})
 					}else{
 						alert(response.data);
 						$scope.isOnPeticion = false;
@@ -740,7 +760,7 @@ var editarOT = function($scope, $http, $timeout) {
 		});
 	}
 
-	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope);}
+	$scope.getFormData = function(url){ $scope.$parent.getDataITems(url, $scope);}
 	$scope.getData = function(url){	$scope.$parent.getData(url, $scope, true); }
 	$scope.selectTarea = function(ot, indice){
 		$timeout(function(){
@@ -755,6 +775,9 @@ var editarOT = function($scope, $http, $timeout) {
 		$scope.calcularSubtotales();
 	}
 	// procesos para items added a la OT
+	$scope.getItemsVg = function(lnk){
+		$scope.$parent.getItemsVg(lnk, $scope);
+	}
 	//items planeación
 	$scope.VwITems = function(tipo){
 		if($scope.ot.tareas != undefined && $scope.ot.tareas.length > 0){ $scope.$parent.VwITems(tipo, $scope); }
@@ -823,9 +846,6 @@ var editarOT = function($scope, $http, $timeout) {
 						$scope.selectTarea($scope.ot, $('#selected_tarea').val());
 						$scope.isOnPeticion = false;
 						$scope.$parent.calcularValorOT($scope);
-						$timeout(function(){
-							$scope.$parent.refreshTabs();
-						});
 					}else if (response.data == 'La Orden de trabajo ya existe.') {
 						alert('No. de Orden de trabajo ya registrado');
 						$scope.isOnPeticion = false;

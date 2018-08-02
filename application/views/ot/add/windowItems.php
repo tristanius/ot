@@ -1,4 +1,5 @@
   <div id="ventana_add_items" class="nodisplay ventanaItems">
+    <img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader">
 		<div style="position: relative">
 			<button type="button" class="btn green" ng-click="addSelectedItems()" data-icon="">Ok</button>
 		</div>
@@ -21,7 +22,7 @@
 					<td class="noMaterialStyles">
 						<button type="button" ng-click="changeFilterSelect(filtroItems)" class="btn mini-btn2"> <span data-icon="&#xe04c;"></span> </button>
 					</td>
-					<td> <input type="text" ng-model="filtroItems.itemc_item" placeholder="item"/> </td>
+					<td> <input type="text" ng-model="filtroItems.item" placeholder="item"/> </td>
 					<td> <input type="text" ng-model="filtroItems.codigo" placeholder="codigo"/> </td>
 					<td> <input type="text" ng-model="filtroItems.descripcion" placeholder="descripcion"/> </td>
 					<td> <input type="text" ng-model="filtroItems.unidad" placeholder="unidad"/> </td>
@@ -35,7 +36,7 @@
 					<td class="noMaterialStyles">
 						<input type="checkbox" ng-model="it.add" ng-click="setSelecteState(it.add)" />
 					</td>
-					<td style="width: 70px" ng-bind="it.itemc_item" ></td>
+					<td style="width: 70px" ng-bind="it.item" ></td>
 					<td ng-bind="it.codigo" ></td>
 					<td ng-bind="it.descripcion"></td>
 					<td ng-bind="it.unidad"></td>

@@ -1,5 +1,5 @@
-<div class="windowCentered2 row" ng-controller="OT">
-	<section class="area" ng-controller="agregarOT">
+<div class="windowCentered2 row" ng-controller="agregarOT">
+	<section class="area">
 
 		<div class="btnWindow">
 	    <h5>
@@ -9,7 +9,7 @@
 	  </div>
 
 		<!-- Información de la básica OT -->
-		<table class="mytabla" ng-init="getItemsBy('<?= site_url('Ot/getDataNewForm') ?>')">
+		<table class="mytabla" ng-init="getFormData('<?= site_url('Ot/getDataNewForm') ?>')">
 			<thead>
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Nombre de OT</th>
@@ -118,7 +118,7 @@
 						</select>
 					</td>
 					<td colspan="2">
-						<select ng-model="ot.idcontrato" ng-options="c.idcontrato as (c.no_contrato+' '+c.contratista) for c in contratos track by c.idcontrato"></select>
+						<select ng-model="ot.idcontrato" ng-options="c.idcontrato as (c.no_contrato+' '+c.contratista) for c in contratos track by c.idcontrato" ng-disabled="ot.vigencias"></select>
 					</td>
 					<td colspan="3"></td>
 				</tr>
@@ -147,30 +147,28 @@
 			<!-- seleccion de tarea -->
 			<div class="noMaterialStyles">
 				<label>Selecciona una Tarea: </label>
-				<select id="selected_tarea" ng-model="selected_tarea" ng-init="selected_tarea = '0'" ng-change="selectTarea(ot, selected_tarea)">
-					<option ng-repeat="tar in ot.tareas track by $index" value="{{$index}}" ng-init="selectTarea(ot, 0)">{{tar.nombre_tarea}}</option>
-				</select>
-				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
+				<select id="selected_tarea" ng-model="mytr" ng-options="tarea as (tarea.nombre_tarea) for tarea in ot.tareas track by $index"></select>
+				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()" ng-disabled="!ot.idcontrato"></button>
 			</div>
 
 			<section class="row">
 				<div class="col s12 m2 l2" style="border:1px solid #CCC; padding:3px;">
 					<h6>Descripcion de la O.T.: </h6>
-					<button class="btn blue mini-btn2" ng-click="toggleContent('#descripcion', 'nodisplay', '.mypanel > div')">Descripción</button>
-					<button class="btn teal accent-4 mini-btn2" ng-click="toggleContent('#frentes', 'nodisplay', '.mypanel > div')">Frentes</button>
+					<button class="btn blue mini-btn2" ng-click="toggleContent('#descripcion', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Descripción</button>
+					<button class="btn teal accent-4 mini-btn2" ng-click="toggleContent('#frentes', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Frentes</button>
 				</div>
 
 				<div class="col s12 m6 l6" style="border:1px solid #CCC; padding:3px;">
 					<h6>Planeación Tarea: </h6>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')">Recursos</button>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#indirectos_ot', 'nodisplay', '.mypanel > div')">G.V. / H.E / Otros</button>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')">Requisitos</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Recursos</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#indirectos_ot', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> G.V. / H.E / Otros</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Requisitos</button>
 				</div>
 
 				<div class="col s12 m4 l4" style="border:1px solid #CCC; padding:3px;">
 					<h6>Vista general: </h6>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#general', 'nodisplay', '.mypanel > div')">General</button>
-					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')">Inf. adicional de O.T.</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#general', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> General</button>
+					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Inf. adicional de O.T.</button>
 				</div>
 			</section>
 			<!-- <button class="btn blue darken-4 orange mini-btn" ng-click="toggleContent('#resumen', 'nodisplay', '.mypanel > div')">resumen</button> -->
@@ -211,11 +209,13 @@
 
 		<br>
 
+		<img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader">
+
 		<!-- opciones -->
 		<div class="btnWindow">
-			<button type="button" class="waves-effect waves-light btn" ng-if="validPriv(37)" ng-click="guardarOT('<?= site_url('ot/saveOT') ?>')"> Finalizar</button>
-			<button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindow()">Cerrar</button>
-			<button type="button" class="waves-effect waves-light btn grey" ng-click="toggleWindow()">Ocultar</button>
+			<button type="button" class="waves-effect waves-light btn" ng-if="validPriv(37)" ng-click="guardarOT('<?= site_url('ot/saveOT') ?>', '<?= site_url('ot/getBy') ?>')"> Finalizar</button>
+			<button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindowLocal('#ventanaOT', enlaceGetOT)">Cerrar</button>
+			<button type="button" class="waves-effect waves-light btn grey" ng-click="toggleWindow2('#ventanaOT', '#ventanaOTOculta')">Ocultar</button>
 	  	</div>
 
 	</section>

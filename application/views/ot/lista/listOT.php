@@ -4,7 +4,7 @@
     <h4>Gestion de ordenes de trabajo:</h4>
 
     <div class="row botonera" ng-if="validPriv(37)">
-      <button type="button" class="btn btn-small blue" data-icon="&#xe052;" ng-click="getAjaxWindow('<?= site_url('ot/addNew') ?>', $event, 'Gestion de OTs');"> Crear O.T.</button>
+      <button type="button" class="btn btn-small blue" data-icon="&#xe052;" ng-click="getAjaxWindowLocal('<?= site_url('ot/addNew') ?>', '#ventanaOT', 'Gestion de OTs');"> Crear O.T.</button>
     </div>
 
     <div class="row" style="margin:2px; padding:2px; border:1px solid #999;border-radius:7px;">
@@ -33,13 +33,23 @@
 
       <div class="col m1">
         <button type="button" class="btn mini-btn" data-icon="," style="margin-top:0;"
-          ng-click="findOTsByBase('<?= site_url('ot/getBy') ?>')"></button>
+          ng-click="findOTsBy('<?= site_url('ot/getBy') ?>')"></button>
       </div>
 
     </div>
 
     <div class="row">
       <?php $this->load->view('ot/lista/list') ?>
+    </div>
+
+    <div id="ventanaOT" class="VentanaContainer nodisplay row">
+      <div class="loader col s12" ng-include="enlaceGetOT">
+      </div>
+    </div>
+    <div id="ventanaOTOculta" class="WindowOculta nodisplay">
+      <button type="button" class="btn blue" ng-click="toggleWindow2('#ventanaOT', '#ventanaOTOculta');" name="button">
+        <small>Mostrar Ventana oculta</small>
+      </button>
     </div>
   </section>
 

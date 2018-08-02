@@ -32,9 +32,10 @@
 			    		<td ng-bind="ot.nombre_tipo_ot"></td>
 		          <td ng-bind="ot.estado_doc"></td>
 		          <td>
-		            <button type="button" class="btn btn-small font10" ng-click="getAjaxWindow('<?= site_url('ot/edit') ?>/'+ot.idOT, $event, 'Editar OT');" data-icon="&#xe03e;"> Modificar</button>
+		            <button type="button" class="btn btn-small font10" ng-click="getAjaxWindowLocal('<?= site_url('ot/edit') ?>/'+ot.idOT, '#ventanaOT', 'Editar OT');" data-icon="&#xe03e;"> Modificar</button>
 
-								<button type="button" class="btn blue btn-small font10" ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"> Duplicar</button>
+								<button type="button" class="btn blue btn-small font10" ng-click="getAjaxWindowLocal('<?= site_url('ot/duplicar') ?>/'+ot.idOT, '#ventanaOT', 'Duplicar de OTs');"
+								ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"> Duplicar</button>
 
 								<button ng-if="validPriv(69)" class="btn btn-small red font10" ng-click="deleteOT('<?= site_url('ot/delete') ?>/', ot.idOT)" > X </button>
 		          </td>

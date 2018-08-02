@@ -78,11 +78,7 @@ class Ot extends CI_Controller {
 	{
 		$this->load->model(array("Ot_db","item_db","miscelanio_db","contrato_db"));
 		$bases = $this->Ot_db->getBases();
-		$items['actividad']  = $this->item_db->getBytipo(1)->result();
-		$items['personal']  = $this->item_db->getBytipo(2)->result();
-		$items['equipo']  = $this->item_db->getBytipo(3)->result();
-		$items['material']  = $this->item_db->getBytipo('material')->result();
-		$items['otros']  = $this->item_db->getBytipo('otros')->result();
+		$items = array('actividad'=>[], 'personal'=>[], 'equipo'=>[], 'material'=>[], 'otros'=>[]);
 		$vigencias = $this->item_db->getVigenciasActivas()->result();
 		$contratos = $this->contrato_db->getContratos(NULL, TRUE)->result();
 		$this->load->helper('config');
