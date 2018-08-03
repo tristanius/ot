@@ -469,7 +469,7 @@ var addReporte = function($scope, $http, $timeout) {
         if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
           val.hora_fin2 = '17:00';
           val.horas_ordinarias = 9;
-        }else if ($scope.rd.idbase == 262) {
+        }else if ($scope.rd.idbase == 262 || $scope.rd.idbase == 244) {
           if ($scope.dia_semana == 'sábado') {
             val.hora_fin = '-';
             val.hora_inicio2 = '-';
@@ -938,7 +938,7 @@ var editReporte = function($scope, $http, $timeout){
         if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
           val.hora_fin2 = '17:00';
           val.horas_ordinarias = 9;
-        }else if ($scope.rd.idbase == 262) {
+        }else if ($scope.rd.idbase == 262 || $scope.rd.idbase == 244 ) {
           if ($scope.dia_semana == 'sábado') {
             val.hora_fin = '-';
             val.hora_inicio2 = '-';

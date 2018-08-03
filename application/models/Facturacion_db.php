@@ -82,7 +82,7 @@ class Facturacion_db extends CI_Model{
         itc.descripcion,
         if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
         if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
-        titc.descripcion as clasifica_deta,
+        titc.descripcion as clasificacion_item,
         if(rrd.facturable,"SI","NO") AS facturable,
         tr.tarifa,
         (
@@ -110,7 +110,7 @@ class Facturacion_db extends CI_Model{
         IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und,
         rrd.abscisa_ini,
         rrd.abscisa_fin,
-        rrd.tipo_instalacion,        
+        rrd.tipo_instalacion,
         avance.*,
       ';
     }else{
@@ -154,7 +154,7 @@ class Facturacion_db extends CI_Model{
       itc.descripcion,
       if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
       if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
-      titc.descripcion as clasifica_deta,
+      titc.descripcion as clasificacion_item,
       if(rrd.facturable,"SI","NO") AS facturable,
       rrd.cantidad AS cant_und,
       tr.tarifa,
