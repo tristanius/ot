@@ -132,6 +132,8 @@ class Tarea_db extends CI_Model{
         tar.requisitos_documentales,
         tar.editable,
         titc.CL,
+        titc.BO,
+        titc.descripcion AS clasificacion_item,
         vg.idvigencia_tarifas,
         itt.idfrente_ot
         ');

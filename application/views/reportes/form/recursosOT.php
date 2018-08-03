@@ -5,12 +5,14 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
   <b>SELECCIONA FRENTE:</b>
 
   <?php foreach ($frentes as $key => $f): ?>
-    <?php $f->usuario = json_decode($f->usuario); ?>
-    <button class="btn mini-btn  {{myfrente == <?= $f->idfrente_ot ?> ?'teal darken-4':'light-blue darken-3';}}"
-      ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')"
-      ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && !validPriv(46)) )">
-        <?= ($key+1).". ".$f->nombre ?>
-    </button>
+      <?php $f->usuario = json_decode($f->usuario); ?>
+      <button class="btn mini-btn  {{myfrente == <?= $f->idfrente_ot ?> ?'teal darken-4':'light-blue darken-3';}}"
+        ng-click="myfrente = <?= $f->idfrente_ot ?>; changeFrente(myfrente, rd, '#showRecursos')"
+        <?php if ( isset($f->usuario) ): ?>
+        ng-disabled="(log.idusuario != <?= $f->usuario->idusuario ?> && (!validPriv(45) && !validPriv(46)) )"
+        <?php endif; ?>
+        > <?= ($key+1).". ".$f->nombre ?>
+      </button>
   <?php endforeach; ?>
 
 </div>

@@ -193,6 +193,18 @@ class Ot extends CI_Controller {
 		echo json_encode($ret);
 	}
 
+	public function mod_frente()
+	{
+		$f = json_decode( file_get_contents("php://input") );
+		$this->load->model('ot_db', 'ot');
+		$this->ot->modFrenteOT($f);
+		$ret = new stdClass();
+		$ret->success = 'success';
+		$ret->frente = $f;
+		$ret->array = (array) $f;
+		echo json_encode($ret);
+	}
+
 	# Gestiona cuando hay que agregar o modificar frentes de trabajo de una OT.
 	private function frentesOT($frente, $idot){
 		$this->load->model('ot_db', 'ot');

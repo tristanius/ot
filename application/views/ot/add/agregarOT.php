@@ -147,8 +147,9 @@
 			<!-- seleccion de tarea -->
 			<div class="noMaterialStyles">
 				<label>Selecciona una Tarea: </label>
-				<select id="selected_tarea" ng-model="mytr" ng-options="tarea as (tarea.nombre_tarea) for tarea in ot.tareas track by $index"></select>
-				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()" ng-disabled="!ot.idcontrato"></button>
+				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
+				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
+				&nbsp;
 			</div>
 
 			<section class="row">
@@ -209,7 +210,7 @@
 
 		<br>
 
-		<img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader">
+		<img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader" width="50">
 
 		<!-- opciones -->
 		<div class="btnWindow">

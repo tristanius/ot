@@ -1,9 +1,9 @@
   <div id="ventana_add_items" class="nodisplay ventanaItems">
-    <img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader">
+    <img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader" width="50">
 		<div style="position: relative">
 			<button type="button" class="btn green" ng-click="addSelectedItems()" data-icon="">Ok</button>
 		</div>
-		<table class="mytabla filtered ">
+		<table class="mytabla filtered fon11">
 			<tbody>
         <tr style="border-top:1px solid #777">
 					<th>Selecc.</th>
@@ -16,6 +16,7 @@
 					<th>Duración</th>
 					<th>Basico/Opcional</th>
 					<th>Conv./Legal</th>
+          <th>Clasificacion</th>
 				</tr>
 
 				<tr style="border:1px solid #999">
@@ -31,6 +32,7 @@
 					<td> </td>
 					<td> </td>
 					<td></td>
+          <td></td>
 				</tr>
 				<tr ng-repeat="it in myItems | filter: filtroItems" style="border:1px solid #999" >
 					<td class="noMaterialStyles">
@@ -45,6 +47,7 @@
 					<td> <input type="number" style="border: 1px solid #E65100; width:10ex"  ng-model="it.duracion" ng-init="it.duracion = 0" min="0"> </td>
 					<td ng-bind="it.BO"> </td>
 					<td ng-bind="it.CL"> </td>
+          <td ng-bind="it.clasificacion_item"></td>
 				</tr>
 			</tbody>
 		</table>

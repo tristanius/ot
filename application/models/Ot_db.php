@@ -189,7 +189,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$frente = (array) $frente;
-		$frente['usuario'] = json_encode($frente['usuario']);
+		$frente['usuario'] = isset($frente['usuario'] )?json_encode($frente['usuario']):NULL;
 		$this->db->insert('frente_ot', $frente);
 		return $this->db->insert_id();
 	}
@@ -197,7 +197,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$frente = (array) $frente;
-		$frente['usuario'] = json_encode($frente['usuario']);
+		$frente['usuario'] = isset($frente['usuario'] )?json_encode($frente['usuario']):NULL;
 		return $this->db->update('frente_ot', $frente, 'idfrente_ot = '.$idfrente);
 	}
 

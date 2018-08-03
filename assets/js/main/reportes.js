@@ -346,11 +346,11 @@ var listOTReportes = function($scope, $http, $timeout){
     $http.get(url+'valid/'+$scope.consulta.idOT+'/'+$scope.rd.fecha_selected)
     .then(
       function(response) {
-        console.log(response.data);
         if (response.data == "invalid") {
           alert('El reporte de esta fecha para esta OT ya existe');
         }else if(response.data == "valid") {
           var link = url+'/'+$scope.consulta.idOT+'/'+$scope.rd.fecha_selected;
+          console.log(link);
           $scope.enlaceGetReporte = link;
           $scope.$parent.getAjaxWindowLocal(link, '#ventanaReporte', '#ventanaReporteOCulta');
         }else if (response.data == 'toolong') {

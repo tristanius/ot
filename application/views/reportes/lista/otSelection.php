@@ -10,9 +10,15 @@
           <th>Nombre de OT</th>
           <th>Estado</th>
         </tr>
+        <tr>
+          <th></th>
+          <th> <input type="text" ng-model="filterOtSelect.base_idbase" placeholder="filtro de busqueda"> </th>
+          <th> <input type="text" ng-model="filterOtSelect.nombre_ot" placeholder="filtro de busqueda"> </th>
+          <th> <input type="text" ng-model="filterOtSelect.estado_doc" placeholder="filtro de busqueda"> </th>
+        </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="ot in myOts">
+        <tr ng-repeat="ot in myOts | filter: filterOtSelect">
           <td>
             <button type="button" class="btn mini-btn2" ng-click="seleccionarOT(ot, '<?= site_url() ?>')" data-icon="w"> Sel.</button>
           </td>

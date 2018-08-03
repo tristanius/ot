@@ -60,6 +60,11 @@ var OT = function($scope, $http, $timeout){
 		ambito.tr = ot.tareas[indice];
 		ambito.tr.editable = $scope.toboolean(ambito.tr.editable);
 	}
+	$scope.setTarea = function(mytr, ambito){
+		$timeout(function(){
+			ambito.tr = mytr;
+		});
+	}
 	// eliminar un item
 	$scope.unset_item = function(lista, item, site_url, tr){
 		if(item.iditem_tarea_ot){
@@ -165,7 +170,9 @@ var OT = function($scope, $http, $timeout){
 					"requisitos_documentales":{}
 				}
 			);
-			ambito.tr = ambito.ot.tareas[ambito.ot.tareas.length];
+		ambito.tr = ambito.ot.tareas[ambito.ot.tareas.length];
+		var i = ambito.ot.tareas.length;
+		$scope.setTarea(ambito.ot.tareas[i-1], ambito);
 		alert('Has añadido una nueva tarea, selecciona en la lista desplegable para modificar valores');
 	}
 	//==============================================================================
@@ -176,7 +183,10 @@ var OT = function($scope, $http, $timeout){
 		$http.get(lnk).then(
 			function(resp){
 				console.log(resp.data)
-				ambito.items = resp.data;
+				ambito.items = resp.data.items;
+				ambito.tr.a_vg = resp.data.a;
+				ambito.tr.i_vg = resp.data.i;
+				ambito.tr.u_vg = resp.data.u;
 				$scope.loader = false;
 			},
 			function(resp){
@@ -647,17 +657,16 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.myestado_doc = 'POR EJECUTAR';
 	$scope.ot.allMeses = [ ];
 	$scope.ot.frentes = [];
+	$scope.tr = {};
 	////$scope.$parent.tinyMCE();
 
 	$scope.getFormData = function(url){ $scope.$parent.getDataITems(url, $scope); }
 	$scope.getData = function(url){ $scope.$parent.getData(url, $scope, false); }
-	$scope.selectTarea = function(ot, indice){
-		$timeout(function(){
-			$scope.$parent.selectTarea(ot, $scope, indice);
-			$scope.calcularSubtotales();
-		});
-	}
+
 	$scope.addTarea = function(){$scope.$parent.addTarea($scope);}
+	$scope.setTarea = function(mytr){
+		$scope.$parent.setTarea(mytr, $scope);
+	}
 	$scope.unset_item = function(lista, item, site_url){
 		$scope.$parent.unset_item(lista, item, site_url, $scope.tr);
 		$scope.itemsEliminados.push(item);
@@ -749,6 +758,7 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.munis = [];
 	$scope.isOnPeticion = false;
 	$scope.ot.allMeses = [];
+	$scope.tr = {};
 
 	$scope.recorrerTareas = function(){
 		if ( $scope.ot.estado_doc == undefined || $scope.ot.estado_doc == ''){
@@ -762,13 +772,12 @@ var editarOT = function($scope, $http, $timeout) {
 
 	$scope.getFormData = function(url){ $scope.$parent.getDataITems(url, $scope);}
 	$scope.getData = function(url){	$scope.$parent.getData(url, $scope, true); }
-	$scope.selectTarea = function(ot, indice){
-		$timeout(function(){
-			$scope.$parent.selectTarea(ot, $scope, indice);
-			$scope.calcularSubtotales();
-		});
-	}
+
 	$scope.addTarea = function(){$scope.$parent.addTarea($scope);}
+	$scope.setTarea = function(mytr){
+		$scope.$parent.setTarea(mytr, $scope);
+	}
+
 	$scope.unset_item = function(lista, item, site_url){
 		$scope.$parent.unset_item(lista, item, site_url, $scope.tr);
 		$scope.itemsEliminados.push(item);

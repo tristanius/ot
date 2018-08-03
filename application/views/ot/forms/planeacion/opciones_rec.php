@@ -11,7 +11,7 @@
     <span ng-if="!tr.idcontrato"> Seleciona un contrato. </span>
   </div>
   <div ng-if="tr.idvigencia_tarifas" ng-init="getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas);">
-        <h5 ng-bind="findObjByProp(tr.idvigencia_tarifas, 'idvigencia_tarifas', vigencias).descripcion_vigencia"></h5>
+        <h5> <span ng-bind="tr.nombre_tarea"></span>: <span ng-bind="findObjByProp(tr.idvigencia_tarifas, 'idvigencia_tarifas', vigencias).descripcion_vigencia"></span> </h5>
         <button type="button" ng-click="VwITems('actividad');" class="btn green mini-btn" data-icon="&#xe052;"> Actividades</button>
         <button type="button" ng-click="VwITems('personal');" class="btn green mini-btn" data-icon="&#xe052;"> Personal</button>
         <button type="button" ng-click="VwITems('equipo');" class="btn green mini-btn" data-icon="&#xe052;"> Equipo</button>

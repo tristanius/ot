@@ -133,17 +133,15 @@
 		<div class="row">
 			<br>
 			<!-- seleccion de tarea -->
-			<div class="noMaterialStyles" ng-show="!showCopiar" ng-init="showCopiar = false">
-				<label>Selecciona una Tarea: </label>
-				<select id="selected_tarea" ng-model="mytr"	ng-options="tarea as (tarea.nombre_tarea) for tarea in ot.tareas track by $index">
-				</select>
+			<div class="noMaterialStyles" ng-show="!showCopiar" ng-init="showCopiar = false" ng-if="ot.tareas">
+				<label ng-init="setTarea(ot.tareas[0])">Selecciona una Tarea: </label>
+				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
 				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
 				&nbsp;
 				<!--
 				<a href="<?= site_url('ot/imprimirOT') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn orange black-text"  style="margin-top: 0" data-icon=";"></a>
 				<a href="<?= site_url('ot/imprimirAnexos') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn amber black-text"  style="margin-top: 0"> <small>H.E./G.V.</small> </a>
 				-->
-
 			</div>
 
 			<?php $this->load->view("ot/edit/copiar_tarea"); ?>
@@ -212,7 +210,7 @@
 		</div>
 		<br>
 
-		<img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader">
+		<img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader" width="50">
 
 		<!-- opciones -->
 		<div class="btnWindow">
