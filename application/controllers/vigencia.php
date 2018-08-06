@@ -25,6 +25,7 @@ class Vigencia extends CI_Controller{
       $ret->items->equipo = $this->vg->getItemsBy( array('tar.idvigencia_tarifas'=>$idvigencia, 'itf.tipo'=>3) )->result();
       $ret->items->material = $this->vg->getItemsBy( array('tar.idvigencia_tarifas'=>$idvigencia, 'itf.tipo'=>'material') )->result();
       $ret->items->otros = $this->vg->getItemsBy( array('tar.idvigencia_tarifas'=>$idvigencia, 'itf.tipo'=>'otros') )->result();
+      $ret->items->subcontratos = $this->vg->getItemsBy( array('tar.idvigencia_tarifas'=>$idvigencia, 'itf.tipo'=>'subcontrato') )->result();
       $vig = $this->vg->getBy(array('vg.idvigencia_tarifas'=>$idvigencia));
       if($vig->num_rows() > 0){
         $aiu = $vig->row();

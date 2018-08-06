@@ -86,8 +86,9 @@
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Gerencia</th>
 					<th>Departamento ECP</th>
+					<th colspan="2">Contrato</th>
+					<th> Estado O.T. <span style="color:green" ng-bind="ot.estado_doc"></span> </th>
 					<th colspan="2"></th>
-					<th colspan="3"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -108,7 +109,16 @@
 						</select>
 					</td>
 					<td colspan="2"> <span ng-bind="ot.no_contrato"></span> <span ng-bind="ot.contratista"></span> </td>
-					<td colspan="3"></td>
+					<td>
+						<select ng-model="myestado_doc" ng-disabled="!validPriv(49)">
+		          <option value="POR EJECUTAR" ng-if="(ot.estado_doc != 'ACTIVA' && ot.estado_doc != 'FINALIZÓ')">POR EJECUTAR</option>
+		          <option value="ACTIVA">ACTIVA</option>
+		          <option value="FINALIZÓ">FINALIZÓ</option>
+		        </select>
+
+		        <button type="button" class="btn mini-btn2" ng-click="ot.estado_doc = myestado_doc">Aplicar</button>
+					</td>
+					<td colspan="2"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -133,9 +143,9 @@
 		<div class="row">
 			<br>
 			<!-- seleccion de tarea -->
-			<div class="noMaterialStyles" ng-show="!showCopiar" ng-init="showCopiar = false" ng-if="ot.tareas">
-				<label ng-init="setTarea(ot.tareas[0])">Selecciona una Tarea: </label>
-				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
+			<div class="noMaterialStyles" ng-show="!showCopiar" ng-init="showCopiar = false">
+				<label>Selecciona una Tarea: </label>
+				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="setTarea(tr);getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
 				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
 				&nbsp;
 				<!--

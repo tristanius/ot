@@ -31,7 +31,8 @@ class Tarea_db extends CI_Model{
     $json_reembolsables, $json_racion, $json_recursos,
     $responsables, $requisitos_documentales,
     $OT_idOT, $sap,$clase_sap, $tipo_sap,
-    $sap_pago, $clase_sap_pago, $tipo_sap_pago,  $editable, $idvigencia_tarifas = NULL )
+    $sap_pago, $clase_sap_pago, $tipo_sap_pago,  $editable, $idvigencia_tarifas = NULL,
+    $a=NULL, $i=NULL, $u=NULL )
   {
     $data = array(
       'nombre_tarea'=>$nombre_tarea_ot,
@@ -55,7 +56,10 @@ class Tarea_db extends CI_Model{
       "clase_sap_pago"=>$clase_sap_pago,
       "tipo_sap_pago"=>$tipo_sap_pago,
       'editable'=>$editable,
-			'idvigencia_tarifas'=>$idvigencia_tarifas
+			'idvigencia_tarifas'=>$idvigencia_tarifas,
+      'a'=>$a,
+      'i'=>$i,
+      'u'=>$u
     );
     $this->db->insert('tarea_ot', $data);
     return $this->db->insert_id();
@@ -71,7 +75,8 @@ class Tarea_db extends CI_Model{
     $json_racion, $json_recursos, $responsables,
     $requisitos_documentales, $OT_idOT,
     $sap, $clase_sap, $tipo_sap, $sap_pago,
-    $clase_sap_pago, $tipo_sap_pago, $editable, $idvigencia_tarifas = NULL)
+    $clase_sap_pago, $tipo_sap_pago, $editable, $idvigencia_tarifas = NULL,
+    $a=NULL, $i=NULL, $u=NULL)
   {
     $data = array(
       'nombre_tarea'=>$nombre_tarea_ot,
@@ -95,7 +100,10 @@ class Tarea_db extends CI_Model{
       "clase_sap_pago"=>$clase_sap_pago,
       "tipo_sap_pago"=>$tipo_sap_pago,
       'editable'=>$editable,
-			'idvigencia_tarifas'=>$idvigencia_tarifas
+			'idvigencia_tarifas'=>$idvigencia_tarifas,
+      'a'=>$a,
+      'i'=>$i,
+      'u'=>$u
     );
     return $this->db->update('tarea_ot', $data, 'idtarea_ot = '.$idtarea_ot);
   }
@@ -203,18 +211,21 @@ class Tarea_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->select('
           OT.idOT, OT.nombre_ot, OT.base_idbase, tr.idtarea_ot, tr.nombre_tarea, itt.iditem_tarea_ot,
-          SUM(itt.duracion) AS duracion_tot, SUM(itt.cantidad) AS planeado, itt.unidad, itt.tarifa,
+          SUM(itt.duracion) AS duracion, SUM(itt.cantidad) AS planeado, itt.unidad, itt.tarifa, itt.cantidad_planeada,
           itt.fecha_agregado, itt.valor_plan, itt.itemf_iditemf, itt.itemf_codigo, itt.fecha_agregado,
-          itt.idsector_item_tarea, itf.*, tr.responsables, tr.requisitos_documentales,
+          itt.subtarifa, itf.*, CONCAT(f.nombre, " - ", f.ubicacion) AS nombre_frente
         ')->from('OT')
         ->join('tarea_ot AS tr', 'OT.idOT = tr.OT_idOT')
         ->join('item_tarea_ot AS itt', 'tr.idtarea_ot = itt.tarea_ot_idtarea_ot')
         ->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf')
+        ->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot','LEFT')
         ->where('OT.idOT',$idOT)
         ->where('itf.tipo', $tipo)
-        ->group_by('itf.codigo')
-        ->group_by('itt.idsector_item_tarea')
         ->order_by('itf.codigo','ASC')
+        ->order_by('tr.idtarea_ot','DESC')
+        ->group_by('itf.codigo')
+        ->group_by('itt.subtarifa')
+        ->group_by('itt.idfrente_ot')
         ->get();
   }
 

@@ -100,7 +100,7 @@
 			<tbody>
 				<tr>
 					<td>
-						<select class="noMaterialStyles" ng-model="ot.gerencia" ng-init="ot.gerencia = 'GOT'">
+						<select class="noMaterialStyles" ng-model="ot.gerencia" ng-init="ot.gerencia = 'N/A'">
 							<option value="N/A">N/A</option>
 							<option value="GOT">GOT: OLEDUCTOS</option>
 							<option value="GPO">GPO: POLIDUCTOS</option>
@@ -108,7 +108,7 @@
 						</select>
 					</td>
 					<td>
-						<select class="noMaterialStyles" ng-model="ot.departamento_ecp" ng-init="ot.departamento_ecp = 'PCL'">
+						<select class="noMaterialStyles" ng-model="ot.departamento_ecp" ng-init="ot.departamento_ecp = 'N/A'">
 							<option value="N/A">N/A</option>
 							<option value="PCL">PCL</option>
 							<option value="OBC">OBC</option>

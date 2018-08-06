@@ -40,16 +40,12 @@ class Reporte extends CI_Controller{
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($idOT);
     $frentes = $this->otdb->getFrentesOT($idOT);
-    $this->load->model('tarea_db', 'tarea');
-    $item_equipos = $this->tarea->getTareasItemsResumenBy($idOT,3);
     $this->load->model('miscelanio_db', 'misc');
     $estados = $this->misc->getDataEstados()->result();
-
     $items_planeados = $this->otdb->getPlanByFrentes($idOT);
 
     //obtener unidades de negocio
     $this->load->model('equipo_db', 'equ');
-    $un_equipos = $this->equ->getResumenUN();
 
     $dias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $diasemana = $dias[ date( "w", strtotime($fecha) ) ];
@@ -59,8 +55,6 @@ class Reporte extends CI_Controller{
 				'ot'=>$ot->row(),
         'frentes'=>$frentes->result(),
 				'fecha'=>$fecha,
-				'item_equipos'=>$item_equipos->result(),
-				'un_equipos'=>$un_equipos,
 				'estados'=>$estados,
         'diasemana'=>$diasemana,
         'estados_labor'=>$this->misc->getEstadosLabor()->result(),
@@ -89,10 +83,14 @@ class Reporte extends CI_Controller{
         $this->insertarRecursoRep($post->recursos->actividades, $idrepo);
         $this->insertarRecursoRep($post->recursos->personal, $idrepo);
         $this->insertarRecursoRep($post->recursos->equipos, $idrepo);
+
         if(isset($post->recursos->material))
         $this->insertarRecursoRep($post->recursos->material, $idrepo);
         if(isset($post->recursos->otros))
           $this->insertarRecursoRep($post->recursos->otros, $idrepo);
+        if(isset($post->recursos->subcontratos))
+          $this->insertarRecursoRep($post->recursos->subcontratos, $idrepo);
+
         $validProcc = $this->repo->end_transact();
         if($validProcc != FALSE){
           $response = new stdClass();
@@ -106,6 +104,7 @@ class Reporte extends CI_Controller{
           $response->actividades = $var->actividades;
           $response->material = $var->material;
           $response->otros = $var->otros;
+          $response->subcontratos = $var->subcontratos;
           echo json_encode($response);
         }else{
           show_404();
@@ -118,6 +117,9 @@ class Reporte extends CI_Controller{
       $response->personal = $validReporte->recursos->personal;
       $response->equipos = $validReporte->recursos->equipos;
       $response->actividades = $validReporte->recursos->actividades;
+      $response->material = $validReporte->material;
+      $response->otros = $validReporte->otros;
+      $response->subcontratos = $validReporte->subcontratos;
       echo json_encode($response);
     }
   }
@@ -189,7 +191,7 @@ class Reporte extends CI_Controller{
     }
     $post->succ = TRUE;
     foreach ($post->recursos as $k => $v) {
-      if($k != 'actividades' && $k != 'material' && $k != 'otros'){
+      if($k != 'actividades' && $k != 'material' && $k != 'otros' && $k != 'subcontratos'){
         foreach ($v as $key => $rec) {
           $rec->msj = '';
           # Validamos primero que el codigo del item exista en la OT
@@ -259,11 +261,6 @@ class Reporte extends CI_Controller{
     $ot = $this->otdb->getData($r->OT_idOT);
     $items_planeados = $this->otdb->getPlanByFrentes($r->OT_idOT);
     $frentes = $this->otdb->getFrentesOT($r->OT_idOT)->result();
-    $this->load->model('tarea_db', 'tarea');
-    $item_equipos = $this->tarea->getTareasItemsResumenBy($r->OT_idOT,3);
-    //obtener unidades de negocio
-    $this->load->model('equipo_db', 'equ');
-    $un_equipos = $this->equ->getResumenUN();
 
     $this->load->model('miscelanio_db', 'misc');
     $estados = $this->misc->getDataEstados()->result();
@@ -274,8 +271,8 @@ class Reporte extends CI_Controller{
     $diasemana = $dias[ date( "w", strtotime($r->fecha_reporte) ) ];
     $this->load->view('reportes/edit/edit',
       array(
-        'r'=>$r, 'frentes'=>$frentes, 'item_equipos'=>$item_equipos->result(),
-        'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana,
+        'r'=>$r, 'frentes'=>$frentes,
+        'estados'=>$estados, 'diasemana'=>$diasemana,
         'estados_labor'=>$this->misc->getEstadosLabor()->result(),
         'items_planeados' => $items_planeados->result()
       )
@@ -308,6 +305,7 @@ class Reporte extends CI_Controller{
     $recursos->actividades = $this->repo->getRecursos($idReporte, 'actividades')->result();
     $recursos->material = $this->repo->getRecursos($idReporte, 'material')->result();
     $recursos->otros = $this->repo->getRecursos($idReporte, 'otros')->result();
+    $recursos->subcontratos = $this->repo->getRecursos($idReporte, 'subcontrato')->result();
     return $recursos;
   }
   # ===========================================================================================================
@@ -336,6 +334,7 @@ class Reporte extends CI_Controller{
       $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
       $cambios->material = $this->actualizarRecursos($post->recursos->material, $post->idreporte_diario, $post->fecha);
       $cambios->otros = $this->actualizarRecursos($post->recursos->otros, $post->idreporte_diario, $post->fecha);
+      $cambios->subcontratos = $this->actualizarRecursos($post->recursos->subcontratos, $post->idreporte_diario, $post->fecha);
       if (isset($post->log)) {
         $msj = 'Reporte diario '.$post->fecha." de ".$post->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
@@ -356,6 +355,7 @@ class Reporte extends CI_Controller{
         $response->actividades = $var->actividades;
         $response->material = $var->material;
         $response->otros = $var->otros;
+        $response->subcontratos = $var->subcontratos;
         echo json_encode($response);
       }else{
         echo "Falló la inserción";
@@ -369,6 +369,7 @@ class Reporte extends CI_Controller{
       $response->actividades = $validReporte->recursos->actividades;
       $response->material = $validReporte->recursos->material;
       $response->otros = $validReporte->recursos->otros;
+      $response->subcontratos = $validReporte->recursos->otros;
       echo json_encode($response);
     }
   }
@@ -475,12 +476,14 @@ class Reporte extends CI_Controller{
       $acts = $this->tarea->getActividadesPlaneadas($idOT,1, NULL, $fecha);
       $mats = $this->recdb->getRecursoByOT($idOT, 'material');
       $otros = $this->recdb->getRecursoByOT($idOT, 'otros');
+      $subs = $this->tarea->getActividadesPlaneadas($idOT,'subcontrato', NULL, NULL);
       $data = array(
           'personal' => $pers->result(),
           'equipo' => $equs->result(),
           'actividad'=> $acts->result(),
           'material'=>$mats->result(),
-          'otros' =>$otros->result()
+          'otros' =>$otros->result(),
+          'subcontratos' =>$subs->result()
         );
       echo json_encode($data);
   }

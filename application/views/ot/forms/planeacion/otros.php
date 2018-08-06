@@ -18,7 +18,9 @@
 				<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="o.cantidad" ng-init="o.cantidad = strtonum(o.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 				<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="o.duracion" ng-init="o.duracion = strtonum(o.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 				<td style="text-align: right" ng-bind="o.tarifa | currency:'$':0"></td>
-				<td style="text-align: right"> <small ng-bind="o.subtarifa"></small> <input type="text" ng-model="o.subtarifa" style="max-width:10ex;" ng-init="o.subtarifa = o.subtarifa?o.subtarifa:o.tarifa"> </td>
+
+				<td style="display:none"> <small ng-bind="o.subtarifa"></small> <input type="text" ng-model="o.subtarifa" style="max-width:10ex;" ng-init="o.subtarifa = o.subtarifa?o.subtarifa:o.tarifa"> </td>
+
 				<td style="text-align: right">
 					{{ ( o.facturable?(o.cantidad * o.duracion)*o.tarifa:0 ) | currency:'$':0 }}
 					<button ng-show=" ( o.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.otros, o, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>

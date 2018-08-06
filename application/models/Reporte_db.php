@@ -319,7 +319,9 @@ class Reporte_db extends CI_Model{
         e.ccosto, e.ccosto, desc_un, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
       $this->db->where('rot.tipo', 'equipo');
-    }elseif ($tipo == 'actividades') {
+    }elseif ($tipo == 'actividades' || $tipo == 'subcontrato') {
+      # CORREGIS los TIPO
+      $tipo = $tipo=='actividades'?1:$tipo;
       $this->db->select("
         (
           SELECT SUM(mrrd.cantidad) AS cant
@@ -334,6 +336,7 @@ class Reporte_db extends CI_Model{
       ");
       $this->db->join('sector_item_tarea AS sec', 'sec.idsector_item_tarea = rrd.idsector_item_tarea', 'LEFT');
       $this->db->where('rrd.idrecurso_ot', NULL);
+      $this->db->where('itf.tipo', $tipo);
     }elseif ($tipo=='material' || $tipo=='otros'){
       $this->db->select('
         rot.descripcion_temporal AS descripcion_recurso, rot.codigo_temporal AS referencia, rot.*, titc.BO, titc.CL, titc.grupo_mayor');

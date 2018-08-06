@@ -114,7 +114,7 @@
       <div class="mypanel">
         <div id="info" class="font11"> <?php $this->load->view('reportes/form/info'); ?> </div>
         <div id="preview_reporte" class="font11 nodisplay"> <?php $this->load->view('reportes/form/preview_reporte'); ?> </div>
-        <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('ot'=>$r, 'un_equipos'=>$un_equipos, 'item_equipos'=>$item_equipos, 'estados_labor'=>$estados_labor)); ?> </div>
+        <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('ot'=>$r, 'estados_labor'=>$estados_labor)); ?> </div>
         <div id="firmas" class="font11 nodisplay"> <?php $this->load->view('reportes/form/firmas'); ?> </div>
         <div id="observacion" class="font11 nodisplay"> <?php $this->load->view('reportes/form/observaciones'); ?> </div>
         <div id="validaciones" class="font11 nodisplay"> <?php $this->load->view('reportes/form/validaciones'); ?> </div>

@@ -26,7 +26,6 @@ var OT = function($scope, $http, $timeout){
 	}
 
 	$scope.getDataITems = function(url, ambito){
-		console.log(url);
 		$http.get(url).then(
 			function(response) {
 				ambito.bases = JSON.parse(response.data.bases);
@@ -44,6 +43,7 @@ var OT = function($scope, $http, $timeout){
 		$http.post(url, {}).then(
 				function(response){
 					ambito.ot = response.data;
+					ambito.tr = ambito.ot.tareas[0];
 					if(edit){
 						ambito.recorrerTareas();
 						ambito.obtenerMunicipios(ambito.ot.departamento, $("#depart").data('getmunis'));
@@ -166,6 +166,7 @@ var OT = function($scope, $http, $timeout){
 					"equipos": [],
 					'material':[],
 					'otros':[],
+					'subcontratos':[],
 					"responsables":{},
 					"requisitos_documentales":{}
 				}
@@ -182,11 +183,10 @@ var OT = function($scope, $http, $timeout){
 		$scope.loader = true;
 		$http.get(lnk).then(
 			function(resp){
-				console.log(resp.data)
 				ambito.items = resp.data.items;
-				ambito.tr.a_vg = resp.data.a;
-				ambito.tr.i_vg = resp.data.i;
-				ambito.tr.u_vg = resp.data.u;
+				ambito.tr.a = resp.data.a;
+				ambito.tr.i = resp.data.i;
+				ambito.tr.u = resp.data.u;
 				$scope.loader = false;
 			},
 			function(resp){
@@ -199,7 +199,9 @@ var OT = function($scope, $http, $timeout){
 	//Muestra items por agregar de un tipo en la ventana. Debe llamarse desde un controller hijo.
 	$scope.selectItemsType =  function(type, ambito){
 		try {
-				ambito.myItems = angular.copy(ambito.items[type]);
+			console.log(type);
+			console.log(ambito.items);
+			ambito.myItems = angular.copy(ambito.items[type]);
 		} catch (e) {
 			ambito.myItems = [];
 			console.log(e)
@@ -253,6 +255,10 @@ var OT = function($scope, $http, $timeout){
 					if (!tr.otros)
 						tr.otros = [];
 					tr.otros.push(v);
+				}else if(v.tipo == 'subcontrato'){
+					if (!tr.subcontratos)
+						tr.subcontratos = [];
+					tr.subcontratos.push(v);
 				}
 			};
 			if (i == size){
@@ -272,15 +278,25 @@ var OT = function($scope, $http, $timeout){
 	$scope.calcularSubtotales = function(ambito, tr){
 		if( tr == undefined) {
 		}else{
+			var suma = 0;
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
-			if(tr.material)
+			suma = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
+			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
-			if (tr.otros)
+				suma += Math.round(tr.material);
+			}
+			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
+				suma += Math.round(tr.otros);
+			}
+			if(tr.subcontratos){
+				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
+				suma += Math.round(tr.subactsubtotal);
+			}
 			//Redondeado de totales
-			tr.valor_recursos = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
+			tr.valor_recursos = suma;
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
 			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
 			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
@@ -589,7 +605,6 @@ var OT = function($scope, $http, $timeout){
 
 	// --------------------------------------------------------------------------------
 	// Frentes de trabajo
-
 	$scope.addFrente = function( lnk, lista, frente ){
 		$http.post(
 			lnk,
@@ -721,7 +736,7 @@ var agregarOT = function($scope, $http, $timeout){
 			$http.post(	  url, { ot: $scope.ot, log: $scope.$parent.log }   ).then(
 				function(response) {
 					if(response.data == 'Orden de trabajo guardada correctamente'){
-						alert('Orden de trabajo guardada correctamente, BASE: '+$scope.ot.base_idbase);
+						alert('Orden de trabajo guardada correctamente, C.O.: '+$scope.ot.base_idbase);
 						$timeout(function(){
 							$scope.$parent.cerrarWindowLocal('#ventanaOT', $scope.$parent.enlaceGetOT);
 							//$scope.$parent.refreshTabs();
@@ -838,21 +853,19 @@ var editarOT = function($scope, $http, $timeout) {
 	}
 	$scope.guardarOT = function(url){
 		//tinyMCE.triggerSave();
+		var ind = $scope.ot.tareas.indexOf($scope.tr);
 		if($scope.isOnPeticion){
 			alert('Ya se esta ejecutando un proceso de guardado, espera a que muestre su finalización');
 		}else {
 			$scope.isOnPeticion = true;
 			$scope.calcularSubtotales();
-			$scope.ot.justificacion = $('#justificacion').val();
-			$scope.ot.actividad = $('#actividad').val();
-			console.log($scope.ot);
 			$http.post(	  url, { ot: $scope.ot, log: $scope.$parent.log }   ).then(
 				function(response) {
 					if(response.data.success == 'Orden de trabajo guardada correctamente'){
 						alert(response.data.success);
 						console.log(response.data.ot);
 						$scope.ot=response.data.ot;
-						$scope.selectTarea($scope.ot, $('#selected_tarea').val());
+						$scope.tr = $scope.ot.tareas[ind];
 						$scope.isOnPeticion = false;
 						$scope.$parent.calcularValorOT($scope);
 					}else if (response.data == 'La Orden de trabajo ya existe.') {

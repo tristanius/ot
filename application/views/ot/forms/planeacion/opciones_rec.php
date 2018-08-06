@@ -17,7 +17,7 @@
         <button type="button" ng-click="VwITems('equipo');" class="btn green mini-btn" data-icon="&#xe052;"> Equipo</button>
         <button type="button" ng-click="VwITems('material');" class="btn green mini-btn" data-icon="&#xe052;"> Material</button>
         <button type="button" ng-click="VwITems('otros');" class="btn green mini-btn" data-icon="&#xe052;"> Otros</button>
-        <button type="button" ng-click="VwITems('subcontrato');" class="btn green mini-btn" data-icon="&#xe052;"> Subcontrato</button>
+        <button type="button" ng-click="VwITems('subcontratos');" class="btn green mini-btn" data-icon="&#xe052;"> Subcontrato</button>
   </div>
 
 </p>

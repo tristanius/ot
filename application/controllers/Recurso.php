@@ -29,6 +29,7 @@ class Recurso extends CI_Controller{
     $equs = $this->recdb->getEquiposOtBy($post->idOT, 'equipo');
     $material = $this->recdb->getRecursoByOT($post->idOT, 'material');
     $otros = $this->recdb->getRecursoByOT($post->idOT, 'otros');
+    $subcontratos = $this->recdb->getRecursoByOT($post->idOT, 'subcontrato');
 
     $items = $this->ot->getItemByTipeOT($post->idOT);
 
@@ -37,6 +38,7 @@ class Recurso extends CI_Controller{
     $recursos->equipo = $equs->result();
     $recursos->material = $material->result();
     $recursos->otros = $otros->result();
+    $recursos->subcontratos = $subcontratos->result();
     $recursos->itemsOT = $items->result();
     $recursos->succ = 'success';
     echo json_encode($recursos);

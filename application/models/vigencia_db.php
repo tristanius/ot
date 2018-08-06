@@ -15,18 +15,18 @@ class Vigencia_db extends CI_Model{
     if (isset($wh)) {
       $this->db->where($wh);
     }
-    return $this->db->select(
-      'c.idcontrato,
+    $fields =   'c.idcontrato,
       c.no_contrato,
+      vg.idvigencia_tarifas,
       vg.descripcion_vigencia,
       vg.idvigencia_tarifas,
       vg.fecha_inicio_vigencia,
       vg.fecha_fin_vigencia,
-      IF(vg.a = 0, vg.a, c.a_contrato) AS a,
-      IF(vg.i = 0, vg.i, c.i_contrato) AS i,
-      IF(vg.u = 0, vg.u, c.u_contrato) AS u,
-      '
-      )
+      vg.a AS a,
+      vg.i AS i,
+      vg.u AS u
+      ';
+    return $this->db->select($fields)
       ->from('vigencia_tarifas AS vg')
       ->join('contrato AS c', 'c.idcontrato = vg.idcontrato')
       ->get();

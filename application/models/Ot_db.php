@@ -153,26 +153,19 @@ class Ot_db extends CI_Model {
 	public function getTarea($idOt, $idTarea)
 	{
 		$this->load->database('ot');
-		$this->db->from('tarea_ot');
+		$this->db->from('tarea_ot as tr');
+		$this->db->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tr.idvigencia_tarifas', 'left');
 		$this->db->where('OT_idOT', $idOt);
 		$this->db->where('idtarea_ot', $idTarea);
-		return $this->db->get();
-	}
-
-	public function getTarea1($idOT)
-	{
-		$this->load->database('ot');
-		$this->db->select('MIN(idtarea_ot) AS idtarea_ot');
-		$this->db->from('tarea_ot');
-		$this->db->where('OT_idOT', $idOT);
 		return $this->db->get();
 	}
 	# Obtiene un listado de taras
 	public function getTareas($id, $arr_tareas=NULL)
 	{
 		$this->load->database('ot');
-		$this->db->select('tr.*');
+		$this->db->select('tr.*, IFNULL(tr.a, vg.a) AS a, IFNULL(tr.i, vg.i) AS i, IFNULL(tr.u, vg.u)');
 		$this->db->from('tarea_ot AS tr');
+		$this->db->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tr.idvigencia_tarifas', 'left');
 		$this->db->where('OT_idOT', $id);
 		if (isset($arr_tareas)) {
 			$this->db->where_in('idtarea_ot', $arr_tareas);

@@ -49,7 +49,44 @@
 				<tr>
 					<th colspan="9" rowspan="" style="background:#ddedd0">EQUIPOS</th>
 				</tr>
+
 				<tr ng-repeat="eq in mytr.equipos | orderBy: 'codigo' ">
+					<td>{{ eq.itemc_item }}</td>
+					<td>{{ eq.descripcion }}</td>
+					<td>{{ eq.facturable?'SI':'NO' }}</td>
+					<td>{{ eq.unidad }}</td>
+					<td> {{eq.cantidad}} </td>
+					<td> {{eq.duracion}} </td>
+					<td style="text-align: right">{{ eq.tarifa | currency:'$':0 }}</td>
+					<td style="text-align: right">
+						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$':0 }}
+					</td>
+					<td>{{ eq.fecha_agregado }}</td>
+				</tr>
+
+				<tr>
+					<th colspan="9" rowspan="" style="background:#ddedd0">MATERIALES</th>
+				</tr>
+
+				<tr ng-repeat="eq in mytr.material | orderBy: 'codigo' ">
+					<td>{{ eq.itemc_item }}</td>
+					<td>{{ eq.descripcion }}</td>
+					<td>{{ eq.facturable?'SI':'NO' }}</td>
+					<td>{{ eq.unidad }}</td>
+					<td> {{eq.cantidad}} </td>
+					<td> {{eq.duracion}} </td>
+					<td style="text-align: right">{{ eq.tarifa | currency:'$':0 }}</td>
+					<td style="text-align: right">
+						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$':0 }}
+					</td>
+					<td>{{ eq.fecha_agregado }}</td>
+				</tr>
+
+				<tr>
+					<th colspan="9" rowspan="" style="background:#ddedd0">OTROS</th>
+				</tr>
+
+				<tr ng-repeat="eq in mytr.otros | orderBy: 'codigo' ">
 					<td>{{ eq.itemc_item }}</td>
 					<td>{{ eq.descripcion }}</td>
 					<td>{{ eq.facturable?'SI':'NO' }}</td>
@@ -66,6 +103,29 @@
 					<td colspan="6" rowspan="" style="text-align: right">Sutotal de recursos: </td>
 					<td colspan="3" rowspan="" headers=""><big><b>{{ (mytr.eqsubtotal+mytr.actsubtotal+mytr.persubtotal) | currency:'$':0 }}</b></big></td>
 				</tr>
+
+				<tr>
+					<th colspan="9" rowspan="" style="background:#ddedd0">SUBCONTRATO</th>
+				</tr>
+
+				<tr ng-repeat="eq in mytr.subcontratos | orderBy: 'codigo' ">
+					<td>{{ eq.itemc_item }}</td>
+					<td>{{ eq.descripcion }}</td>
+					<td>{{ eq.facturable?'SI':'NO' }}</td>
+					<td>{{ eq.unidad }}</td>
+					<td> {{eq.cantidad}} </td>
+					<td> {{eq.duracion}} </td>
+					<td style="text-align: right">{{ eq.tarifa | currency:'$':0 }}</td>
+					<td style="text-align: right">
+						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$':0 }}
+					</td>
+					<td>{{ eq.fecha_agregado }}</td>
+				</tr>
+				<tr>
+					<td colspan="6" rowspan="" style="text-align: right">Sutotal de recursos: </td>
+					<td colspan="3" rowspan="" headers=""><big><b>{{ (mytr.eqsubtotal+mytr.actsubtotal+mytr.persubtotal) | currency:'$':0 }}</b></big></td>
+				</tr>
+
 			</tbody>
 		</table>
 	</div>
