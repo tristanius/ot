@@ -10,7 +10,7 @@
       <button type="button" class="btn btn-small blue darken-3 white-text" ng-click="form('<?= site_url('contrato/form/') ?>', '#ventanaContrato', '#ventanaContratoOculta')">Crear contrato</button>
     </p>
 
-    <table class="mytabla striped">
+    <table class="mytabla striped font10">
       <thead>
         <tr class="blue-grey lighten-4">
           <th>ID</th>
@@ -22,7 +22,8 @@
           <th>Vigencias de tarifa</th>
           <th>Inicio estimado</th>
           <th>Final estimado</th>
-          <th>Modificar</th>
+          <th>Mod.</th>
+          <th>Elim</th>
         </tr>
         <tr class="blue-grey lighten-5">
           <th></th>
@@ -34,6 +35,7 @@
           <th></th>
           <th> <input type="text" ng-model="filtroContrato.fecha_inicio_estimado" value=""> </th>
           <th> <input type="text" ng-model="filtroContrato.fecha_final_estimado" value=""> </th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -50,6 +52,8 @@
           <td ng-bind="c.fecha_fin_estimado"></td>
           <td>
             <button type="button" class="btn btn-small orange" ng-click="form('<?= site_url('contrato/form/') ?>/'+c.idcontrato, '#ventanaContrato', '#ventanaContratoOculta');"> <small>Modificar</small> </button>
+          </td>
+          <td>
             <button type="button" class="btn btn-small red"> <small>X</small> </button>
           </td>
         </tr>

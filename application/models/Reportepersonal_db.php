@@ -56,7 +56,9 @@ class Reportepersonal_db extends CI_Model{
       itf.itemc_item,
       itf.codigo,
       itf.iditemf,
-      ft.nombre AS nombre_frente'
+      ft.nombre AS nombre_frente,
+      rot.propietario_observacion AS asignado_como,
+      IF(rot.propietario_recurso,"SI","NO") AS propio'
     );
     // if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
     $this->db->from('reporte_diario AS rd');

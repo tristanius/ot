@@ -159,14 +159,14 @@
 					<button class="btn teal accent-4 mini-btn2" ng-click="toggleContent('#frentes', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Frentes</button>
 				</div>
 
-				<div class="col s12 m6 l6" style="border:1px solid #CCC; padding:3px;">
+				<div class="col s12 m6 l5" style="border:1px solid #CCC; padding:3px;">
 					<h6>Planeación Tarea: </h6>
 					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Recursos</button>
 					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#indirectos_ot', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> G.V. / H.E / Otros</button>
 					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Requisitos</button>
 				</div>
 
-				<div class="col s12 m4 l4" style="border:1px solid #CCC; padding:3px;">
+				<div class="col s12 m4 l5" style="border:1px solid #CCC; padding:3px;">
 					<h6>Vista general: </h6>
 					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#general', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> General</button>
 					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato"> Inf. adicional de O.T.</button>
