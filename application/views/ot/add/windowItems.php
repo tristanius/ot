@@ -3,7 +3,7 @@
 		<div style="position: relative">
 			<button type="button" class="btn green" ng-click="addSelectedItems()" data-icon="">Ok</button>
 		</div>
-		<table class="mytabla filtered fon11">
+		<table class="mytabla filtered fon10">
 			<tbody>
         <tr style="border-top:1px solid #777">
 					<th>Selecc.</th>

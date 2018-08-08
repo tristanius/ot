@@ -25,6 +25,8 @@ class Facturacion_db extends CI_Model{
     $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
 
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT','LEFT');
+    $this->db->join('contrato AS c', 'c.idcontrato = OT.idcontrato','LEFT');
+
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf','LEFT');
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc','LEFT');
     $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc','LEFT');
@@ -61,6 +63,7 @@ class Facturacion_db extends CI_Model{
   {
     if( $tipo == 2){
       return '
+        c.no_contrato as contrato,
         year(rd.fecha_reporte) as año,
         month(rd.fecha_reporte) as mes,
         OT.nombre_departamento_ecp as nombre_departamento,
@@ -117,7 +120,7 @@ class Facturacion_db extends CI_Model{
       return 'year(rd.fecha_reporte) as año,
       month(rd.fecha_reporte) as mes,
       if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
-      "MA0032887" as contrato,
+      c.no_contrato as contrato,
       OT.gerencia as gerencia,
       OT.nombre_departamento_ecp as nombre_departamento,
       OT.departamento_ecp as departamento_ecp,
