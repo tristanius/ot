@@ -24,8 +24,7 @@
 			<tbody>
 				<tr>
 					<td>
-						<span ng-show="!validPriv(54)" ng-bind="ot.nombre_ot"></span>
-						<input type="text" ng-model="ot.nombre_ot" ng-show="validPriv(54)">
+						<input type="text" ng-model="ot.nombre_ot" ng-disabled="!validPriv(54)">
 					</td>
 					<td>
 						<span ng-show="!validPriv(54)" ng-bind="ot.base_idbase"></span>
