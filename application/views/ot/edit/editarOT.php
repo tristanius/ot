@@ -148,7 +148,7 @@
 				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
 				&nbsp;
 				&nbsp;
-				<button class="btn mini-btn red" style="margin-top: 0" data-icon="&#xe052;" ng-click="delTarea('<?= site_url('tarea/delete/') ?>/', tr)" ng-if="tr"></button>
+				<button class="btn mini-btn red" style="margin-top: 0" ng-click="delTarea('<?= site_url('tarea/delete/') ?>/', tr)" ng-if="tr" ng-disabled="!validPriv(54)">x</button>
 				<!--
 				<a href="<?= site_url('ot/imprimirOT') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn orange black-text"  style="margin-top: 0" data-icon=";"></a>
 				<a href="<?= site_url('ot/imprimirAnexos') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn amber black-text"  style="margin-top: 0"> <small>H.E./G.V.</small> </a>
