@@ -177,25 +177,30 @@ var OT = function($scope, $http, $timeout){
 	}
 
 	$scope.delTarea = function(lnk, tarea, ambito){
+		if(ambito.ot.tareas.length <= 1){
+			alert("No puedes eliminar la unica tarea.");
+		}
 		$procc = confirm('Estas seguro de eliminar esta tarea  de a OT?');
-			if($procc && tarea.idtarea_ot){
-						$http.post(lnk+tarea.idtarea_ot, {idtarea_ot: tarea.idtarea_ot}).then(
-							function(resp){
-								if(resp.data.status){
-									var i = ambito.ot.tareas.indexOf(tarea);
-									ambito.ot.tareas.splice(i,1);
-								}else{
-									console.log(resp.data);
-									alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');
-								}
-							},
-							function(resp){
+		if($procc && tarea.idtarea_ot){
+					$http.post(lnk+tarea.idtarea_ot, {idtarea_ot: tarea.idtarea_ot}).then(
+						function(resp){
+							if(resp.data.status){
+								var i = ambito.ot.tareas.indexOf(tarea);
+								ambito.ot.tareas.splice(i,1);
+								ambito.tr = ambito.ot.tareas[0];
+							}else{
 								console.log(resp.data);
-								alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');	}
-						);
-			}else if ($procc) {
-				ambito.ot.tareas.splice(i,1);
-			}
+								alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');
+							}
+						},
+						function(resp){
+							console.log(resp.data);
+							alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');	}
+					);
+		}else if ($procc) {
+			ambito.ot.tareas.splice(i,1);
+			ambito.tr = ambito.ot.tareas[0];
+		}
 	}
 	//==============================================================================
 	// Gestion de items de OT

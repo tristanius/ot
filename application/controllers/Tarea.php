@@ -30,11 +30,5 @@ class Tarea extends CI_Controller{
     }else{ $this->db->trans_commit(); }
     echo json_encode($ret);
 	}
-
-  private function del_costos_mes($id)
-	{
-		$this->load->database('ot');
-		$this->db->delete('costo_mes_ot', array('OT_idOT'=>$id) );
-	}
-
+  
 }
