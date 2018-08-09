@@ -179,6 +179,7 @@ var OT = function($scope, $http, $timeout){
 	$scope.delTarea = function(lnk, tarea, ambito){
 		if(ambito.ot.tareas.length <= 1){
 			alert("No puedes eliminar la unica tarea.");
+			return;
 		}
 		$procc = confirm('Estas seguro de eliminar esta tarea  de a OT?');
 		if($procc && tarea.idtarea_ot){
