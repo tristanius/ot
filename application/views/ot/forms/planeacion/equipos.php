@@ -14,8 +14,8 @@
       </th>
       <td class="noMaterialStyles"> <input type="checkbox" ng-model="eq.facturable" ng-init="eq.facturable = toboolean(eq.facturable)"> </td>
       <td ng-bind="eq.unidad"></td>
-      <td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="eq.cantidad" ng-init="eq.cantidad = strtonum(eq.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
-      <td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+      <td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="eq.cantidad" ng-init="eq.cantidad = strtonum(eq.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+      <td> <input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
       <td style="text-align: right" ng-bind="eq.tarifa | currency:'$':0"></td>
 
       <td style="display:none">

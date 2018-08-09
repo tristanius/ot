@@ -15,8 +15,8 @@
 				</th>
 				<td class="noMaterialStyles"> <input type="checkbox" ng-model="o.facturable" ng-init="o.facturable = toboolean(o.facturable)"> </td>
 				<td ng-bind="o.unidad"></td>
-				<td> <input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="o.cantidad" ng-init="o.cantidad = strtonum(o.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
-				<td> <input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="o.duracion" ng-init="o.duracion = strtonum(o.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+				<td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="o.cantidad" ng-init="o.cantidad = strtonum(o.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+				<td> <input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="o.duracion" ng-init="o.duracion = strtonum(o.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 				<td style="text-align: right" ng-bind="o.tarifa | currency:'$':0"></td>
 
 				<td style="display:none"> <small ng-bind="o.subtarifa"></small> <input type="text" ng-model="o.subtarifa" style="max-width:10ex;" ng-init="o.subtarifa = o.subtarifa?o.subtarifa:o.tarifa"> </td>

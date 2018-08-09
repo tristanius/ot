@@ -43,7 +43,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'" style="{{ e.propietario_recurso==true?'':'background: #ffc46d' }}">
+      <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'" style="{{ e.propietario_recurso==true?'':'background: #FCD9A9' }}">
         <td>
             <button
             type="button"

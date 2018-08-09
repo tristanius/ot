@@ -147,6 +147,8 @@
 				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="setTarea(tr);getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
 				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
 				&nbsp;
+				&nbsp;
+				<button class="btn mini-btn red" style="margin-top: 0" data-icon="&#xe052;" ng-click="delTarea('<?= site_url('tarea/delete/') ?>/', tr)" ng-if="tr"></button>
 				<!--
 				<a href="<?= site_url('ot/imprimirOT') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn orange black-text"  style="margin-top: 0" data-icon=";"></a>
 				<a href="<?= site_url('ot/imprimirAnexos') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn amber black-text"  style="margin-top: 0"> <small>H.E./G.V.</small> </a>

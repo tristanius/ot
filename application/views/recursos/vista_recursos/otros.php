@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="o in recursosOT.otros" style="{{ o.propietario_recurso==true?'':'background: #ffc46d' }}">
+      <tr ng-repeat="o in recursosOT.otros" style="{{ o.propietario_recurso==true?'':'background: #FCD9A9' }}">
         <td>
             <button
             type="button"

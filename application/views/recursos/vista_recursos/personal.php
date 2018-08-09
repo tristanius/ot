@@ -39,7 +39,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="p in recursosOT.personal | filter: filterPer | orderBy:'nombre_completo'" style="{{ p.propietario_recurso==true?'':'background: #ffc46d' }}">
+      <tr ng-repeat="p in recursosOT.personal | filter: filterPer | orderBy:'nombre_completo'" style="{{ p.propietario_recurso==true?'':'background: #FCD9A9' }}">
         <td>
           <button
           type="button"

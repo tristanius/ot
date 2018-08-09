@@ -176,6 +176,23 @@ var OT = function($scope, $http, $timeout){
 		$scope.setTarea(ambito.ot.tareas[i-1], ambito);
 		alert('Has añadido una nueva tarea, selecciona en la lista desplegable para modificar valores');
 	}
+	$scope.delTarea = function(lnk, tarea, ambito){
+			if( confirm('Estas seguro de eliminar esta tarea  de a OT?')  && tarea.idtarea_ot){
+						$http.post(lnk, {idtarea_ot: tarea.idtarea_ot}).then(
+							function(resp){
+								if(resp.data.status){
+									var i = ambito.ot.tareas.indexOf(tarea);
+									ambito.ot.tareas.splice(i,1);
+								}else{
+									alet('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');
+								}
+							},
+							function(resp){ alet('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');	}
+						);
+			}else{
+				ambito.ot.tareas.splice(i,1);
+			}
+	}
 	//==============================================================================
 	// Gestion de items de OT
 	// selecciona los items de la OT
@@ -682,6 +699,10 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.setTarea = function(mytr){
 		$scope.$parent.setTarea(mytr, $scope);
 	}
+	$scope.delTarea = function(lnk, tarea){
+		$scope.$parent.delTarea(lnk, tarea, ambito);
+	}
+
 	$scope.unset_item = function(lista, item, site_url){
 		$scope.$parent.unset_item(lista, item, site_url, $scope.tr);
 		$scope.itemsEliminados.push(item);
@@ -791,6 +812,10 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.addTarea = function(){$scope.$parent.addTarea($scope);}
 	$scope.setTarea = function(mytr){
 		$scope.$parent.setTarea(mytr, $scope);
+	}
+
+	$scope.delTarea = function(lnk, tarea){
+		$scope.$parent.delTarea(lnk, tarea, ambito);
 	}
 
 	$scope.unset_item = function(lista, item, site_url){
