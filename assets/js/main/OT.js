@@ -179,16 +179,19 @@ var OT = function($scope, $http, $timeout){
 	$scope.delTarea = function(lnk, tarea, ambito){
 		$procc = confirm('Estas seguro de eliminar esta tarea  de a OT?');
 			if($procc && tarea.idtarea_ot){
-						$http.post(lnk+"/"+tarea.idtarea_ot, {idtarea_ot: tarea.idtarea_ot}).then(
+						$http.post(lnk+tarea.idtarea_ot, {idtarea_ot: tarea.idtarea_ot}).then(
 							function(resp){
 								if(resp.data.status){
 									var i = ambito.ot.tareas.indexOf(tarea);
 									ambito.ot.tareas.splice(i,1);
 								}else{
-									alet('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');
+									console.log(resp.data);
+									alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');
 								}
 							},
-							function(resp){ alet('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');	}
+							function(resp){
+								console.log(resp.data);
+								alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');	}
 						);
 			}else if ($procc) {
 				ambito.ot.tareas.splice(i,1);
@@ -814,7 +817,6 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.setTarea = function(mytr){
 		$scope.$parent.setTarea(mytr, $scope);
 	}
-
 	$scope.delTarea = function(lnk, tarea){
 		$scope.$parent.delTarea(lnk, tarea, $scope);
 	}
