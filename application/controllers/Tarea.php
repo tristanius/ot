@@ -16,8 +16,8 @@ class Tarea extends CI_Controller{
 
 	public function delete($id)
 	{
+    $this->load->database('ot');
 		$this->db->trans_begin();
-		$this->load->database('ot');
 		$status = $this->db->trans_status();
     $ret = new stdClass();
     $ret->status = FALSE;

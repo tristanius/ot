@@ -150,6 +150,8 @@
 				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
 				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
 				&nbsp;
+				&nbsp;
+				<button class="btn mini-btn red" style="margin-top: 0" ng-click="delTarea('<?= site_url('tarea/delete/') ?>/', tr)" ng-if="tr">x</button>
 			</div>
 
 			<section class="row">
