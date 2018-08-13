@@ -337,7 +337,7 @@ class Export extends CI_Controller{
     $this->load->helper('download');
     write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informePMO'.date("Ymd").'.xlsx');
     //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
-    force_download('./uploads/informePMO'.date("Ymd").'.xlsx',NULL);
+    force_download('./uploads/informePMO'.date("Ymd").'.xlsx',NULL, 'items OT y CO');
   }
 
   # =================================================================================

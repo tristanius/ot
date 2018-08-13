@@ -6,7 +6,7 @@ function getWriter(){
   return new XLSXWriter();
 }
 
-function write_xlsx($data=NULL, $headers=NULL, $file)
+function write_xlsx($data=NULL, $headers=NULL, $file, $nombreHoja='informeProducción')
 {
   $writer = new XLSXWriter();
   $writer->writeSheetRow('informeProducción', $headers);
