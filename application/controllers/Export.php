@@ -322,6 +322,24 @@ class Export extends CI_Controller{
     $writer->close();
   }
 
+
+  # Informe Items PMO
+  public function form_informe_items($value='')
+  {
+    $this->load->view('consultas/PMO/form_pmo');
+  }
+  public function informe_items()
+  {
+    $this->load->model('ot_db', 'ot');
+    $bases = $this->input->post('bases');
+    $rows = $this->ot->getPlaneacion(NULL, $bases);
+    $this->load->helper('xlsxwriter');
+    $this->load->helper('download');
+    write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informePMO'.date("Ymd").'.xlsx');
+    //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
+    force_download('./uploads/informePMO'.date("Ymd").'.xlsx',NULL);
+  }
+
   # =================================================================================
   public function resumenOt($idOT)
   {

@@ -20,7 +20,7 @@
       <td style="text-align: right" ng-bind="act.tarifa | currency:'$':0"></td>
 
       <td style="display:none;">
-        <input type="text" ng-model="act.subtarifa" style="max-width:10ex;" v ng-init="act.subtarifa = act.subtarifa?act.subtarifa:act.tarifa">
+        <input type="text" ng-model="act.subtarifa" style="max-width:10ex;" ng-init="act.subtarifa = act.subtarifa?act.subtarifa:act.tarifa">
       </td>
 
       <td style="text-align: right">

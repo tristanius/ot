@@ -295,7 +295,8 @@ class Reporte_db extends CI_Model{
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
       frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente,
       avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
-      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte'
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte, 
+      avance.abscisa_ini, avance.abscisa_fin'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
@@ -423,8 +424,8 @@ class Reporte_db extends CI_Model{
       IFNULL(rot.tipo, "actividad" ) AS tipo_recurso,
       itf.itemc_item AS item,
       itf.descripcion,
-      rrd.abscisa_ini,
-      rrd.abscisa_fin,
+      avance.abscisa_ini,
+      avance.abscisa_fin,
       rrd.tipo_instalacion,
       rrd.facturable,
       rrd.print,
@@ -462,7 +463,7 @@ class Reporte_db extends CI_Model{
     $this->db->from('reporte_diario AS rd');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
-    #$this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
+    $this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
     $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
     $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');

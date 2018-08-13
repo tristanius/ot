@@ -28,17 +28,17 @@
 
         <td  style="display:none" ng-bind="sb.tarifa | currency:'$ ':0"></td>
 
-				<td style="text-align: right"> <small ng-bind="sb.subtarifa | currency:'$ ':2 "></small> <input type="text" ng-model="sb.subtarifa" style="max-width:10ex;" ng-init="sb.subtarifa = sb.subtarifa?sb.subtarifa:sb.tarifa"> </td>
+				<td style="text-align: right"> <small ng-bind="sb.subtarifa | currency:'$ ':2 "></small> <input type="text" ng-model="sb.subtarifa" style="max-width:10ex;" ng-init="sb.subtarifa = sb.subtarifa?sb.subtarifa:sb.tarifa" ng-change="sb.tarifa = sb.subtarifa"> </td>
 
 				<td style="text-align: right">
-					{{ ( sb.facturable?(sb.cantidad * sb.duracion)*sb.tarifa:0 ) | currency:'$':0 }}
+					{{ ( sb.facturable?(sb.cantidad * sb.duracion)*sb.subtarifa:0 ) | currency:'$':0 }}
 					<button ng-show=" ( sb.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.subcontratos, sub, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
 				</td>
 
 				<td>
 					<select ng-model="sb.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="sb.idfrente_ot = sb.idfrente_ot">	</select>
 				</td>
-				<td class="font9">{{ sb.fecha_agregado }}</td>
+				<td class="font9" >{{ sb.fecha_agregado }}</td>
 			</tr>
 
 			<tr>
