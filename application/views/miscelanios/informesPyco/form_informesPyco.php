@@ -14,7 +14,7 @@
   <div class="">
 
     <div class="col l2" ng-if="validPriv(52)">
-      <a href="#" ng-click="clickeableLink('<?= site_url('export/form_informe_items') ?>', $event, 'Informes de OTs');" class="btn-panel black-text" style="width:100%">
+      <a href="#" ng-click="clickeableLink('<?= site_url('export/form_informe_items') ?>', $event, 'Informes de OTs');" class="btn-panel black-text light-blue accent-1" style="width:100%">
         <h3 class="center-align" data-icon="&#xe041;"></h3>
         <p class="center-align">Informes Items OT </p>
       </a>
