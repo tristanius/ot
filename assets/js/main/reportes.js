@@ -272,16 +272,16 @@ var reportes = function($scope, $http, $timeout) {
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(ambito){
     angular.forEach(ambito.actividadesOT, function(val, key){
-      console.log(val);
       if(val.add && !ambito.$parent.existeRegistroList(ambito.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
-        val.facturable = true;
-        val.cantidad = 0;
+        var rec = angular.copy(val);
+        rec.facturable = true;
+        rec.cantidad = 0;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if(ambito.myfrente){
           var f = ambito.myfrente;
-          val.idfrente_ot = f;
+          rec.idfrente_ot = f;
         }
-        ambito.rd.recursos.actividades.push(val);
+        ambito.rd.recursos.actividades.push(rec);
       }
     });
   }
@@ -322,14 +322,15 @@ var reportes = function($scope, $http, $timeout) {
     angular.forEach(ambito.subcontratosOT, function(val, key){
       if(val.add)
       {
-        val.facturable = true;
-        val.cantidad = 1;
+        var rec = angular.copy(val);
+        rec.facturable = true;
+        rec.cantidad = 1;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if(ambito.myfrente){
           var f = ambito.myfrente;
-          val.idfrente_ot = f;
+          rec.idfrente_ot = f;
         }
-        ambito.rd.recursos.subcontratos.push(val);
+        ambito.rd.recursos.subcontratos.push(rec);
       }
     });
   }
