@@ -488,7 +488,15 @@ class Reporte_db extends CI_Model{
   public function deleteRecursoReporte($idrecurso_reporte_diario)
   {
     $this->load->database('ot');
-    return $this->db->delete('recurso_reporte_diario', array('idrecurso_reporte_diario'=>$idrecurso_reporte_diario));
+    $this->db->trans_begin();
+    $this->db->delete('avance_reporte', array('idrecurso_reporte_diario'=>$idrecurso_reporte_diario));
+    $val = $this->db->delete('recurso_reporte_diario', array('idrecurso_reporte_diario'=>$idrecurso_reporte_diario));
+    if($this->db->trans_status() === FALSE ){
+      $this->db->trans_rollback();
+    }else{
+      $this->db->trans_commit();
+    }
+    return $val;
   }
 
   # Numero de reportes por Orden en un mes
