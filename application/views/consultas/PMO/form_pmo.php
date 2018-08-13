@@ -1,5 +1,5 @@
 <section>
-  <form action="'<?= site_url('export/informe_items/') ?>'" method="post" class=" noMaterialStyles">
+  <form action="<?= site_url('export/informe_items/') ?>" method="post" class=" noMaterialStyles">
     <fieldset>
       <h5>Informe de items por OT (Inf. de PMO)</h5>
       <br>
