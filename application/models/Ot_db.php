@@ -529,9 +529,11 @@ class Ot_db extends CI_Model {
 		}
 		return $this->db->from('OT')->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
 			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
-			->join('itemf AS itf', 'itt.itemf_iditemf = itf.idtemf')
+			->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf')
+			->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tarf.idvigencia_tarifas')
 			->join('tarifa AS tarf', 'tarf.itemf_iditemf = itf.idtemf')
 			->join('contrato AS c', 'c.idcontrato = OT.idcontrato')
+			->where('vg.idvigencia_tarifas = tarf.idvigencia_tarifas')
 			->get();
 	}
 }
