@@ -518,7 +518,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$select = 'OT.nombre_ot, IF(OT.basica, "SI", "NO") AS orden_primaria, tr.nombre_tarea, tr.fecha_inicio, tr.fecha_fin, ';
-		$select .= 'itemf.codigo, itemf.descripcion, itemf.unidad, itemf.itemc_item, itt.cantidad, itt.duracion, itt.cantidad_planeada, ';
+		$select .= 'itf.codigo, itf.descripcion, itf.unidad, itf.itemc_item, itt.cantidad, itt.duracion, itt.cantidad_planeada, ';
 		$select .= 'tarf.tarifa, itf.subtarifa, itf.tipo';
 		$this->db->select($select);
 		if (isset($where)) {
