@@ -69,8 +69,12 @@
 					<td> {{ tr.json_reembolsables.valor_reembolsables | currency:'$':0 }} </td>
 				</tr>
 				<tr>
-					<td>Administración (1%):</td>
-					<td> {{ tr.json_reembolsables.valor_reembolsables * 0.01 | currency:'$':0 }} </td>
+					<td>
+						Administración 
+						<input type="text" ng-model="tr.json_indirectos.adm_reembolsable" 
+						ng-init="tr.json_indirectos.adm_reembolsable = tr.json_indirectos.adm_reembolsable?tr.json_indirectos.adm_reembolsable:0.01">:
+					</td>
+					<td> {{ tr.json_reembolsables.valor_reembolsables * tr.json_indirectos.adm_reembolsable | currency:'$':0 }} </td>
 				</tr>
 			</tbody>
 		</table>

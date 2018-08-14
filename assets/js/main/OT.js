@@ -347,12 +347,15 @@ var OT = function($scope, $http, $timeout){
 	}
 	$scope.recorrerSubtotales = function(obj){
 		var valor = 0;
-		for (var i = 0; i < obj.length; i++) {
-			if(obj[i].facturable){
-					valor += obj[i].tarifa * (obj[i].cantidad * obj[i].duracion);
-					console.log(valor);
+		angular.forEach(listado, function(v, k){
+			if(v.facturable){
+				if(v.tipo == 'subcontrato'){
+					valor += v.subtarifa * (v.cantidad * v.duracion);
+				}else{
+					valor += v.tarifa * (v.cantidad * v.duracion);
+				}
 			}
-		};
+		});
 		return valor;
 	}
 	//====================================================================================
@@ -815,8 +818,8 @@ var editarOT = function($scope, $http, $timeout) {
 			$scope.ot.estado_doc = 'POR EJECUTAR';
 		}
 		$scope.myestado_doc = $scope.ot.estado_doc;
-		angular.forEach($scope.ot.tareas, function(val, key){
-			$scope.$parent.calcularSubtotales($scope, val);
+		angular.forEach($scope.ot.tareas, function(tr, key){
+			$scope.$parent.calcularSubtotales($scope, tr);
 		});
 	}
 
