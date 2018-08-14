@@ -350,9 +350,9 @@ var OT = function($scope, $http, $timeout){
 		angular.forEach(listado, function(v, k){
 			if(v.facturable){
 				if(v.tipo == 'subcontrato'){
-					valor += (v.subtarifa.fixed(4)*1.00) * (v.cantidad * v.duracion);
+					valor += v.subtarifa.fixed(4) * (v.cantidad * v.duracion);
 				}else{
-					valor += (v.tarifa.fixed(4)*1.00) * (v.cantidad * v.duracion);
+					valor += v.tarifa.fixed(4) * (v.cantidad * v.duracion);
 				}
 			}
 		});

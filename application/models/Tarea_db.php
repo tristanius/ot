@@ -133,6 +133,7 @@ class Tarea_db extends CI_Model{
         itf.descripcion,
         itf.itemc_item,
         itf.iditemf,
+        itf.tipo,
         itt.idsector_item_tarea,
         tar.OT_idOT AS idot,
         itt.tarifa,

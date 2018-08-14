@@ -33,5 +33,5 @@
     </tr>
 
     <tr>
-      <td colspan="11" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.eqsubtotal | currency"></span> </td>
+      <td colspan="11" class="right-align" > <b>Subtotal equipos: </b> <span ng-bind="tr.eqsubtotal | currency"></span> </td>
     </tr>

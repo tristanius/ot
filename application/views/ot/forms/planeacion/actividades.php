@@ -34,5 +34,5 @@
     </tr>
 
     <tr>
-      <td colspan="12" class="right-align" > <b>Subtotal: </b> <span ng-bind="tr.actsubtotal | currency"></span> </td>
+      <td colspan="12" class="right-align" > <b>Subtotal actividades: </b> <span ng-bind="tr.actsubtotal | currency"></span> </td>
     </tr>
