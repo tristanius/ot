@@ -31,7 +31,7 @@
 				</tr>
 				<tr>
 					<th colspan="2">Total Tarea de O.T.</th>
-          <th ng-bind="tr.valor_tarea_ot | currency: '$ ' "></th>
+					<th ng-bind="tr.valor_tarea_ot | currency: '$ ' "></th>
 				</tr>
 			</tbody>
 		</table>

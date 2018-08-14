@@ -99,10 +99,6 @@
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
 				</tr>
-				<tr>
-					<td colspan="6" rowspan="" style="text-align: right">Sutotal de recursos: </td>
-					<td colspan="3" rowspan="" headers=""><big><b>{{ (mytr.eqsubtotal+mytr.actsubtotal+mytr.persubtotal) | currency:'$':0 }}</b></big></td>
-				</tr>
 
 				<tr>
 					<th colspan="9" rowspan="" style="background:#ddedd0">SUBCONTRATO</th>
@@ -123,7 +119,7 @@
 				</tr>
 				<tr>
 					<td colspan="6" rowspan="" style="text-align: right">Sutotal de recursos: </td>
-					<td colspan="3" rowspan="" headers=""><big><b>{{ (mytr.eqsubtotal+mytr.actsubtotal+mytr.persubtotal) | currency:'$':0 }}</b></big></td>
+					<td colspan="3" rowspan="" headers=""><big><b>{{ (tr.eqsubtotal+tr.actsubtotal+tr.persubtotal+tr.msubtotal+tr.otrsubtotal+tr.subactsubtotal) | currency:'$':0 }}</b></big></td>
 				</tr>
 
 			</tbody>
