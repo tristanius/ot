@@ -306,6 +306,7 @@ var OT = function($scope, $http, $timeout){
 		if( tr == undefined) {
 		}else{
 			var suma = 0;
+			tr.valor_recursos = 0;
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
@@ -322,9 +323,8 @@ var OT = function($scope, $http, $timeout){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
 				suma += tr.subactsubtotal;
 			}
-			console.log(tr);
 			//Redondeado de totales
-			tr.valor_recursos = suma;
+			tr.valor_recursos = suma*1.00;
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
 			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
 			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
@@ -345,7 +345,7 @@ var OT = function($scope, $http, $timeout){
 		tr.json_indirectos.utilidad = value;
 		return value;
 	}
-	$scope.recorrerSubtotales = function(obj){
+	$scope.recorrerSubtotales = function(listado){
 		var valor = 0;
 		angular.forEach(listado, function(v, k){
 			if(v.facturable){
