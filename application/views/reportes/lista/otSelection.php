@@ -6,8 +6,8 @@
       <thead>
         <tr>
           <th>Seleccionar</th>
-          <th>Base</th>
-          <th>Nombre de OT</th>
+          <th>C.O. / oficina</th>
+          <th>No. Orden</th>
           <th>Estado</th>
         </tr>
         <tr>

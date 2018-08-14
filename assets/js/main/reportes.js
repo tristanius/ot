@@ -694,15 +694,7 @@ var addReporte = function($scope, $http, $timeout) {
                 //$scope.$parent.refreshTabs();
               });
             }else{
-              alert("¡Oh Nooo! "+response.data.msj);
-              $timeout(function() {
-                $scope.rd.recursos.personal = response.data.personal;
-                $scope.rd.recursos.equipos = response.data.equipos;
-                $scope.rd.recursos.actividades = response.data.actividades;
-                $scope.rd.recursos.material = response.data.material;
-                $scope.rd.recursos.otros = response.data.otros;
-                $scope.booleanCorrection();
-              });
+              alert("Hemos encontrado un fallo inesperado."+response.data.msj);
             }
           },
           function(response) {

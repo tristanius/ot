@@ -7,10 +7,10 @@
         <th style="background: #F4F9FD ">Fact.</th>
         <!--<th style="max-width:6ex;">Sector</th>-->
         <th>item</th>
-        <th>Descripcion</th>
+        <th ng-show="!vista_extendida">Descripcion</th>
         <th>UND</th>
-        <th>Abscisa Ini.</th>
-        <th>Abscisa fin.</th>
+        <th ng-show="vista_extendida">Abscisa Ini.</th>
+        <th ng-show="vista_extendida">Abscisa fin.</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Tipo instal.</th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Ubicacion </small></th>
@@ -34,11 +34,11 @@
         <th></th>
         <th></th>
         <!--<th></th>-->
+        <th ng-show="!vista_extendida"></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th ng-show="vista_extendida"></th>
+        <th ng-show="vista_extendida"></th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th> <!-- tipo instalacion -->
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
@@ -72,10 +72,10 @@
         <!--<td style="max-width:6ex;"> <span ng-bind="sbc.idsector_item_tarea"></span> </td>-->
         <td ng-bind="sbc.itemc_item">
         </td>
-        <td ng-bind="sbc.descripcion" style="min-width: 200px;"></td>
+        <td ng-bind="sbc.descripcion" style="min-width: 200px;" ng-show="!vista_extendida"></td>
         <td ng-bind="sbc.unidad"></td>
-        <td> <input type="text" ng-model="sbc.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td> <input type="text" ng-model="sbc.abscisa_fin" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td> <input type="text" ng-model="sbc.abscisa_ini" ng-show="vista_extendida" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td> <input type="text" ng-model="sbc.abscisa_fin" ng-show="vista_extendida" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <!-- AVANCE DE OBRA -->
         <td  class="light-blue lighten-5" ng-show="vista_extendida">

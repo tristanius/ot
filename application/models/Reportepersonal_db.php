@@ -57,6 +57,7 @@ class Reportepersonal_db extends CI_Model{
       itf.codigo,
       itf.iditemf,
       ft.nombre AS nombre_frente,
+      ft.ubicacion AS ubicacion_frente,
       rot.propietario_observacion AS asignado_como,
       IF(rot.propietario_recurso,"SI","NO") AS propio'
     );
@@ -123,11 +124,12 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
-      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
       OT.base_idbase AS CO,
       rd.fecha_reporte,
       p.identificacion,
       p.nombre_completo,
+      IFNULL(ft.nombre, OT.nombre_ot) AS Frente,
+      IFNULL(ft.ubicacion, OT.nombre_ot) AS Ubicacion,
       itf.itemc_item,
       itf.codigo,
       titc.descripcion as clasificacion_item,
@@ -179,8 +181,9 @@ class Reportepersonal_db extends CI_Model{
     return $this->db->select(
       '
       OT.nombre_ot AS Orden,
-      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
       OT.base_idbase AS CO,
+      IFNULL(ft.nombre, OT.nombre_ot) AS Frente_OT,
+      IFNULL(ft.ubicacion, OT.nombre_ot) AS ubicacion,
       rd.fecha_reporte,
       p.identificacion,
       p.nombre_completo,
@@ -321,15 +324,16 @@ class Reportepersonal_db extends CI_Model{
         sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-29)))) as d29,
         sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-30)))) as d30,
         sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-31)))) as d31
-        from reporte_diario rd,recurso_reporte_diario rrd,OT, recurso_ot rot,recurso ,persona p
+        from reporte_diario AS rd
+        JOIN OT ON OT.idOT = rd.OT_idOT
+        JOIN recurso_reporte_diario AS rrd ON rrd.idreporte_diario = rd.idreporte_diario
+        JOIN frente_ot AS ft ON ft.idfrente_ot = rrd.frente_ot
+        JOIN recurso_ot AS rot ON rot.idreporte_diario = rd.idreporte_diario
+        JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
+        JOIN persona AS p ON p.identificacion = r.persona_identificacion
         where MONTH(rd.fecha_reporte) = '.$mes.' and
         YEAR(rd.fecha_reporte)  = '.$year.' and
         '.$base.'
-        rd.idreporte_diario=rrd.idreporte_diario and
-        OT.idot=rd.ot_idot and
-        rrd.idrecurso_ot=rot.idrecurso_ot and
-        rot.recurso_idrecurso=recurso.idrecurso and
-        recurso.persona_identificacion=p.identificacion
         group by p.identificacion,nombre_ot
         order by p.identificacion,nombre_ot
     '

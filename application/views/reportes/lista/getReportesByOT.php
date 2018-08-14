@@ -13,7 +13,7 @@
             </div>
 
             <div class="noMaterialStyles row col l3 m4 s12">
-              <b class="col l3 m4 s4">Base:</b>
+              <b class="col l3 m4 s4">C.O. / oficina:</b>
               <select ng-model="consulta.base" class="col l8 m8 s8" style="height:4ex;">
                 <option value="">No Seleccionado</option>
                 <option ng-repeat="b in log.bases" value="{{b.idbase}}"> {{b.idbase + " - " + b.nombre_base }} </option>

@@ -32,7 +32,7 @@
 					<td> </td>
 					<td> </td>
 					<td></td>
-          <td></td>
+          <td><input type="text" ng-model="filtroItems.clasificacion_item" placeholder="item"/> </td>
 				</tr>
 				<tr ng-repeat="it in myItems | filter: filtroItems" style="border:1px solid #999" >
 					<td class="noMaterialStyles">
