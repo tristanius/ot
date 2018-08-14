@@ -310,21 +310,21 @@ var OT = function($scope, $http, $timeout){
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
-			suma = tr.actsubtotal+tr.persubtotal+tr.eqsubtotal;
+			suma = (tr.actsubtotal*1.00+tr.persubtotal*1.00+tr.eqsubtotal*1.00);
 			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
-				suma += tr.material;
+				suma += tr.material*1.00;
 			}
 			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
-				suma += tr.otros;
+				suma += tr.otros*1.00;
 			}
 			if(tr.subcontratos){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
-				suma += tr.subactsubtotal;
+				suma += tr.subactsubtotal*1.00;
 			}
 			//Redondeado de totales
-			tr.valor_recursos = suma*1.00;
+			tr.valor_recursos = suma;
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
 			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
 			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
