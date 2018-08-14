@@ -5,7 +5,7 @@
 				<tr>
 					<th></th>
 					<th>Recursos</th>
-					<th ng-bind="tr.valor_recursos | currency: '$ '"></th>
+					<th ng-bind="tr.valor_recursos | currency: '$ ':0"></th>
 				</tr>
 				<tr>
 					<th>Concepto</th>

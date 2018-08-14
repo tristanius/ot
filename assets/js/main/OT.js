@@ -309,18 +309,18 @@ var OT = function($scope, $http, $timeout){
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
-			suma = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
+			suma = tr.actsubtotal+tr.persubtotal+tr.eqsubtotal;
 			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
-				suma += Math.round(tr.material);
+				suma += tr.material;
 			}
 			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
-				suma += Math.round(tr.otros);
+				suma += tr.otros;
 			}
 			if(tr.subcontratos){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
-				suma += Math.round(tr.subactsubtotal);
+				suma += tr.subactsubtotal;
 			}
 			//Redondeado de totales
 			tr.valor_recursos = suma;
@@ -349,6 +349,7 @@ var OT = function($scope, $http, $timeout){
 		for (var i = 0; i < obj.length; i++) {
 			if(obj[i].facturable){
 					valor += obj[i].tarifa * (obj[i].cantidad * obj[i].duracion);
+					console.log(valor);
 			}
 		};
 		return valor;
