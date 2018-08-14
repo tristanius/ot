@@ -310,6 +310,7 @@ var OT = function($scope, $http, $timeout){
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
 			suma = tr.actsubtotal+tr.persubtotal+tr.eqsubtotal;
+			console.log(suma);
 			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
 				suma += tr.material;
@@ -322,6 +323,7 @@ var OT = function($scope, $http, $timeout){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
 				suma += tr.subactsubtotal;
 			}
+			console.log(suma);
 			//Redondeado de totales
 			tr.valor_recursos = suma;
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
