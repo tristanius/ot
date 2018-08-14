@@ -34,7 +34,7 @@
 				</td>
 
 				<td style="text-align: right">
-					{{ ( sb.facturable?(sb.cantidad * sb.duracion)*sb.subtarifa:0 ) | currency:'$':0 }}
+					{{ ( sb.facturable?(sb.cantidad * sb.duracion)*sb.subtarifa:0 ) | currency:'$ ':0 }}
 					<button ng-show=" ( sb.fecha_agregado == '' || ot.estado_doc == 'POR EJECUTAR' || tr.editable == true ) " type="button" ng-click="unset_item(tr.subcontratos, sb, '<?= site_url() ?>')" class="btn red mini-btn2"> x </button>
 				</td>
 

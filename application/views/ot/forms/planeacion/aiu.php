@@ -1,6 +1,6 @@
 
 	<div class="col s6" ng-if="tr.nombre_tarea">
-		<table class="mytabla">
+		<table class="mytabla" ng-init="calcularSubtotales()">
 			<thead style="background:#ddedd0">
 				<tr>
 					<th></th>
