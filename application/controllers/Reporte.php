@@ -396,11 +396,9 @@ class Reporte extends CI_Controller{
     foreach ($recursos as $key => $rec) {
       if( !isset($rec->idrecurso_reporte_diario) ){
         $idrrd = $this->repo->addRecursoRepo($rec, $idr);
-        array_push($cambios, $rec);
         $this->avanceRecurso($rec, $idrrd); # Agregamos avance de actividad si lo tiene
       }else{
         if ( $this->repo->editRecursoRepo($rec, $idr) ) {
-          array_push($cambios, $rec);
           $this->avanceRecurso($rec, $rec->idrecurso_reporte_diario); # Agregamos avance de actividad si lo tiene
         }
       }

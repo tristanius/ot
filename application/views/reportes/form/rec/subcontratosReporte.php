@@ -30,7 +30,6 @@
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Diametro </small></th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Peso Unit. </small></th>
 
-
         <th class="yellow lighten-4">Cant. item</th>
         <th ng-show="!vista_extendida">Acumulado</th>
         <th data-icon="*"> </th>
@@ -73,7 +72,11 @@
     <tbody>
       <tr ng-repeat="sbc in rd.recursos.subcontratos | filter: sbcFilter track by $index" ng-if="sbc.idfrente_ot == myfrente" class="{{ (!sbc.idrecurso_reporte_diario && sbc.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
-          <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.subcontratos, act, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
+          <button type="button" class="btn mini-btn2 red"
+            ng-click="quitarRegistroLista(rd.recursos.subcontratos, sbc, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')"
+            ng-show="rd.info.estado != 'CERRADO' ">
+            x
+          </button>
         </td>
         <td class="noMaterialStyles" style="background: #F4F9FD ">
           <input type="checkbox" ng-model="sbc.facturable" ng-init="sbc.facturable = parseBool(sbc.facturable) " ng-disabled="rd.info.estado == 'CERRADO' ">
@@ -86,7 +89,8 @@
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.tipo_ejecucion">
+          <select class="" ng-model="sbc.tipo_ejecucion" style="width: 12ex;">
+            <option value="">Sin seleccion</option>
             <option value="AVANCE DE OBRA">AVANCE DE OBRA</option>
             <option value="REPROCESO">REPROCESO</option>
             <option value="CONTINGENCIA">CONTINGENCIA</option>
@@ -94,14 +98,16 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.a_cargo">
+          <select class="" ng-model="sbc.a_cargo" style="width: 12ex;">
+            <option value="">Sin seleccion</option>
             <option value="PROPIO">PROPIO</option>
             <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
             <option value="RECLAMACION">RECLAMACION</option>
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.calidad">
+          <select class="" ng-model="sbc.calidad" style="width: 12ex;">
+            <option value="">Sin seleccion</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
             <option value="PEMDIENTE">PEMDIENTE</option>
             <option value="SATISFACTORIO">SATISFACTORIO</option>

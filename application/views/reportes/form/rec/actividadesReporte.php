@@ -30,7 +30,6 @@
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Diametro </small></th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Peso Unit. </small></th>
 
-
         <th class="yellow lighten-4">Cant. item</th>
         <th ng-show="!vista_extendida">Acumulado</th>
         <th data-icon="*"> </th>
@@ -87,7 +86,8 @@
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
-          <select class="" ng-model="act.tipo_ejecucion">
+          <select class="" ng-model="act.tipo_ejecucion" style="width: 12ex;">
+            <option value="">Sin selección</option>
             <option value="AVANCE DE OBRA">AVANCE DE OBRA</option>
             <option value="REPROCESO">REPROCESO</option>
             <option value="CONTINGENCIA">CONTINGENCIA</option>
@@ -95,14 +95,16 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="act.a_cargo">
+          <select class="" ng-model="act.a_cargo" style="width: 12ex;">
+            <option value="">Sin selección</option>
             <option value="PROPIO">PROPIO</option>
             <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
             <option value="RECLAMACION">RECLAMACION</option>
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="act.calidad">
+          <select class="" ng-model="act.calidad" style="width: 12ex;">
+            <option value="">Sin selección</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
             <option value="PEMDIENTE">PEMDIENTE</option>
             <option value="SATISFACTORIO">SATISFACTORIO</option>
