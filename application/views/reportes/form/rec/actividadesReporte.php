@@ -39,6 +39,7 @@
         <th></th>
         <th></th>
         <!--<th></th>-->
+        <th></th>
         <th ng-show="!vista_extendida"></th>
         <th></th>
 
