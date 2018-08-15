@@ -166,6 +166,9 @@ class Reporte_db extends CI_Model{
      ){
        $data = array(
          'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+         'tipo_ejecucion' => isset($recurso->tipo_ejecucion)?$recurso->tipo_ejecucion:NULL,
+         'a_cargo' => isset($recurso->a_cargo)?$recurso->a_cargo:NULL,
+         'calidad' => isset($recurso->calidad)?$recurso->calidad:NULL,
 
          'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
          'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
@@ -192,6 +195,9 @@ class Reporte_db extends CI_Model{
   {
     $data = array(
       'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'tipo_ejecucion' => isset($recurso->tipo_ejecucion)?$recurso->tipo_ejecucion:NULL,
+      'a_cargo' => isset($recurso->a_cargo)?$recurso->a_cargo:NULL,
+      'calidad' => isset($recurso->calidad)?$recurso->calidad:NULL,
 
       'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
       'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
@@ -295,8 +301,8 @@ class Reporte_db extends CI_Model{
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
       frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente,
       avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
-      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte, 
-      avance.abscisa_ini, avance.abscisa_fin'
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte,
+      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion, avance.a_cargo, avance.calidad'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
@@ -424,13 +430,12 @@ class Reporte_db extends CI_Model{
       IFNULL(rot.tipo, "actividad" ) AS tipo_recurso,
       itf.itemc_item AS item,
       itf.descripcion,
-      avance.abscisa_ini,
-      avance.abscisa_fin,
       rrd.tipo_instalacion,
       rrd.facturable,
       rrd.print,
       rrd.cantidad,
       getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) as cantidad_final,
+      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion,
       rrd.hora_inicio,
       rrd.hora_fin,
       rrd.hora_inicio2,
@@ -457,7 +462,10 @@ class Reporte_db extends CI_Model{
       if( e.referencia IS NULL, rot.codigo_temporal, e.referencia ) AS referencia,
       if( e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion ) AS equipo,
       rot.propietario_observacion AS asignado_a,
-      IF( rot.propietario_recurso, "SI", "NO" ) AS propio
+      IF( rot.propietario_recurso, "SI", "NO" ) AS propio,
+      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte,
+      avance.a_cargo, avance.calidad
       '
     );
     $this->db->from('reporte_diario AS rd');
@@ -549,7 +557,6 @@ class Reporte_db extends CI_Model{
   # ======================================================================================
   # Frentes
   # ======================================================================================
-
   public function getRecusoReportesByFrente($idOT, $idfrente, $group=TRUE, $idreporte=NULL)
   {
     $this->load->database('ot');
@@ -576,8 +583,6 @@ class Reporte_db extends CI_Model{
     }
     return $this->db->get();
   }
-
-
 
   # ======================================================================================
   # TRANSACTION

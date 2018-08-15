@@ -46,6 +46,9 @@ table tr td, table tr th{
       <th class='thT'>IDENTIFICACION</th>
       <th class='thT'>NOMBRE</th>
       <th class='thT'>OT</th>
+      <th class='thT'>ASIGNACION</th>
+      <th class='thT'>CARGO</th>
+      <th class='thT'>FRENTE</th>
       <?php
         for ($i=1; $i<=$nDias ; $i++) {
           echo "<th class='thT'>".$i."</th>";

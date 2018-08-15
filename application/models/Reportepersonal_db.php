@@ -284,7 +284,7 @@ class Reportepersonal_db extends CI_Model{
 
   public function getPerMes($mes, $year,$laBase)
   {
-    $base = $laBase?'':'OT.base_idbase = '.$laBase.' and ';
+    $base = $laBase?'':'OT.base_idbase = '.$laBase.' ';
     $this->load->database('ot');
     return $this->db->query(
       '
@@ -293,44 +293,48 @@ class Reportepersonal_db extends CI_Model{
         p.identificacion,
         p.nombre_completo,
         OT.nombre_ot,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-1))))  as d01,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-2))))  as d02,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-3))))  as d03,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-4))))  as d04,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-5))))  as d05,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-6))))  as d06,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-7))))  as d07,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-8))))  as d08,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-9))))  as d09,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-10)))) as d10,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-11)))) as d11,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-12)))) as d12,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-13)))) as d13,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-14)))) as d14,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-15)))) as d15,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-16)))) as d16,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-17)))) as d17,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-18)))) as d18,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-19)))) as d19,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-20)))) as d20,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-21)))) as d21,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-22)))) as d22,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-23)))) as d23,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-24)))) as d24,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-25)))) as d25,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-26)))) as d26,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-27)))) as d27,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-28)))) as d28,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-29)))) as d29,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-30)))) as d30,
-        sum(rrd.idestado_labor*abs(1-abs(sign(day(rd.fecha_reporte)-31)))) as d31
-        from reporte_diario AS rd
+        rot.propietario_observacion AS asingnacion,
+        itf.codigo,
+        CONCAT( ft.ubicacion; ft.ubicacion ) AS ubicacion_frente,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-1 ) ) ) )  as d01,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-2 ) ) ) )  as d02,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-3 ) ) ) )  as d03,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-4 ) ) ) )  as d04,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-5 ) ) ) )  as d05,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-6 ) ) ) )  as d06,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-7 ) ) ) )  as d07,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-8 ) ) ) )  as d08,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-9 ) ) ) )  as d09,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-10 ) ) ) ) as d10,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-11 ) ) ) ) as d11,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-12 ) ) ) ) as d12,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-13 ) ) ) ) as d13,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-14 ) ) ) ) as d14,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-15 ) ) ) ) as d15,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-16 ) ) ) ) as d16,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-17 ) ) ) ) as d17,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-18 ) ) ) ) as d18,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-19 ) ) ) ) as d19,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-20 ) ) ) ) as d20,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-21 ) ) ) ) as d21,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-22 ) ) ) ) as d22,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-23 ) ) ) ) as d23,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-24 ) ) ) ) as d24,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-25 ) ) ) ) as d25,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-26 ) ) ) ) as d26,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-27 ) ) ) ) as d27,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-28 ) ) ) ) as d28,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-29 ) ) ) ) as d29,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-30 ) ) ) ) as d30,
+        SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-31 ) ) ) ) as d31
+        FROM reporte_diario AS rd
         JOIN OT ON OT.idOT = rd.OT_idOT
         JOIN recurso_reporte_diario AS rrd ON rrd.idreporte_diario = rd.idreporte_diario
-        JOIN frente_ot AS ft ON ft.idfrente_ot = rrd.frente_ot
-        JOIN recurso_ot AS rot ON rot.idreporte_diario = rd.idreporte_diario
+        JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
         JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
         JOIN persona AS p ON p.identificacion = r.persona_identificacion
+        JOIN frente_ot AS ft ON ft.idfrente_ot = rrd.frente_ot
+        JOIN itemf AS itf ON itf.iditemf = rrd.itemf_iditemf
         where MONTH(rd.fecha_reporte) = '.$mes.' and
         YEAR(rd.fecha_reporte)  = '.$year.' and
         '.$base.'

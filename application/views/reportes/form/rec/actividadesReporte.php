@@ -7,10 +7,15 @@
         <th style="background: #F4F9FD ">Fact.</th>
         <!--<th style="max-width:6ex;">Sector</th>-->
         <th>item</th>
-        <th>Descripcion</th>
+        <th ng-show="!vista_extendida">Descripcion</th>
         <th>UND</th>
-        <th>Abscisa Ini.</th>
-        <th>Abscisa fin.</th>
+
+        <th class="light-blue lighten-5" ng-show="vista_extendida">Ejecc.</th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida">A Cargo</th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida">Calidad</th>
+
+        <th class="light-blue lighten-5" ng-show="vista_extendida">Abscisa Ini.</th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida">Abscisa fin.</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Tipo instal.</th>
         <th class="light-blue lighten-5" ng-show="vista_extendida"><small> Ubicacion </small></th>
@@ -34,11 +39,15 @@
         <th></th>
         <th></th>
         <!--<th></th>-->
+        <th ng-show="!vista_extendida"></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+
+        <th ng-show="vista_extendida"></th>
+        <th ng-show="vista_extendida"></th>
+        <th ng-show="vista_extendida"></th>
+
+        <th ng-show="vista_extendida"></th>
+        <th ng-show="vista_extendida"></th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th> <!-- tipo instalacion -->
         <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
@@ -72,12 +81,39 @@
         <!--<td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>-->
         <td ng-bind="act.itemc_item">
         </td>
-        <td ng-bind="act.descripcion" style="min-width: 200px;"></td>
+        <td ng-bind="act.descripcion" ng-show="!vista_extendida" style="min-width: 200px;"></td>
         <td ng-bind="act.unidad"></td>
-        <td> <input type="text" ng-model="act.abscisa_ini" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td> <input type="text" ng-model="act.abscisa_fin" value="" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <!-- AVANCE DE OBRA -->
+        <th ng-show="vista_extendida">
+          <select class="" ng-model="sbc.tipo_ejecucion">
+            <option value="AVANCE DE OBRA">AVANCE DE OBRA</option>
+            <option value="REPROCESO">REPROCESO</option>
+            <option value="CONTINGENCIA">CONTINGENCIA</option>
+            <option value="SOBREANCHO">SOBREANCHO</option>
+          </select>
+        </th>
+        <th ng-show="vista_extendida">
+          <select class="" ng-model="sbc.a_cargo">
+            <option value="PROPIO">PROPIO</option>
+            <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
+            <option value="RECLAMACION">RECLAMACION</option>
+          </select>
+        </th>
+        <th ng-show="vista_extendida">
+          <select class="" ng-model="sbc.calidad">
+            <option value="SIN PRUEBA">SIN PRUEBA</option>
+            <option value="PEMDIENTE">PEMDIENTE</option>
+            <option value="SATISFACTORIO">SATISFACTORIO</option>
+            <option value="LIBERADO">LIBERADO</option>
+            <option value="RECHAZADO">RECHAZADO</option>
+            <option value="FACTURADO PEND">FACTURADO PEND.</option>
+          </select>
+        </th>
+
+        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_ini" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' " > </td>
+        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_fin" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' " > </td>
+
         <td  class="light-blue lighten-5" ng-show="vista_extendida">
           <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;" ng-disabled="rd.info.estado == 'CERRADO'">
             <option value="N/A">N/A</option>
@@ -106,7 +142,7 @@
 
 
         <td class="yellow lighten-4">
-          <input type="number" min=0 step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)"  ng-change="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> 
+          <input type="number" step=0.001 ng-model="act.cantidad" ng-init="act.cantidad = parseNumb(act.cantidad)"  ng-change="act.cantidad = parseNumb(act.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;">
         </td>
         <td ng-init="act.acumulado?act.acumulado:0;" ng-show="!vista_extendida">
           <span ng-bind="(act.acumulado*1) + (act.cantidad*1) |  number:5"></span>

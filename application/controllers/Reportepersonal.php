@@ -207,7 +207,7 @@ class Reportepersonal extends CI_Controller{
 
   public function reporteMes($mes, $year, $laBase=NULL)
   {
-    $post = json_decode( file_get_contents("php://input") );
+    //$post = json_decode( file_get_contents("php://input") );
     $this->load->model('Reportepersonal_db', 'rpermes');
     $rows = $this->rpermes->getBy($mes, $year, $laBase);
     if($rows->num_rows() > 0){
