@@ -123,13 +123,6 @@
           </select>
         </td>
 
-        <td class="blue-text text-darken-2" ng-show="vista_extendida">
-          <input type="text" style="width: 8ex;" ng-model="sbc.MH_inicio">
-        </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida">
-          <input type="text" style="width: 8ex;" ng-model="sbc.MH_inicio">
-        </td>
-
         <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.ubicacion"> </td>
         <td class="blue-text text-darken-2" ng-show="vista_extendida">
           <select class="" style="width: 10ex;" ng-model="sbc.margen">

@@ -86,7 +86,7 @@
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.tipo_ejecucion">
+          <select class="" ng-model="act.tipo_ejecucion">
             <option value="AVANCE DE OBRA">AVANCE DE OBRA</option>
             <option value="REPROCESO">REPROCESO</option>
             <option value="CONTINGENCIA">CONTINGENCIA</option>
@@ -94,14 +94,14 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.a_cargo">
+          <select class="" ng-model="act.a_cargo">
             <option value="PROPIO">PROPIO</option>
             <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
             <option value="RECLAMACION">RECLAMACION</option>
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.calidad">
+          <select class="" ng-model="act.calidad">
             <option value="SIN PRUEBA">SIN PRUEBA</option>
             <option value="PEMDIENTE">PEMDIENTE</option>
             <option value="SATISFACTORIO">SATISFACTORIO</option>
@@ -111,8 +111,8 @@
           </select>
         </th>
 
-        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_ini" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' " > </td>
-        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_fin" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' " > </td>
+        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_ini" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_fin" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <td  class="light-blue lighten-5" ng-show="vista_extendida">
           <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;" ng-disabled="rd.info.estado == 'CERRADO'">
@@ -122,6 +122,7 @@
             <option value="Obra Civil">Obra Civil</option>
           </select>
         </td>
+
         <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ubicacion"> </td>
         <td class="blue-text text-darken-2" ng-show="vista_extendida">
           <select class="" style="width: 10ex;" ng-model="act.margen">
