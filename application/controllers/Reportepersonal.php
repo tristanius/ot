@@ -205,7 +205,7 @@ class Reportepersonal extends CI_Controller{
     $this->load->view("miscelanios/reportepersonal/form_reportemespersona", array("bases"=>$rows));
   }
 
-  public function reporteMes($mes, $year, $laBase=NULL)
+  public function reporteMes($mes, $year, $laBase)
   {
     //$post = json_decode( file_get_contents("php://input") );
     $this->load->model('Reportepersonal_db', 'rpermes');
