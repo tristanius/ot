@@ -355,6 +355,10 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
     } );
   }
 
+  $scope.initValue = function(){
+
+  }
+
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });
