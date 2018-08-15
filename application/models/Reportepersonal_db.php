@@ -333,7 +333,7 @@ class Reportepersonal_db extends CI_Model{
         JOIN recurso_ot AS rot ON rot.idrecurso_ot = rrd.idrecurso_ot
         JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
         JOIN persona AS p ON p.identificacion = r.persona_identificacion
-        JOIN frente_ot AS ft ON ft.idfrente_ot = rrd.frente_ot
+        JOIN frente_ot AS ft ON ft.idfrente_ot = rrd.idfrente_ot
         JOIN itemf AS itf ON itf.iditemf = rrd.itemf_iditemf
         where MONTH(rd.fecha_reporte) = '.$mes.' and
         YEAR(rd.fecha_reporte)  = '.$year.'
