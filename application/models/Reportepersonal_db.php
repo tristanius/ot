@@ -295,7 +295,7 @@ class Reportepersonal_db extends CI_Model{
         OT.nombre_ot,
         rot.propietario_observacion AS asingnacion,
         itf.codigo,
-        CONCAT( ft.ubicacion; ft.ubicacion ) AS ubicacion_frente,
+        CONCAT( ft.ubicacion, ft.ubicacion ) AS ubicacion_frente,
         SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-1 ) ) ) )  as d01,
         SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-2 ) ) ) )  as d02,
         SUM( rrd.idestado_labor * ABS( 1-ABS( sign( DAY(rd.fecha_reporte )-3 ) ) ) )  as d03,
