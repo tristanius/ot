@@ -162,7 +162,7 @@ class Reporte_db extends CI_Model{
     if(
       isset($recurso->ubicacion) || isset($recurso->margen) || isset($recurso->MH_inicio) || isset($recurso->MH_fin) || isset($recurso->longitud) ||
       isset($recurso->ancho) || isset($recurso->alto) || isset($recurso->cant_elementos) || isset($recurso->cant_varillas) || isset($recurso->diametro_acero) ||
-      isset($recurso->peso_und) || isset($recurso->tipo_instalacion)  || isset($recurso->tipo_ejecucion) || isset($recurso->a_cargo) || isset($recurso->calidad)
+      isset($recurso->peso_und) || isset($recurso->tipo_ejecucion) || isset($recurso->a_cargo) || isset($recurso->calidad)
      ){
        $data = array(
          'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,

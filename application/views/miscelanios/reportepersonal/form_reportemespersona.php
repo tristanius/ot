@@ -41,7 +41,7 @@ $meses = array(
 	    </span>
 
 	    <a style="margin-top:0"  ng-if="consultatiempo.mes && consultatiempo.year && consultatiempo.base"
-	    	ng-href="<?= site_url('reportepersonal/reporteMes') ?>+'/'+consultatiempo.mes+'/'+consultatiempo.year+'/'+consultatiempo.base"
+	    	ng-href="{{ '<?= site_url('reportepersonal/reporteMes') ?>/'+consultatiempo.mes+'/'+consultatiempo.year+'/'+consultatiempo.base }}"
 	    	class="btn mini-btn" data-icon="&#xe031;" >
 	    </a>
 	</div>
