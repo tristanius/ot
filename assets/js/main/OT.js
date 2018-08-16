@@ -311,17 +311,21 @@ var OT = function($scope, $http, $timeout){
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
 			suma = (tr.actsubtotal*1.00+tr.persubtotal*1.00+tr.eqsubtotal*1.00);
+			console.log('Valor personal, equipo y actividades:'+uma)
 			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
 				suma += tr.material*1.00;
+				console.log('Valor material:'+uma)
 			}
 			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 				suma += tr.otros*1.00;
+				console.log('Valor con otros:'+uma)
 			}
 			if(tr.subcontratos){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
 				suma += tr.subactsubtotal*1.00;
+				console.log('Valor con subcontrato:'+uma)
 			}
 			//Redondeado de totales
 			tr.valor_recursos = suma;
@@ -350,12 +354,13 @@ var OT = function($scope, $http, $timeout){
 		angular.forEach(listado, function(v, k){
 			if(v.facturable){
 				if(v.tipo == 'subcontrato'){
-					valor += v.subtarifa.fixed(4) * (v.cantidad * v.duracion);
+					valor += v.subtarifa * (v.cantidad * v.duracion);
 				}else{
-					valor += v.tarifa.fixed(4) * (v.cantidad * v.duracion);
+					valor += v.tarifa * (v.cantidad * v.duracion);
 				}
 			}
 		});
+		console.log(valor)
 		return valor;
 	}
 	//====================================================================================
