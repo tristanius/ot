@@ -2,12 +2,12 @@
   <button type="button" class="btn mini-btn indigo darken-1" ng-click="vista_extendida=!vista_extendida" ng-init="vista_extendida=false">vista extendida actividades</button>
   <table class="mytabla font10" ng-hide="isOnPeticion">
     <thead class="font9">
-      <tr style="background: #EEE">
+      <tr style="background: #EEE" ng-init="myOrderBy_act = 'itemc_item'">
         <th>#</th>
         <th style="background: #F4F9FD ">Fact.</th>
         <!--<th style="max-width:6ex;">Sector</th>-->
-        <th>item</th>
-        <th>Descripcion</th>
+        <th>item <a href="" ng-click="myOrderBy_act = 'itemc_item'" ng-disabled="myOrderBy_act == 'itemc_item'" data-icon="&#xe029;"></a></th>
+        <th>Descripcion <a href="" ng-click="myOrderBy_act = 'descripcion'" ng-disabled="myOrderBy_act == 'descripcion'" data-icon="&#xe029;"></a></th>
         <th>UND</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Ejecc.</th>
@@ -71,7 +71,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="act in rd.recursos.actividades | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (!act.idrecurso_reporte_diario && act.idrecurso_reporte_diario == '')?'newrow':''; }}">
+      <tr ng-repeat="act in rd.recursos.actividades | orderBy: myOrderBy_act  | filter: actividadFilter track by $index" ng-if="act.idfrente_ot == myfrente" class="{{ (!act.idrecurso_reporte_diario && act.idrecurso_reporte_diario == '')?'newrow':''; }}">
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista(rd.recursos.actividades, act, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>','idrecurso_reporte_diario')" ng-show="rd.info.estado != 'CERRADO' "> x </button>
         </td>

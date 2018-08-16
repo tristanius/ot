@@ -26,17 +26,17 @@
       </tr>
 
 
-      <tr style="background: #EEE" ng-init="myOrderBy = 'itemc_item'">
+      <tr style="background: #EEE" ng-init="myOrderBy_per = 'itemc_item'">
           <th></th>
           <th>#</th>
           <th>
-            Item <a href="" ng-disabled="myOrderBy == 'itemc_item'"><i class="fas fa-sort" ng-click="myOrderBy = 'itemc_item'"></i></a>
+            Item <a href="" ng-click="myOrderBy_per = 'itemc_item" ng-disabled="myOrderBy_per == 'itemc_item'" data-icon="&#xe029;"></a>
           </th>
           <th>
-            Cédula <a href="" ng-disabled="myOrderBy == 'identificacion'"><i class="fas fa-sort" ng-click="myOrderBy = 'identificacion'"></i></a>
+            Cédula <a href="" ng-click="myOrderBy_per = 'identificacion" ng-disabled="myOrderBy_per == 'identificacion'" data-icon="&#xe029;"></a>
           </th>
           <th>
-            Nombre Completo <a href="" ng-disabled="myOrderBy == 'nombre_completo"><i class="fas fa-sort" ng-click="myOrderBy = 'nombre_completo'"></i></a>
+            Nombre Completo <a href="" ng-click="myOrderBy_per = 'nombre_completo" ng-disabled="myOrderBy_per == 'nombre_completo" data-icon="&#xe029;"></a>
           </th>
           <th>Cargo</th>
           <th>Est.</th>
@@ -89,7 +89,7 @@
           <td></td>
       </tr>
 
-      <tr ng-repeat="pr in rd.recursos.personal | orderBy: myOrderBy | filter: personalFilter track by $index" ng-if="pr.idfrente_ot == myfrente" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion_he==1 || pr.nomina==1)?'background:#fefefe;':''; }}"> <!--  | orderBy: 'itemc_item' -->
+      <tr ng-repeat="pr in rd.recursos.personal | orderBy: myOrderBy_per | filter: personalFilter track by $index" ng-if="pr.idfrente_ot == myfrente" class="{{ (pr.idrecurso_reporte_diario == undefined || pr.idrecurso_reporte_diario == '')?'newrow':''; }}" style="{{ (pr.validacion_he==1 || pr.nomina==1)?'background:#fefefe;':''; }}"> <!--  | orderBy: 'itemc_item' -->
         <td>
           <button type="button" class="btn mini-btn2 red" ng-click="quitarRegistroLista( rd.recursos.personal, pr, '<?= site_url('reporte/eliminarRecursosReporte/'); ?>', 'idrecurso_reporte_diario')" ng-show="(rd.info.estado == 'ABIERTO' && pr.nomina!=1)"> x </button>
         </td>
