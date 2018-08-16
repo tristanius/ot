@@ -311,21 +311,21 @@ var OT = function($scope, $http, $timeout){
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
 			suma = (tr.actsubtotal*1.00+tr.persubtotal*1.00+tr.eqsubtotal*1.00);
-			console.log('Valor personal, equipo y actividades:'+uma)
+			console.log('Valor personal, equipo y actividades:'+suma)
 			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
 				suma += tr.material*1.00;
-				console.log('Valor material:'+uma)
+				console.log('Valor material:'+suma)
 			}
 			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 				suma += tr.otros*1.00;
-				console.log('Valor con otros:'+uma)
+				console.log('Valor con otros:'+suma)
 			}
 			if(tr.subcontratos){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
 				suma += tr.subactsubtotal*1.00;
-				console.log('Valor con subcontrato:'+uma)
+				console.log('Valor con subcontrato:'+suma)
 			}
 			//Redondeado de totales
 			tr.valor_recursos = suma;
