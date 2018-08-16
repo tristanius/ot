@@ -311,24 +311,29 @@ var OT = function($scope, $http, $timeout){
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
 			suma = (tr.actsubtotal*1.00+tr.persubtotal*1.00+tr.eqsubtotal*1.00);
-			console.log('Valor personal, equipo y actividades:'+suma)
 			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
 				suma += tr.material*1.00;
-				console.log('Valor material:'+suma)
 			}
 			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
 				suma += tr.otros*1.00;
-				console.log('Valor con otros:'+suma)
 			}
 			if(tr.subcontratos){
 				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
 				suma += tr.subactsubtotal*1.00;
-				console.log('Valor con subcontrato:'+suma)
 			}
 			//Redondeado de totales
 			tr.valor_recursos = suma;
+			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
+			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
+			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
+		}
+	}
+	$scope.calcularAIU = function(tr){
+		if( tr == undefined) {
+			return;
+		}else{
 			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
 			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
 			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
@@ -513,6 +518,19 @@ var OT = function($scope, $http, $timeout){
 			//console.log('>> Valor OT: '+ambito.ot.valor_ot);
 		});
 		//console.log(ambito.ot.tareas);
+	}
+	$scope.recalcularOT = function(ambito){
+		ambito.ot.valor_ot = 0;
+		angular.forEach(ambito.ot.tareas, function(tarea, key){
+			var he = tarea.json_horas_extra.valor_horas_extra + tarea.json_horas_extra.administracion;
+			var rm = tarea.json_horas_extra.raciones_cantidad * tarea.json_horas_extra.raciones_valor_und;
+			var gv = tarea.json_viaticos.valor_viaticos + tarea.json_viaticos.administracion;
+			$scope.calcularAIU(tarea);
+			var id = tarea.json_indirectos.administracion + tarea.json_indirectos.utilidad + tarea.json_indirectos.imprevistos;
+			var tar = tarea.valor_recursos;
+			tarea.valor_tarea_ot = (he + rm + gv + id + tar);
+			ambito.ot.valor_ot += tarea.valor_tarea_ot;
+		});
 	}
 	//Vendors
 	$scope.tinyMCE = function(){
@@ -749,6 +767,7 @@ var agregarOT = function($scope, $http, $timeout){
 	//viaticos
 	$scope.setViaticos= function(tag, tr){ $scope.$parent.setViaticos(tag, tr, $scope); }
 	$scope.calcularViaticos= function(tr){ $scope.$parent.calcularViaticos(tr, $scope); $scope.$parent.calcularValorOT($scope); }
+	$scope.recalcularOT = function(){$scope.$parent.recalcularOT( $scope );}
 	//reembolsables
 	$scope.endReembolsables = function(tag, tr){ $scope.$parent.endReembolsables(tag, tr, $scope); $scope.$parent.calcularValorOT($scope); }
 	$scope.addReemb = function(tr){ $scope.$parent.addReemb($scope, tr); }
@@ -855,6 +874,7 @@ var editarOT = function($scope, $http, $timeout) {
 	}
 	$scope.addSelectedItems = function(){ $scope.$parent.addSelectedItems($scope,$scope.tr); $scope.calcularSubtotales(); }
 	$scope.calcularSubtotales = function(){	$scope.$parent.calcularSubtotales($scope, $scope.tr); $scope.$parent.calcularValorOT($scope);}
+	$scope.recalcularOT = function(){$scope.$parent.recalcularOT( $scope );}
 	//viaticos
 	$scope.setViaticos= function(tag, tr){ $scope.$parent.setViaticos(tag, tr, $scope); }
 	$scope.calcularViaticos= function(tr){ $scope.$parent.calcularViaticos(tr, $scope); $scope.$parent.calcularValorOT($scope); }
