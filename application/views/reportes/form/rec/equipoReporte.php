@@ -19,15 +19,15 @@
         <th colspan="3" class="yellow lighten-4">Combustible</th>
         <th></th>
       </tr>
-      <tr class="background:#EEE; color:#EEE;">
+      <tr class="background:#EEE; color:#EEE;" ng-init="myOrderBy_eq = 'itemc_item'">
         <th>#</th>
-        <th>Item</th>
+        <th>Item <a href="" ng-click="myOrderBy_eq = 'itemc_item'" ng-show="myOrderBy_eq != 'itemc_item'" data-icon="&#xe029;"></a </th>
         <th style="background: #F4F9FD ">Fact.</th>
         <th data-icon="x"></th>
         <th>Codigo</th>
         <th>Ref./AF</th>
         <th>Equipo</th>
-        <th>Descripción</th>
+        <th>Descripción <a href="" ng-click="myOrderBy_eq = 'descripcion'" ng-show="myOrderBy_eq != 'descripcion'" data-icon="&#xe029;"></a</th>
         <th>Operador</th>
         <th>C.O.</th>
 

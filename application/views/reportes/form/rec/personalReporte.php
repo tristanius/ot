@@ -36,7 +36,7 @@
             Cédula <a href="" ng-click="myOrderBy_per = 'identificacion'" ng-show="myOrderBy_per != 'identificacion'" data-icon="&#xe029;"></a>
           </th>
           <th>
-            Nombre Completo <a href="" ng-click="myOrderBy_per = 'nombre_completo'" ng-show="myOrderBy_per != 'nombre_completo" data-icon="&#xe029;"></a>
+            Nombre Completo <a href="" ng-click="myOrderBy_per = 'nombre_completo'" ng-show="myOrderBy_per != 'nombre_completo'" data-icon="&#xe029;"></a>
           </th>
           <th>Cargo</th>
           <th>Est.</th>
