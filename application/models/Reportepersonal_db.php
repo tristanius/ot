@@ -284,7 +284,7 @@ class Reportepersonal_db extends CI_Model{
 
   public function getPerMes($mes, $year,$laBase)
   {
-    $base = isset($laBase)?'':'and OT.base_idbase = '.$laBase.' ';
+    $base = !isset($laBase)?'':'and OT.base_idbase = '.$laBase.' ';
     $this->load->database('ot');
     return $this->db->query(
       '

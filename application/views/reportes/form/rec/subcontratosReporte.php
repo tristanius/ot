@@ -83,7 +83,7 @@
         </td>
         <!--<td style="max-width:6ex;"> <span ng-bind="sbc.idsector_item_tarea"></span> </td>-->
         <td> <a href="" ng-click="mensaje(sbc.descripcion)"  ng-bind="sbc.itemc_item"></a> </td>
-        <td> <div ng-bind="sbc.descripcion" style="max-width: 300px; max-height: 5ex; overflow: hidden"></div> </td>
+        <td> <div ng-bind="sbc.descripcion" style="max-width: 500px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="sbc.unidad"></td>
 
         <!-- AVANCE DE OBRA -->
