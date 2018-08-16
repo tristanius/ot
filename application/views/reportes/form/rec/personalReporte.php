@@ -30,13 +30,13 @@
           <th></th>
           <th>#</th>
           <th>
-            Item <a href="" ng-click="myOrderBy_per = 'itemc_item" ng-disabled="myOrderBy_per == 'itemc_item'" data-icon="&#xe029;"></a>
+            Item <a href="" ng-click="myOrderBy_per = 'itemc_item'" ng-show="myOrderBy_per != 'itemc_item'" data-icon="&#xe029;"></a>
           </th>
           <th>
-            Cédula <a href="" ng-click="myOrderBy_per = 'identificacion" ng-disabled="myOrderBy_per == 'identificacion'" data-icon="&#xe029;"></a>
+            Cédula <a href="" ng-click="myOrderBy_per = 'identificacion'" ng-show="myOrderBy_per != 'identificacion'" data-icon="&#xe029;"></a>
           </th>
           <th>
-            Nombre Completo <a href="" ng-click="myOrderBy_per = 'nombre_completo" ng-disabled="myOrderBy_per == 'nombre_completo" data-icon="&#xe029;"></a>
+            Nombre Completo <a href="" ng-click="myOrderBy_per = 'nombre_completo'" ng-show="myOrderBy_per != 'nombre_completo" data-icon="&#xe029;"></a>
           </th>
           <th>Cargo</th>
           <th>Est.</th>

@@ -2,7 +2,7 @@
   <button type="button" class="btn mini-btn indigo darken-1" ng-click="vista_extendida=!vista_extendida" ng-init="vista_extendida=false">vista extendida act. Subcontrato</button>
   <table class="mytabla font10" ng-hide="isOnPeticion">
     <thead class="font9">
-      <tr style="background: #EEE"  ng-init="myOrderBy_sub = 'itemc_item'">
+      <tr style="background: #EEE" ng-init="myOrderBy_sub = 'itemc_item'">
         <th>#</th>
         <th style="background: #F4F9FD ">Fact.</th>
         <!--<th style="max-width:6ex;">Sector</th>-->
