@@ -1,7 +1,7 @@
 <div class="noMaterialStyles" style="max-width:100%; overflow: auto">
   <button type="button" class="btn mini-btn indigo darken-1" ng-click="vista_extendida=!vista_extendida" ng-init="vista_extendida=false">vista extendida actividades</button>
   <table class="mytabla font10" ng-hide="isOnPeticion">
-    <thead>
+    <thead class="font9">
       <tr style="background: #EEE">
         <th>#</th>
         <th style="background: #F4F9FD ">Fact.</th>
@@ -80,7 +80,7 @@
         </td>
         <!--<td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>-->
         <td> <a href="" ng-click="mensaje(act.descripcion)"  ng-bind="act.itemc_item"></a> </td>
-        <td> <div ng-bind="act.descripcion" style="max-width: 200px; max-height: 5ex; overflow: hidden"></div> </td>
+        <td> <div ng-bind="act.descripcion" style="max-width: 300px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="act.unidad"></td>
 
         <!-- AVANCE DE OBRA -->
@@ -94,7 +94,7 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="act.a_cargo" style="width: 12ex;">
+          <select class="" ng-model="act.a_cargo" style="width: 11ex;">
             <option value="">Sin selección</option>
             <option value="PROPIO">PROPIO</option>
             <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
@@ -102,7 +102,7 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="act.calidad" style="width: 12ex;">
+          <select class="" ng-model="act.calidad" style="width: 11ex;">
             <option value="">Sin selección</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
             <option value="PEMDIENTE">PEMDIENTE</option>
@@ -117,7 +117,7 @@
         <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_fin" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <td  class="light-blue lighten-5" ng-show="vista_extendida">
-          <select class="" ng-model="act.tipo_instalacion" style="width: 12ex;" ng-disabled="rd.info.estado == 'CERRADO'">
+          <select class="" ng-model="act.tipo_instalacion" style="width: 11ex;" ng-disabled="rd.info.estado == 'CERRADO'">
             <option value="N/A">N/A</option>
             <option value="Box Coulbert">Box Coulbert</option>
             <option value="Instalaciones Hidráulicas">Instalaciones Hidráulicas</option>
@@ -133,15 +133,15 @@
             <option value="izquierdo">izquierdo</option>
           </select>
         </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_inicio"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.MH_fin"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.longitud"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.ancho"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.alto"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.cant_elementos"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.cant_varillas"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.diametro_acero"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="act.peso_und"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.MH_inicio"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.MH_fin"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.longitud"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.ancho"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.alto"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.cant_elementos"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.cant_varillas"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.diametro_acero"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="act.peso_und"> </td>
 
 
         <td class="yellow lighten-4">

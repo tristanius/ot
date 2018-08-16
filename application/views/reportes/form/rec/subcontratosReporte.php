@@ -1,7 +1,7 @@
 <div class="noMaterialStyles" style="max-width:100%; overflow: auto">
   <button type="button" class="btn mini-btn indigo darken-1" ng-click="vista_extendida=!vista_extendida" ng-init="vista_extendida=false">vista extendida act. Subcontrato</button>
   <table class="mytabla font10" ng-hide="isOnPeticion">
-    <thead>
+    <thead class="font9">
       <tr style="background: #EEE">
         <th>#</th>
         <th style="background: #F4F9FD ">Fact.</th>
@@ -83,12 +83,12 @@
         </td>
         <!--<td style="max-width:6ex;"> <span ng-bind="sbc.idsector_item_tarea"></span> </td>-->
         <td> <a href="" ng-click="mensaje(sbc.descripcion)"  ng-bind="sbc.itemc_item"></a> </td>
-        <td> <div ng-bind="sbc.descripcion" style="max-width: 200px; max-height: 5ex; overflow: hidden"></div> </td>
+        <td> <div ng-bind="sbc.descripcion" style="max-width: 300px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="sbc.unidad"></td>
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.tipo_ejecucion" style="width: 12ex;">
+          <select class="" ng-model="sbc.tipo_ejecucion" style="width: 11ex;">
             <option value="">Sin seleccion</option>
             <option value="AVANCE DE OBRA">AVANCE DE OBRA</option>
             <option value="REPROCESO">REPROCESO</option>
@@ -97,7 +97,7 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.a_cargo" style="width: 12ex;">
+          <select class="" ng-model="sbc.a_cargo" style="width: 11ex;">
             <option value="">Sin seleccion</option>
             <option value="PROPIO">PROPIO</option>
             <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
@@ -105,7 +105,7 @@
           </select>
         </th>
         <th ng-show="vista_extendida">
-          <select class="" ng-model="sbc.calidad" style="width: 12ex;">
+          <select class="" ng-model="sbc.calidad" style="width: 11ex;">
             <option value="">Sin seleccion</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
             <option value="PEMDIENTE">PEMDIENTE</option>
@@ -136,15 +136,15 @@
             <option value="izquierdo">izquierdo</option>
           </select>
         </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.MH_inicio"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.MH_fin"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.longitud"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.ancho"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.alto"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.cant_elementos"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.cant_varillas"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.diametro_acero"> </td>
-        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 8ex;" ng-model="sbc.peso_und"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.MH_inicio"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.MH_fin"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.longitud"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.ancho"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.alto"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.cant_elementos"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.cant_varillas"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.diametro_acero"> </td>
+        <td class="blue-text text-darken-2" ng-show="vista_extendida"> <input type="text" style="width: 7ex;" ng-model="sbc.peso_und"> </td>
 
 
         <td class="yellow lighten-4">
