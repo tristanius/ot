@@ -80,13 +80,13 @@
         </td>
         <!--<td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>-->
         <td> <a href="" ng-click="mensaje(act.descripcion)"  ng-bind="act.itemc_item"></a> </td>
-        <td> <div ng-bind="act.descripcion" style="max-width: 500px; max-height: 5ex; overflow: hidden"></div> </td>
+        <td> <div ng-bind="act.descripcion" style="max-width: 1000px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="act.unidad"></td>
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
           <select class="" ng-model="act.tipo_ejecucion" style="width: 12ex;">
-            <option value="">Sin selección</option>
+            <option value="">-</option>
             <option value="AVANCE DE OBRA">AVANCE DE OBRA</option>
             <option value="REPROCESO">REPROCESO</option>
             <option value="CONTINGENCIA">CONTINGENCIA</option>
@@ -95,7 +95,7 @@
         </th>
         <th ng-show="vista_extendida">
           <select class="" ng-model="act.a_cargo" style="width: 11ex;">
-            <option value="">Sin selección</option>
+            <option value="">-</option>
             <option value="PROPIO">PROPIO</option>
             <option value="SUBCONTRATISTA">SUBCONTRATISTA</option>
             <option value="RECLAMACION">RECLAMACION</option>
@@ -103,7 +103,7 @@
         </th>
         <th ng-show="vista_extendida">
           <select class="" ng-model="act.calidad" style="width: 11ex;">
-            <option value="">Sin selección</option>
+            <option value="">-</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
             <option value="PEMDIENTE">PEMDIENTE</option>
             <option value="SATISFACTORIO">SATISFACTORIO</option>
@@ -118,7 +118,7 @@
 
         <td  class="light-blue lighten-5" ng-show="vista_extendida">
           <select class="" ng-model="act.tipo_instalacion" style="width: 11ex;" ng-disabled="rd.info.estado == 'CERRADO'">
-            <option value="N/A">N/A</option>
+            <option value="N/A">-</option>
             <option value="Box Coulbert">Box Coulbert</option>
             <option value="Instalaciones Hidráulicas">Instalaciones Hidráulicas</option>
             <option value="Obra Civil">Obra Civil</option>
