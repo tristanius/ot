@@ -7,7 +7,7 @@
         <th style="background: #F4F9FD ">Fact.</th>
         <!--<th style="max-width:6ex;">Sector</th>-->
         <th>item</th>
-        <th ng-show="!vista_extendida">Descripcion</th>
+        <th>Descripcion</th>
         <th>UND</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Ejecc.</th>
@@ -39,7 +39,7 @@
         <th></th>
         <!--<th></th>-->
         <th></th>
-        <th ng-show="!vista_extendida"></th>
+        <th></th>
         <th></th>
 
         <th ng-show="vista_extendida"></th>
@@ -79,9 +79,8 @@
           <input type="checkbox" ng-model="act.facturable" ng-init="act.facturable = parseBool(act.facturable) " ng-disabled="rd.info.estado == 'CERRADO' ">
         </td>
         <!--<td style="max-width:6ex;"> <span ng-bind="act.idsector_item_tarea"></span> </td>-->
-        <td ng-bind="act.itemc_item">
-        </td>
-        <td ng-bind="act.descripcion" ng-show="!vista_extendida" style="min-width: 200px;"></td>
+        <td> <a href="" ng-click="mensaje(act.descripcion)"  ng-bind="act.itemc_item"></a> </td>
+        <td> <div ng-bind="act.descripcion" style="max-width: 200px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="act.unidad"></td>
 
         <!-- AVANCE DE OBRA -->
