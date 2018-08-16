@@ -497,7 +497,8 @@ var OT = function($scope, $http, $timeout){
 		tr.json_horas_extra.json_horas_extra = angular.copy(tr.personal)
 		tr.json_horas_extra.administracion = Math.round( (tr.json_horas_extra.valor_horas_extra + (tr.json_horas_extra.raciones_cantidad * tr.json_horas_extra.raciones_valor_und)) * 0.0458 );//desde el contrato
 	}
-	// ----------------------------------------
+	/* ----------------------------------------*/
+
 	//Calculos de OT
 	$scope.calcularValorOT = function(ambito){
 		ambito.ot.valor_ot = 0;

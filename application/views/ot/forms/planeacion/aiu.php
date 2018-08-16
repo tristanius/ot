@@ -16,17 +16,17 @@
 			<tbody>
 				<tr>
 					<td>Administración</td>
-					<td> <input ng-model="tr.a" ng-init="calcularSubtotales()" ng-init="calcularSubtotales()"> </td>
+					<td> <input ng-model="tr.a" ng-init="calcularSubtotales()" ng-change="calcularSubtotales()"> </td>
 					<td> <span ng-bind="(tr.valor_recursos*tr.a) | currency: '$ ' "></span> </td>
 				</tr>
 				<tr>
 					<td>Imprevistos</td>
-					<td> <span ng-model="tr.i" ng-init="calcularSubtotales()"> </span> </td>
+					<td> <input ng-model="tr.i" ng-init="calcularSubtotales()" ng-change="calcularSubtotales()"> </span> </td>
 					<td> <span ng-bind="(tr.valor_recursos*tr.i) | currency: '$ ' "></span> </td>
 				</tr>
 				<tr>
 					<td>Utilidad</td>
-					<td> <input ng-model="tr.u" ng-init="calcularSubtotales()" ng-init="calcularSubtotales()"> </td>
+					<td> <input ng-model="tr.u" ng-init="calcularSubtotales()" ng-change="calcularSubtotales()"> </td>
 					<td> <span ng-bind="(tr.valor_recursos*tr.u) | currency: '$ ' "></span> </td>
 				</tr>
 				<tr>
