@@ -2,21 +2,6 @@
   <div class="">
     <h5>Información general de OT</h5>
 
-    <div class="row">
-
-      <div class="col s12 m12 l12">
-        <label for=""> Estado de la Orden:  <span style="color:green" ng-bind="ot.estado_doc"></span></label>
-
-        <select ng-model="myestado_doc">
-          <option value="POR EJECUTAR" ng-if="(ot.estado_doc != 'ACTIVA' && ot.estado_doc != 'FINALIZÓ')">POR EJECUTAR</option>
-          <option value="ACTIVA">ACTIVA</option>
-          <option value="FINALIZÓ">FINALIZÓ</option>
-        </select>
-
-        <button type="button" class="btn mini-btn2" ng-click="ot.estado_doc = myestado_doc">Aplicar</button>
-      </div>
-    </div>
-
     <br>
 
     <div style="padding:3px;" class="row">
@@ -54,7 +39,7 @@
     </div>
 
     <br>
-    <section ng-if="validPriv(37)">
+    <section ng-if="0 && validPriv(37)">
 
         <div class="">
           <button type="button" class="btn mini-btn" ng-click="add_new_costo_mes_ot = true">+</button> Add. año de costos

@@ -1,5 +1,15 @@
 var OT = function($scope, $http, $timeout){
 
+	$scope.enlaceGetOT = '';
+	$scope.loader = false;
+	$scope.getAjaxWindowLocal = function(lnk, ventana, titulo){
+		$scope.enlaceGetOT = '';
+		$timeout(function(){
+			$scope.enlaceGetOT = lnk;
+		});
+		$scope.$parent.getAjaxWindowLocal(lnk, ventana, titulo);
+	}
+
 	$scope.getResumenGeneral = function(link){
 		$.ajax({
 			url: link,
@@ -16,7 +26,6 @@ var OT = function($scope, $http, $timeout){
 	}
 
 	$scope.getDataITems = function(url, ambito){
-		console.log(url);
 		$http.get(url).then(
 			function(response) {
 				ambito.bases = JSON.parse(response.data.bases);
@@ -34,6 +43,7 @@ var OT = function($scope, $http, $timeout){
 		$http.post(url, {}).then(
 				function(response){
 					ambito.ot = response.data;
+					ambito.tr = ambito.ot.tareas[0];
 					if(edit){
 						ambito.recorrerTareas();
 						ambito.obtenerMunicipios(ambito.ot.departamento, $("#depart").data('getmunis'));
@@ -49,6 +59,11 @@ var OT = function($scope, $http, $timeout){
 	$scope.selectTarea = function(ot, ambito, indice){
 		ambito.tr = ot.tareas[indice];
 		ambito.tr.editable = $scope.toboolean(ambito.tr.editable);
+	}
+	$scope.setTarea = function(mytr, ambito){
+		$timeout(function(){
+			ambito.tr = mytr;
+		});
 	}
 	// eliminar un item
 	$scope.unset_item = function(lista, item, site_url, tr){
@@ -72,33 +87,40 @@ var OT = function($scope, $http, $timeout){
 
 	}
 	$scope.delete_item = function(lista, tr, item){
-		if(lista == tr.personal){
-			lista.splice(lista.indexOf(item),1);
-			alert('Has modificado personal, debes modificar tambien horas extra y gastos de viaje de la tarea actual de ese item, si los ha calculado previamente');
-		}else {
-			lista.splice(lista.indexOf(item),1);
+		var proceder = confirm('¿Esta seguro de eliminar este Item?');
+		if(proceder){
+			if(lista == tr.personal){
+				lista.splice(lista.indexOf(item),1);
+				alert('Has modificado personal, debes modificar tambien horas extra y gastos de viaje de la tarea actual de ese item, si los ha calculado previamente');
+			}else {
+				lista.splice(lista.indexOf(item),1);
+			}
 		}
 	}
 
 	$scope.deleteOT = function(url, id){
 		console.log(url+id);
-		$http.get(url+id).then(
-			function(response){
-				if(response.data == 'success'){
-					alert('Borrado exitosamente, recarga la consulta.');
-				}else {
-					alert('No encontrada')
+		var proceder = confirm('¿Esta seguro de eliminar esta orden de trabajo?');
+		if(proceder){
+			$http.get(url+id).then(
+				function(response){
+					if(response.data == 'success'){
+						alert('Borrado exitosamente, recarga la consulta.');
+					}else {
+						alert('No encontrada')
+					}
+					console.log(response.data);
+				},
+				function(response){
+					alert('Algo ha fallado');
+					console.log(response.data);
 				}
-			},
-			function(response){
-				alert('Algo ha fallado');
-			}
-		);
+			);
+		}
 	}
 
 	$scope.consola = function(tr){console.log(tr)}
 	// ---------------------------------------------------------------------------
-
 	// Add una nueva tarea
 	$scope.addTarea = function(ambito){
 		var idot = (ambito.ot.idOT != undefined)?ambito.ot.idOT:"";
@@ -143,42 +165,83 @@ var OT = function($scope, $http, $timeout){
 					"equipos": [],
 					'material':[],
 					'otros':[],
+					'subcontratos':[],
 					"responsables":{},
 					"requisitos_documentales":{}
 				}
 			);
-			ambito.tr = ambito.ot.tareas[ambito.ot.tareas.length];
+		ambito.tr = ambito.ot.tareas[ambito.ot.tareas.length];
+		var i = ambito.ot.tareas.length;
+		$scope.setTarea(ambito.ot.tareas[i-1], ambito);
 		alert('Has añadido una nueva tarea, selecciona en la lista desplegable para modificar valores');
+	}
+
+	$scope.delTarea = function(lnk, tarea, ambito){
+		if(ambito.ot.tareas.length <= 1){
+			alert("No puedes eliminar la unica tarea.");
+			return;
+		}
+		$procc = confirm('Estas seguro de eliminar esta tarea  de a OT?');
+		if($procc && tarea.idtarea_ot){
+				$http.post(lnk+tarea.idtarea_ot, {idtarea_ot: tarea.idtarea_ot}).then(
+					function(resp){
+						if(resp.data.status){
+							var i = ambito.ot.tareas.indexOf(tarea);
+							ambito.ot.tareas.splice(i,1);
+							ambito.tr = ambito.ot.tareas[0];
+						}else{
+							console.log(resp.data);
+							alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');
+						}
+					},
+					function(resp){
+						console.log(resp.data);
+						alert('No se ha podido borrar la tarea seleccionada. verfica que no tenga informacion realacionada.');	}
+				);
+		}else if ($procc) {
+			ambito.ot.tareas.splice(i,1);
+			ambito.tr = ambito.ot.tareas[0];
+		}
 	}
 	//==============================================================================
 	// Gestion de items de OT
+	// selecciona los items de la OT
+	$scope.getItemsVg = function(lnk, ambito){
+		$scope.loader = true;
+		$http.get(lnk).then(
+			function(resp){
+				ambito.items = resp.data.items;
+				ambito.tr.a = resp.data.a;
+				ambito.tr.i = resp.data.i;
+				ambito.tr.u = resp.data.u;
+				$scope.loader = false;
+			},
+			function(resp){
+				alert('algo ha fallado');
+				console.log(resp.data);
+				$scope.loader = false;
+			}
+		);
+	}
 	//Muestra items por agregar de un tipo en la ventana. Debe llamarse desde un controller hijo.
 	$scope.selectItemsType =  function(type, ambito){
-		switch (type) {
-			case 1:
-				ambito.myItems = angular.copy(ambito.items['actividad']);
-				break;
-			case 2:
-				ambito.myItems = angular.copy(ambito.items['personal']);
-				break;
-			case 3:
-				ambito.myItems = angular.copy(ambito.items['equipo']);
-				break;
-			case 'material':
-				ambito.myItems = angular.copy(ambito.items['material']);
-				break;
-			case 'otros':
-				ambito.myItems = angular.copy(ambito.items['otros']);
-				break;
-			default:
-				ambito.myItems = [{}];
-				alert('no se encuentran elementos de el tipo seleccionado.');
+		try {
+			console.log(type);
+			console.log(ambito.items);
+			ambito.myItems = angular.copy(ambito.items[type]);
+		} catch (e) {
+			ambito.myItems = [];
+			console.log(e)
 		}
 	}
 	//Muestra la ventana para add items. Debe llamarse desde un controller hijo.
 	$scope.VwITems = function(tipo, ambito){
-		$scope.selectItemsType(tipo, ambito);
+		$scope.loader = true;
+		$timeout(function(){
+			$scope.selectItemsType(tipo, ambito);
+		});
 		$("#ventana_add_items").removeClass('nodisplay');
+		$scope.loader = false;
 	}
 	$scope.setSelecteState = function(add){
 		if(!add){
@@ -195,30 +258,34 @@ var OT = function($scope, $http, $timeout){
 			i++;
 			ambito.indexer++;
 			if (v.add == true) {
-				//console.log(v);
+				console.log(v);
 				v.id = ambito.indexer;
 				v.fecha_agregado = '';
 				v.cantidad = v.cantidad==undefined?1:v.cantidad;
 				v.duracion = v.duracion==undefined?1:v.duracion;
 				v.facturable = true;
 				v.idsector_item_tarea = '1';
-				if (v.tipo_item == 1){
+				if (v.tipo == 1){
 					tr.actividades.push(v);
-				}else if(v.tipo_item == 2) {
+				}else if(v.tipo == 2) {
 					tr.personal.push(v);
 					//generar listado de items de personal para calc. gastos de viaje.
 					tr.json_viaticos.json_viaticos.push(v);
 					tr.json_horas_extra.json_horas_extra.push(v);
-				}else if(v.tipo_item == 3){
+				}else if(v.tipo == 3){
 					tr.equipos.push(v);
-				}else if (v.tipo_item == 'material') {
+				}else if (v.tipo == 'material') {
 					if (!tr.material)
 						tr.material = [];
 					tr.material.push(v);
-				}else if(v.tipo_item == 'otros'){
+				}else if(v.tipo == 'otros'){
 					if (!tr.otros)
 						tr.otros = [];
 					tr.otros.push(v);
+				}else if(v.tipo == 'subcontrato'){
+					if (!tr.subcontratos)
+						tr.subcontratos = [];
+					tr.subcontratos.push(v);
 				}
 			};
 			if (i == size){
@@ -238,18 +305,29 @@ var OT = function($scope, $http, $timeout){
 	$scope.calcularSubtotales = function(ambito, tr){
 		if( tr == undefined) {
 		}else{
+			var suma = 0;
+			tr.valor_recursos = 0;
 			tr.actsubtotal = ambito.recorrerSubtotales(tr.actividades);
 			tr.persubtotal = ambito.recorrerSubtotales(tr.personal);
 			tr.eqsubtotal = ambito.recorrerSubtotales(tr.equipos);
-			if(tr.material)
+			suma = (tr.actsubtotal*1.00+tr.persubtotal*1.00+tr.eqsubtotal*1.00);
+			if(tr.material){
 				tr.msubtotal = ambito.recorrerSubtotales(tr.material);
-			if (tr.otros)
+				suma += tr.material*1.00;
+			}
+			if (tr.otros){
 				tr.otrsubtotal = ambito.recorrerSubtotales(tr.otros);
+				suma += tr.otros*1.00;
+			}
+			if(tr.subcontratos){
+				tr.subactsubtotal = ambito.recorrerSubtotales(tr.subcontratos);
+				suma += tr.subactsubtotal*1.00;
+			}
 			//Redondeado de totales
-			tr.valor_recursos = Math.round(tr.actsubtotal+tr.persubtotal+tr.eqsubtotal);
-			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * 0.18);//desde el contrato
-			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * 0.01);//desde el contrato
-			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * 0.04);//desde el contrato
+			tr.valor_recursos = suma;
+			tr.json_indirectos.administracion = Math.round(tr.valor_recursos * tr.a);//desde el contrato
+			tr.json_indirectos.imprevistos = Math.round(tr.valor_recursos * tr.i);//desde el contrato
+			tr.json_indirectos.utilidad = Math.round(tr.valor_recursos * tr.u);//desde el contrato
 		}
 	}
 	$scope.setTareaAdministracion = function(value, tr){
@@ -267,16 +345,20 @@ var OT = function($scope, $http, $timeout){
 		tr.json_indirectos.utilidad = value;
 		return value;
 	}
-	$scope.recorrerSubtotales = function(obj){
+	$scope.recorrerSubtotales = function(listado){
 		var valor = 0;
-		for (var i = 0; i < obj.length; i++) {
-			if(obj[i].facturable){
-					valor += obj[i].tarifa * (obj[i].cantidad * obj[i].duracion);
+		angular.forEach(listado, function(v, k){
+			if(v.facturable){
+				if(v.tipo == 'subcontrato'){
+					valor += v.subtarifa.fixed(4) * (v.cantidad * v.duracion);
+				}else{
+					valor += v.tarifa.fixed(4) * (v.cantidad * v.duracion);
+				}
 			}
-		};
+		});
 		return valor;
 	}
-		//====================================================================================
+	//====================================================================================
 	// Viaticos
 	$scope.setViaticos = function(tag, tr, ambito){
 		$(tag).removeClass("nodisplay");
@@ -555,7 +637,6 @@ var OT = function($scope, $http, $timeout){
 
 	// --------------------------------------------------------------------------------
 	// Frentes de trabajo
-
 	$scope.addFrente = function( lnk, lista, frente ){
 		$http.post(
 			lnk,
@@ -587,7 +668,7 @@ var OT = function($scope, $http, $timeout){
 var listaOT = function($scope, $http, $timeout){
 	$scope.linkLista = '';
 	$scope.consulta = {};
-	$scope.findOTsByBase = function(url){
+	$scope.findOTsBy = function(url){
 		if($scope.consulta.indicio_nombre_ot || $scope.consulta.base || $scope.consulta.estado){
 			$http.post(url, $scope.consulta ).then(
 					function(response) {
@@ -615,6 +696,7 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.eqsubtotal=0;
 	$scope.actsubtotal=0;
 	$scope.persubtotal=0;
+	$scope.subactsubtotal=0;
 	$scope.reembs=[];
 	$scope.viaticos = 0;
 	$scope.filtroItems = {};
@@ -623,23 +705,30 @@ var agregarOT = function($scope, $http, $timeout){
 	$scope.myestado_doc = 'POR EJECUTAR';
 	$scope.ot.allMeses = [ ];
 	$scope.ot.frentes = [];
+	$scope.tr = {};
 	////$scope.$parent.tinyMCE();
 
-	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope); }
+	$scope.getFormData = function(url){ $scope.$parent.getDataITems(url, $scope); }
 	$scope.getData = function(url){ $scope.$parent.getData(url, $scope, false); }
-	$scope.selectTarea = function(ot, indice){
-		$timeout(function(){
-			$scope.$parent.selectTarea(ot, $scope, indice);
-			$scope.calcularSubtotales();
-		});
-	}
+
 	$scope.addTarea = function(){$scope.$parent.addTarea($scope);}
+	$scope.setTarea = function(mytr){
+		$scope.$parent.setTarea(mytr, $scope);
+	}
+	$scope.delTarea = function(lnk, tarea){
+		$scope.$parent.delTarea(lnk, tarea, $scope);
+	}
+
 	$scope.unset_item = function(lista, item, site_url){
 		$scope.$parent.unset_item(lista, item, site_url, $scope.tr);
 		$scope.itemsEliminados.push(item);
 		$scope.calcularSubtotales();
 	}
 	// procesos para items added a la OT
+	// Obtener items de una vigencia seleccionada
+	$scope.getItemsVg = function(lnk){
+		$scope.$parent.getItemsVg(lnk, $scope);
+	}
 	//items planeación
 	$scope.VwITems = function(tipo){
 		if($scope.ot.tareas != undefined && $scope.ot.tareas.length > 0){ $scope.$parent.VwITems(tipo, $scope); }
@@ -668,15 +757,13 @@ var agregarOT = function($scope, $http, $timeout){
 		//$scope.$parent.getMapa($scope);
 	}
 	//===================================================================================================================
-	$scope.guardarOT = function(url){
+	$scope.guardarOT = function(url, lnkConsulta){
 		$scope.calcularSubtotales();
 		$scope.ot.justificacion = $('#justificacion').val();
 		$scope.ot.actividad = $('#actividad').val();
 		console.log($scope.ot);
 		if($scope.isOnPeticion){
 			alert('Ya has presiondo guardar previamente, debes ir a editar para agregar cambios');
-		}else	if($scope.ot.vereda == undefined || $scope.ot.vereda == '' || $scope.ot.tareas.length == 0){
-			alert('Faltan datos por registrar');
 		}else if ($scope.ot.nombre_ot == '' || $scope.ot.nombre_ot == undefined
 						|| $scope.ot.tipo_ot == undefined || $scope.ot.tipo_ot == ''
 						|| $scope.ot.especialidad == undefined || $scope.ot.especialidad == '' || $scope.ot.idcontrato == undefined) {
@@ -686,13 +773,13 @@ var agregarOT = function($scope, $http, $timeout){
 			$http.post(	  url, { ot: $scope.ot, log: $scope.$parent.log }   ).then(
 				function(response) {
 					if(response.data == 'Orden de trabajo guardada correctamente'){
-						alert('Orden de trabajo guardada correctamente, BASE: '+$scope.ot.base_idbase);
+						alert('Orden de trabajo guardada correctamente, C.O.: '+$scope.ot.base_idbase);
 						$timeout(function(){
-							$scope.$parent.cerrarWindow();
-							$scope.$parent.refreshTabs();
+							$scope.$parent.cerrarWindowLocal('#ventanaOT', $scope.$parent.enlaceGetOT);
+							//$scope.$parent.refreshTabs();
+							$scope.$parent.findOTsBy(lnkConsulta);
 							$scope.isOnPeticion = false;
 						});
-						$http.post($scope.$parent.site_url+"/sesion/sendMail2",{msj: " Una nueva orden de trabajo <b>"+$scope.ot.nombre_ot+"</b> se ha creado. "})
 					}else{
 						alert(response.data);
 						$scope.isOnPeticion = false;
@@ -717,38 +804,45 @@ var editarOT = function($scope, $http, $timeout) {
 	$scope.eqsubtotal=0;
 	$scope.actsubtotal=0;
 	$scope.persubtotal=0;
+	$scope.subactsubtotal=0;
 	$scope.reembs=[];
 	$scope.viaticos = 0;
 	$scope.filtroItems = {};
 	$scope.munis = [];
 	$scope.isOnPeticion = false;
 	$scope.ot.allMeses = [];
+	$scope.tr = {};
 
 	$scope.recorrerTareas = function(){
 		if ( $scope.ot.estado_doc == undefined || $scope.ot.estado_doc == ''){
 			$scope.ot.estado_doc = 'POR EJECUTAR';
 		}
 		$scope.myestado_doc = $scope.ot.estado_doc;
-		angular.forEach($scope.ot.tareas, function(val, key){
-			$scope.$parent.calcularSubtotales($scope, val);
+		angular.forEach($scope.ot.tareas, function(tr, key){
+			$scope.$parent.calcularSubtotales($scope, tr);
 		});
 	}
 
-	$scope.getItemsBy = function(url){ $scope.$parent.getDataITems(url, $scope);}
+	$scope.getFormData = function(url){ $scope.$parent.getDataITems(url, $scope);}
 	$scope.getData = function(url){	$scope.$parent.getData(url, $scope, true); }
-	$scope.selectTarea = function(ot, indice){
-		$timeout(function(){
-			$scope.$parent.selectTarea(ot, $scope, indice);
-			$scope.calcularSubtotales();
-		});
-	}
+
 	$scope.addTarea = function(){$scope.$parent.addTarea($scope);}
+	$scope.setTarea = function(mytr){
+		$scope.$parent.setTarea(mytr, $scope);
+	}
+	$scope.delTarea = function(lnk, tarea){
+		$scope.$parent.delTarea(lnk, tarea, $scope);
+	}
+
 	$scope.unset_item = function(lista, item, site_url){
 		$scope.$parent.unset_item(lista, item, site_url, $scope.tr);
 		$scope.itemsEliminados.push(item);
 		$scope.calcularSubtotales();
 	}
 	// procesos para items added a la OT
+	$scope.getItemsVg = function(lnk){
+		$scope.$parent.getItemsVg(lnk, $scope);
+	}
 	//items planeación
 	$scope.VwITems = function(tipo){
 		if($scope.ot.tareas != undefined && $scope.ot.tareas.length > 0){ $scope.$parent.VwITems(tipo, $scope); }
@@ -800,26 +894,21 @@ var editarOT = function($scope, $http, $timeout) {
 	}
 	$scope.guardarOT = function(url){
 		//tinyMCE.triggerSave();
+		var ind = $scope.ot.tareas.indexOf($scope.tr);
 		if($scope.isOnPeticion){
 			alert('Ya se esta ejecutando un proceso de guardado, espera a que muestre su finalización');
 		}else {
 			$scope.isOnPeticion = true;
 			$scope.calcularSubtotales();
-			$scope.ot.justificacion = $('#justificacion').val();
-			$scope.ot.actividad = $('#actividad').val();
-			console.log($scope.ot);
 			$http.post(	  url, { ot: $scope.ot, log: $scope.$parent.log }   ).then(
 				function(response) {
 					if(response.data.success == 'Orden de trabajo guardada correctamente'){
 						alert(response.data.success);
 						console.log(response.data.ot);
 						$scope.ot=response.data.ot;
-						$scope.selectTarea($scope.ot, $('#selected_tarea').val());
+						$scope.tr = $scope.ot.tareas[ind];
 						$scope.isOnPeticion = false;
 						$scope.$parent.calcularValorOT($scope);
-						$timeout(function(){
-							$scope.$parent.refreshTabs();
-						});
 					}else if (response.data == 'La Orden de trabajo ya existe.') {
 						alert('No. de Orden de trabajo ya registrado');
 						$scope.isOnPeticion = false;

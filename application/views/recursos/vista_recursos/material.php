@@ -1,11 +1,14 @@
-<h5>Material: <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-material')"></button></h5>
+<h5>Material:
+  <!-- <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-material')"></button> -->
+</h5>
 
-<div id="tabla-material" class="nodisplay">
+<div id="tabla-material" class="">
   <ul class="col s12 m6 l6">
     <li>
-      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue black-text" ng-click="showSection('#addMaterial')"
-        data-icon="N" style="margin-top:0; font-size: 2.1ex">
-      </button> Add. material
+      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-1 white-text" ng-click="showSection('#addMaterial')"
+        data-icon="&#xe02e;" style="margin-top:0; font-size: 2.1ex">
+        Add. material nuevo
+      </button>
     </li>
     <!-- <li><button type="button" class="btn mini-btn light-blue black-text" ng-click="showSection('#findEquipo')" data-icon="C" style="margin-top:0; font-size: 2.1ex"></button> Relacionar equipo siesa.</li> -->
   </ul>
@@ -15,7 +18,7 @@
   </div>
 
   <table class="mytabla tabla-recursos font10">
-    <thead>
+    <thead class="blue-grey lighten-4">
       <tr>
         <th></th>
         <th>Item</th>
@@ -28,7 +31,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="m in recursosOT.material" style="{{ m.propietario_recurso==true?'':'background: #ffc46d' }}">
+      <tr ng-repeat="m in recursosOT.material" style="{{ m.propietario_recurso==true?'':'background: #FCD9A9' }}">
         <td>
             <button
             type="button"

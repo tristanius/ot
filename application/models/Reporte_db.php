@@ -95,9 +95,15 @@ class Reporte_db extends CI_Model{
        'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
        'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
        'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+
+       'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
+       'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
+       'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
+
        'last_log'=>$log." - ".date('Y-m-d H:i:s')
      );
      $this->db->insert('recurso_reporte_diario', $data);
+     return $this->db->insert_id();
    }
   #Actualiar un recurso reporte
   public function editRecursoRepo($recurso, $idrepo)
@@ -138,11 +144,81 @@ class Reporte_db extends CI_Model{
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+
+      'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
+      'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
+      'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
+
       'last_log'=>$log." - ".date('Y-m-d H:i:s')
     );
     $this->db->update('recurso_reporte_diario', $data, 'idrecurso_reporte_diario = '.$recurso->idrecurso_reporte_diario);
     return ($this->db->affected_rows() > 0)?TRUE:FALSE;
   }
+  # -------------------------------------------------------------------
+  # Avance de actividad
+  # Agregar Avance actividad reportada
+  public function addAvance($recurso, $idrecurso_repo)
+  {
+    if(
+      isset($recurso->ubicacion) || isset($recurso->margen) || isset($recurso->MH_inicio) || isset($recurso->MH_fin) || isset($recurso->longitud) ||
+      isset($recurso->ancho) || isset($recurso->alto) || isset($recurso->cant_elementos) || isset($recurso->cant_varillas) || isset($recurso->diametro_acero) ||
+      isset($recurso->peso_und) || isset($recurso->tipo_ejecucion) || isset($recurso->a_cargo) || isset($recurso->calidad)
+     ){
+       $data = array(
+         'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+         'tipo_ejecucion' => isset($recurso->tipo_ejecucion)?$recurso->tipo_ejecucion:NULL,
+         'a_cargo' => isset($recurso->a_cargo)?$recurso->a_cargo:NULL,
+         'calidad' => isset($recurso->calidad)?$recurso->calidad:NULL,
+
+         'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
+         'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
+         'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+
+         'margen' => isset($recurso->margen)?$recurso->margen:NULL,
+         'MH_inicio' => isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
+         'MH_fin' => isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
+         'longitud' => isset($recurso->longitud)?$recurso->longitud:NULL,
+         'ancho' => isset($recurso->ancho)?$recurso->ancho:NULL,
+         'alto' => isset($recurso->alto)?$recurso->alto:NULL,
+         'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
+         'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
+         'diametro_acero' => isset($recurso->diametro_acero)?$recurso->diametro_acero:NULL,
+         'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL,
+         'idrecurso_reporte_diario' => $idrecurso_repo,
+       );
+       $this->db->insert('avance_reporte', $data);
+       return $this->db->insert_id();
+    }
+  }
+  # Modificar avance de actividad reportada
+  public function modAvance($recurso)
+  {
+    $data = array(
+      'ubicacion' => isset($recurso->ubicacion)?$recurso->ubicacion:NULL,
+      'tipo_ejecucion' => isset($recurso->tipo_ejecucion)?$recurso->tipo_ejecucion:NULL,
+      'a_cargo' => isset($recurso->a_cargo)?$recurso->a_cargo:NULL,
+      'calidad' => isset($recurso->calidad)?$recurso->calidad:NULL,
+
+      'abscisa_ini'=>isset($recurso->abscisa_ini)?$recurso->abscisa_ini:NULL,
+      'abscisa_fin'=>isset($recurso->abscisa_fin)?$recurso->abscisa_fin:NULL,
+      'tipo_instalacion'=>isset($recurso->tipo_instalacion)?$recurso->tipo_instalacion:NULL,
+
+      'margen' => isset($recurso->margen)?$recurso->margen:NULL,
+      'MH_inicio' => isset($recurso->MH_inicio)?$recurso->MH_inicio:NULL,
+      'MH_fin' => isset($recurso->MH_fin)?$recurso->MH_fin:NULL,
+      'longitud' => isset($recurso->longitud)?$recurso->longitud:NULL,
+      'ancho' => isset($recurso->ancho)?$recurso->ancho:NULL,
+      'alto' => isset($recurso->alto)?$recurso->alto:NULL,
+      'cant_elementos' => isset($recurso->cant_elementos)?$recurso->cant_elementos:NULL,
+      'cant_varillas' => isset($recurso->cant_varillas)?$recurso->cant_varillas:NULL,
+      'diametro_acero' => isset($recurso->diametro_acero)?$recurso->diametro_acero:NULL,
+      'peso_und' => isset($recurso->peso_und)?$recurso->peso_und:NULL
+    );
+    return $this->db->update('avance_reporte', $data, 'idavance_reporte = '.$recurso->idavance_reporte);
+  }
+
+  #-------------------------------------------------------------
+  # Consultas de reportes diarios
   public function recursoRepoFecha($idRecOt, $fecha)
   {
     $this->load->database('ot');
@@ -156,9 +232,12 @@ class Reporte_db extends CI_Model{
         ->where('rrd.idrecurso_reporte_diario',$id)->where('rd.fecha_reporte',$fecha)->order_by('rrd.idrecurso_reporte_diario', 'DESC')->get();
   }
 
-  public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL, $facturable = NULL)
+  public function recursoRepoFechaBy($tipo, $identificacion, $fecha, $idOT = NULL, $facturable = NULL, $select=NULL)
   {
     $this->load->database('ot');
+    if (isset($select)) {
+      $this->db->select($select);
+    }
     $this->db->select('OT.nombre_ot');
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
@@ -175,11 +254,9 @@ class Reporte_db extends CI_Model{
     if ( $tipo=='equipos' ) {
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo');
       $this->db->where('e.codigo_siesa', $identificacion);
-      $this->db->where('rrd.cantidad >=', 1);
     }elseif ($tipo == 'personal') {
       $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion');
       $this->db->where('p.identificacion', $identificacion);
-      $this->db->where('rrd.cantidad >=', 1);
     }
     return $this->db->get();
   }
@@ -222,13 +299,17 @@ class Reporte_db extends CI_Model{
     $this->db->select('
       rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
-      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente'
+      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente,
+      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte,
+      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion, avance.a_cargo, avance.calidad'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
+    $this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
     $this->db->join('itemf AS itf', 'rrd.itemf_iditemf = itf.iditemf', 'LEFT');
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc', 'LEFT');
-    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc');
+    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc', 'LEFT');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT');
     $this->db->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT');
     $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
@@ -245,7 +326,9 @@ class Reporte_db extends CI_Model{
         e.ccosto, e.ccosto, desc_un, r.idrecurso, r.centro_costo, r.unidad_negocio, r.fecha_ingreso, rot.*, titc.BO, titc.CL');
       $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
       $this->db->where('rot.tipo', 'equipo');
-    }elseif ($tipo == 'actividades') {
+    }elseif ($tipo == 'actividades' || $tipo == 'subcontrato') {
+      # CORREGIS los TIPO
+      $tipo = $tipo=='actividades'?1:$tipo;
       $this->db->select("
         (
           SELECT SUM(mrrd.cantidad) AS cant
@@ -260,6 +343,7 @@ class Reporte_db extends CI_Model{
       ");
       $this->db->join('sector_item_tarea AS sec', 'sec.idsector_item_tarea = rrd.idsector_item_tarea', 'LEFT');
       $this->db->where('rrd.idrecurso_ot', NULL);
+      $this->db->where('itf.tipo', $tipo);
     }elseif ($tipo=='material' || $tipo=='otros'){
       $this->db->select('
         rot.descripcion_temporal AS descripcion_recurso, rot.codigo_temporal AS referencia, rot.*, titc.BO, titc.CL, titc.grupo_mayor');
@@ -343,14 +427,15 @@ class Reporte_db extends CI_Model{
       rd.fecha_reporte,
       rd.festivo,
       itf.codigo,
-      rot.tipo,
+      IFNULL(rot.tipo, "actividad" ) AS tipo_recurso,
       itf.itemc_item AS item,
       itf.descripcion,
-      rrd.idsector_item_tarea,
+      rrd.tipo_instalacion,
       rrd.facturable,
       rrd.print,
       rrd.cantidad,
       getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) as cantidad_final,
+      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion,
       rrd.hora_inicio,
       rrd.hora_fin,
       rrd.hora_inicio2,
@@ -377,16 +462,20 @@ class Reporte_db extends CI_Model{
       if( e.referencia IS NULL, rot.codigo_temporal, e.referencia ) AS referencia,
       if( e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion ) AS equipo,
       rot.propietario_observacion AS asignado_a,
-      IF( rot.propietario_recurso, "SI", "NO" ) AS propio
+      IF( rot.propietario_recurso, "SI", "NO" ) AS propio,
+      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
+      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte,
+      avance.a_cargo, avance.calidad
       '
     );
     $this->db->from('reporte_diario AS rd');
+    $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
+    $this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
     $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
     $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
     $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
-    $this->db->join('OT', 'OT.idOT = rd.OT_idOT');
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
     $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if (isset($idOT)) {
@@ -407,7 +496,15 @@ class Reporte_db extends CI_Model{
   public function deleteRecursoReporte($idrecurso_reporte_diario)
   {
     $this->load->database('ot');
-    return $this->db->delete('recurso_reporte_diario', array('idrecurso_reporte_diario'=>$idrecurso_reporte_diario));
+    $this->db->trans_begin();
+    $this->db->delete('avance_reporte', array('idrecurso_reporte_diario'=>$idrecurso_reporte_diario));
+    $val = $this->db->delete('recurso_reporte_diario', array('idrecurso_reporte_diario'=>$idrecurso_reporte_diario));
+    if($this->db->trans_status() === FALSE ){
+      $this->db->trans_rollback();
+    }else{
+      $this->db->trans_commit();
+    }
+    return $val;
   }
 
   # Numero de reportes por Orden en un mes
@@ -460,7 +557,6 @@ class Reporte_db extends CI_Model{
   # ======================================================================================
   # Frentes
   # ======================================================================================
-
   public function getRecusoReportesByFrente($idOT, $idfrente, $group=TRUE, $idreporte=NULL)
   {
     $this->load->database('ot');
@@ -487,8 +583,6 @@ class Reporte_db extends CI_Model{
     }
     return $this->db->get();
   }
-
-
 
   # ======================================================================================
   # TRANSACTION

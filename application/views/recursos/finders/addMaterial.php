@@ -4,7 +4,7 @@
   <div class="row noMaterialStyles regularForm">
     <div class="col m6 s12 l4">
       <p>
-        <label>Codigo Materal:</label>
+        <label>Referencia / Serial:</label>
         <input type="text" ng-model="addMaterial.codigo_temporal">
       </p>
 
@@ -43,8 +43,11 @@
   </div>
 
   <div>
-      <button type="button" name="btn mini-btn" ng-click="addRecursoOT(addMaterial, '<?= site_url('recurso/addRecursoOT') ?>', 'material', myitemf_mt)">Crear</button>
-      <button type="button" name="btn mini-btn" ng-click="showSection('#addMaterial')">Ocultar</button>
+      <button type="button" class="btn mini-btn green" ng-click="addRecursoOT(addMaterial, '<?= site_url('recurso/addRecursoOT') ?>', 'material', myitemf_mt); showSection('#addMaterial')"
+        ng-disabled="!addMaterial.codigo_temporal || !myitemf_mt">
+        Crear
+      </button>
+      <button type="button" class="btn mini-btn orange" ng-click="showSection('#addMaterial')">Ocultar</button>
   </div>
 </fieldset>
 <br>

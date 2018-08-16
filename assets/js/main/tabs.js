@@ -1,14 +1,15 @@
 var app = angular.module("myapp", ['ui.tinymce']);
-app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $timeout){
+app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $timeout){
   $scope.site_url = '';
   $scope.estructura = [];
   $scope.myform = '';
   $scope.countertab = 0;
-  $scope.tabs = [{ id:$scope.countertab, linkto:"options", titulo:$sce.trustAsHtml("Menu general"), content: '', include:task.url, class: 'active', active: true}];
+  $scope.tabs = [{ id:$scope.countertab, linkto:"options", titulo:$sce.trustAsHtml(" Panel inicial "), content: '', include:task.url, class: 'active', active: true}];
   $scope.bigHtml = '',
   $scope.estructuras = [];
   $scope.uploader = undefined;
   $scope.showSlideState = true;
+  $scope.sidenav = undefined;
   //============================================================================
   //Funcion que carga una vista de pestaña desde un boton de enlace en la vista de inicio
   $scope.clickeableLink = function(myurl, evt, titulo){
@@ -118,6 +119,18 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
       $scope.showSlideState = true;
     }
   }
+  $scope.initMenu = function(){
+    var e = $('.sidenav').sidenav();
+    $('.collapsible').collapsible();
+    $scope.sidenav = instance = M.Sidenav.getInstance(e);
+  }
+  $scope.showMenu = function(){
+    $scope.sidenav.open();
+  }
+  $scope.closeMenu = function(){
+    $scope.sidenav.close();
+  }
+
   $scope.imprimir = function(text){console.log(text);}
   //============================================================================
   // validaciones de permisos
@@ -187,6 +200,17 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
 
   $scope.switchTagClass = function(tag, clase){
     $(tag).toggleClass(clase);
+  }
+
+  $scope.confirmarCerrar  = function(msj, ventana, form){
+    var c = confirm(msj);
+    if(c){
+      if(ventana && form){
+        $scope.cerrarWindowLocal(ventana, form);
+      }else{
+        $scope.cerrarWindow();
+      }
+    }
   }
 
   $scope.cerrarWindow = function(){
@@ -300,7 +324,40 @@ app.controller("test", function($scope, $sce, $compile, $http, $templateCache, $
       list.push(obj);
     });
   }
+  // ------ PAGINACION ------
+  // Numero de paginas para paginación con AngularJS
+  $scope.numberOfPages=function(lista, pageSize){
+    return Math.ceil(lista.length/pageSize);
+  }
 
+
+  $scope.datatable = function(selector){
+
+    $(selector+' thead tr.filters th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
+    // DataTable
+    var table = $(selector).DataTable();
+
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+
+        $( 'input', this.header() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+  }
+
+  $scope.initValue = function(){
+
+  }
 
 });
 
@@ -367,10 +424,6 @@ app.controller("consulta_nom",function($scope, $http, $timeout){
   consulta_nom($scope, $http, $timeout);
 });
 
-app.controller("migracion_recursos",function($scope, $http, $timeout){
-  migracion_recursos($scope, $http, $timeout);
-});
-
 app.controller("factura",function($scope, $http, $timeout){
   factura($scope, $http, $timeout);
 });
@@ -392,7 +445,15 @@ app.controller("condensado_rd", function($scope, $http, $timeout){
 app.controller("frentes", function($scope, $http, $timeout){
   frentes($scope, $http, $timeout);
 });
-
+app.controller("contrato", function($scope, $http, $timeout){
+  contrato($scope, $http, $timeout);
+});
+app.controller("form_contrato", function($scope, $http, $timeout){
+  form_contrato($scope, $http, $timeout);
+});
+app.controller("itemc",function($scope, $http, $timeout){
+  itemc($scope, $http, $timeout);
+});
 
 //let's make a startFrom filter
 app.filter('startFrom', function() {

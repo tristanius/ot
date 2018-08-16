@@ -1,6 +1,6 @@
   <head>
     <meta charset="utf-8">
-    <!-- -->
+    <!-- CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/fontastic/styles.css') ?>" />
     <!-- Materialize -->
     <link rel="stylesheet" href="<?= base_url('assets/materialize/css/materialize.min.css') ?>" />
@@ -17,15 +17,15 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/forms.css') ?>?v=<?php echo rand(); ?>" />
 
     <!-- librerias JS -->
-    <script type="text/javascript" src="<?= base_url('assets/js/vendor/jquery.min.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/angular.min.js') ?>"></script>
+
+    <!-- Materialize -->
+    <script type="text/javascript" src="<?= base_url('assets/materialize/js/materialize.min.js') ?>"></script>
 
     <!-- JQuery UI -->
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/jquery-ui/jquery-ui.min.js') ?>"></script>
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/js/vendor/jquery-ui/jquery-ui.css') ?>" />
-
-    <!-- Materialize -->
-    <script type="text/javascript" src="<?= base_url('assets/materialize/js/materialize.min.js') ?>"></script>
 
     <!-- uploadfile JS -->
     <script src="<?= base_url('assets/js/vendor/jquery.form.js') ?>" type="text/javascript"></script>
@@ -33,22 +33,23 @@
 
     <!-- datatables -->
     <script src="<?= base_url('assets/js/datatables/spanish.json') ?>" charset="utf-8"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/datatables/datatables.min.js') ?>"></script>
-    <link rel="stylesheet" href="<?= base_url('assets/js/datatables/datatables.min.css') ?>" media="screen" charset="utf-8">
+    <script type="text/javascript" src="<?= base_url('assets/js/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js') ?>"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/js/datatables/DataTables-1.10.16/css/jquery.dataTables.min.css') ?>" media="screen" charset="utf-8">
 
-    <!-- tinyMCE -->
+    <!-- TableExport -->
     <script src="<?= base_url('assets/js/vendor/tableExport/js/xlsx.core.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vendor/tableExport/js/FileSaver.min.js') ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/vendor/tableExport/js/tableexport.min.js') ?>" type="text/javascript"></script>
 
-    <!-- TableExport -->
+    <!-- tinyMCE -->
     <link rel="stylesheet" href="<?= base_url('assets/js/vendor/tableExport/css/tableexport.min.css') ?>" />
     <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
-    <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
-    <script src="<?= base_url('assets/js/vendor/tinymce-angular.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/vendor/tinymce/tinymce.min.js') ?>" type="text/javascript"></script>
 
     <!-- Charts JS -->
-    <script src="<?= base_url('assets/js/vendor/Chart.min.js') ?>" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"> </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"> </script>
+
     <!-- FileSaverAs -->
     <script src="<?= base_url('assets/js/vendor/FileSaver.min.js') ?>" type="text/javascript"></script>
     <!-- Mainer JS -->
@@ -56,6 +57,7 @@
     var task = {url:'<?= site_url('welcome/loadOptions') ?>'}
     var baseUrl = '<?= site_url() ?>';
     </script>
+    <script src="<?= base_url('assets/js/main/contrato.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/OT.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/consulta.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/reportes.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
@@ -65,7 +67,7 @@
     <script src="<?= base_url('assets/js/main/recursos.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/tarifa.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/factura.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
-    <script src="<?= base_url('assets/js/main/migracion_recursos.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/js/main/item.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/cargues_historicos.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
     <script src="<?= base_url('assets/js/main/tabs.js') ?>?v=<?php echo rand(); ?>" type="text/javascript"></script>
 

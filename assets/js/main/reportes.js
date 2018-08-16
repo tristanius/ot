@@ -46,7 +46,7 @@ var reportes = function($scope, $http, $timeout) {
   }
 
   $scope.setSelecteState = function(add){
-		if( !add ){
+    if( !add ){
 			add = true;
 		}else{
 			add = false;
@@ -205,17 +205,136 @@ var reportes = function($scope, $http, $timeout) {
     $scope.asociableItem.item_asociado = it.itemc_item;
     $scope.closeRecursoReporte(tag);
   }
-  //--------------------------------------------------------------------------
-  // mostrar una sección para agregar elementos al reporte
-  $scope.showRecursosReporte = function(tag){
-    $(tag).show();
-  }
-  // Ocultar una seccion de agregar recursos y ejecutar una funcion de inicio
-  $scope.closeRecursoReporte = function(tag){
-    $timeout(function(){
-      $(tag).hide(100);
+
+  // Agregar el personal seleccionado al reporte
+  $scope.agregarPersonal = function(ambito){
+    angular.forEach(ambito.personalOT, function(val, key){
+      if(!$scope.existeRegistro( ambito.rd.recursos.personal, 'identificacion', val.identificacion) && val.add){
+        val.hora_inicio = '7:00'; val.hora_fin = '12:00'; val.hora_inicio2 = '13:00';
+        if (ambito.rd.idbase == 172 || ambito.rd.idbase == 173 || ambito.rd.idbase == 174){
+          val.hora_fin2 = '17:00'; val.horas_ordinarias = 9;
+        }else if ( ambito.rd.idbase == 262 || ambito.rd.idbase == 244) {
+          if (ambito.dia_semana == 'sábado') {
+            val.hora_fin = '-'; val.hora_inicio2 = '-'; val.hora_fin2 = '10:00';
+            val.horas_ordinarias = 3;
+          }else{
+            val.hora_fin2 = '17:00';
+            val.horas_ordinarias = 9;
+          }
+        }else{
+          val.hora_fin2 = '16:00';
+          val.horas_ordinarias = 8;
+        }
+        val.idestado_labor = '1';
+        val.cantidad = 1;
+        val.horas_rn = 0;
+        val.horas_hed = 0;
+        val.horas_hen = 0;
+        val.gasto_viaje_pr = '';
+        val.gasto_viaje_lugar = '';
+        val.racion = 0;
+        val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if(ambito.myfrente){
+          var f = ambito.myfrente;
+          val.idfrente_ot = f;
+        }
+        ambito.rd.recursos.personal.push(val);
+      }
     });
   }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarEquipos = function(ambito){
+    angular.forEach(ambito.equiposOT, function(val, key){
+      if(
+        (!ambito.existeRegistro(ambito.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
+        (ambito.existeRegistro(ambito.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !ambito.existeRegistro(ambito.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add ) ||
+        (val.codigo_siesa == "Temporal" && val.add)
+      )
+      {
+        val.horas_oper = 0;
+        val.horas_disp = 1;
+        val.cantidad = 1;
+        val.facturable = true;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if(ambito.myfrente){
+          var f = ambito.myfrente;
+          val.idfrente_ot = f;
+        }
+        ambito.rd.recursos.equipos.push(val);
+      }else{
+        console.log("No ha sido agregado "+val.codigo_siesa)
+      }
+    });
+  }
+
+
+  // Agregar actividades seleccionadas al reporte
+  $scope.agregarActividades = function(ambito){
+    angular.forEach(ambito.actividadesOT, function(val, key){
+      if(val.add && !ambito.$parent.existeRegistroList(ambito.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
+        var rec = angular.copy(val);
+        rec.facturable = true;
+        rec.cantidad = 0;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if(ambito.myfrente){
+          var f = ambito.myfrente;
+          rec.idfrente_ot = f;
+        }
+        ambito.rd.recursos.actividades.push(rec);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarMaterial = function(ambito){
+    angular.forEach(ambito.materialOT, function(val, key){
+      if(val.add)
+      {
+        val.facturable = true;
+        val.cantidad = 1;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if(ambito.myfrente){
+          var f = ambito.myfrente;
+          val.idfrente_ot = f;
+        }
+        ambito.rd.recursos.material.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarOtros = function(ambito){
+    angular.forEach(ambito.otrosOT, function(val, key){
+      if(val.add)
+      {
+        val.facturable = true;
+        val.cantidad = 1;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if(ambito.myfrente){
+          var f = ambito.myfrente;
+          val.idfrente_ot = f;
+        }
+        ambito.rd.recursos.otros.push(val);
+      }
+    });
+  }
+  // Agregar equipos seleccionados al reporte
+  $scope.agregarSubcontratos = function(ambito){
+    angular.forEach(ambito.subcontratosOT, function(val, key){
+      if(val.add)
+      {
+        var rec = angular.copy(val);
+        rec.facturable = true;
+        rec.cantidad = 1;
+        // AQUI SE AGREGA EL FRENTE SELECCIONADO
+        if(ambito.myfrente){
+          var f = ambito.myfrente;
+          rec.idfrente_ot = f;
+        }
+        ambito.rd.recursos.subcontratos.push(rec);
+      }
+    });
+  }
+
 }
 
 // ============================================================================================
@@ -346,11 +465,11 @@ var listOTReportes = function($scope, $http, $timeout){
     $http.get(url+'valid/'+$scope.consulta.idOT+'/'+$scope.rd.fecha_selected)
     .then(
       function(response) {
-        console.log(response.data);
         if (response.data == "invalid") {
           alert('El reporte de esta fecha para esta OT ya existe');
         }else if(response.data == "valid") {
           var link = url+'/'+$scope.consulta.idOT+'/'+$scope.rd.fecha_selected;
+          console.log(link);
           $scope.enlaceGetReporte = link;
           $scope.$parent.getAjaxWindowLocal(link, '#ventanaReporte', '#ventanaReporteOCulta');
         }else if (response.data == 'toolong') {
@@ -385,7 +504,8 @@ var addReporte = function($scope, $http, $timeout) {
       equipos:[],
       actividades:[],
       material:[],
-      otros:[]
+      otros:[],
+      subcontratos:[]
     }
   }
   $scope.personalOT = [];
@@ -393,29 +513,7 @@ var addReporte = function($scope, $http, $timeout) {
   $scope.actividadesOT = [];
   $scope.listStatus = [];
 
-  //Busque de equipos no relacionados
-  $scope.consultaEquiposOT = {};
-  $scope.resultEquiposBusqueda = [];
-
-	$scope.isOnPeticion = false;
-
-  $scope.buscarEquiposBy = function(link){
-    console.log(link)
-    $http.post(link, {
-      codigo_siesa: $scope.consultaEquiposOT.codigo_siesa,
-      referencia: $scope.consultaEquiposOT.referencia,
-      descripcion: $scope.consultaEquiposOT.descripcion,
-      un: $scope.consultaEquiposOT.un
-    }).then(
-      function(response){
-        console.log(response.data)
-        $scope.resultEquiposBusqueda = response.data;
-      },
-      function(response){
-        alert('Falló la consulta');
-      }
-    );
-  }
+  $scope.isOnPeticion = false;
 
   // Utilidades
   $scope.toggleContent = function(tag, clase, section){
@@ -447,8 +545,10 @@ var addReporte = function($scope, $http, $timeout) {
           $scope.actividadesOT = response.data.actividad;
           $scope.materialOT = response.data.material;
           $scope.otrosOT = response.data.otros;
+          $scope.subcontratosOT = response.data.subcontratos;
         },
         function(response){
+          console.log(response.data);
           alert("Problemas a la cargar los datos de los formularios, por favor cierra la ventana y vuelve a ingresar.")
         }
       )
@@ -467,131 +567,22 @@ var addReporte = function($scope, $http, $timeout) {
   // Ocultar una seccion de agregar recursos y ejecutar una funcion de inicio
   $scope.closeRecursoReporte = function(section, method){
     if(method == 1 ){
-      $scope.agregarPersonal();
+      $scope.$parent.agregarPersonal($scope);
     }else if(method == 2){
-      $scope.agregarEquipos();
+      $scope.$parent.agregarEquipos($scope);
     }else if(method == 3){
-      $scope.agregarActividades();
+      $scope.$parent.agregarActividades($scope);
     }else if(method==4){
-      $scope.agregarMaterial();
+      $scope.$parent.agregarMaterial($scope);
     }else if(method==5){
-      $scope.agregarOtros();
+      $scope.$parent.agregarOtros($scope);
+    }else if(method==6){
+      $scope.$parent.agregarSubcontratos($scope);
     }
     $timeout(function(){
       $(section).hide(100);
     });
   }
-  // Agregar el personal seleccionado al reporte
-  $scope.agregarPersonal = function(){
-    angular.forEach($scope.personalOT, function(val, key){
-      if(!$scope.existeRegistro($scope.rd.recursos.personal, 'identificacion', val.identificacion) && val.add){
-        val.hora_inicio = '7:00';
-        val.hora_fin = '12:00';
-        val.hora_inicio2 = '13:00';
-        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
-          val.hora_fin2 = '17:00';
-          val.horas_ordinarias = 9;
-        }else{
-          val.hora_fin2 = '16:00';
-          val.horas_ordinarias = 8;
-        }
-        val.idestado_labor = '1';
-        val.cantidad = 1;
-        val.horas_rn = 0;
-        val.horas_hed = 0;
-        val.horas_hen = 0;
-        val.gasto_viaje_pr = '';
-        val.gasto_viaje_lugar = '';
-        val.racion = 0;
-        val.facturable = true;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.personal.push(val);
-      }
-    });
-  }
-  // Agregar equipos seleccionados al reporte
-  $scope.agregarEquipos = function(){
-    angular.forEach($scope.equiposOT, function(val, key){
-      if(
-        (!$scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
-        ($scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add ) ||
-        (val.codigo_siesa == "Temporal" && val.add)
-      )
-      {
-        val.horas_oper = 0;
-        val.horas_disp = 1;
-        val.cantidad = 1;
-        val.facturable = true;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.equipos.push(val);
-      }else{
-        console.log("No ha sido agregado "+val.codigo_siesa)
-      }
-    });
-  }
-  // Agregar actividades seleccionadas al reporte
-  $scope.agregarActividades = function(){
-    angular.forEach($scope.actividadesOT, function(val, key){
-      console.log(val);
-      if(val.add && !$scope.$parent.existeRegistroList($scope.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
-        val.facturable = true;
-        val.cantidad = 0;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.actividades.push(val);
-      }
-    });
-  }
-  // Agregar equipos seleccionados al reporte
-  $scope.agregarMaterial = function(){
-    angular.forEach($scope.materialOT, function(val, key){
-      if(val.add)
-      {
-        val.facturable = true;
-        val.cantidad = 1;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.material.push(val);
-      }
-    });
-  }
-  // Agregar equipos seleccionados al reporte
-  $scope.agregarOtros = function(){
-    angular.forEach($scope.otrosOT, function(val, key){
-      if(val.add)
-      {
-        val.facturable = true;
-        val.cantidad = 1;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.otros.push(val);
-      }
-    });
-  }
-
-  // Relacionar equipos desde esta vista
-  $scope.relacionarEquipoAOt = function(it, url){
-    console.log($scope.rd.info)
-    $scope.$parent.relacionarEquipoAOt(it, url, $scope);
-  }
-
   $scope.quitarRegistroLista = function( lista, item, url, prop){
     if(false){
       $http.post(url, { prop: item[prop], }
@@ -677,7 +668,7 @@ var addReporte = function($scope, $http, $timeout) {
     var recursos = $scope.rd.recursos;
     if($scope.isOnPeticion){
       alert('Ya se esta realizando un proceso de guardado');
-    }else if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 ){
+    }else if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 && recursos.subcontratos.length == 0 ){
       alert('No hay recurso agregados');
     }else{
       $scope.isOnPeticion = true;
@@ -703,15 +694,7 @@ var addReporte = function($scope, $http, $timeout) {
                 //$scope.$parent.refreshTabs();
               });
             }else{
-              alert("¡Oh Nooo! "+response.data.msj);
-              $timeout(function() {
-                $scope.rd.recursos.personal = response.data.personal;
-                $scope.rd.recursos.equipos = response.data.equipos;
-                $scope.rd.recursos.actividades = response.data.actividades;
-                $scope.rd.recursos.material = response.data.material;
-                $scope.rd.recursos.otros = response.data.otros;
-                $scope.booleanCorrection();
-              });
+              alert("Hemos encontrado un fallo inesperado."+response.data.msj);
             }
           },
           function(response) {
@@ -810,6 +793,7 @@ var editReporte = function($scope, $http, $timeout){
           $scope.rd.recursos.actividades = response.data.actividades;
           $scope.rd.recursos.material = response.data.material;
           $scope.rd.recursos.otros = response.data.otros;
+          $scope.rd.recursos.subcontratos = response.data.subcontratos;
           $scope.spinner = false;
         },
         function(response){
@@ -871,26 +855,7 @@ var editReporte = function($scope, $http, $timeout){
       v.validacion_he = false;
     });
   }
-  //Busque de equipos no relacionados
-  $scope.consultaEquiposOT = {};
-  $scope.resultEquiposBusqueda = [];
-  $scope.buscarEquiposBy = function(link){
-    console.log(link)
-    $http.post(link, {
-      codigo_siesa: $scope.consultaEquiposOT.codigo_siesa,
-      referencia: $scope.consultaEquiposOT.referencia,
-      descripcion: $scope.consultaEquiposOT.descripcion,
-      un: $scope.consultaEquiposOT.un
-    }).then(
-      function(response){
-        console.log(response.data)
-        $scope.resultEquiposBusqueda = response.data;
-      },
-      function(response){
-        alert('Falló la consulta');
-      }
-    );
-  }
+
   // Utilidades
   $scope.toggleContent = function(tag, clase, section, myfun=undefined){
     if(section != undefined){
@@ -925,8 +890,10 @@ var editReporte = function($scope, $http, $timeout){
           $scope.actividadesOT = response.data.actividad;
           $scope.materialOT = response.data.material;
           $scope.otrosOT = response.data.otros;
+          $scope.subcontratosOT = response.data.subcontratos;
         },
         function(response){
+          console.log(response.data);
           alert("Problemas a la cargar los datos de los formularios, por favor cierra la ventana y vuelve a ingresar.")
         }
       )
@@ -945,121 +912,21 @@ var editReporte = function($scope, $http, $timeout){
   // Ocultar una seccion de agregar recursos y ejecutar una funcion de inicio
   $scope.closeRecursoReporte = function(section, method){
     if(method == 1 ){
-      $scope.agregarPersonal();
+      $scope.$parent.agregarPersonal($scope);
     }else if(method == 2){
-      $scope.agregarEquipos();
+      $scope.$parent.agregarEquipos($scope);
     }else if(method == 3){
-      $scope.agregarActividades();
+      $scope.$parent.agregarActividades($scope);
     }else if(method==4){
-      $scope.agregarMaterial();
+      $scope.$parent.agregarMaterial($scope);
     }else if(method==5){
       $scope.agregarOtros();
+    }else if(method==6){
+      $scope.$parent.agregarSubcontratos($scope);
     }
     $timeout(function(){
       $(section).hide(100);
     });
-  }
-  // Agregar el personal seleccionado al reporte
-  $scope.agregarPersonal = function(){
-    angular.forEach($scope.personalOT, function(val, key){
-      if(!$scope.existeRegistro($scope.rd.recursos.personal, 'identificacion', val.identificacion) && val.add){
-        val.hora_inicio = '7:00';
-        val.hora_fin = '12:00';
-        val.hora_inicio2 = '13:00';
-        if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
-          val.hora_fin2 = '17:00';
-          val.horas_ordinarias = 9;
-        }else{
-          val.hora_fin2 = '16:00';
-          val.horas_ordinarias = 8;
-        }
-        val.idestado_labor = '1';
-        val.cantidad = 1;
-        val.horas_recargo = 0;
-        val.horas_extra_dia = 0;
-        val.horas_extra_noc = 0;
-        val.gasto_viaje_pr = '';
-        val.gasto_viaje_lugar = '';
-		    val.racion = 0;
-        val.facturable = true;
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.personal.push(val);
-      }
-    });
-  }
-  // Agregar equipos seleccionados al reporte
-  $scope.agregarEquipos = function(){
-    angular.forEach($scope.equiposOT, function(val, key){
-      if(
-        (!$scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
-        ($scope.existeRegistro($scope.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !$scope.existeRegistro($scope.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add ) ||
-        (val.codigo_siesa == "Temporal" && val.add)
-      ){
-        val.horas_operacion = 0;
-        val.horas_disponible = 1;
-        val.cantidad = 1;
-        val.facturable = true;
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.equipos.push(val);
-      }else{
-        console.log(val.codigo_siesa + "No ha sido agregado");
-      }
-    });
-  }
-  // Agregar actividades seleccionadas al reporte
-  $scope.agregarActividades = function(){
-    angular.forEach($scope.actividadesOT, function(val, key){
-      if(val.add && !$scope.$parent.existeRegistroList($scope.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
-        val.facturable = true;
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.actividades.push(val);
-      }
-    });
-  }
-  // Agregar equipos seleccionados al reporte
-  $scope.agregarMaterial = function(){
-    angular.forEach($scope.materialOT, function(val, key){
-      if(val.add)
-      {
-        val.facturable = true;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.material.push(val);
-      }
-    });
-  }
-  // Agregar equipos seleccionados al reporte
-  $scope.agregarOtros = function(){
-    angular.forEach($scope.otrosOT, function(val, key){
-      if(val.add)
-      {
-        val.facturable = true;
-        // AQUI SE AGREGA EL FRENTE SELECCIONADO
-        if($scope.myfrente){
-          var f = $scope.myfrente;
-          val.idfrente_ot = f;
-        }
-        $scope.rd.recursos.otros.push(val);
-      }
-    });
-  }
-
-  // Relacionar equipos desde esta vista
-  $scope.relacionarEquipoAOt = function(it, url){
-    console.log($scope.rd.info)
-    $scope.$parent.relacionarEquipoAOt(it, url, $scope);
   }
 
   $scope.quitarRegistroLista = function( lista, item, url, prop){
@@ -1119,6 +986,8 @@ var editReporte = function($scope, $http, $timeout){
         );
     }
   }
+
+  // CORREGIR
   $scope.addObservacion = function(tipo){
     var f = new Date();
     if (tipo=='proveedor') {
@@ -1127,7 +996,7 @@ var editReporte = function($scope, $http, $timeout){
       $scope.rd.info.observaciones_cliente.push( {msj:'', tipo:'cliente', fecha: f.toLocaleString()} );
     }
   }
-
+  // CORREGIR
   $scope.addObservacion2 = function(obspyco){
     var f = new Date();
     var data = {
@@ -1137,7 +1006,7 @@ var editReporte = function($scope, $http, $timeout){
       };
     $scope.rd.observaciones_pyco.push(data);
   }
-
+  // CORREGIR
   $scope.addActividad = function(tipo){
     var f = new Date();
     if($scope.rd.info.actividades == undefined){
@@ -1149,7 +1018,7 @@ var editReporte = function($scope, $http, $timeout){
       $scope.rd.info.actividades.push( { msj:'', tipo:'cliente', fecha: f.toLocaleString() } );
     }
   }
-
+  // CORREGIR
   $scope.getStatusLaboral = function(idstst, per){
     var adicion = false;
     if($scope.rd.idbase == 172 || $scope.rd.idbase == 173 || $scope.rd.idbase == 174){
@@ -1183,8 +1052,6 @@ var editReporte = function($scope, $http, $timeout){
     var recursos = $scope.rd.recursos;
     if($scope.isOnPeticion){
       alert('Ya se esta realizando un proceso de guardado');
-    }else if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 ){
-      alert('No hay recurso agregados');
     }else{
       $scope.isOnPeticion = true;
       $scope.spinner = true;
@@ -1200,6 +1067,7 @@ var editReporte = function($scope, $http, $timeout){
             $scope.rd.recursos.actividades = [];
             $scope.rd.recursos.material = [];
             $scope.rd.recursos.otros = [];
+            $scope.rd.recursos.subcontratos = [];
             if(response.data.success == 'success'){
               // REEMPLADO DE VENTANA EMERGENTE
               $scope.mensaje_log = response.data.msj;
@@ -1220,6 +1088,7 @@ var editReporte = function($scope, $http, $timeout){
               $scope.rd.recursos.actividades = response.data.actividades;
               $scope.rd.recursos.material = response.data.material;
               $scope.rd.recursos.otros = response.data.otros;
+              $scope.rd.recursos.subcontratos = response.data.subcontratos;
               $scope.booleanCorrection();
             });
             $scope.getReportesView($scope.site_url);
@@ -1241,7 +1110,7 @@ var editReporte = function($scope, $http, $timeout){
 	  angular.forEach($scope.rd.recursos.equipos, function(v,k){
 		v.facturable = $scope.$parent.parseBool(v.facturable);
 	  });
-	  angular.forEach($scope.rd.recursos.equipos, function(v,k){
+	  angular.forEach($scope.rd.recursos.actividades, function(v,k){
 		  v.facturable = $scope.$parent.parseBool(v.facturable);
 	  });
   }

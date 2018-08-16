@@ -9,14 +9,25 @@ class Tarifa_db extends CI_Model{
     //Codeigniter : Write Less Do More
   }
 
-  public function getTarifasByItemc($itemc)
+  public function add($tarifa)
   {
     $this->load->database('ot');
-    $this->db->from('itemf');
-    $this->db->join('tarifa', 'itemf.codigo = tarifa.itemf_codigo');
-    $this->db->where('itemf.itemc_item', $itemc);
-    $this->db->where('tarifa.estado',TRUE);
-    return $this->db->get();
+  }
+
+  public function add($tarifa, $id = NULL)
+  {
+    $this->load->database('ot');
+  }
+
+  #=============================================================================
+  public function getVigencias( $idcontrato )
+  {
+    $this->load->database('ot');
+  }
+
+  public function getByVigencia( $idvigencia )
+  {
+    $this->load->database('ot');
   }
 
   public function updateSalario($id, $salario, $estado_salario)

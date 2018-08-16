@@ -19,7 +19,9 @@
 
   <div class="row">
     <div class="col s12 m6 l6" ng-if="consulta.idcontrato != '' && consulta.idcontrato != undefined && contrato.no_contrato != undefined && contrato.no_contrato != ''">
-      <button type="button" class="btn mini-btn round" data-icon="p" ng-click="factura('<?= site_url('factura/form/add') ?>', '#ventanaFactura', '#ventanaFacturaOculta')"></button> Add. Factura a {{ contrato.no_contrato }}
+      <button type="button" class="btn btn-small" ng-click="factura('<?= site_url('factura/form/add') ?>', '#ventanaFactura', '#ventanaFacturaOculta')">
+        <span data-icon="i"></span>
+      </button> Add. Factura a {{ contrato.no_contrato }}
     </div>
     <div class="loader col s12 m6 l6" ng-show="loaders.getfacturas" ng-init="loaders.getfacturas = false">
       <img src="<?= base_url('assets/img/ajax-loader2.gif') ?>" alt="">
@@ -28,7 +30,7 @@
 
   <div class="resultset">
     <br>
-    <?php $this->load->view('factura/contrato/list_facturas'); ?>
+    <?php $this->load->view('factura/list_facturas'); ?>
   </div>
 
 

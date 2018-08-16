@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Facturacion_db extends CI_Controller{
+class Facturacion_db extends CI_Model{
 
   public function __construct()
   {
@@ -17,6 +17,7 @@ class Facturacion_db extends CI_Controller{
     $this->db->select( $this->consultaTipo($tipo) );
     $this->db->from('reporte_diario AS rd');
     $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario','LEFT');
+    $this->db->join('avance_reporte AS avance', 'avance.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
 
     $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
     $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
@@ -24,6 +25,8 @@ class Facturacion_db extends CI_Controller{
     $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
 
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT','LEFT');
+    $this->db->join('contrato AS c', 'c.idcontrato = OT.idcontrato','LEFT');
+
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf','LEFT');
     $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc','LEFT');
     $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc','LEFT');
@@ -60,6 +63,7 @@ class Facturacion_db extends CI_Controller{
   {
     if( $tipo == 2){
       return '
+        c.no_contrato as contrato,
         year(rd.fecha_reporte) as año,
         month(rd.fecha_reporte) as mes,
         OT.nombre_departamento_ecp as nombre_departamento,
@@ -73,7 +77,6 @@ class Facturacion_db extends CI_Controller{
         ft.nombre AS Frente_OT,
         OT.locacion as lugar,
         OT.municipio,
-        OT.zona,
         OT.abscisa as pk,
         p.identificacion as cedula,
         p.nombre_completo,
@@ -82,16 +85,22 @@ class Facturacion_db extends CI_Controller{
         itc.descripcion,
         if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
         if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
-        titc.descripcion as clasifica_deta,
+        titc.descripcion as clasificacion_item,
         if(rrd.facturable,"SI","NO") AS facturable,
-        rrd.cantidad AS cant_und,
         tr.tarifa,
+        (
+          SELECT itt.subtarifa
+          FROM item_tarea_ot AS itt
+          JOIN tarea_ot AS tarea ON tarea.idtarea_ot = itt.tarea_ot_idtarea_ot
+          WHERE tarea.OT_idOT = OT.idOT
+          AND itt.itemf_iditemf = itf.iditemf
+          ORDER BY itf.iditemf DESC
+          LIMIT 1
+        ) AS subtatifa,
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
         e.referencia as placa_equipo,
-        rrd.horas_operacion,
-        rrd.horas_disponible,
         e.codigo_siesa,
         if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) as referencia,
         rrd.nombre_operador,
@@ -99,27 +108,19 @@ class Facturacion_db extends CI_Controller{
         rrd.hora_fin AS tr1_salida,
         rrd.hora_inicio2 AS tr2_entrada,
         rrd.hora_fin2 AS tr2_salida,
-        rrd.hr_almuerzo,
-        if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
-        if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
-        if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
-        if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
-        if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
-        if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
-        if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
-        if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
-        rrd.racion,
-        rrd.gasto_viaje_pr AS pernocto,
-        rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
-        IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und
+        IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und,
+        rrd.abscisa_ini,
+        rrd.abscisa_fin,
+        rrd.tipo_instalacion,
+        avance.*,
       ';
     }else{
       return 'year(rd.fecha_reporte) as año,
       month(rd.fecha_reporte) as mes,
       if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
-      "MA0032887" as contrato,
+      c.no_contrato as contrato,
       OT.gerencia as gerencia,
       OT.nombre_departamento_ecp as nombre_departamento,
       OT.departamento_ecp as departamento_ecp,
@@ -156,10 +157,11 @@ class Facturacion_db extends CI_Controller{
       itc.descripcion,
       if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
       if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
-      titc.descripcion as clasifica_deta,
+      titc.descripcion as clasificacion_item,
       if(rrd.facturable,"SI","NO") AS facturable,
       rrd.cantidad AS cant_und,
       tr.tarifa,
+      IFNULL(tr.tarifa_subcontrato,tr.tarifa) AS tarifa_subcontrato,
       itf.unidad,
       if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad), 0) as cantidad_total,
       if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) * tr.tarifa, 0) as valor_subtotal,

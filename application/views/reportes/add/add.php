@@ -46,9 +46,9 @@
             <tr>
               <td><b><?= $ot->nombre_ot ?></b> <input type="hidden" ng-model="rd.info.nombre_ot" ng-init="rd.info.nombre_ot = '<?= $ot->nombre_ot ?>'"> </td>
               <td>
-                <b><?= date('Y/m/d',strtotime($fecha)) ?></b>
+                <b ng-init="rd.fecha_reporte = '<?= $fecha ?>'"><?= date('Y/m/d',strtotime($fecha)) ?></b>
                 <input type="hidden" ng-model="rd.info.fecha_reporte" ng-init="rd.info.fecha_reporte = '<?= $fecha ?>'"> -
-                ( <?= $diasemana ?> )
+                -  ( <span ng-bind="dia_semana" ng-init="dia_semana = '<?= $diasemana ?>'"></span> )
               </td>
               <td>
                 <button type="button" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#info', 'nodisplay', '.mypanel > div')" data-icon="&#xe021;"> Detalles Reporte</button>
@@ -69,7 +69,7 @@
 
       <div class="mypanel">
         <div id="info" class="font11"> <?php $this->load->view('reportes/form/info'); ?> </div>
-        <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('un_equipos'=>$un_equipos, 'item_equipos'=>$item_equipos,'estados_labor'=>$estados_labor)); ?> </div>
+        <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('estados_labor'=>$estados_labor)); ?> </div>
         <div id="firmas" class="font11 nodisplay"> <?php $this->load->view('reportes/form/firmas'); ?> </div>
         <div id="observacion" class="font11 nodisplay"> <?php $this->load->view('reportes/form/observaciones'); ?> </div>
         <div id="validaciones" class="font11 nodisplay"> <?php $this->load->view('reportes/form/validaciones'); ?> </div>
@@ -77,13 +77,10 @@
       <br>
 
       <div class="btnWindow" ng-show="!isOnPeticion">
-        <!--
-        <button type="button" class="waves-effect waves-light btn green mini-btn2" ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')" data-icon="&#xe02d;">
-           Validar recursos
+        <button type="button" class="light-green waves-effect waves-light btn mini-btn2" ng-if="validPriv(38)"
+          ng-click="validarRecursos('<?= site_url('reporte/validarRecursos') ?>')">
+          <b data-icon="&#xe04c;"></b>
         </button>
-        <br>
-        <br>
-        -->
 
         <button id="guardar_reporte" type="button" class="waves-effect waves-light btn mini-btn2" ng-click="guardarRD('<?= site_url('reporte/insert') ?>')">
           <b data-icon="&#xe015;"></b> Guardar

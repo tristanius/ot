@@ -4,6 +4,9 @@ var factura = function($scope, $http, $timeout){
   $scope.loaders = {};
   $scope.enlaceGetFactura = '';
   $scope.linkDataContrato = '';
+  $scope.spinner = false;
+
+  // Obtiene la informacion de un contrato macro
   $scope.getDataContrato = function(){
     if ($scope.consulta.idcontrato != '' && $scope.consulta.idcontrato != undefined) {
       $scope.loaders.getfacturas = $scope.toggleLoader($scope.loaders.getfacturas);
@@ -25,30 +28,16 @@ var factura = function($scope, $http, $timeout){
     }
   }
 
+  // spinner .gif
   $scope.toggleLoader = function(loader){
     return loader?false:true;
   }
+
+  // Carga la información de un formulario para agregar o modificar una factura
   $scope.factura = function(link, ventana, btnMostrar) {
     console.log(link);
     $scope.resetView(link);
     $scope.$parent.getAjaxWindowLocal(link, ventana, btnMostrar);
-  }
-
-  $scope.calcularCantidad = function(rec){
-    var cant = 0;
-    if (rec.tipo == 3) {
-      if (rec.unidad == 'hr') {
-        cant = (rec.horas_operacion-4 > 0)? rec.horas_operacion: 4;
-      }else if (rec.horas_operacion == 0 && rec.hrdisp > 0) {
-        var disp  = (rec.hrdisp / rec.basedisp);
-        cant = (rec.horas_disponible > 0)?disp:0;
-      }else{
-        cant = (rec.horas_disponible > 0)?1:0;
-      }
-    }else{
-      cant = 1;
-    }
-    return cant.toFixed(6) * rec.cant_und;
   }
 
   $scope.delAddFromList = function(list, base){
@@ -83,145 +72,279 @@ var factura = function($scope, $http, $timeout){
 }
 
 var formFactura = function($scope, $http, $timeout){
-  $scope.fac = {
+  $scope.doc_status = 'sin cambios';
+  $scope.deteccionCambios = false;
+  $scope.factura = {
     actas:[],
     bases:[],
     recursos:[],
-    ordenes:[]
+    ordenes:[],
+    conceptos_factura:[],
+    factura_adjuntos:[]
   };
   $scope.currentPage = 0;
   $scope.pageSize = 13;
   $scope.orden = {recursos:[]};
   $scope.panel_visible = false;
 
+
+  // ---------- Obtener una factura ya exitente ----------------------
+  $scope.getFactura = function(lnk, id){
+    $scope.$parent.spinner = true;
+    $http.post(lnk, {idfactura: id})
+    .then(
+      function(resp){
+        if(resp.data.status){
+          $scope.factura = resp.data.factura;
+        }
+        console.log(resp.data);
+        $scope.$parent.spinner = false;
+      },
+      function(resp){
+        alert('algo salio mal');
+        console.log(resp.data);
+        $scope.$parent.spinner = false;
+      }
+    );
+  }
+
+  // Renderiza las pestañas de JQuery
+  $scope.initForm = function(selector){
+    $( function() {
+      $( selector ).tabs();
+      $('.tooltipped').tooltip();
+    } );
+  }
+
+  //Inicial ventanas modales del formulario
+  $scope.initModals = function(){
+    $( function(){
+      $('.modal').modal();
+    } );
+  }
+  // Ajax http request
+  // Obtiene los recursos de un periodo dado
   $scope.getRecursos = function(link) {
-    if ($scope.fac.no_doc == undefined || $scope.fac.no_doc == '' || $scope.fac.fecha_fin_factura == undefined || $scope.fac.fecha_fin_factura == undefined || $scope.fac.bases.length == 0) {
-      alert('Debes selecionar los campos necesarios para realizar el ata de factura')
-    }else{
-      $scope.$parent.loaders.formLoad = true;
-      $http.post(link, $scope.fac)
+      $scope.$parent.spinner = true;
+      $http.post(link, $scope.factura)
       .then(
         function(response){
-          $scope.$parent.loaders.formLoad = false;
-          $scope.panel_visible = true;
-          $scope.fac.ordenes = response.data;
+          if(response.data.success){
+            $scope.factura.recursos = response.data.recursos;
+            $scope.factura.ordenes = response.data.ordenes;
+            $scope.calcularRecursos();
+            $scope.doc_status = 'modificado';
+          }
+          $scope.deteccionCambios = false;
+          console.log(response.data);
+          $scope.$parent.spinner = false;
         },
         function(response){
-          $scope.$parent.loaders.formLoad = false;
-          alert('algo ha salido Mal');
+          $scope.deteccionCambios = false;
+          $scope.$parent.spinner = false;
           console.log(response.data);
+          alert("error al consultar recursos");
         }
       );
+  }
+
+  //----------------------------------------------------------------------------
+  //Procedimientos para filtrar consultas
+
+  // Obtener ordenes de trabajo
+  $scope.getOrdenes = function(lnk){
+    $scope.$parent.spinner = true
+
+    $http.post(lnk, $scope.factura).then(
+      function(resp){
+        if(resp.data.success){
+          $scope.factura.ordenes = resp.data.ordenes;
+          $scope.doc_status = 'modificado';
+        }else{
+          console.log(resp.data);
+          alert("Algo ha fallado al consultar Ordenes");
+        }
+        $scope.deteccionCambios = false;
+        $scope.$parent.spinner = false;
+      },
+      function(resp){
+        $scope.deteccionCambios = false;
+        $scope.$parent.spinner = false;
+        console.log(resp.data);
+        alert("Algo ha fallado al consultar Ordenes");
+      }
+    );
+  }
+
+  //-----------------------------------------------------------------------------
+  // Seleccion de centros de operacion excluidos
+  $scope.selectedCOs = function(){
+    var i = 0;
+    $scope.factura.centros_operacion_excluidos = [];
+    angular.forEach($scope.factura.centros_operacion, function(v,k){
+      if (!v.isSelected) {
+        i++;
+        $scope.factura.centros_operacion_excluidos.push(v.idbase);
+      }
+    });
+    if(i<=0){
+      $scope.factura.centros_operacion_excluidos = undefined;
     }
+  }
+  // Selecccion de ordenes de trabajo excluidas
+  $scope.selectedOTs = function(){
+    var i = 0;
+    $scope.factura.ordenes_excluidas = [];
+    angular.forEach($scope.factura.ordenes, function(v,k){
+      if (!v.isSelected) {
+        i++;
+        $scope.factura.ordenes_excluidas.push(v.idOT);
+      }
+    });
+    if(i<=0){
+      $scope.factura.ordenes_excluidas = undefined;
+    }
+  }
+  // ---- form recursos ----
+  $scope.calcularRecursos = function(){
+    var subtotal = 0;
+    var i = 0;
+    angular.forEach($scope.factura.recursos, function(v,k){
+      i++;
+      v.subtotal = v.tarifa * v.disponibilidad;
+      v.a = v.a_vigencia*(v.subtotal);
+      v.i = v.i_vigencia*(v.subtotal);
+      v.u = v.u_vigencia*(v.subtotal);
+      v.total = ( v.subtotal + v.a + v.i + v.u );
+      subtotal += v.total;
+    });
+  }
+
+  $scope.deleteRecurso = function(elemento, lnk){
+    $scope.$parent.spinner = true;
+    var i = $scope.factura.recursos.indexOf(elemento);
+    var conf = confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?");
+    if(conf){
+      if( elemento.idfactura_recurso_reporte ){
+        $http.post(lnk, elemento).then(
+          function(resp){
+            if(resp.data.status){
+              $scope.factura.recursos.splice(i, 1);
+              $scope.doc_status = 'modificado';
+            }else{
+              console.log(resp.data);
+              alert('Algo ha salido mal al eliminar un recurso.');
+            }
+            $scope.$parent.spinner = false;
+          },
+          function(resp){
+            alert("Error de servidor");
+            $scope.$parent.spinner = false;
+            console.log(resp.data)
+          }
+        );
+      }else{
+        $scope.factura.recursos.splice(i, 1);
+      }
+    }
+    $scope.$parent.spinner = false;
+  }
+
+  // ---- form otros ----
+  $scope.calcularOtros = function(){
+    var otros = 0;
+    var i = 0;
+    angular.forEach($scope.factura.conceptos_factura, function(v,k){
+      otros += v.valor;
+    });
+    $scope.factura.otros = otros;
+  }
+
+  $scope.addConceptoFactura = function(obj){
+    $scope.$parent.spinner = true;
+    if(obj.item && obj.concepto && obj.valor){
+      $scope.factura.conceptos_factura.push(obj);
+      $scope.doc_status = 'modificado';
+    }else{
+      alert("Hay campos necesarios por llenar");
+    }
+    $scope.calcularOtros();
+    $scope.$parent.spinner = false;
+  }
+
+  $scope.removeConceptoFactura = function(otr, lnk){
+    $scope.$parent.spinner = true;
+    var i = $scope.factura.conceptos_factura.indexOf(otr);
+    var conf = confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?");
+    if (conf) {
+      if(otr.idconcepto_factura && conf ){
+        $http.post(lnk, otr).then(
+          function(resp){
+            if(resp.data.status){
+              $scope.factura.conceptos_factura.splice(i, 1);
+              $scope.calcularOtros();
+              $scope.doc_status = 'modificado';
+            }else{
+              alert("Fallo al eliminar");
+              console.log(resp.data);
+            }
+          },
+          function(resp){
+            alert("Fallo al eliminar");
+            console.log(resp.data);
+          }
+        );
+      }else{
+        $scope.factura.conceptos_factura.splice(i, 1);
+      }
+    }
+    $scope.$parent.spinner = false;
   }
 
   /// ==========================================================================
-  // INSERTAR
+  // Guardar
   $scope.save = function(link, tipo){
-    if ($scope.fac.ordenes.length > 0) {
-      $scope.$parent.loaders.formLoad = true;
-      $scope.panel_visible = false;
-      $http.post(link, $scope.fac)
+    if( ($scope.factura.fecha_inicio && $scope.factura.fecha_fin) && ($scope.factura.recursos || $scope.factura.recursos.length >= 0) ){
+      $scope.$parent.spinner = true;
+      $http.post(link, $scope.factura)
       .then(
         function(response){
-          $scope.panel_visible = true;
-          $scope.$parent.loaders.formLoad = false;
-          console.log(response.data);
-          if (response.data == 'success') {
-            alert('Proceso realizado');
-            $scope.$parent.getDataContrato();
-            if (tipo=='add'){
-              $scope.cerrarWindowLocal('#ventanaFactura', $scope.$parent.enlaceGetFactura);
-            }
+          if(response.data.status == true) {
+            $scope.factura= response.data.factura;
+            $scope.doc_status = 'guardado';
+            alert("Procedimiento realizado con exito.");
           }else{
             alert('Se ha interrumpido el proceso');
           }
+          console.log(response.data);
+          $scope.$parent.spinner = false;
         },
         function(response){
+          $scope.$parent.spinner = false;
           console.log(response.data);
           alert('Algo ha salido mal');
         }
       );
-    }else{
-      alert('No existen registros por agregar');
+    }else {
+      alert("Faltan campos basicos por diligenciar");
     }
-  }
-
-
-  /// ==========================================================================
-  // EDICION
-  $scope.getFacturaData = function(link) {
-    $scope.$parent.loaders.formLoad = true;
-    $http.post(
-      link, {}
-    ).then(
-      function(response){
-        $scope.$parent.loaders.formLoad = false;
-        if(response.data.success == 'success' ) {
-          $scope.panel_visible = true;
-          console.log( response.data.fac );
-          $scope.fac = response.data.fac;
-        }else{
-          console.log(response.data);
-          alert('Se ha interrumpido el proceso');
-        }
-      },
-      function(response){
-        console.log(response.data);
-          alert('Algo ha salido mal');
-      }
-    );
   }
   // ===========================================================================
 
   $scope.togglePanel = function(){
     $scope.panel_visible = $scope.$parent.toggleLoader($scope.panel_visible);
   }
-
-  $scope.numberOfPages=function(){
-    return Math.ceil($scope.orden.recursos.length/$scope.pageSize);
-  }
-
-  $scope.deleteElementFactura = function(listaPadre, elemento, tipo){
-    if (elemento) {
-      var i = listaPadre.indexOf(elemento);
-      if (tipo == 'orden') {
-        listaPadre.splice( i, 1 );
-        var x = listaPadre.length;
-        if(x==i){ i = 0; }
-        $scope.orden = listaPadre[i];
-      }else if (tipo =='recurso'){
-        if ( elemento.idfactura_recurso_reporte ) {
-            $http.post( $scope.$parent.site_url+'/factura/delItemFactura/',   {idfactura_recurso_reporte: elemento.idfactura_recurso_reporte})
-            .then(
-              function(response) {
-                if (response.data == "success") {
-                    listaPadre.splice( i, 1 );
-                }else{
-                  console.log(response.data);
-                  alert('Elemento NO eliminado');
-                }
-              },function(response) { alert(response.data) }
-            );
-        }else{
-          listaPadre.splice( i, 1 );
-        }
-      }
-    }
+  // Numero de paginas para las paginas de la tabla
+  $scope.numberOfPages=function(lista){
+    return Math.ceil(lista.length/$scope.pageSize);
   }
 
   $scope.changeSelectFac = function(tipo){
-    if (tipo=='orden') {
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
-    }else if (tipo == 'base') {
+    if (tipo == 'base') {
       $scope.orden = {recursos:[]};
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
-    }else if (tipo == 'filtroItems') {
-      $scope.currentPage =  0;
-      $scope.pgNum = 1;
     }
+    $scope.currentPage =  0;
+    $scope.pgNum = 1;
   }
 
   $scope.setValRange = function(valmodel, prop, lista){
@@ -242,8 +365,95 @@ var formFactura = function($scope, $http, $timeout){
     });
   }
 
-  $scope.addActa = function(myacta){
-    $scope.fac.actas.push(myacta);
+  // ------------------------ Adjuntos ---------------------------------------
+  // Upload file
+  $scope.isSelectedFile = false;
+
+  $scope.initAdjunto = function(ruta) {
+    // Se guarda en una variable el objeto retornado del inicio de la funcion de carga
+    $scope.adjunto = $("#fileuploader").uploadFile({
+      url:ruta,
+      autoSubmit: false,
+      fileName:"myfile",
+      dynamicFormData: function(){
+        var data ={
+          usuario: $scope.$parent.log.nombre_usuario,
+          path: 'factura/adjunto/',
+          gestion: '',
+          referencia: ''
+        }
+        return data;
+      },
+      onSelect: function(files){
+        $timeout(function(){
+          $scope.isSelectedFile = true;
+        });
+        return true;
+      },
+      onSuccess: function(file, data, xhr){
+        console.log(data);
+        data = JSON.parse(data);
+        $timeout(function(){
+          if(data.status == true){
+            $scope.factura.factura_adjuntos.push(data.adjunto);
+            $scope.doc_status = 'modificado';
+          }
+        });
+        $scope.isSelectedFile = false;
+        $scope.$parent.spinner = false;
+      },
+      onError: function(files,status,errMsg,pd){
+        alert("Erro de cargue de archivo");
+        console.log(status);
+        console.log(errMsg);
+        $scope.isSelectedFile = false;
+        $scope.$parent.spinner = false;
+      },
+      onCancel: function(files,pd){
+        $scope.isSelectedFile = false;
+        $scope.$parent.spinner = false;
+      }
+    });
+  }
+  // esta funcion es invocada al darle click al botón adjuntar/cargar
+  $scope.IniciarUploadAdjunto = function(){
+    $scope.$parent.spinner = true;
+    $scope.adjunto.startUpload();
+  }
+  // borrar un adjunto
+  $scope.deleteAdjunto = function(lnk, adj){
+    $scope.$parent.spinner = true;
+    $http.post(lnk,
+      {
+        id: adj.idadjunto,
+        nombre_adjunto: adj.nombre_adjunto
+      }
+    ).then(
+      function(resp){
+        if(resp.data.status==true){
+          var i = $scope.factura.factura_adjuntos.indexOf(adj);
+          $scope.factura.factura_adjuntos.splice(i, 1);
+          $scope.doc_status = 'modificado';
+        }
+        $scope.$parent.spinner = false;
+        console.log(resp.data)
+      },
+      function(resp){
+        $scope.$parent.spinner = false;
+        alert("Error al borrar adjunto");
+        console.log(resp.data);
+      }
+    );
   }
 
+  //Vendors
+	$scope.tinyMCE = function(selTag){
+    // evaluar si es necesario remover tinymce primero
+		tinymce.init({
+  	   selector: selTag
+  	});
+	}
+  $scope.removeTinyMCE = function(tag){
+    tinymce.remove(tag);
+  }
 }

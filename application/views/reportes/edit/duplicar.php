@@ -2,7 +2,7 @@
   <div class="noMaterialStyles row" style="position:relative; padding:2em; background:#FFF">
     <b class="col s4 m3 l3">Fecha a duplicar: (AÑO-MES-DIA)</b>
     <input type="text" class="datepicker limitdate noMaterialStyles col s4 m3 l3" ng-model="fecha_duplicar" ng-init=""  >
-    <button type="button" class="btn mini-btn" ng-click="duplicar('<?= site_url('reporte/addvalid') ?>', $event)">Duplicar</button>
+    <button type="button" class="btn mini-btn" ng-click="duplicar('<?= site_url('reporte/addvalid') ?>', $event)">Duplicar reporte</button>
     <button type="button" class="btn mini-btn red" ng-click="formDuplicar()">Cerrar</button>
   </div>
 </section>

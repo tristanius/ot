@@ -128,7 +128,6 @@ class Ot_db extends CI_Model {
 		$this->db->join('contrato AS c', 'c.idcontrato = OT.idcontrato');
 		$this->db->where('OT.idOT', $idot);
 		return $this->db->get();
-
 	}
 	//Obtener un listado de todas las OT
 	public function getAllOTs($base = NULL, $nom = NULL, $estado = NULL){
@@ -154,26 +153,19 @@ class Ot_db extends CI_Model {
 	public function getTarea($idOt, $idTarea)
 	{
 		$this->load->database('ot');
-		$this->db->from('tarea_ot');
+		$this->db->from('tarea_ot as tr');
+		$this->db->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tr.idvigencia_tarifas', 'left');
 		$this->db->where('OT_idOT', $idOt);
 		$this->db->where('idtarea_ot', $idTarea);
-		return $this->db->get();
-	}
-
-	public function getTarea1($idOT)
-	{
-		$this->load->database('ot');
-		$this->db->select('MIN(idtarea_ot) AS idtarea_ot');
-		$this->db->from('tarea_ot');
-		$this->db->where('OT_idOT', $idOT);
 		return $this->db->get();
 	}
 	# Obtiene un listado de taras
 	public function getTareas($id, $arr_tareas=NULL)
 	{
 		$this->load->database('ot');
-		$this->db->select('tr.*');
+		$this->db->select('tr.*, IFNULL(tr.a, vg.a) AS a, IFNULL(tr.i, vg.i) AS i, IFNULL(tr.u, vg.u)');
 		$this->db->from('tarea_ot AS tr');
+		$this->db->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tr.idvigencia_tarifas', 'left');
 		$this->db->where('OT_idOT', $id);
 		if (isset($arr_tareas)) {
 			$this->db->where_in('idtarea_ot', $arr_tareas);
@@ -190,7 +182,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$frente = (array) $frente;
-		$frente['usuario'] = json_encode($frente['usuario']);
+		$frente['usuario'] = isset($frente['usuario'] )?json_encode($frente['usuario']):NULL;
 		$this->db->insert('frente_ot', $frente);
 		return $this->db->insert_id();
 	}
@@ -198,7 +190,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$frente = (array) $frente;
-		$frente['usuario'] = json_encode($frente['usuario']);
+		$frente['usuario'] = isset($frente['usuario'] )?json_encode($frente['usuario']):NULL;
 		return $this->db->update('frente_ot', $frente, 'idfrente_ot = '.$idfrente);
 	}
 
@@ -251,11 +243,12 @@ class Ot_db extends CI_Model {
 	# Consulta de items de OT
 	# ===========================================================================
 
-	# Obetner items por tipo de un OT
+	# Obtener items por tipo de un OT
 	public function getItemByTipeOT($idOT, $tipo=NULL)	{
 		$this->load->database('ot');
 		$this->db->select(
 				'
+				itc.item,
 				itt.iditem_tarea_ot,
 				itt.facturable,
 				itf.iditemf,
@@ -272,7 +265,8 @@ class Ot_db extends CI_Model {
 				titc.BO,
 				titc.CL,
 				SUM(itt.cantidad) AS planeado,
-				itt.idfrente_ot
+				itt.idfrente_ot,
+				itt.subtarifa
 				'
 			);
 		$this->db->from('item_tarea_ot AS itt');
@@ -518,6 +512,31 @@ class Ot_db extends CI_Model {
 		}
 		$this->db->order_by('ot.idOT', 'asc');
 		return $this->db->get();
+	}
+
+	public function getPlaneacion($where, $bases)
+	{
+		$this->load->database('ot');
+		$select = 'OT.nombre_ot, IF(OT.basica, "SI", "NO") AS orden_primaria, tr.nombre_tarea, tr.fecha_inicio, tr.fecha_fin, ';
+		$select .= 'itf.codigo, itf.descripcion, itf.unidad, itf.itemc_item, itt.cantidad, itt.duracion, itt.cantidad_planeada, ';
+		$select .= 'tarf.tarifa, itt.subtarifa, tipo.descripcion AS tipo';
+		$this->db->select($select);
+		if (isset($where)) {
+			$this->db->where($where);
+		}
+		if(isset($bases)){
+			$this->db->or_where_in('OT.base_idbase', $bases);
+		}
+		return $this->db->from('OT')->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
+			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
+			->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf')
+			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')			
+			->join('tipo_itemc AS tipo', 'tipo.idtipo_itemc = itc.idtipo_itemc')
+			->join('tarifa AS tarf', 'tarf.itemf_iditemf = itf.iditemf')
+			->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tarf.idvigencia_tarifas')
+			->join('contrato AS c', 'c.idcontrato = OT.idcontrato')
+			->where('vg.idvigencia_tarifas = tarf.idvigencia_tarifas')
+			->get();
 	}
 }
 /* End of file Ot_db.php */

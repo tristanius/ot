@@ -1,7 +1,7 @@
   <hr style="border:1px solid #33c633">
   <br>
 
-  <div class="col l12 row">
+  <div class="col l12 row noMaterialStyles regularForm">
     <div class="col l12 row">
       <div class="col s12 l6">
         <input type="checkbox" id="p1" ng-model="ot.json.p1" />
@@ -31,12 +31,12 @@
 
   <div class="col l12 s12 row">
     <label for=""><b>Actividad:</b></label>
-    <textarea  id="actividad" ng-model="ot.actividad" ng-init="setTextarea('#actividad', ot.actividad)"></textarea>
+    <textarea  id="actividad" ng-model="ot.actividad" ></textarea>
   </div>
 
   <div class="col l12 s12 row">
     <label for=""><b>Justificación:</b></label>
-    <textarea id="justificacion"  ng-model="ot.justificacion" ng-init="setTextarea('#justificacion', ot.justificacion)"></textarea>
+    <textarea id="justificacion"  ng-model="ot.justificacion" ></textarea>
   </div>
 
   </div>

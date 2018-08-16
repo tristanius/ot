@@ -64,6 +64,7 @@ class Reporteequipomes_db extends CI_Model{
       rot.propietario_observacion AS asignacion,
       if(rot.propietario_recurso, "SI", "NO") AS propio,
       ft.nombre AS nombre_frente,
+      ft.ubicacion AS ubicacion_frente,
       OT.nombre_ot,
       e.responsable,
       sum(horas_disponible*(1-abs(sign(day(fecha_reporte)-1))))  as s01,
@@ -169,7 +170,10 @@ class Reporteequipomes_db extends CI_Model{
       CONCAT(rrd.horometro_ini, "-", rrd.horometro_fin),
       ft.nombre AS frente,
       rot.propietario_observacion AS asignacion,
-      if(rot.propietario_recurso, "SI", "NO") AS propio,'
+      if(rot.propietario_recurso, "SI", "NO") AS propio,
+      rrd.combustible_cantidad,
+      rrd.combustible_valor,
+      rrd.combustible_und,'
     );
     $this->db->from('reporte_diario AS rd');
     $this->db->join('OT', 'OT.idOT = rd.OT_idOT');

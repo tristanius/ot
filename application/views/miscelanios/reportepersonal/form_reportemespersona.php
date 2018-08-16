@@ -21,11 +21,9 @@ $meses = array(
 	<div class="noMaterialStyles regularForm">
 		<span>
 	      <label for="">Base:</label>
-	      <select id="consultatiempoBase" name="consultatiempoBase" ng-model="consultatiempo.base" ng-init="consultatiempo.base = (''+log.base_idbase)" required>
+	      <select id="consultatiempoBase" ng-model="consultatiempo.base" ng-init="consultatiempo.base = (''+log.base_idbase)" required>
 	        <option value="all">Todos</option>
-	        <?php foreach ($bases->result() as $val): ?>
-	        <option value="<?= $val->idbase ?>"><?= $val->idbase." ".$val->nombre_base ?></option>
-	        <?php endforeach; ?>
+          <option ng-repeat="b in log.bases" value="{{b.idbase}}"> {{b.idbase + " - " + b.nombre_base }} </option>
 	      </select>
 	    </span>
 
@@ -43,7 +41,7 @@ $meses = array(
 	    </span>
 
 	    <a style="margin-top:0"  ng-if="consultatiempo.mes && consultatiempo.year && consultatiempo.base"
-	    	ng-href="<?= site_url('reportepersonal/reporteMes') ?>/{{ consultatiempo.mes+'/'+consultatiempo.year+'/'+consultatiempo.base }}"
+	    	ng-href="{{ '<?= site_url('reportepersonal/reporteMes') ?>/'+consultatiempo.mes+'/'+consultatiempo.year+'/'+consultatiempo.base }}"
 	    	class="btn mini-btn" data-icon="&#xe031;" >
 	    </a>
 	</div>

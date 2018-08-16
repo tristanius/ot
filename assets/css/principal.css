@@ -1,3 +1,6 @@
+html, body, button, input, optgroup, select, textarea{
+  font-family: "Roboto", sans-serif;
+}
 h1, h2, h3, h4{
   margin: 5px;
 }
@@ -19,6 +22,36 @@ nav ul li{
 nav ul a{
   color:#486EAE;
   height: 2.5em;
+}
+/* sobreescribe las propiedades de materialize */
+.sidenav li, .sidenav li > a{
+  height: auto;
+  line-height: 35px;
+}
+.sidenav li{
+  margin-top: 1px;
+}
+.sidenav .collapsible-header:first-child{
+  margin: 0;
+}
+.sidenav .collapsible-header, .sidenav .collapsible-body li a, .sidenav .collapsible-header a{
+  color: #0d47a1;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+}
+.collapsible, .collapsible .collapsible-body, .sidenav li > a{
+  font-size: 13px;
+}
+.collapsible .collapsible-body{
+  margin: auto;
+  padding-left: 0px;
+}
+.modal{
+  width: 80%;
+}
+/* -------------------------------------------- */
+.text-shadow{
+  text-shadow: 0px 0px 3px #000;
 }
 .controles a i{
   display: block;
@@ -102,6 +135,10 @@ section.area select, .windowCentered select{
   height: auto;
 }
 
+.panel{
+  background: #FFF;
+  margin: 1ex;
+}
 /* ventana emergente */
 
 .nodisplay{
@@ -179,6 +216,10 @@ section.area select, .windowCentered select{
 }
 /* ============================================= */
 
+.col .row{
+  margin-left: 0;
+  margin-right: 0;
+}
 .col.row{
   padding:2px;
   margin: 3px;

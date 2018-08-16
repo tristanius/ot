@@ -12,7 +12,7 @@ class Export extends CI_Controller{
 
   function index()
   {
-
+    $this->load->model('facturacion_db', 'repo');
   }
 
   public function historyRepoByOT($idOT, $nombre_ot, $fact=NULL)
@@ -40,8 +40,8 @@ class Export extends CI_Controller{
   {
     $this->load->helper('xlsxwriter');
     $this->load->helper('download');
-    $this->load->model('facturacion_db', 'repo');
-    $rows = $this->repo->informeFacturacion($f1, $f2);
+    $this->load->model('facturacion_db', 'fact');
+    $rows = $this->fact->informeFacturacion($f1, $f2);
     write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
     //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
     force_download('./uploads/informeProduccion.xlsx',NULL);
@@ -53,13 +53,13 @@ class Export extends CI_Controller{
   {
     $this->load->helper('xlsxwriter');
     $this->load->helper('download');
-    $this->load->model('facturacion_db', 'repo');
+    $this->load->model('facturacion_db', 'fact');
 
     $bases = $this->input->post("bases");
     $f1 = $this->input->post("fecha_ini");
     $f2 = $this->input->post("fecha_fin");
     $tipo_informe = $this->input->post("tipo_informe");
-    $rows = $this->repo->informeFacturacion($f1, $f2, NULL, json_decode($bases), $tipo_informe);
+    $rows = $this->fact->informeFacturacion($f1, $f2, NULL, json_decode($bases), $tipo_informe);
 
     write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
     force_download('./uploads/informeProduccion.xlsx',NULL);
@@ -320,6 +320,24 @@ class Export extends CI_Controller{
       } // cierre if existe condensado
     }// cierre de iteracion de reportes
     $writer->close();
+  }
+
+
+  # Informe Items PMO
+  public function form_informe_items($value='')
+  {
+    $this->load->view('consultas/PMO/form_pmo');
+  }
+  public function informe_items()
+  {
+    $this->load->model('ot_db', 'ot');
+    $bases = $this->input->post('bases');
+    $rows = $this->ot->getPlaneacion(NULL, $bases);
+    $this->load->helper('xlsxwriter');
+    $this->load->helper('download');
+    write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informePMO'.date("Ymd").'.xlsx');
+    //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
+    force_download('./uploads/informePMO'.date("Ymd").'.xlsx',NULL, 'items OT y CO');
   }
 
   # =================================================================================

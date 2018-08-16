@@ -52,18 +52,29 @@ class Welcome extends CI_Controller {
 
 	public function permisos_visualizacion()
 	{
+		/*CORREGIR*/
 		$this->load->library('session');
 		$this->load->database('ot');
-		$idbase = $this->session->userdata('base_idbase');
+		$idbase = $this->session->userdata('base');
 		$row = $this->db->from('base')->where( 'idbase', $idbase )->get()->row();
 		$data = array(
-			'sector' => $row->sector,
-			'idsector' => $row->idsector
+			'sector' => isset($row->sector)?$row->sector:NULL,
+			'idsector' => isset($row->idsector)?$row->idsector:NULL
 		);
-		if ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
-			$data['bases'] = $this->db->from('base')->where( 'idsector', $row->idsector )->get()->result();
+		if ($this->session->userdata('tipo_visualizacion') == 'contrato' ) {
+			$contratos = $this->db->select('cb.idcontrato')->from('contrato_base AS cb')->where('cb.idbase', $idbase)->get()->result();
+			$where = array();
+			foreach ($contratos as $key => $val) {
+				array_push($where, $val->idcontrato);
+			}
+			$data['bases'] = $this->db->select('b.idbase, b.nombre_base, cb.idcontrato, b.idsector, b.sector, b.departamento_base')
+											->from('base AS b')->join('contrato_base AS cb','cb.idbase = b.idbase')
+											->where_in('cb.idcontrato',$where)->group_by('b.idbase')
+											->get()->result();
+		}elseif ($this->session->userdata('tipo_visualizacion') == 'sector' ) {
+			$data['bases'] = $this->db->select('idbase, nombre_base')->from('base')->where( 'idsector', $row->idsector )->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'base' ) {
-			$data['bases'] = $this->db->from('base')->where( 'idsector', $idbase )->get()->result();
+			$data['bases'] = $this->db->select('idbase, nombre_base')->from('base')->where( 'idsector', $idbase )->get()->result();
 		}elseif ($this->session->userdata('tipo_visualizacion') == 'general' ){
 			$data['bases'] = $this->db->get('base')->result();
 		}

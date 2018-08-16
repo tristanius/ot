@@ -1,8 +1,8 @@
 	<div>
 		<table class="noMaterialStyles mytabla font12 striped">
 		    <thead>
-		      <tr style="background: #D8DAFF;">
-		        <th>Base</th>
+		      <tr class="blue-grey lighten-4">
+		        <th>C.O.</th>
 		        <th>No. orden de trabajo</th>
 		        <th>fecha creacion en sistema</th>
 		        <th># Tareas</th>
@@ -11,10 +11,10 @@
 		        <th>Estado</th>
 		        <th>Opciones</th>
 		      </tr>
-					<tr style="background:#D7F1F4">
+					<tr class="blue-grey lighten-2">
 		    		<td></td>
-		    		<td><input type="text" ng-model="filtro.nombre_ot" placeholder="Filtro " =""></td>
-		    		<td><input type="text" ng-model="filtro.fecha_creacion"> </td>
+		    		<td><input type="text" ng-model="filtro.nombre_ot" placeholder="Filtro "></td>
+		    		<td><input type="text" ng-model="filtro.fecha_creacion" placeholder="Filtro "> </td>
 		    		<td></td>
 		    		<td><input type="text" ng-model="filtro.nombre_especialidad" placeholder="Filtro " =""></td>
 		    		<td><input type="text" ng-model="filtro.nombre_tipo_ot" placeholder="Filtro " =""></td>
@@ -32,11 +32,12 @@
 			    		<td ng-bind="ot.nombre_tipo_ot"></td>
 		          <td ng-bind="ot.estado_doc"></td>
 		          <td>
-		            <button type="button" class="btn mini-btn" name="button" data-icon="&#xe03e;"  ng-click="getAjaxWindow('<?= site_url('ot/edit') ?>/'+ot.idOT, $event, 'Editar OT');"></button>
+		            <button type="button" class="btn btn-small font10" ng-click="getAjaxWindowLocal('<?= site_url('ot/edit') ?>/'+ot.idOT, '#ventanaOT', 'Editar OT');" data-icon="&#xe03e;"> Modificar</button>
 
-								<button type="button" class="btn blue mini-btn" ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"></button>
+								<button type="button" class="btn blue btn-small font10" ng-click="getAjaxWindowLocal('<?= site_url('ot/duplicar') ?>/'+ot.idOT, '#ventanaOT', 'Duplicar de OTs');"
+								ng-click="getAjaxWindow('<?= site_url('ot/duplicar') ?>/'+ot.idOT, $event, 'Duplicar OT');" ng-if="validPriv(37)" data-icon="'"> Duplicar</button>
 
-								<button ng-if="validPriv(69)" class="btn mini-btn red" ng-click="deleteOT('<?= site_url('ot/delete') ?>/', ot.idOT)" > X </button>
+								<button ng-if="validPriv(69)" class="btn btn-small red font10" ng-click="deleteOT('<?= site_url('ot/delete') ?>/', ot.idOT)" > X </button>
 		          </td>
 		        </tr>
 		    </tbody>

@@ -90,7 +90,7 @@ class Consulta extends CI_Controller{
     $html = $this->load->view('consultas/equipos_mes/vista_consulta',array(), TRUE);
     $links = array(
       array('link'=>site_url('reporteequipomes/reporteMes'), 'label'=>'Consolidado'),
-      array('link'=>site_url('reporteequipomes/reporteMesPyco'), 'label'=>'pyco')
+      array('link'=>site_url('reporteequipomes/reporteMesPyco'), 'label'=>'Inf. Equipos detallado')
     );
     $this->load->view(
       'consultas/equipos_mes/form_reporte_mes',

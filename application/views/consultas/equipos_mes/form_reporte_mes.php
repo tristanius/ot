@@ -31,7 +31,7 @@ $meses = array(
               ng-model="consulta.base"
               value="{{ b.idbase }}"
             >
-            <span class="col s10 m11 l11 black-text">{{ b.idbase + ' - ' + b.nombre_base }}</span>
+            <b class="col s10 m11 l11 black-text">{{ b.idbase + ' - ' + b.nombre_base }}</b>
           </label>
         </div>
 
@@ -57,9 +57,10 @@ $meses = array(
             <input type="text" class="col m5 l6 s12" ng-model="consulta.nombre_ot">
           </div>
 
-        </div>
+          <div class="col s12 m12 l12">
+            <br>
+          </div>
 
-        <div class="col m6 l6 s12 row" style="border: 1px solid #eee">
           <div class="col s12 m12 l12">
             <label class="col m3 l3 s12">Informe:</label>
             <select class="col m5 l6 s12" ng-model="consulta.link">

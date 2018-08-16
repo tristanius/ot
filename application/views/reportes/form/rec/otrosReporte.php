@@ -18,6 +18,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
         <th>
           <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
             <input type="hidden" ng-init="otrosFilter.idfrente_ot = myfrente" disabled="disabled">
@@ -37,7 +38,7 @@
         </td>
         <td ng-bind="otr.descripcion"></td>
         <td ng-bind="otr.unidad"></td>
-        <td> <input type="number" ng-model="otr.cantidad" ng-init="otr.cantidad = parseNumb(otr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
+        <td> <input type="number" ng-model="otr.cantidad" ng-init="otr.cantidad = parseNumb(otr.cantidad)" ng-change="otr.cantidad = parseNumb(otr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
         <td ng-bind="otr.idfrente_ot"></td>
         <td  class="font9">
           <span ng-if="otr.item_asociado"> (<span ng-bind="otr.item_asociado" style="color: #934B10"></span>)</span>

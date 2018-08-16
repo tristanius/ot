@@ -1,5 +1,5 @@
-<div class="windowCentered2 row" ng-controller="OT">
-	<section class="area" ng-controller="editarOT">
+<div class="windowCentered2 row" ng-controller="editarOT">
+	<section class="area" >
 		<div class="btnWindow">
 		    <h5 ng-init="getData('<?= site_url('ot/getData/'.$idot) ?>')">
 					<img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="80px" />
@@ -9,11 +9,11 @@
 	   </div>
 
 		<!-- Información de la básica OT -->
-		<table class="mytabla" ng-init="getItemsBy('<?= site_url('Ot/getDataNewForm') ?>')">
+		<table class="mytabla" ng-init="getFormData('<?= site_url('Ot/getDataNewForm') ?>')">
 			<thead>
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Nombre de OT</th>
-					<th>Base</th>
+					<th>C.O. / Oficina</th>
 					<th>Zona</th>
 					<th>Especialidad</th>
 					<th>Tipo OT</th>
@@ -24,15 +24,12 @@
 			<tbody>
 				<tr>
 					<td>
-						<span ng-show="!validPriv(54)" ng-bind="ot.nombre_ot"></span>
-						<input type="text" ng-model="ot.nombre_ot" ng-show="validPriv(54)">
+						<input type="text" ng-model="ot.nombre_ot" ng-disabled="!validPriv(54)">
 					</td>
 					<td>
 						<span ng-show="!validPriv(54)" ng-bind="ot.base_idbase"></span>
 						<select ng-show="validPriv(54)" class="col m7" ng-model="ot.base_idbase" >
-							<?php foreach ($bases->result() as $key => $base): ?>
-								<option value="<?= $base->idbase ?>"><?= $base->idbase." - ". $base->nombre_base ?> </option>
-							<?php endforeach; ?>
+							<option ng-repeat="base in log.bases" value="{{ base.idbase }}">{{base.idbase + " - "+ base.nombre_base}}</option>
 						</select>
 					</td>
 					<td ng-bind="ot.zona"></td>
@@ -88,32 +85,42 @@
 				<tr style="background: #3A4B52; color: #FFF">
 					<th>Gerencia</th>
 					<th>Departamento ECP</th>
+					<th colspan="2">Contrato</th>
+					<th> Estado O.T. <span style="color:green" ng-bind="ot.estado_doc"></span> </th>
 					<th colspan="2"></th>
-					<th colspan="3"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>
 						<select class="noMaterialStyles" ng-model="ot.gerencia">
+							<option value="N/A">N/A</option>
 							<option value="GOT">GOT: OLEDUCTOS</option>
 							<option value="GPO">GPO: POLIDUCTOS</option>
 							<option value="GPT">GPT: FLUVIAL</option>
-							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td>
 						<select class="noMaterialStyles" ng-model="ot.departamento_ecp">
+							<option value="N/A">N/A</option>
 							<option value="PCL">PCL</option>
 							<option value="OBC">OBC</option>
 							<option value="PNO">PNO</option>
 							<option value="PFL">PFL</option>
 							<option value="POR">POR</option>
-							<option value="N/A">N/A</option>
 						</select>
 					</td>
 					<td colspan="2"> <span ng-bind="ot.no_contrato"></span> <span ng-bind="ot.contratista"></span> </td>
-					<td colspan="3"></td>
+					<td>
+						<select ng-model="myestado_doc" ng-disabled="!validPriv(49)">
+		          <option value="POR EJECUTAR" ng-if="(ot.estado_doc != 'ACTIVA' && ot.estado_doc != 'FINALIZÓ')">POR EJECUTAR</option>
+		          <option value="ACTIVA">ACTIVA</option>
+		          <option value="FINALIZÓ">FINALIZÓ</option>
+		        </select>
+
+		        <button type="button" class="btn mini-btn2" ng-click="ot.estado_doc = myestado_doc">Aplicar</button>
+					</td>
+					<td colspan="2"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -140,41 +147,42 @@
 			<!-- seleccion de tarea -->
 			<div class="noMaterialStyles" ng-show="!showCopiar" ng-init="showCopiar = false">
 				<label>Selecciona una Tarea: </label>
-				<select id="selected_tarea" ng-model="selected_tarea" ng-init="selected_tarea = '0'" ng-change="selectTarea(ot, selected_tarea)">
-					<option ng-repeat="tar in ot.tareas track by $index" value="{{$index}}" ng-init="selectTarea(ot, 0)">{{tar.nombre_tarea}}</option>
-				</select>
+				<select ng-model="tr"	ng-options="tarea.nombre_tarea for tarea in ot.tareas" ng-change="setTarea(tr);getItemsVg('<?= site_url('vigencia/get_tarifas') ?>/'+tr.idvigencia_tarifas)"></select>
 				<button class="btn mini-btn" style="margin-top: 0" data-icon="&#xe052;" ng-click="addTarea()"></button>
 				&nbsp;
+				&nbsp;
+				<button class="btn mini-btn red" style="margin-top: 0" ng-click="delTarea('<?= site_url('tarea/delete/') ?>/', tr)" ng-if="tr" ng-disabled="!validPriv(54)">x</button>
+				<!--
 				<a href="<?= site_url('ot/imprimirOT') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn orange black-text"  style="margin-top: 0" data-icon=";"></a>
 				<a href="<?= site_url('ot/imprimirAnexos') ?>/{{ot.idOT +'/'+ tr.idtarea_ot}}" class="btn mini-btn amber black-text"  style="margin-top: 0"> <small>H.E./G.V.</small> </a>
-
+				-->
 			</div>
 
 			<?php $this->load->view("ot/edit/copiar_tarea"); ?>
 
 			<section class="row"  ng-show="!showCopiar">
-				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
+				<div class="col s6 m3 l2" style="border:1px solid #CCC; padding:3px;">
 					<h6>Información de O.T.:</h6>
-					<button class="btn blue mini-btn2" ng-click="toggleContent('#descripcion', 'nodisplay', '.mypanel > div')">Descripción</button>
-					<button class="btn teal accent-4 mini-btn2" ng-click="toggleContent('#frentes', 'nodisplay', '.mypanel > div')">Frentes</button>
+					<button class="btn blue mini-btn2" ng-click="toggleContent('#descripcion', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">Descripción</button>
+					<button class="btn teal accent-4 mini-btn2" ng-click="toggleContent('#frentes', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">Frentes</button>
 				</div>
 
-				<div class="col s6 m6 l6" style="border:1px solid #CCC; padding:3px;">
-					<h6>Gestiones de la tarea:</h6>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')" ng-show="ot.estado_doc !='FINALIZÓ' ">Planeación</button>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#indirectos_ot', 'nodisplay', '.mypanel > div')">G.V. / H.E / Otros</button>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')">validaciones</button>
+				<div class="col s6 m4 l5" style="border:1px solid #CCC; padding:3px;">
+					<h6>Planeación Tarea:</h6>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#planeacion', 'nodisplay', '.mypanel > div')" ng-show="ot.estado_doc !='FINALIZÓ' " ng-disabled="!ot.idcontrato">Recursos</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#indirectos_ot', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">G.V. / H.E / Otros</button>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#responsabilidades', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">Requisitos</button>
 				</div>
 
-				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
-					<h6>Vista general:</h6>
-					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#general', 'nodisplay', '.mypanel > div')">General</button>
-					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')">Info / Estados</button>
+				<div class="col s6 m3 l3" style="border:1px solid #CCC; padding:3px;">
+					<h6>Consulta:</h6>
+					<button class="btn blue darken-4 mini-btn2" ng-click="toggleContent('#general', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">General</button>
+					<button class="btn blue mini-btn2" ng-click="toggleContent('#info_general', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">Inf. adicional de O.T.</button>
 				</div>
 
 				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
 					<h6>Resumen:</h6>
-					<button class="btn blue darken-4 orange mini-btn2" ng-click="getResumenGeneral('<?= site_url('ot/resumenItems/'.$idot) ?>')">resumen</button>
+					<button class="btn blue darken-4 orange mini-btn2" ng-click="getResumenGeneral('<?= site_url('ot/resumenItems/'.$idot) ?>')" ng-disabled="!ot.idcontrato">resumen</button>
 				</div>
 			</section>
 		</div>
@@ -216,11 +224,13 @@
 		</div>
 		<br>
 
+		<img src="<?= base_url('assets/img/ajax-loader.gif') ?>" ng-show="loader" width="50">
+
 		<!-- opciones -->
 		<div class="btnWindow">
 			<button type="button" class="waves-effect waves-light btn" ng-if="validPriv(37)" ng-click="guardarOT('<?= site_url('ot/update') ?>')">Guardar</button>
-			<button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindow()">Cerrar</button>
-			<button type="button" class="waves-effect waves-light btn grey" ng-click="toggleWindow()">Ocultar</button>
+			<button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindowLocal('#ventanaOT', enlaceGetOT)">Cerrar</button>
+			<button type="button" class="waves-effect waves-light btn grey" ng-click="toggleWindow2('#ventanaOT', '#ventanaOTOculta')">Ocultar</button>
 	  </div>
 
 	</section>

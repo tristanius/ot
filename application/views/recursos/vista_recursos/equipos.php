@@ -1,18 +1,17 @@
-<h5>Equipos: <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-equipos')"></button></h5>
+<h5>Equipos:
+  <!-- <button class="btn mini-btn" style="margin-top:0px;" data-icon="&#xe034;" ng-click="showSection('#tabla-equipos')"></button> -->
+</h5>
 
-<div id="tabla-equipos" class="nodisplay">
+<div id="tabla-equipos" class="">
   <ul class="col s12 m6 l6">
     <li>
-      <button ng-show="validPriv(65)" type="button" class="btn mini-btn light-green black-text" ng-click="showSection('#addEquipo')"
+      <button ng-show="validPriv(65)" type="button" class="btn mini-btn blue darken-1 white-text" ng-click="showSection('#addEquipo')"
         data-icon="N" style="margin-top:0; font-size: 2.1ex">
-      </button> Add. equipo NO siesa / herramienta menor.
+        Crear equipo provisonal
+      </button>
     </li>
     <!-- <li><button type="button" class="btn mini-btn light-blue black-text" ng-click="showSection('#findEquipo')" data-icon="C" style="margin-top:0; font-size: 2.1ex"></button> Relacionar equipo siesa.</li> -->
   </ul>
-
-  <div id="findEquipo" class="col s12 m7 l7 nodisplay" style="background:#FAFAFA; padding:4px; border:1px solid #999;">
-    <?php $this->load->view('recursos/finders/equipos'); ?>
-  </div>
 
   <div id="addEquipo" class="col s12 m7 l7 nodisplay" style="background:#FAFAFA; padding:4px; border:1px solid #999;">
     <?php $this->load->view('recursos/finders/addEquipoTemp'); ?>
@@ -20,8 +19,8 @@
 
   <table class="mytabla tabla-recursos font10">
     <thead>
-      <tr>
-        <th>Codigo siesa / Cod. temp</th>
+      <tr class="blue-grey lighten-4">
+        <th>Codigo ERP / Temporal</th>
         <th>Referencia</th>
         <th>Descripción equipo</th>
         <th>Item</th>
@@ -44,7 +43,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'" style="{{ e.propietario_recurso==true?'':'background: #ffc46d' }}">
+      <tr ng-repeat="e in recursosOT.equipo | filter: filterEq | orderBy: 'descripcion_equipo'" style="{{ e.propietario_recurso==true?'':'background: #FCD9A9' }}">
         <td>
             <button
             type="button"

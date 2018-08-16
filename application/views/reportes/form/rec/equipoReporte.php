@@ -13,8 +13,10 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
         <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
+        <th colspan="3" class="yellow lighten-4">Combustible</th>
         <th></th>
       </tr>
       <tr class="background:#EEE; color:#EEE;">
@@ -25,8 +27,9 @@
         <th>Codigo</th>
         <th>Ref./AF</th>
         <th>Equipo</th>
-        <th>Operador / Conductor</th>
-        <th>Base</th>
+        <th>Descripción</th>
+        <th>Operador</th>
+        <th>C.O.</th>
 
         <th>Cant.</th>
         <th>UND</th>
@@ -35,6 +38,9 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
+        <th class="yellow lighten-4"> <small>Cant.</small> </th>
+        <th class="yellow lighten-4"> <small>Valor</small> </th>
+        <th class="yellow lighten-4"> <small>Und</small> </th>
         <th data-icon="*"></th>
       </tr>
     </thead>
@@ -48,6 +54,7 @@
         <td> <input style="width: 7ex" type="text" ng-model="equipoFilter.codigo_siesa"> </td>
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.referencia"> </td>
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.descripcion_equipo"> </td>
+        <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.descripcion_"> </td>
         <td> <input style="width: 13ex" type="text" ng-model="equipoFilter.nombre_operador"> </td>
         <td></td>
         <td></td>
@@ -61,6 +68,7 @@
             <input type="hidden" ng-init="equipoFilter.idfrente_ot = myfrente" disabled="disabled">
           <?php endif; ?>
         </td>
+        <td colspan="3" class="yellow lighten-4"></td>
         <td data-icon="*"></td>
       </tr>
 
@@ -90,10 +98,13 @@
         <td ng-bind="eq.codigo_siesa"></td>
         <td ng-bind="eq.referencia"></td>
         <td ng-bind="eq.descripcion_equipo"></td>
-        <td> <input type="text" style="width:90%" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td ng-bind="eq.descripcion"></td>
+        <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="noMaterialStyles"> <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:9ex;"> </td>
 
-        <td class="inputSmall"> <input type="number" min=0 ng-model="eq.cantidad" step=any ng-init="eq.cantidad = parseNumb(eq.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td class="inputSmall">
+          <input type="number" ng-model="eq.cantidad"  ng-init="eq.cantidad = parseNumb(eq.cantidad)"  ng-change="eq.cantidad = parseNumb(eq.cantidad)" step=any min=0  ng-readonly="rd.info.estado == 'CERRADO' ">
+        </td>
         <td class="inputSmall"> <input type="text" ng-model="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <td class="inputSmall"> <input type="text" ng-model="eq.horometro_ini" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
@@ -102,6 +113,10 @@
         <td class="inputSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_operacion" ng-init="eq.horas_operacion = parseNumb(eq.horas_operacion)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_disponible" ng-init="eq.horas_disponible = parseNumb(eq.horas_disponible)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputSmall noMaterialStyles"> <input type="checkbox" ng-model="eq.varado" ng-init="eq.varado = parseBool(eq.varado)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
+
+        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_cantidad" placeholder="cantidad"> </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_valor" placeholder="valor $"> </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_und" placeholder="Unidad"> </td>
 
         <td class="font9">
           <span ng-if="eq.item_asociado">  (<span ng-bind="eq.item_asociado" style="color: #934B10"></span>)</span>
@@ -118,6 +133,7 @@
         <th>Codigo</th>
         <th>Ref./AF</th>
         <th>Equipo</th>
+        <th>Descrip. item</th>
         <th>Operador / Conductor</th>
         <th>Base</th>
 
@@ -128,6 +144,7 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
+        <th colspan="3" class="yellow lighten-4">Combustible</th>
         <th data-icon="*"></th>
       </tr>
     </tbody>

@@ -6,7 +6,7 @@
         <div class="btnWindow">
           <img class="logo" src="<?= base_url("assets/img/termotecnica.png") ?>" width="100px" />
           <button type="button" class="waves-effect waves-light btn red" ng-click="cerrarWindowLocal('#ventanaReporte', enlaceGetReporte)">Salir</button>
-          <button type="button" class="waves-effect waves-light btn" ng-click="formDuplicar()" ng-if="validPriv(38)">Duplicar</button>
+          <button type="button" class="waves-effect waves-light btn" ng-click="formDuplicar()" ng-if="validPriv(38)">Duplicar reporte</button>
           <img ng-if="validPriv(56)" src="<?= base_url('assets/img/info.png') ?>" width="15" ng-click="getLogMovimientos( '<?= site_url('miscelanio/getLog') ?>' , <?= $r->idreporte_diario ?>, 'reporte_diario')">
 
           <small class=""> Documento creado por: <?= $r->usuario_creacion ?> </small>
@@ -67,7 +67,7 @@
               <td>
                 <b ng-bind="rd.info.fecha_reporte"></b>
                 <input type="hidden" ng-model="rd.fecha_reporte" ng-init="rd.fecha_reporte = '<?= $r->fecha_reporte ?>'">
-                -  ( <?= $diasemana ?> )
+                -  ( <span ng-bind="dia_semana" ng-init="dia_semana = '<?= $diasemana ?>'"></span> )
               </td>
               <td class="noMaterialStyles">
                 <?php if (TRUE): ?>
@@ -83,7 +83,7 @@
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#firmas', 'nodisplay', '.mypanel > div')" data-icon="^">Firmas</button>
                 <button type="button" ng-if="validPriv(38) || validPriv(45)" style="background:#1261C9" class="btn mini-btn" ng-click="toggleContent('#observacion', 'nodisplay', '.mypanel > div')" data-icon="&#xe03d;"> Observaciones</button>
                 <button type="button" ng-show="validPriv(45) || validPriv(46)" class="btn mini-btn orange" ng-click="toggleContent('#validaciones', 'nodisplay', '.mypanel > div')" data-icon="&#xe02d;">Validación</button>
-                <button type="button" ng-show="(rd.info.estado == 'CERRADO') && ( validPriv(45) || validPriv(46) )" class="btn mini-btn brown" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="&#xe04f;"> Consolidar</button>
+                <button type="button" ng-show="(rd.info.estado == 'CERRADO') && ( validPriv(45) || validPriv(46) )" class="btn mini-btn brown" ng-click="toggleContent('#condensado', 'nodisplay', '.mypanel > div')" data-icon="&#xe04f;"> Asignar APU's</button>
               </td>
             </tr>
             <tr class="noMaterialStyles">
@@ -114,7 +114,7 @@
       <div class="mypanel">
         <div id="info" class="font11"> <?php $this->load->view('reportes/form/info'); ?> </div>
         <div id="preview_reporte" class="font11 nodisplay"> <?php $this->load->view('reportes/form/preview_reporte'); ?> </div>
-        <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('ot'=>$r, 'un_equipos'=>$un_equipos, 'item_equipos'=>$item_equipos, 'estados_labor'=>$estados_labor)); ?> </div>
+        <div id="recursosOT" class="font11 nodisplay"> <?php $this->load->view('reportes/form/recursosOT', array('ot'=>$r, 'estados_labor'=>$estados_labor)); ?> </div>
         <div id="firmas" class="font11 nodisplay"> <?php $this->load->view('reportes/form/firmas'); ?> </div>
         <div id="observacion" class="font11 nodisplay"> <?php $this->load->view('reportes/form/observaciones'); ?> </div>
         <div id="validaciones" class="font11 nodisplay"> <?php $this->load->view('reportes/form/validaciones'); ?> </div>

@@ -35,7 +35,7 @@
 				<tr>
 					<td colspan="2">
 						<b>Gastos de viaje:</b>
-						<button type="button" ng-click="setViaticos('#addViaticosOT', tr)" class="btn brown lighten-1 mini-btn2" name="button">Calcular</button>
+						<button type="button" ng-click="setViaticos('#addViaticosOT', tr)" class="btn brown lighten-1 mini-btn2" name="button" ng-disabled="true">Calcular</button>
 					</td>
 				</tr>
 			</thead>
@@ -59,7 +59,7 @@
 				<tr>
 					<td colspan="2">
 						<b>Reembolsables:</b>
-						<button type="button" ng-click="setReembolsables('#reembolsablesOT', tr)" class="btn brown lighten-1 mini-btn2" name="button">Calcular</button>
+						<button type="button" ng-click="setReembolsables('#reembolsablesOT', tr)" class="btn brown lighten-1 mini-btn2" name="button" ng-disabled="true">Calcular</button>
 					</td>
 				</tr>
 			</thead>
@@ -69,8 +69,12 @@
 					<td> {{ tr.json_reembolsables.valor_reembolsables | currency:'$':0 }} </td>
 				</tr>
 				<tr>
-					<td>Administración (1%):</td>
-					<td> {{ tr.json_reembolsables.valor_reembolsables * 0.01 | currency:'$':0 }} </td>
+					<td>
+						Administración 
+						<input type="text" ng-model="tr.json_indirectos.adm_reembolsable" 
+						ng-init="tr.json_indirectos.adm_reembolsable = tr.json_indirectos.adm_reembolsable?tr.json_indirectos.adm_reembolsable:0.01">:
+					</td>
+					<td> {{ tr.json_reembolsables.valor_reembolsables * tr.json_indirectos.adm_reembolsable | currency:'$':0 }} </td>
 				</tr>
 			</tbody>
 		</table>
@@ -87,7 +91,7 @@
 				<tr>
 					<td colspan="2">
 						<b>Horas extra y raciones:</b>
-						<button type="button" ng-click="setHorasExtra('#addHorasExtra', tr)" class="btn brown lighten-1 mini-btn2" name="button">Calcular</button>
+						<button type="button" ng-click="setHorasExtra('#addHorasExtra', tr)" class="btn brown lighten-1 mini-btn2" name="button" ng-disabled="true">Calcular</button>
 					</td>
 				</tr>
 			</thead>

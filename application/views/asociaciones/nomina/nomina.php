@@ -17,11 +17,12 @@
           <legend style="color: #BBB; font-size:12px">filtros Obligatorios</legend>
           <span for="">Desde:</span> <input placeholder="0000-00-00" type="text" class="datepicker" ng-init="datepicker_init()" name="fecha_inicio" ng-model="consulta_nom.fecha_inicio">
           <span for="">Hasta:</span> <input placeholder="0000-00-00" type="text" class="datepicker" ng-init="datepicker_init()" name="fecha_hasta" ng-model="consulta_nom.fecha_hasta">
+
+          <span for="">C.O.:</span> <select class="" ng-model="consulta_nom.base" ng-options="b.idbase as (b.idbase+' - '+b.nombre_base) for b in log.bases "></select>
         </fieldset>
         <fieldset>
           <legend style="color: #BBB; font-size:12px">Filtros opcionales</legend>
             <span for="">Orden:</span> <input type="text" ng-model="consulta_nom.orden" name="orden" placeholder="Ejemplo: OTATMTPA555-17-18"> &nbsp;
-            <span for="">C.O.:</span> <input type="text" ng-model="consulta_nom.base" name="base" placeholder="Ejemplo: 168">&nbsp;
             <span for="">Cédula:</span> <input type="text" ng-model="consulta_nom.identificacion" name="identificacion" placeholder="Ejemplo: 10904455236">&nbsp;
             <span for="">Estado excluido:</span> <input type="text" ng-model="consulta_nom.estado_exl" ng-init="consulta_nom.estado_exl = 'EN ELABORACION, CORREGIR'" ng-readonly="true" name="orden">&nbsp;
             <div class="">

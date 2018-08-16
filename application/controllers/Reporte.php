@@ -18,7 +18,7 @@ class Reporte extends CI_Controller{
     $date1=date_create($fecha);
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
-    if($diff->y == 0 && $diff->m == 0 && $diff->d <= 30){
+    if($diff->y == 0 && $diff->m <= 4){
       if( date( 'Y-m-d', strtotime($fecha) ) <= date( 'Y-m-d', strtotime('2018-01-30') )  ) {
         echo 'toolong';
       }else{
@@ -40,16 +40,12 @@ class Reporte extends CI_Controller{
     $this->load->model('Ot_db', 'otdb');
     $ot = $this->otdb->getData($idOT);
     $frentes = $this->otdb->getFrentesOT($idOT);
-    $this->load->model('tarea_db', 'tarea');
-    $item_equipos = $this->tarea->getTareasItemsResumenBy($idOT,3);
     $this->load->model('miscelanio_db', 'misc');
     $estados = $this->misc->getDataEstados()->result();
-
     $items_planeados = $this->otdb->getPlanByFrentes($idOT);
 
     //obtener unidades de negocio
     $this->load->model('equipo_db', 'equ');
-    $un_equipos = $this->equ->getResumenUN();
 
     $dias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     $diasemana = $dias[ date( "w", strtotime($fecha) ) ];
@@ -59,8 +55,6 @@ class Reporte extends CI_Controller{
 				'ot'=>$ot->row(),
         'frentes'=>$frentes->result(),
 				'fecha'=>$fecha,
-				'item_equipos'=>$item_equipos->result(),
-				'un_equipos'=>$un_equipos,
 				'estados'=>$estados,
         'diasemana'=>$diasemana,
         'estados_labor'=>$this->misc->getEstadosLabor()->result(),
@@ -89,10 +83,14 @@ class Reporte extends CI_Controller{
         $this->insertarRecursoRep($post->recursos->actividades, $idrepo);
         $this->insertarRecursoRep($post->recursos->personal, $idrepo);
         $this->insertarRecursoRep($post->recursos->equipos, $idrepo);
+
         if(isset($post->recursos->material))
         $this->insertarRecursoRep($post->recursos->material, $idrepo);
         if(isset($post->recursos->otros))
           $this->insertarRecursoRep($post->recursos->otros, $idrepo);
+        if(isset($post->recursos->subcontratos))
+          $this->insertarRecursoRep($post->recursos->subcontratos, $idrepo);
+
         $validProcc = $this->repo->end_transact();
         if($validProcc != FALSE){
           $response = new stdClass();
@@ -106,6 +104,7 @@ class Reporte extends CI_Controller{
           $response->actividades = $var->actividades;
           $response->material = $var->material;
           $response->otros = $var->otros;
+          $response->subcontratos = $var->subcontratos;
           echo json_encode($response);
         }else{
           show_404();
@@ -118,13 +117,18 @@ class Reporte extends CI_Controller{
       $response->personal = $validReporte->recursos->personal;
       $response->equipos = $validReporte->recursos->equipos;
       $response->actividades = $validReporte->recursos->actividades;
+      $response->material = $validReporte->material;
+      $response->otros = $validReporte->otros;
+      $response->subcontratos = $validReporte->subcontratos;
       echo json_encode($response);
     }
   }
   public function insertarRecursoRep($list, $idr){
     $this->load->library('session');
     foreach ($list as $key => $value) {
-      $this->repo->addRecursoRepo($value, $idr);
+      $idrrd = $this->repo->addRecursoRepo($value, $idr);
+      // agregar avance de obra
+      $this->avanceRecurso($value, $idrrd);
     }
   }
   #===========================================================================================================
@@ -135,31 +139,34 @@ class Reporte extends CI_Controller{
   {
     $identificacion = ( $conjunto == "equipos" )? $val->codigo_siesa: $val->identificacion;
     $val->valid = TRUE;
-    $rows = array();
-    /*
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    Corregir: lista de excepciones no debe ser exluyente de coincidencia de reportes.
-    Corregir: la cantidad del item a validar se debe validar no en este metodo sino en el de nivel superior (REVISAR PRIMERO)
-    Corregir: Optimizar en funcion de rendimiento y no reproceso.
-    */
-    if ( !$this->exceptionValidarRecurso($val) ) { // SI NO ESTA DENTRO DE LAS EXCEPCIONES
-      $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, TRUE);
-      $rows2 = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, FALSE);
-      if( $rows->num_rows() > 0){ // SI ESTA CANT > 1 y FACTURABLE
+    # Consultamos registros el mismo día en otras OT
+    $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
+    # Si existe
+    if($rows->num_rows() > 0){
+      # si NO es un codigo excepto continuamos
+      if(!$this->exceptionValidarRecurso($val)){
+        $fact= FALSE;
+        $select='SUM(rrd.cantidad) AS cantidad_acumulada';
+        $facturable = NULL;
+        $acumulados = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, $facturable, $select)->row();
+        # Validamos
+        $acumulado = $acumulados->cantidad_acumulada + $val->cantidad;
+        if($acumulado >= 1){
           $val->valid = FALSE;
-          $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
-      }elseif ($rows2->num_rows() > 0 && $val->cantidad > 0) { // CANTIDAD MAYOR QUE 0 Y NO FACTURABLE
-        if($conjunto == "equipos"){
-          $val->valid = FALSE;
-          $val->msj = "El recurso ya se encuentra reportado en otra orden de trabajo como NO facturable. ".json_encode($rows->result());
-        }else{
-          $val->msj = "CUIDADO! El recurso ya se encuentra reportado en otra orden de trabajo. ".json_encode($rows->result());
+          $val->msj = 'Este registro acumularía '.$acumulado.' unidades en reportes. ';
         }
+        $val->msj .= 'Se encuentra reportado en las OT: '.json_encode($rows->result());
+      }else{
+        # Sí esta excepto de todos modos avisamos.
+        $val->msj = "Recurso excepto de validación. Pero ya reportado: ".json_encode($rows->result());
       }
+    }else {
+      $val->valid = TRUE;
     }
     return $val;
   }
 
+  # CORREGIR: generar tabla de excepciones por contrato y consultar
   public function exceptionValidarRecurso($val)
   {
     $this->load->database('ot');
@@ -184,27 +191,29 @@ class Reporte extends CI_Controller{
     }
     $post->succ = TRUE;
     foreach ($post->recursos as $k => $v) {
-      if($k != 'actividades' && $k != 'material' && $k != 'otros'){
-        foreach ($v as $key => $value) {
-          /*
-          Corregir: revisar primero las cantidades y estado facturable antes de ir a validar los items.
-          */
-          $value->msj = '';
-          $value->valid_item = $this->validarItemByOT($post->idOT, $value->codigo);
-          $value =  $this->validarRecurso( $post->fecha, $value, $k, $post->idOT );
-          if($value->cantidad <= 0 && !$value->facturable){
-            $value->valid = TRUE;
-            $value->msj = "Este registro NO es facturable y sin cantidad.";
-          }elseif ($k=='personal' && !$value->valid && $value->cantidad <= 0 ){
-            $value->valid = TRUE;
-          }
-          if(!$value->valid){
+      if($k != 'actividades' && $k != 'material' && $k != 'otros' && $k != 'subcontratos'){
+        foreach ($v as $key => $rec) {
+          $rec->msj = '';
+          # Validamos primero que el codigo del item exista en la OT
+          $rec->valid_item = $this->validarItemByOT($post->idOT, $rec->codigo);
+          if(!$rec->valid_item){
+            $rec->msj = ' El item no existe en la planificación OT';
+            $rec->valid = FALSE;
             $post->succ = FALSE;
-          }
-          if(!$value->valid_item){
-            $value->msj .= ' El item no existe en la planificación OT';
-            $value->valid = FALSE;
-            $post->succ = FALSE;
+          }else{
+            #inicio de validacion de item
+            if($rec->cantidad <= 0){
+              $rec->valid = TRUE;
+              $rec->msj = "Registro sin cantidad. ";
+            }else{
+              $rec =  $this->validarRecurso( $post->fecha, $rec, $k, $post->idOT );
+              #$rec->valid = (!$rec->facturable && !$rec->valid)?TRUE:FALSE;
+            }
+            # Si el item no es valido el resultado general tampoco
+            if(!$rec->valid){
+              $post->succ = FALSE;
+            }
+            # fin de validacion de item
           }
         }
       }
@@ -252,11 +261,6 @@ class Reporte extends CI_Controller{
     $ot = $this->otdb->getData($r->OT_idOT);
     $items_planeados = $this->otdb->getPlanByFrentes($r->OT_idOT);
     $frentes = $this->otdb->getFrentesOT($r->OT_idOT)->result();
-    $this->load->model('tarea_db', 'tarea');
-    $item_equipos = $this->tarea->getTareasItemsResumenBy($r->OT_idOT,3);
-    //obtener unidades de negocio
-    $this->load->model('equipo_db', 'equ');
-    $un_equipos = $this->equ->getResumenUN();
 
     $this->load->model('miscelanio_db', 'misc');
     $estados = $this->misc->getDataEstados()->result();
@@ -267,8 +271,8 @@ class Reporte extends CI_Controller{
     $diasemana = $dias[ date( "w", strtotime($r->fecha_reporte) ) ];
     $this->load->view('reportes/edit/edit',
       array(
-        'r'=>$r, 'frentes'=>$frentes, 'item_equipos'=>$item_equipos->result(),
-        'un_equipos'=>$un_equipos, 'estados'=>$estados, 'diasemana'=>$diasemana,
+        'r'=>$r, 'frentes'=>$frentes,
+        'estados'=>$estados, 'diasemana'=>$diasemana,
         'estados_labor'=>$this->misc->getEstadosLabor()->result(),
         'items_planeados' => $items_planeados->result()
       )
@@ -301,6 +305,7 @@ class Reporte extends CI_Controller{
     $recursos->actividades = $this->repo->getRecursos($idReporte, 'actividades')->result();
     $recursos->material = $this->repo->getRecursos($idReporte, 'material')->result();
     $recursos->otros = $this->repo->getRecursos($idReporte, 'otros')->result();
+    $recursos->subcontratos = $this->repo->getRecursos($idReporte, 'subcontrato')->result();
     return $recursos;
   }
   # ===========================================================================================================
@@ -329,6 +334,7 @@ class Reporte extends CI_Controller{
       $cambios->equipos = $this->actualizarRecursos($post->recursos->equipos, $post->idreporte_diario, $post->fecha);
       $cambios->material = $this->actualizarRecursos($post->recursos->material, $post->idreporte_diario, $post->fecha);
       $cambios->otros = $this->actualizarRecursos($post->recursos->otros, $post->idreporte_diario, $post->fecha);
+      $cambios->subcontratos = $this->actualizarRecursos($post->recursos->subcontratos, $post->idreporte_diario, $post->fecha);
       if (isset($post->log)) {
         $msj = 'Reporte diario '.$post->fecha." de ".$post->nombre_ot.' actualizado.';
         addLog( $post->log->idusuario, $post->log->nombre_usuario, $post->idreporte_diario, 'reporte_diario', $msj, date('Y-m-d H:i:s'), NULL, json_encode($cambios) );
@@ -349,6 +355,7 @@ class Reporte extends CI_Controller{
         $response->actividades = $var->actividades;
         $response->material = $var->material;
         $response->otros = $var->otros;
+        $response->subcontratos = $var->subcontratos;
         echo json_encode($response);
       }else{
         echo "Falló la inserción";
@@ -362,6 +369,7 @@ class Reporte extends CI_Controller{
       $response->actividades = $validReporte->recursos->actividades;
       $response->material = $validReporte->recursos->material;
       $response->otros = $validReporte->recursos->otros;
+      $response->subcontratos = $validReporte->recursos->otros;
       echo json_encode($response);
     }
   }
@@ -387,15 +395,25 @@ class Reporte extends CI_Controller{
     $cambios = array();
     foreach ($recursos as $key => $rec) {
       if( !isset($rec->idrecurso_reporte_diario) ){
-        $this->repo->addRecursoRepo($rec, $idr);
-        array_push($cambios, $rec);
+        $idrrd = $this->repo->addRecursoRepo($rec, $idr);
+        $rec->idrecurso_reporte_diario = $idrrd;
+        $this->avanceRecurso($rec, $idrrd); # Agregamos avance de actividad si lo tiene
       }else{
         if ( $this->repo->editRecursoRepo($rec, $idr) ) {
-          array_push($cambios, $rec);
+          $this->avanceRecurso($rec, $rec->idrecurso_reporte_diario); # Agregamos avance de actividad si lo tiene
         }
       }
     }
     return $cambios;
+  }
+
+  public function avanceRecurso($rec, $idrrd=NULL)
+  {
+    if (isset($rec->idavance_reporte)) {
+      $this->repo->modAvance($rec);
+    }else{
+      $this->repo->addAvance($rec, $idrrd);
+    }
   }
 
 
@@ -457,12 +475,14 @@ class Reporte extends CI_Controller{
       $acts = $this->tarea->getActividadesPlaneadas($idOT,1, NULL, $fecha);
       $mats = $this->recdb->getRecursoByOT($idOT, 'material');
       $otros = $this->recdb->getRecursoByOT($idOT, 'otros');
+      $subs = $this->tarea->getActividadesPlaneadas($idOT,'subcontrato', NULL, NULL);
       $data = array(
           'personal' => $pers->result(),
           'equipo' => $equs->result(),
           'actividad'=> $acts->result(),
           'material'=>$mats->result(),
-          'otros' =>$otros->result()
+          'otros' =>$otros->result(),
+          'subcontratos' =>$subs->result()
         );
       echo json_encode($data);
   }
@@ -485,13 +505,16 @@ class Reporte extends CI_Controller{
     foreach ($ret->frentes as $key => $f) {
       $actividades = $this->cond->generar($idr, 1, $f->idfrente_ot)->result();
       $f->items = array();
+      $odd = '';
       foreach ($actividades as $key => $act) {
         $items = $this->cond->generar($idr, NULL, $f->idfrente_ot)->result();
         foreach ($items as $key => $it) {
+          $it->odd = $odd;
           $it->item_asociado = $act->itemc_item;
           $it->descripcion_asociada = $act->descripcion;
           array_push($f->items, $it);
         }
+        $odd = $odd==''?'odd':'';
       }
     }
     $ret->guardado = FALSE;

@@ -1,6 +1,6 @@
-<div id="calendario">
-  <h6>Agregar reporte nuevo:</h6>
-
+<div id="calendario" class="card padding1ex">
+  <h5>Crear reporte diario nuevo:</h5>
+  <p>Seleciona una fecha para crear un reporte diario</p>
   <style media="screen">
     #calendario tr > td{
       color:red;

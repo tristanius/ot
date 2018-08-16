@@ -8,89 +8,193 @@ class Factura_db extends CI_Model{
     parent::__construct();
     //Codeigniter : Write Less Do More
   }
-
-  public function add($post)
+  ##############################################################################
+  # Agregar factura
+  public function add($factura)
   {
-
     $data = array(
-      'no_doc' => $post->no_doc,
-      'fecha_ini_factura' => $post->fecha_ini_factura,
-      'fecha_fin_factura' => $post->fecha_fin_factura,
-      'idvigencia_tarifas' => $post->idvigencia_tarifas,
-      'tipo' => $post->tipo,
-      'estado'=>'ELABORACION',
-      'filtros'=>isset($post->bases)?json_encode($post->bases):'{}',
-      'centro_costo_ecp' => isset($post->centro_costo_ecp)?$post->centro_costo_ecp:NULL
+      'no_factura' => $factura->no_factura,
+      'fecha_inicio' => $factura->fecha_inicio,
+      'fecha_fin' => $factura->fecha_fin,
+      'descripcion' => isset($factura->descripcion)?$factura->descripcion:NULL,
+      'subtotal' => $factura->subtotal,
+      'otros' => $factura->otros,
+      'total'=>$factura->total,
+      'idcontrato'=>$factura->idcontrato,
+      'tipo_acta'=>$factura->tipo_acta,
+      'estado_factura'=>$factura->estado_factura,
+      'validado'=> $factura->validado,
+      'ordenes' => isset($factua->ordenes)?json_encode($factura->ordenes):NULL,
+      'centros_operacion' => isset($factura->centros_operacion)?json_encode($factura->centros_operacion):NULL,
+      'factura_adjuntos' => isset($factura->factura_adjuntos)?json_encode($factura->factura_adjuntos):NULL
     );
     $this->load->database('ot');
     $this->db->insert('factura', $data);
     return $this->db->insert_id();
   }
-
-  public function mod($post)
+  # Consulta una factura con su contrato
+  public function get($idfactura)
   {
-
+    $this->load->database('ot');
+    return $this->db->select('f.*, c.idcontrato, c.no_contrato')
+      ->from('factura AS f')
+      ->join('contrato AS c','c.idcontrato = f.idcontrato')
+      ->where('f.idfactura', $idfactura)
+      ->get();
+  }
+  # Modificar/actualizar factura
+  public function mod($factura)
+  {
+    # No se modifican los campos de vigencias y contrato
     $data = array(
-      'no_doc' => $post->no_doc,
-      'fecha_ini_factura' => $post->fecha_ini_factura,
-      'fecha_fin_factura' => $post->fecha_fin_factura,
-      'idvigencia_tarifas' => $post->idvigencia_tarifas,
-      'tipo' => $post->tipo,
-      'estado'=>$post->estado,
-      'filtros'=>isset($post->bases)?json_encode($post->bases):'[]',
-      'actas'=>isset($post->actas)?json_encode($post->actas):'[]',
-      'centro_costo_ecp' => isset($post->centro_costo_ecp)?$post->centro_costo_ecp:NULL
+      'no_factura' => $factura->no_factura,
+      'fecha_inicio' => $factura->fecha_inicio,
+      'fecha_fin' => $factura->fecha_fin,
+      'descripcion'=>isset($factura->descripcion)?$factura->descripcion:NULL,
+      'tipo_acta'=> $factura->tipo_acta,
+      'subtotal' => $factura->subtotal,
+      'otros' => $factura->otros,
+      'total' => $factura->total,
+      'estado_factura' => $factura->estado_factura,
+      'validado' => $factura->validado,
+      'ordenes' => isset($factua->ordenes)?json_encode($factura->ordenes):NULL,
+      'centros_operacion' => isset($factura->centros_operacion)?json_encode($factura->centros_operacion):NULL,
+      'factura_adjuntos' => isset($factura->factura_adjuntos)?json_encode($factura->factura_adjuntos):NULL
     );
     $this->load->database('ot');
-    return $this->db->update('factura', $data, 'idfactura = '.$post->idfactura);
+    return $this->db->update('factura', $data, 'idfactura = '.$factura->idfactura);
   }
-
+  #============================================================================
+  # Recurso
   public function addRecurso($rec, $idfac)
   {
-    $this->load->database('ot');
-    $val = $rec->cantidad_total * $rec->tarifa;
-    $a = ($val * 0.18);
-    $i = ($val * 0.01);
-    $u = ($val * 0.04);
     $data = array(
-      'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario,
-      'cantidad_total'=>$rec->cantidad_total,
-      'subtotal'=>$val,
-      'a'=>$a,
-      'i'=>$i,
-      'u'=>$u,
-      'total'=>($val+$a+$i+$u),
-      'estado'=>'APROBADO',
-      'acta'=>NULL,
-      'idfactura'=>$idfac
+      'cantidad' => $rec->cantidad,
+      'tarifa' => $rec->tarifa,
+      'subtotal' => $rec->subtotal,
+      'a' => $rec->a,
+      'i' => $rec->i,
+      'u' => $rec->u,
+      'total'=> $rec->total,
+      'estado'=> (isset($rec->estado)?$rec->estado:NULL),
+      'idvigencia_tarifas' => $rec->idvigencia_tarifas,
+      'idfactura' => $idfac,
+      'idrecurso_reporte_diario' => $rec->idrecurso_reporte_diario
     );
+    $this->load->database('ot');
     $this->db->insert('factura_recurso_reporte', $data);
     return $this->db->insert_id();
   }
 
-
-
   public function modRecurso($rec)
   {
-    $this->load->database('ot');
-    $val = $rec->cantidad_total * $rec->tarifa;
-    $a = ($val * 0.18);
-    $i = ($val * 0.01);
-    $u = ($val * 0.04);
     $data = array(
-      'idrecurso_reporte_diario' =>$rec->idrecurso_reporte_diario,
-      'cantidad_total'=>$rec->cantidad_total,
-      'subtotal'=>$val,
-      'a'=>$a,
-      'i'=>$i,
-      'u'=>$u,
-      'total'=>($val+$a+$i+$u),
-      'estado'=>($rec->estado?$rec->estado:NULL),
-      'acta'=>($rec->acta?$rec->acta:NULL)
+      'cantidad '=> $rec->cantidad,
+      'tarifa' => $rec->tarifa,
+      'subtotal'=>$rec->subtotal,
+      'a' => $rec->a,
+      'i' => $rec->i,
+      'u' => $rec->u,
+      'total' => $rec->total,
+      'estado' => (isset($rec->estado)?$rec->estado:NULL),
+      'idvigencia_tarifas' => $rec->idvigencia_tarifas
     );
+    $this->load->database('ot');
     return $this->db->update('factura_recurso_reporte', $data, 'idfactura_recurso_reporte = '.$rec->idfactura_recurso_reporte);
   }
+  public function getRecursoByFactura($idfactura)
+  {
+    $this->load->database('ot');
+    return $this->db->select(
+      'c.idcontrato,
+      OT.idOT,
+      OT.nombre_ot,
+      OT.base_idbase,
+      rd.idreporte_diario,
+      rd.fecha_reporte,
+      rrd.idrecurso_reporte_diario,
+      IF(rrd.facturable,"SI","NO") AS facturable,
+      itf.codigo,
+      itf.itemc_item,
+      itf.descripcion,
+      p.identificacion,
+      p.nombre_completo,
+      IFNULL(rot.tipo, "activiad") AS tipo,
+      IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
+      IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo,
+      rrd.horas_operacion,
+      rrd.horas_disponible,
+      getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad*1 AS disponibilidad,
+      vg.a AS a_vigencia,
+      vg.i AS i_vigencia,
+      vg.u AS u_vigencia,
+      frrd.*'
+    )->from('contrato AS c')
+    ->join('OT', 'OT.idcontrato = c.idcontrato')
+    ->join('base AS b','b.idbase = OT.base_idbase')
+    ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
+    ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
+    ->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf')
+    ->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
+    ->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario')
+    ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = frrd.idvigencia_tarifas')
+    ->join('tarifa AS tar', 'tar.idvigencia_tarifas = vg.idvigencia_tarifas')
+    ->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot', 'LEFT')
+    ->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso', 'LEFT')
+    ->join('persona AS p', 'r.persona_identificacion = p.identificacion', 'LEFT')
+    ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo', 'LEFT')
+    ->where('frrd.idfactura', $idfactura)
+    ->where('tar.itemf_iditemf = itf.iditemf')
+    ->get();
+  }
+  # borrar un recurso reportado de una factura por su id
+  public function delRecurso($idfrd)
+  {
+    $this->load->database('ot');
+    return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd) );
+  }
+  # borrar unos recursos reportados de una factura por el id de la factura
+  public function delRecursoBy($idfact)
+  {
+    $this->load->database('ot');
+    return $this->db->delete('factura_recurso_reporte', array('idfactura'=>$idfact) );
+  }
 
+  #=============================================================================
+  # Conceptos de factura
+
+  public function addConcepto($concepto, $idfactura)
+  {
+    $this->load->database('ot');
+    $data = (array) $concepto;
+    $data['idfactura'] = $idfactura;
+    $this->db->insert('concepto_factura', $data);
+    return $this->db->insert_id();
+  }
+
+  public function modConcepto($concepto)
+  {
+    $this->load->database('ot');
+    $data = (array) $concepto;
+    $id = $data['idconcepto_factura'];
+    $data['idconcepto_factura'] = NULL;
+    return $this->db->update('concepto_factura', $data, 'idconcepto_factura = '.$id );
+  }
+
+  public function delConcepto($idconcepto)
+  {
+    $this->load->database('ot');
+    return $this->db->delete('concepto_factura', array('idconcepto_factura'=>$idconcepto));
+  }
+
+  public function getConceptosByFactura($idfactura)
+  {
+    $this->load->database('ot');
+    return $this->db->select('concep.concepto, concep.item, concep.valor, concep.tipo, concep.idconcepto_factura')
+      ->from('concepto_factura AS concep')
+      ->where('concep.idfactura',$idfactura)
+      ->get();
+  }
   #=============================================================================
   # Información de contrato
   public function getContrato($idcontrato)
@@ -102,42 +206,68 @@ class Factura_db extends CI_Model{
   public function getVigenciasContrato($idcontrato)
   {
     $this->load->database('ot');
-    return $this->db->from('contrato AS c')
-    ->join('vigencia_tarifas AS vfac','vfac.idcontrato = c.idcontrato')
+    return $this->db->select('
+    c.idcontrato,
+    c.no_contrato,
+    c.contratista,
+    c.estado,
+    vg.idvigencia_tarifas,
+    vg.descripcion_vigencia,
+    vg.estado,
+    vg.fecha_inicio_vigencia,
+    vg.fecha_fin_vigencia,
+    vg.a,
+    vg.i,
+    vg.u
+    ')
+    ->from('contrato AS c')
+    ->join('vigencia_tarifas AS vg','vg.idcontrato = c.idcontrato')
     ->where('c.idcontrato',$idcontrato)
-    ->order_by('vfac.idvigencia_tarifas','DESC')->get();
+    ->order_by('vg.idvigencia_tarifas','DESC')->get();
   }
 
   public function getFacturasContrato($idcontrato)
   {
     $this->load->database('ot');
     return $this->db
-    ->select(
-      '
-      f.*,
-      vtar.descripcion_vigencia,
-      (SELECT SUM(frrd.total) FROM factura_recurso_reporte AS frrd WHERE frrd.idfactura = f.idfactura) AS total
+    ->select('
+      f.*
       ')
     ->from('factura AS f')
-    ->join('vigencia_tarifas AS vtar','vtar.idvigencia_tarifas = f.idvigencia_tarifas')
-    ->join('contrato AS c','c.idcontrato = vtar.idcontrato')
+    ->join('contrato AS c','c.idcontrato = f.idcontrato')
     ->where('c.idcontrato',$idcontrato)
     ->get();
   }
 
+  public function getCentrosOperacionContratos($idcontrato)
+  {
+    $this->load->database("ot");
+    return $this->db->select("
+    c.idcontrato,
+    c.contratista,
+    b.idbase,
+    b.idsector,
+    cb.sector,
+    b.nombre_base
+    ")->from("contrato AS c")
+    ->join("contrato_base AS cb",'cb.idcontrato = c.idcontrato')
+    ->join("base AS b","b.idbase = cb.idbase")
+    ->where("c.idcontrato",$idcontrato)
+    ->get();
+  }
 
   #=============================================================================
+  # Consultas para crear factura y modificar valores desde cero.
+  # En uso
   public function getOrdenes($obj)
   {
     $this->load->database('ot');
-    $this->db->select(
-      '
-      OT.idOT,
-      OT.nombre_ot AS No_OT,
-      b.idbase AS CO,
-      b.nombre_base AS base
-      '
-    );
+    $this->db->select('
+    OT.idOT,
+    OT.nombre_ot AS No_OT,
+    b.idbase AS CO,
+    b.nombre_base AS base
+    ');
     $this->db->from('OT');
     $this->db->join('base AS b', 'b.idbase = OT.base_idbase');
     $this->db->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT');
@@ -153,195 +283,90 @@ class Factura_db extends CI_Model{
     $this->db->order_by('OT.nombre_ot', 'DESC');
     return $this->db->get()->result();
   }
-
-  public function getRecursosByOt($idOT, $fecha_ini_factura, $fecha_fin_factura, $idvigencia_tarifas){
-    $this->load->database('ot');
-    $this->db->select(
-      '
-      OT.idOT,
-      OT.nombre_ot,
-      OT.base_idbase,
-      rd.idreporte_diario,
-      rd.fecha_reporte,
-      rd.festivo,
-      itc.item,
-      itc.descripcion,
-      titc.descripcion AS clasificacion,
-      itc.hrdisp,
-      itc.basedisp,
-      rrd.idrecurso_reporte_diario,
-      rrd.cantidad AS cant_und,
-      if(rrd.facturable,"SI","NO") AS facturable,
-      itf.codigo,
-      itf.tipo,
-      0 AS cantidad_total,
-      tr.tarifa,
-      itf.unidad,
-      0 as valor_total,
-      0 as a,
-      0 as i,
-      0 as u,
-      0 as total,
-      OT.municipio,
-      e.codigo_siesa,
-      e.descripcion AS dec_equipo,
-      rrd.horas_operacion,
-      rrd.horas_disponible,
-      p.identificacion,
-      p.nombre_completo,
-      rrd.nombre_operador,
-      if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
-      if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
-      if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
-      if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
-      if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
-      if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
-      if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
-      if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
-      rrd.racion,
-      rrd.gasto_viaje_pr AS pernocto,
-      rrd.gasto_viaje_lugar AS lugar_gasto_viaje
-      '
-    );
-    $this->db->from('reporte_diario AS rd');
-    $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
-
-    $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
-    $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
-    $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
-    $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
-
-    $this->db->join('OT', 'OT.idOT = rd.OT_idOT','LEFT');
-    $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf','LEFT');
-    $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc','LEFT');
-    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc','LEFT');
-    $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
-    $this->db->join('vigencia_tarifas AS vtarf', 'vtarf.idvigencia_tarifas = tr.idvigencia_tarifas');
-    $this->db->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT');
-
-    $this->db->where('OT.idOT', $idOT);
-    $this->db->where("rd.fecha_reporte BETWEEN '".$fecha_ini_factura."' AND '".$fecha_fin_factura."' ");
-    $this->db->where('vtarf.idvigencia_tarifas',$idvigencia_tarifas);
-    $this->db->where('rrd.facturable', TRUE);
-    $this->db->where('frrd.idfactura_recurso_reporte', NULL);
-    $this->db->order_by('rd.fecha_reporte','ASC');
-    $this->db->order_by('rd.idreporte_diario','ASC');
-    return $this->db->get()->result();
-
-  }
-
-  public function getRecursosByFact($idOT, $idfactura)
+  // Obtener recursos reportados - En uso
+  public function getRecursos($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL, $ordenes=NULL)
   {
     $this->load->database('ot');
-    $this->db->select(
-      '
-      frrd.idfactura_recurso_reporte,
-      rrd.idrecurso_reporte_diario,
-      bs.sector as sector,
-      bs.nombre_base as base,
-      OT.base_idbase as CO,
-      itf.codigo,
-      if(rot.tipo IS NULL , "actividad", rot.tipo) AS UN,
-      rd.fecha_reporte,
-      rd.festivo,
-      OT.nombre_ot,
-      itf.itemc_item as item,
-      itc.descripcion,
-      titc.descripcion as clasificacion,
-      if(rrd.facturable,"SI","NO") AS facturable,
-      rrd.cantidad AS cant_und,
-      tr.tarifa,
-      itf.unidad,
-      frrd.cantidad_total,
-      frrd.subtotal as valor_total,
-      frrd.a,
-      frrd.i,
-      frrd.u,
-      frrd.total,
-      OT.municipio,
-      e.codigo_siesa,
-      e.descripcion AS dec_equipo,
-      rrd.nombre_operador,
-      rrd.horas_operacion,
-      rrd.horas_disponible,
-      p.identificacion,
-      p.nombre_completo,
-      if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
-      if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
-      if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
-      if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
-      if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
-      if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
-      if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
-      if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
-      rrd.racion,
-      rrd.gasto_viaje_pr AS pernocto,
-      rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
-      frrd.estado,
-      itf.tipo,
-      itc.hrdisp,
-      itc.basedisp,
-      frrd.acta
-      '
-    );
-
-    $this->db->from('reporte_diario AS rd');
-    $this->db->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario');
-
-    $this->db->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot','LEFT');
-    $this->db->join('recurso AS r','r.idrecurso = rot.recurso_idrecurso','LEFT');
-    $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
-    $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
-
-    $this->db->join('OT', 'OT.idOT = rd.OT_idOT','LEFT');
-    $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf','LEFT');
-    $this->db->join('itemc AS itc', 'itf.itemc_iditemc = itc.iditemc','LEFT');
-    $this->db->join('tipo_itemc AS titc', 'itc.idtipo_itemc = titc.idtipo_itemc','LEFT');
-
-    $this->db->join('base as bs', 'OT.base_idbase = bs.idbase','LEFT');
-    $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
-
-    $this->db->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario');
-    $this->db->join('factura AS f', 'f.idfactura = frrd.idfactura');
-    $this->db->join('vigencia_tarifas AS vtar', 'f.idvigencia_tarifas = vtar.idvigencia_tarifas');
-
-    $this->db->where('frrd.idfactura', $idfactura);
-    $this->db->where('OT.idOT', $idOT);
-    $this->db->where('tr.idvigencia_tarifas = vtar.idvigencia_tarifas');
-    $this->db->order_by('rd.fecha_reporte','ASC');
-    $this->db->order_by('rd.idreporte_diario','ASC');
-    return $this->db->get()->result();
+    $this->db->select('
+    c.idcontrato,
+    OT.idOT,
+    OT.nombre_ot,
+    OT.base_idbase,
+    rd.idreporte_diario,
+    rd.fecha_reporte,
+    rrd.idrecurso_reporte_diario,
+    rrd.cantidad,
+    IF(rrd.facturable,"SI","NO") AS facturable,
+    itf.codigo,
+    itf.unidad,
+    itf.itemc_item,
+    itf.descripcion,
+    tar.tarifa,
+    p.identificacion,
+    p.nombre_completo,
+    IFNULL(rot.tipo, "activiad") AS tipo,
+    IFNULL(e.codigo_siesa, rot.codigo_temporal) AS codigo_siesa,
+    IFNULL(e.descripcion, rot.descripcion_temporal) AS descripcion_equipo,
+    rrd.horas_operacion,
+    rrd.horas_disponible,
+    getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad*1 AS disponibilidad,
+    vg.idvigencia_tarifas,
+    vg.a AS a_vigencia,
+    vg.i AS i_vigencia,
+    vg.u AS u_vigencia
+    ');
+    $this->db->from('contrato AS c');
+    $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
+          ->join('base AS b','b.idbase = OT.base_idbase')
+          ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
+          ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
+          ->join('recurso_ot AS rot', 'rot.idrecurso_ot = rrd.idrecurso_ot')
+          ->join('recurso AS r', 'r.idrecurso = rot.recurso_idrecurso','LEFT')
+          ->join('persona AS p', 'r.persona_identificacion = p.identificacion','LEFT')
+          ->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT')
+          ->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario','LEFT')
+          ->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf')
+          ->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
+          ->join('tarifa AS tar', 'tar.itemf_iditemf = itf.iditemf')
+          ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tar.idvigencia_tarifas')
+          ->where('c.idcontrato', $idcontrato)
+          ->where('frrd.idfactura_recurso_reporte IS NULL')
+          ->where('vg.idvigencia_tarifas = (
+              SELECT vigencia.idvigencia_tarifas
+              FROM vigencia_tarifas AS vigencia
+              WHERE vigencia.fecha_inicio_vigencia <= rd.fecha_reporte
+              AND vigencia.fecha_fin_vigencia >= rd.fecha_reporte
+              ORDER BY vigencia.idvigencia_tarifas DESC LIMIT 1
+              )')
+          ->where('rd.fecha_reporte BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_fin.'" ')
+          ->order_by("rd.fecha_reporte","ASC");
+    if( isset( $centros_operacion ) ){
+      $this->db->where_not_in('b.idbase', (array) $centros_operacion);
+    }
+    if( isset( $ordenes ) ){
+      $this->db->where_not_in('OT.idOT', (array) $ordenes);
+    }
+    return $this->db->get();
   }
-  #=============================================================================
-  public function get($idfactura)
+  # Obtener ordenes de trabajo por centro de operacion -  En uso
+  public function getOrdenesByCO($idcontrato, $fecha_inicio, $fecha_fin, $centros_operacion=NULL)
   {
     $this->load->database('ot');
-    return $this->db->select('f.*, vfac.descripcion_vigencia')
-      ->from('factura AS f')
-      ->join('vigencia_tarifas AS vfac','vfac.idvigencia_tarifas = f.idvigencia_tarifas')
-      ->where('f.idfactura', $idfactura)
-      ->get();
-  }
-  public function getOrdenesFactura($idfactura)
-  {
-    $this->load->database('ot');
-    return $this->db->select('OT.idOT, OT.nombre_ot AS No_OT, b.idbase AS CO, b.nombre_base AS base')
-      ->from('OT')
-      ->join('base As b','b.idbase = OT.base_idbase')
-      ->join('reporte_diario AS rd','rd.Ot_idOT = OT.idOT')
-      ->join('recurso_reporte_diario AS rrd','rrd.idreporte_diario = rd.idreporte_diario')
-      ->join('factura_recurso_reporte AS frrd','frrd.idrecurso_reporte_diario = rrd.idrecurso_reporte_diario')
-      ->where('frrd.idfactura', $idfactura)
-      ->group_by('OT.idOT')
-      ->get()->result();
-  }
-
-
-
-  public function del($idfrd)
-  {
-    $this->load->database('ot');
-    return $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfrd));
+    $this->db->select('
+    OT.idOT,
+    OT.nombre_ot,
+    OT.base_idbase
+    ');
+    $this->db->from('contrato AS c');
+    $this->db->join('OT', 'OT.idcontrato = c.idcontrato')
+          ->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT')
+          ->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario')
+          ->where('c.idcontrato', $idcontrato);
+    if( isset( $centros_operacion ) ){
+      $this->db->where_not_in('OT.base_idbase', (array)  $centros_operacion);
+    }
+    $this->db->group_by('OT.idOT');
+    return $this->db->get();
   }
   # =================================================================================
   public function init_transact()
@@ -349,13 +374,11 @@ class Factura_db extends CI_Model{
     $this->load->database('ot');
     $this->db->trans_begin();
   }
-
   public function transac_status()
   {
     $this->load->database('ot');
     return $this->db->trans_status();
   }
-
   public function end_transact()
   {
     $this->load->database('ot');
@@ -367,5 +390,10 @@ class Factura_db extends CI_Model{
         $this->db->trans_commit();
     }
     return $status;
+  }
+  public function rollback($value='')
+  {
+    $this->load->database('ot');
+    $this->db->trans_rollback();
   }
 }

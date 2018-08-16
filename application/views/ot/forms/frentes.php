@@ -28,7 +28,7 @@
         <input type="checkbox" ng-model="frente.cc" ng-init="toboolean(frente.cc)">
       </label>
 
-      <button type="button" class="btn-floating btn" ng-disabled=" frente.nombre == undefined || frente.nombre == '' "
+      <button type="button" class="btn-floating btn" ng-disabled=" !frente.ubicacion || !frente.nombre "
         ng-click="addFrente( '<?= site_url("ot/add_frente/") ?>', ot.frentes, frente)">
         +
       </button>

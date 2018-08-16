@@ -10,15 +10,15 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td> Administración (18%): </td>
+						<td> Administración (<span ng-bind="mytr.a*100"></span>%): </td>
 						<td> <span ng-bind="mytr.json_indirectos.administracion | currency:'$':0 "></span></td>
 					</tr>
 					<tr>
-						<td> Imprevistos (1%): </td>
+						<td> Imprevistos (<span ng-bind="mytr.i*100"></span>%): </td>
 						<td> <span ng-bind="mytr.json_indirectos.imprevistos | currency:'$':0 "></span></td>
 					</tr>
 					<tr>
-						<td> Utilidad (4%): </td>
+						<td> Utilidad (<span ng-bind="mytr.u*100"></span>%): </td>
 						<td> <span ng-bind="mytr.json_indirectos.utilidad | currency:'$':0 "></span> </td>
 					</tr>
 				</tbody>

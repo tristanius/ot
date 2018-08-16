@@ -29,10 +29,12 @@
 
   </section>
 
-  <div>
-    <div class="">
+  <hr>
+
+  <div class="row">
+    <div class="col s12 m12 l12">
       <label for="">Add. Observación del cliente</label>
-      <button type="button" class="btn" ng-click="addObservacion('cliente')" ng-if="validPriv(72)"> Add. </button>
+      <button type="button" class="btn btn-floating" ng-click="addObservacion('cliente')" ng-if="validPriv(72)"> Add. </button>
     </div>
     <div class="" ng-repeat="obs in rd.info.observaciones_cliente track by $index">
       <br>

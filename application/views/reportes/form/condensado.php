@@ -3,7 +3,7 @@
   <button type="button" class="btn mini-btn2 orange" ng-click="get_condensado('<?= site_url('reporte/gen_condensado/') ?>',rd.idreporte_diario)">Generar</button> &nbsp;
   <button type="button" ng-if="condensado.guardado == true" class="btn mini-btn2 light-green accent-1" ng-click="get_condensado('<?= site_url('reporte/actualizar_condensado/') ?>',rd.idreporte_diario)">Actualizar</button>
 
-  <table id="info_rd_condensado" class="mytabla" >
+  <table id="info_rd_condensado" class="mytabla">
       <caption style="border:1px solid #333">
         Consolidado de frentes y actividades generado en: {{ condensado.fecha }}
       </caption>
@@ -21,10 +21,10 @@
         </tr>
       </thead>
       <tbody ng-repeat="frente in condensado.frentes">
-        <tr>
+        <tr style="background: #e1f5fe">
           <td colspan="9"> <b ng-bind="frente.nombre+' '+frente.ubicacion"></b>  </td>
         </tr>
-        <tr ng-repeat="it in frente.items" >
+        <tr ng-repeat="it in frente.items" ng-class="it.odd">
           <td ng-bind="it.nombre_ot"></td>
           <td ng-bind="it.nombre_frente"></td>
           <td ng-bind="it.fecha_reporte"></td>

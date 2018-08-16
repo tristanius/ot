@@ -1,4 +1,4 @@
-<div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>' style="overflow:auto"> <!-- max-height:400px;  -->
+<div class="noMaterialStyles" ng-init='listStatus = <?= json_encode($estados_labor) ?>' style="max-width:100%; overflow: auto"> <!-- max-height:400px;  -->
   <table id="personalReporte" class="mytabla font10" ng-hide="isOnPeticion"> <!-- class: sticked -->
     <thead id="thead2" style="box-shadow:0px 0px 4px #333;">
       <tr style="background: #EEE">
@@ -9,7 +9,7 @@
         <th></th>
         <th></th>
         <th></th>
-        <th>Base</th>
+        <th></th>
 
         <th style="background: #F4F9FD "></th>
         <th></th>
@@ -34,7 +34,7 @@
           <th>Nombre Completo</th>
           <th>Cargo</th>
           <th>Est.</th>
-          <th>Base</th>
+          <th>C.O.</th>
 
           <th style="background: #F4F9FD ">Fact.</th>
           <th><small data-icon="x"></small></th>
@@ -150,9 +150,9 @@
           </table>
         </td>
 
-        <td class="inputSmall">
-          <div class="">
-            <input type="number" style="border: green 1px solid; width:6ex;" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "  min=0 max=1>
+        <td style="border: green 1px solid;" >
+          <div class="inputSmall">
+            <input type="number" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-change="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' "  min=0 max=1>
           </div>
         </td>
         <td class="inputSmall" style="background: #F4F9FD "> <input type="number" style="border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true"> </td>

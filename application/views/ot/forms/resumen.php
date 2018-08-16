@@ -1,5 +1,5 @@
 
-	<section id="resumen" ng-init="calcularSubtotales()">
+	<section id="resumen">
 		<div ng-repeat="mytr in ot.tareas">
 			<!--<button type="button" class="" ng-click="delete_tarea('<?= site_url('OT/delete_tarea') ?>' ,tr)">Borrar</button>-->
 			<h5> {{mytr.nombre_tarea}} </h5>
