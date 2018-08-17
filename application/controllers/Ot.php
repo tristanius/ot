@@ -731,6 +731,18 @@ class Ot extends CI_Controller {
 		}
 		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT ) );
 	}
+
+	public function avanceOT($idOT)
+	{
+		$this->load->model(array('ot_db'=>'ot'));
+		$this->load->helper('xlsxwriter');
+		$this->load->helper('download');
+
+		$rows = $this->ot->avanceOT($idOT);
+		xlsx($rows->result_array(), $rows->list_fields(), './downloads/informeAvanceOT.xlsx', 'AvanceOT');
+		//genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
+		force_download('./downloads/informeAvanceOT.xlsx',NULL);
+	}
 	# ===============================================================================
 	// Informes de PYCO en excel
 	public function getInformes($value='')

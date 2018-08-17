@@ -290,8 +290,6 @@ class Ot_db extends CI_Model {
 		$this->db->from('item_tarea_ot AS itt');
 	}
 
-	//
-
 	#==================================================================================================
 
 	# resumen por OT de items
@@ -331,49 +329,6 @@ class Ot_db extends CI_Model {
 			->where('OT.idOT',$idOT)
 			->group_by('itf.iditemf')
 			->order_by('itf.codigo','ASC')
-			->get();
-	}
-
-	public function informeCargues($value='')
-	{
-		$this->load->database('ot');
-		return $this->db->select('
-				OT.nombre_ot,
-				OT.base_idbase,
-				OT.estado_doc As  estado,
-				(
-				  SELECT SUM(itt.cantidad)
-				  FROM item_tarea_ot AS itt
-				  JOIN tarea_ot AS tr ON itt.tarea_ot_idtarea_ot = tr.idtarea_ot
-				  JOIN itemf AS itf ON itf.iditemf = itt.itemf_iditemf
-				  WHERE tr.OT_idOT = OT.idOT
-				  AND itf.tipo = 2
-				) AS  personal_planeado,
-				(
-					SELECT COUNT(rot.idrecurso_ot)
-					FROM recurso_ot AS rot
-					JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
-					JOIN persona AS p ON p.identificacion = r.persona_identificacion
-					WHERE rot.OT_idOT = OT.idOT
-				) AS personal_cargado,
-				(
-					SELECT SUM(itt.cantidad)
-					FROM item_tarea_ot AS itt
-					JOIN tarea_ot AS tr ON itt.tarea_ot_idtarea_ot = tr.idtarea_ot
-					JOIN itemf AS itf ON itf.iditemf = itt.itemf_iditemf
-					WHERE tr.OT_idOT = OT.idOT
-					AND itf.tipo = 3
-				) As equipo_planeado,
-				(
-					SELECT COUNT(rot.idrecurso_ot)
-					FROM recurso_ot AS rot
-					JOIN recurso AS r ON r.idrecurso = rot.recurso_idrecurso
-					JOIN equipo AS e ON e.idequipo = r.equipo_idequipo
-					WHERE rot.OT_idOT = OT.idOT
-				) AS equipo_cargado
-			')
-			->from('OT')
-			->group_by('OT.idOT')
 			->get();
 	}
 
@@ -463,6 +418,11 @@ class Ot_db extends CI_Model {
 		$this->db->order_by('itf.codigo', 'ASC');
 		return $this->db->get();
 	}
+
+	public function avanceOT($idOT=NULL)
+	{
+		$this->load->database('ot');
+	}
 	// Mejora en el resumen
 	# =================================================================================
 	public function init_transact()
@@ -530,7 +490,7 @@ class Ot_db extends CI_Model {
 		return $this->db->from('OT')->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
 			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
 			->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf')
-			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')			
+			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
 			->join('tipo_itemc AS tipo', 'tipo.idtipo_itemc = itc.idtipo_itemc')
 			->join('tarifa AS tarf', 'tarf.itemf_iditemf = itf.iditemf')
 			->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tarf.idvigencia_tarifas')

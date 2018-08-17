@@ -6,8 +6,8 @@
         <th>#</th>
         <th style="background: #F4F9FD ">Fact.</th>
         <!--<th style="max-width:6ex;">Sector</th>-->
-        <th>item <a href="" ng-click="myOrderBy_sub = 'itemc_item'" ng-disabled="myOrderBy_sub == 'itemc_item'" data-icon="&#xe029;"></a></th>
-        <th>Descripcion <a href="" ng-click="myOrderBy_sub = 'itemc_item'" ng-disabled="myOrderBy_sub == 'itemc_item'" data-icon="&#xe029;"></a></th>
+        <th>item <a href="" ng-click="myOrderBy_sub = 'itemc_item'" ng-show="myOrderBy_sub == 'itemc_item'" data-icon="&#xe029;"></a></th>
+        <th>Descripcion <a href="" ng-click="myOrderBy_sub = 'itemc_item'" ng-show="myOrderBy_sub == 'itemc_item'" data-icon="&#xe029;"></a></th>
         <th>UND</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Ejecc.</th>
