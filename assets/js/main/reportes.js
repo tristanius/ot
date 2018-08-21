@@ -194,18 +194,19 @@ var reportes = function($scope, $http, $timeout) {
     });
     return dato;
   }
+
   $scope.initItemsPlaneados = function( lista ){
     $scope.items_planeados = lista;
   }
+
   $scope.viewAsociarItem = function(obj, tag){
     $scope.asociableItem = obj;
-    $scope.showRecursosReporte(tag);
+    $(tag).show();
   }
   $scope.asociarItem = function(it, tag){
     $scope.asociableItem.item_asociado = it.itemc_item;
-    $scope.closeRecursoReporte(tag);
+    $(tag).hide();
   }
-
   // Agregar el personal seleccionado al reporte
   $scope.agregarPersonal = function(ambito){
     angular.forEach(ambito.personalOT, function(val, key){
@@ -1212,14 +1213,6 @@ var condensado_rd = function($scope, $http, $timeout){
       },
       function(resp){ console.log(resp.data); }
     );
-  }
-
-  $scope.exportar_tabla = function(tag){
-    if($scope.tabla){
-      $scope.tabla.reset();
-    }
-    $scope.tabla = $(tag).tableExport();
-    $scope.tabla.prototype.charset = "charset=utf-8";
   }
 
   $scope.validar_cantidad_frente = function(prop, search, lista, item){

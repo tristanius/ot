@@ -31,8 +31,8 @@
 						{{ ( act.facturable?(act.cantidad * act.duracion)*act.tarifa: 0 ) | currency:'$ ':0  }}
 					</td>
 					<td>
-						<select ng-model="act.idfrente_ot" 
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot" ng-disabled="false">	
+						<select ng-model="act.idfrente_ot"
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot" ng-disabled="true">	
 						</select>
 					</td>
 					<td>{{ act.fecha_agregado }}</td>
@@ -57,8 +57,8 @@
 						{{ ( per.facturable? (per.cantidad * per.duracion)*per.tarifa :0 ) | currency:'$ ':0  }}
 					</td>
 					<td>
-						<select ng-model="per.idfrente_ot" 
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot" ng-disabled="false">	
+						<select ng-model="per.idfrente_ot"
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot" ng-disabled="true">	
 						</select>
 					</td>
 					<td>{{ per.fecha_agregado }}</td>
@@ -83,8 +83,8 @@
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$ ':0 }}
 					</td>
 					<td>
-						<select ng-model="eq.idfrente_ot" 
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="false">	
+						<select ng-model="eq.idfrente_ot"
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
@@ -110,8 +110,8 @@
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$ ':0 }}
 					</td>
 					<td>
-						<select ng-model="eq.idfrente_ot" 
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="false">	
+						<select ng-model="eq.idfrente_ot"
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
@@ -137,8 +137,8 @@
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$ ':0 }}
 					</td>
 					<td>
-						<select ng-model="eq.idfrente_ot" 
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="false">	
+						<select ng-model="eq.idfrente_ot"
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
@@ -163,8 +163,8 @@
 						{{ ( eq.facturable?(eq.cantidad * eq.duracion)*eq.tarifa:0 ) | currency:'$ ':0 }}
 					</td>
 					<td>
-						<select ng-model="eq.idfrente_ot" 
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="false">	
+						<select ng-model="eq.idfrente_ot"
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>

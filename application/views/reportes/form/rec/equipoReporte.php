@@ -16,7 +16,7 @@
         <th></th>
         <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
-        <th colspan="3" class="yellow lighten-4">Combustible</th>
+        <th colspan="3" class="orange lighten-5">Combustible</th>
         <th></th>
       </tr>
       <tr class="background:#EEE; color:#EEE;" ng-init="myOrderBy_eq = 'itemc_item'">
@@ -31,16 +31,16 @@
         <th>Operador</th>
         <th>C.O.</th>
 
-        <th>Cant.</th>
+        <th class="yellow lighten-4">Cant.</th>
         <th>UND</th>
         <th>Inicial</th>
         <th>Final</th>
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
-        <th class="yellow lighten-4"> <small>Cant.</small> </th>
-        <th class="yellow lighten-4"> <small>Valor</small> </th>
-        <th class="yellow lighten-4"> <small>Und</small> </th>
+        <th> <small>Cant.</small> </th>
+        <th> <small>Valor</small> </th>
+        <th> <small>Und</small> </th>
         <th data-icon="*"></th>
       </tr>
     </thead>
@@ -57,7 +57,7 @@
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.descripcion_"> </td>
         <td> <input style="width: 13ex" type="text" ng-model="equipoFilter.nombre_operador"> </td>
         <td></td>
-        <td></td>
+        <td class="yellow lighten-4"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -68,7 +68,7 @@
             <input type="hidden" ng-init="equipoFilter.idfrente_ot = myfrente" disabled="disabled">
           <?php endif; ?>
         </td>
-        <td colspan="3" class="yellow lighten-4"></td>
+        <td colspan="3" class="orange lighten-5"></td>
         <td data-icon="*"></td>
       </tr>
 
@@ -102,7 +102,7 @@
         <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="noMaterialStyles"> <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:9ex;"> </td>
 
-        <td class="inputSmall">
+        <td class="inputSmall" class="yellow lighten-4">
           <input type="number" ng-model="eq.cantidad"  ng-init="eq.cantidad = parseNumb(eq.cantidad)"  ng-change="eq.cantidad = parseNumb(eq.cantidad)" step=any min=0  ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
         <td class="inputSmall"> <input type="text" ng-model="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
@@ -144,7 +144,7 @@
         <th>OPER.</th>
         <th>DISP.</th>
         <th>VAR.</th>
-        <th colspan="3" class="yellow lighten-4">Combustible</th>
+        <th colspan="3" class="orange lighten-5">Combustible</th>
         <th data-icon="*"></th>
       </tr>
     </tbody>

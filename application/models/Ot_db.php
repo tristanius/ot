@@ -293,6 +293,7 @@ class Ot_db extends CI_Model {
 	#==================================================================================================
 
 	# resumen por OT de items
+	# Donde se usa?
 	public function getResumenCantItems($idOT)
 	{
 		$this->load->database('ot');
@@ -332,6 +333,7 @@ class Ot_db extends CI_Model {
 			->get();
 	}
 
+	# Donde se usa?
 	public function resumenOT($idOt='', $frentes=NULL)
 	{
 		$this->load->database('ot');
@@ -419,9 +421,57 @@ class Ot_db extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function avanceOT($idOT=NULL)
+	public function avanceOT($idOT, $frentes = NULL)
 	{
 		$this->load->database('ot');
+		$select = 'OT.nombre_ot, itf.codigo, itf.descripcion, CONCAT(ft.nombre, " - ", ft.ubicacion) as frente, ';
+		$this->db->from('OT')
+					->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
+					->join('item_tarea_ot AS itt','itt.tarea_ot_idtarea_ot = tr.idtarea_ot ','LEFT')
+					->join('itemf AS itf','itf.iditemf = itt.itemf_iditemf','LEFT')
+					->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT','LEFT')
+					->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario AND rrd.itemf_iditemf = itf.iditemf','LEFT')
+					->where('OT.idOT',$idOT)
+					->group_by('itf.codigo');
+		if(isset($frentes)){
+			$select .= 'IFNULL(( SELECT SUM(itt2.cantidad_planeada)
+				FROM item_tarea_ot AS itt2
+				JOIN tarea_ot AS tr2 ON tr2.idtarea_ot = itt2.tarea_ot_idtarea_ot
+				JOIN OT AS OT2 ON OT2.idOT = tr2.OT_idOT
+				WHERE OT2.idOT = OT.idOT
+				AND itt2.idfrente_ot = ft.idfrente_ot
+				AND itt2.itemf_iditemf = itf.iditemf
+				), 0) AS planeado_frente, ';
+
+			$select .= 'IFNULL(( SELECT SUM(rrd2.cantidad)
+				FROM recurso_reporte_diario AS rrd2
+				JOIN reporte_diario AS rd2 ON rd2.idreporte_diario = rrd2.idreporte_diario
+				JOIN OT AS OT2 ON OT2.idOT = rd2.OT_idOT
+				WHERE OT2.idOT = OT.idOT
+				AND rrd2.idfrente_ot = ft.idfrente_ot
+				AND rrd2.itemf_iditemf = itf.iditemf
+				), 0)  AS ejecutado ';
+			$this->db->join('frente_ot AS ft','ft.idfrente_ot = itt.idfrente_ot OR ft.idfrente_ot = rrd.idfrente_ot','LEFT')
+			$this->db->group_by('ft.idfrente_ot');
+		}else {
+			$select .= 'IFNULL(( SELECT SUM(itt2.cantidad_planeada)
+				FROM item_tarea_ot AS itt2
+				JOIN tarea_ot AS tr2 ON tr2.idtarea_ot = itt2.tarea_ot_idtarea_ot
+				JOIN OT AS OT2 ON OT2.idOT = tr2.OT_idOT
+				WHERE OT2.idOT = OT.idOT
+				AND itt2.itemf_iditemf = itf.iditemf
+				), 0) AS planeado_frente, ';
+
+			$select .= 'IFNULL(( SELECT SUM(rrd2.cantidad)
+				FROM recurso_reporte_diario AS rrd2
+				JOIN reporte_diario AS rd2 ON rd2.idreporte_diario = rrd2.idreporte_diario
+				JOIN OT AS OT2 ON OT2.idOT = rd2.OT_idOT
+				WHERE OT2.idOT = OT.idOT
+				AND rrd2.itemf_iditemf = itf.iditemf
+				), 0)  AS ejecutado ';
+		}
+		$this->db->select($select);
+		return $this->db->get();
 	}
 	// Mejora en el resumen
 	# =================================================================================

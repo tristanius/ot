@@ -50,7 +50,7 @@
       <div class="collapsible-body">
         <ul class="blue lighten-5">
           <li ng-if"validPriv(37) || validPriv(59)">
-            <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('ot/listOT') ?>', $event, 'Gestion de OTs'); closeMenu()">2.2. Planeacion de O.T.</a>
+            <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('ot/listOT') ?>', $event, 'Gestion de OTs'); closeMenu()">2.2. Manejo de O.T.'s</a>
           </li>
           <!--<li> <a href="#" class="sidenav-close font12">2.2. Resumen de O.T. </a> </li>-->
         </ul>

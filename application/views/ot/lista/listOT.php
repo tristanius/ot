@@ -1,7 +1,8 @@
 <div ng-controller="OT">
 
   <section class="list" ng-controller="listaOT">
-    <h4>Gestion de ordenes de trabajo:</h4>
+    <h5>Manejo de ordenes de trabajo:</h5>
+    <h6>[Programacion de cantidades y duraciones]</h6>
 
     <div class="row botonera" ng-if="validPriv(37)">
       <button type="button" class="btn btn-small blue" data-icon="&#xe052;" ng-click="getAjaxWindowLocal('<?= site_url('ot/addNew') ?>', '#ventanaOT', 'Gestion de OTs');"> Crear O.T.</button>

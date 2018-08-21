@@ -427,15 +427,13 @@ class Reporte_db extends CI_Model{
       rd.fecha_reporte,
       rd.festivo,
       itf.codigo,
-      IFNULL(rot.tipo, "actividad" ) AS tipo_recurso,
+      tip.grupo_mayor AS tipo_recurso,
       itf.itemc_item AS item,
       itf.descripcion,
-      rrd.tipo_instalacion,
       rrd.facturable,
       rrd.print,
       rrd.cantidad,
       getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) as cantidad_final,
-      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion,
       rrd.hora_inicio,
       rrd.hora_fin,
       rrd.hora_inicio2,
@@ -463,9 +461,10 @@ class Reporte_db extends CI_Model{
       if( e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion ) AS equipo,
       rot.propietario_observacion AS asignado_a,
       IF( rot.propietario_recurso, "SI", "NO" ) AS propio,
-      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
-      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte,
-      avance.a_cargo, avance.calidad
+      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion,
+      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud,
+      avance.ancho, avance.alto,  avance.cant_elementos, avance.cant_varillas,
+      avance.diametro_acero, avance.peso_und, avance.a_cargo, avance.calidad
       '
     );
     $this->db->from('reporte_diario AS rd');
@@ -477,6 +476,8 @@ class Reporte_db extends CI_Model{
     $this->db->join('persona AS p', 'p.identificacion = r.persona_identificacion','LEFT');
     $this->db->join('equipo AS e', 'e.idequipo = r.equipo_idequipo','LEFT');
     $this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+    $this->db->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc');
+    $this->db->join('tipo_itemc AS tip', 'tip.idtipo_itemc = itc.idtipo_itemc', 'LEFT');
     $this->db->join('frente_ot AS frente', 'frente.idfrente_ot = rrd.idfrente_ot', 'LEFT');
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT', $idOT);

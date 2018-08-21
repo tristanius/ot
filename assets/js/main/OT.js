@@ -670,7 +670,7 @@ var OT = function($scope, $http, $timeout){
 				if(resp.data.success == 'success'){
 					frente = resp.data.frente;
 					$scope.$parent.set_el_timeout(lista, frente);
-					frente = {};
+					frente = {frente.nombre = 'frente '+ (lista.length+1 )};
 					console.log(resp.data);
 				}else{
 					alert("Error al recibir respuesta del servidor.");

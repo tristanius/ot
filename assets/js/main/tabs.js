@@ -355,6 +355,16 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
     } );
   }
 
+  $scope.exportar_tabla = function(tag){
+    if($scope.tabla){
+      $scope.tabla.reset();
+    }
+    $scope.tabla = $(tag).tableExport({
+      formats: ['xlsx']
+    });
+    $scope.tabla.prototype.charset = "charset=utf-8";
+  }
+
   $scope.initValue = function(){
 
   }

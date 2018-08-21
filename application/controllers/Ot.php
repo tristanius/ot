@@ -737,8 +737,11 @@ class Ot extends CI_Controller {
 		$this->load->model(array('ot_db'=>'ot'));
 		$this->load->helper('xlsxwriter');
 		$this->load->helper('download');
-
-		$rows = $this->ot->avanceOT($idOT);
+		if($frentes->num_rows() > 0){
+			$rows = $this->ot->avanceOT($idOT, TRUE);
+		}else{
+			$rows = $this->ot->avanceOT($idOT);
+		}
 		xlsx($rows->result_array(), $rows->list_fields(), './downloads/informeAvanceOT.xlsx', 'AvanceOT');
 		//genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
 		force_download('./downloads/informeAvanceOT.xlsx',NULL);
