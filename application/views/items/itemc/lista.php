@@ -31,6 +31,7 @@
             <option value="3">equipo</option>
             <option value="material">Material</option>
             <option value="otros">Otros</option>
+            <option value="subcontrato">Subcontrato</option>
             <option value="">Sin selección</option>
           </select>
         </th>

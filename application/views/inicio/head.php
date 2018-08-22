@@ -12,9 +12,9 @@
     <!-- Estilos propios -->
     <link rel="stylesheet" href="<?= base_url('assets/css/principal.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/menu_opciones.css') ?>?v=<?php echo rand(); ?>" />
-    <link rel="stylesheet" href="<?= base_url('assets/css/tablas.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/calendario.css') ?>?v=<?php echo rand(); ?>" />
     <link rel="stylesheet" href="<?= base_url('assets/css/forms.css') ?>?v=<?php echo rand(); ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/css/tablas.css') ?>?v=<?php echo rand(); ?>" />
 
     <!-- librerias JS -->
     <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>

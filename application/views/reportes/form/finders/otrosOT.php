@@ -12,7 +12,6 @@
         <thead>
           <tr>
             <th>No. </th>
-            <th>Referencia</th>
             <th>item</th>
             <th>Referencia</th>
             <th>Descripción</th>
@@ -36,7 +35,6 @@
                 <big ng-if="fil_otros.add == true" data-icon="&#xe04c;"></big>
               </button>
             </tdequipoByOT>
-            <td><input type="text" ng-model="fil_otros.referencia" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_otros.itemc_item" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_otros.descripcion" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_otros.descripcion_recurso" placeholder="filtrar"></td>
@@ -45,7 +43,6 @@
           </tr>
           <tr ng-repeat="otr in otrosOT | filter: fil_otros | orderBy: 'itemc_item' " style="{{ otr.propietario_recurso==true?'':'background: #ffc46d' }}">
             <td class="noMaterialStyles"> <input type="checkbox" ng-model="otr.add" ng-click="setSelecteState(otr.add)"> </td>
-            <td ng-bind="otr.referencia"></td>
             <td ng-bind="otr.itemc_item"></td>
             <td ng-bind="otr.descripcion"></td>
             <td ng-bind="otr.descripcion_recurso"></td>

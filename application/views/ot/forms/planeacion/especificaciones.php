@@ -11,6 +11,16 @@
       </label>
     </div>
 
+    <div class="">
+      <div class="red lighten-4">
+        <span ng-if="tr.fecha_fin < tr.fecha_inicio">Las fecha no tiene un orden cronologico correcto.</span>
+      </div>
+
+      <div ng-repeat="t in ot.tareas" class="deep-orange darker-1">
+        <span ng-if="(t.nombre_tarea != tr.nombre_tarea) && (tr.fecha_inicio >= t.fecha_inicio && tr.fecha_inicio < t.fecha_fin)">Esta fecha esta sobreescribiendo a <b ng-bind="t.nombre_tarea"></b> </span>
+      </div>
+    </div>
+
     <div class="noMaterialStyles regularForm" ng-if="validPriv(49)" style="display: inline-block; margin:1ex;">
       <label for="" style="color:#0D47A1"> <b>Editar tarea:</b> </label>
       <input type="checkbox" ng-model="tr.editable">

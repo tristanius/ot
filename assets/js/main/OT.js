@@ -10,8 +10,15 @@ var OT = function($scope, $http, $timeout){
 		$scope.$parent.getAjaxWindowLocal(lnk, ventana, titulo);
 	}
 
+	$scope.enlaceResumenOT = '';
 	$scope.getResumenGeneral = function(link){
-		$.ajax({
+		$timeout(function(){
+			$scope.enlaceResumenOT = '';
+		})
+		$timeout(function(){
+			$scope.enlaceResumenOT = link+'/'+Math.floor((Math.random() * 100) + 1);
+		});
+		/*$.ajax({
 			url: link,
 			method:'post',
 			success: function(data, status, xhr){
@@ -22,7 +29,7 @@ var OT = function($scope, $http, $timeout){
 				console.log(link);
 				alert('Ha ocurrido un error')
 			}
-		});
+		});*/
 	}
 
 	$scope.getDataITems = function(url, ambito){
@@ -670,7 +677,7 @@ var OT = function($scope, $http, $timeout){
 				if(resp.data.success == 'success'){
 					frente = resp.data.frente;
 					$scope.$parent.set_el_timeout(lista, frente);
-					frente = {frente.nombre = 'frente '+ (lista.length+1 )};
+					frente = { nombre : 'frente '+( lista.length + 1 )};
 					console.log(resp.data);
 				}else{
 					alert("Error al recibir respuesta del servidor.");

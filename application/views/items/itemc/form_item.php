@@ -48,6 +48,7 @@
               <option value="LT">Litro (LT)</option>
               <option value="rollo">Rollo</option>
               <option value="kit">Kit</option>
+              <option value="GB">GB (Global)</option>
             </select>
             <p></p>
           </div>
@@ -59,6 +60,7 @@
               <option value="2">Personal</option>
               <option value="3">Equipo</option>
               <option value="material">Material</option>
+              <option value="subcontrato">Subcontrato</option>
               <option value="otros">Otros</option>
             </select>
             <p></p>

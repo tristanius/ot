@@ -57,54 +57,54 @@ class Reporte_db extends CI_Model{
   }
 
   # Insertar un recurso a un reporte con unas cantidades
-   public function addRecursoRepo($recurso, $idrepo)
-   {
-     $log = $this->session->userdata('idusuario').' '.$this->session->userdata('nombre_usuario');
-     $data = array(
-       'idreporte_diario' => $idrepo,
-       'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
-       'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
-       'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
-       'print'=> isset($recurso->print)?$recurso->print:TRUE,
+  public function addRecursoRepo($recurso, $idrepo)
+  {
+    $log = $this->session->userdata('idusuario').' '.$this->session->userdata('nombre_usuario');
+    $data = array(
+      'idreporte_diario' => $idrepo,
+      'cantidad'=> isset($recurso->cantidad)? $recurso->cantidad: '0',
+      'planeado'=> isset($recurso->planeado)?$recurso->planeado:'',
+      'facturable'=> isset($recurso->facturable)?$recurso->facturable:TRUE,
+      'print'=> isset($recurso->print)?$recurso->print:TRUE,
 
-       'hora_inicio'=> isset($recurso->hora_inicio)? $recurso->hora_inicio: '',
-       'hora_fin'=> isset($recurso->hora_fin)? $recurso->hora_fin: '',
-       'hora_inicio2'=> isset($recurso->hora_inicio2)? $recurso->hora_inicio2: '',
-       'hora_fin2'=> isset($recurso->hora_fin2)? $recurso->hora_fin2: '',
+      'hora_inicio'=> isset($recurso->hora_inicio)? $recurso->hora_inicio: '',
+      'hora_fin'=> isset($recurso->hora_fin)? $recurso->hora_fin: '',
+      'hora_inicio2'=> isset($recurso->hora_inicio2)? $recurso->hora_inicio2: '',
+      'hora_fin2'=> isset($recurso->hora_fin2)? $recurso->hora_fin2: '',
 
-       'horas_extra_dia'=> isset($recurso->horas_extra_dia)? $recurso->horas_extra_dia: '',
-       'horas_extra_noc'=> isset($recurso->horas_extra_noc)? $recurso->horas_extra_noc: '',
-       'horas_recargo'=> isset($recurso->horas_recargo)? $recurso->horas_recargo: '',
-       'horas_ordinarias'=> isset($recurso->horas_ordinarias)? $recurso->horas_ordinarias: '',
+      'horas_extra_dia'=> isset($recurso->horas_extra_dia)? $recurso->horas_extra_dia: '',
+      'horas_extra_noc'=> isset($recurso->horas_extra_noc)? $recurso->horas_extra_noc: '',
+      'horas_recargo'=> isset($recurso->horas_recargo)? $recurso->horas_recargo: '',
+      'horas_ordinarias'=> isset($recurso->horas_ordinarias)? $recurso->horas_ordinarias: '',
 
-       'racion'=> isset($recurso->racion)? $recurso->racion: '',
-       'hr_almuerzo'=> isset($recurso->hr_almuerzo)? $recurso->hr_almuerzo: '',
-       'nombre_operador'=> isset($recurso->nombre_operador)? $recurso->nombre_operador: '',
-       'horas_operacion'=> isset($recurso->horas_operacion)? $recurso->horas_operacion: '',
-       'horas_disponible'=> isset($recurso->horas_disponible)? $recurso->horas_disponible: '',
-       'varado'=> isset($recurso->varado)? $recurso->varado: '',
-       'horometro_ini'=> isset($recurso->horometro_ini)? $recurso->horometro_ini: '',
-       'horometro_fin'=> isset($recurso->horometro_fin)? $recurso->horometro_fin: '',
-       'idrecurso_ot'=>  isset($recurso->idrecurso_ot)?$recurso->idrecurso_ot:NULL,
-       'itemf_iditemf'=> isset($recurso->itemf_iditemf)?$recurso->itemf_iditemf:NULL,
-       'itemf_codigo'=> isset($recurso->codigo)?$recurso->codigo:NULL,
-       'gasto_viaje_pr'=> isset($recurso->gasto_viaje_pr)?$recurso->gasto_viaje_pr:NULL,
-       'gasto_viaje_lugar'=> isset($recurso->gasto_viaje_lugar)?$recurso->gasto_viaje_lugar:NULL,
-       'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
-       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
-       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
-       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
-       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+      'racion'=> isset($recurso->racion)? $recurso->racion: '',
+      'hr_almuerzo'=> isset($recurso->hr_almuerzo)? $recurso->hr_almuerzo: '',
+      'nombre_operador'=> isset($recurso->nombre_operador)? $recurso->nombre_operador: '',
+      'horas_operacion'=> isset($recurso->horas_operacion)? $recurso->horas_operacion: '',
+      'horas_disponible'=> isset($recurso->horas_disponible)? $recurso->horas_disponible: '',
+      'varado'=> isset($recurso->varado)? $recurso->varado: '',
+      'horometro_ini'=> isset($recurso->horometro_ini)? $recurso->horometro_ini: '',
+      'horometro_fin'=> isset($recurso->horometro_fin)? $recurso->horometro_fin: '',
+      'idrecurso_ot'=>  isset($recurso->idrecurso_ot)?$recurso->idrecurso_ot:NULL,
+      'itemf_iditemf'=> isset($recurso->itemf_iditemf)?$recurso->itemf_iditemf:NULL,
+      'itemf_codigo'=> isset($recurso->codigo)?$recurso->codigo:NULL,
+      'gasto_viaje_pr'=> isset($recurso->gasto_viaje_pr)?$recurso->gasto_viaje_pr:NULL,
+      'gasto_viaje_lugar'=> isset($recurso->gasto_viaje_lugar)?$recurso->gasto_viaje_lugar:NULL,
+      'idestado_labor'=>isset($recurso->idestado_labor)?$recurso->idestado_labor:NULL,
+      'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
+      'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
+      'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
+      'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
 
-       'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
-       'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
-       'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
+      'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
+      'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
+      'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
 
-       'last_log'=>$log." - ".date('Y-m-d H:i:s')
-     );
-     $this->db->insert('recurso_reporte_diario', $data);
-     return $this->db->insert_id();
-   }
+      'last_log'=>$log." - ".date('Y-m-d H:i:s')
+    );
+    $this->db->insert('recurso_reporte_diario', $data);
+    return $this->db->insert_id();
+  }
   #Actualiar un recurso reporte
   public function editRecursoRepo($recurso, $idrepo)
   {

@@ -182,8 +182,7 @@
 
 				<div class="col s6 m2 l2" style="border:1px solid #CCC; padding:3px;">
 					<h6>Resumen:</h6>
-					<a href="<?= site_url('ot/avanceOT/'.$idot) ?>">Avance</a>
-					<button class="btn blue darken-4 orange mini-btn2" ng-click="getResumenGeneral('<?= site_url('ot/resumenOT/'.$idot) ?>')" ng-disabled="!ot.idcontrato">resumen</button>
+					<button class="btn blue darken-4 orange mini-btn2" ng-click="getResumenGeneral('<?= site_url('ot/resumenOT/'.$idot) ?>'); toggleContent('#resumenItems', 'nodisplay', '.mypanel > div')" ng-disabled="!ot.idcontrato">resumen</button>
 				</div>
 			</section>
 		</div>
@@ -220,6 +219,9 @@
 			</div>
 
 			<div id="resumenItems" class="nodisplay">
+				<div class=""  ng-include="enlaceResumenOT">
+
+				</div>
 			</div>
 
 		</div>
