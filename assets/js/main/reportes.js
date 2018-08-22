@@ -667,10 +667,13 @@ var addReporte = function($scope, $http, $timeout) {
   // Guardar reporte
   $scope.guardarRD = function(url){
     var recursos = $scope.rd.recursos;
+    if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 && recursos.subcontratos.length == 0 &&  ){
+      if( !confirm('No hay recurso agregados, ¿desea continuar con el guardado?') ){
+        return;
+      }
+    }
     if($scope.isOnPeticion){
       alert('Ya se esta realizando un proceso de guardado');
-    }else if( recursos.personal.length == 0 && recursos.equipos.length == 0 && recursos.actividades.length == 0 && recursos.material.length == 0 && recursos.otros.length == 0 && recursos.subcontratos.length == 0 ){
-      alert('No hay recurso agregados');
     }else{
       $scope.isOnPeticion = true;
         $http.post(
