@@ -314,8 +314,17 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
     console.log(msj)
   }
 
+  $scope.isJSON = function(str) {
+      try {
+          JSON.parse(str);
+      } catch (e) {
+          return false;
+      }
+      return true;
+  }
+
   $scope.parseJSON = function(string){
-    return JSON.parse(string);
+    return $scope.isJSON(string)?JSON.parse(string):string;
   }
 
   // inserta un elemento a una lista con la funcion timeout para refrescar la pagina

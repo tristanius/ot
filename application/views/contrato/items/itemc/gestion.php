@@ -54,10 +54,10 @@
     </fieldset>
 
     <?php
-      $this->load->view('items/itemc/lista');
+      $this->load->view('contrato/items/itemc/lista');
     ?>
   </div>
 
-  <?php  $this->load->view('items/itemc/form_item'); ?>
-  <?php  $this->load->view('items/itemc/form_cargue'); ?>
+  <?php  $this->load->view('contrato/items/itemc/form_item'); ?>
+  <?php  $this->load->view('contrato/items/itemc/form_cargue'); ?>
 </section>

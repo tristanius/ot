@@ -21,8 +21,9 @@
       <p></p>
     </div>
 
+    <p class="callout red" ng-if="cargueItems.error"> El cargue no se ha podido finalizar</p>
+
     <div>
-      <p></p>
       <table class="striped">
         <thead class="brown lighten-5">
           <th>Resultado</th>
@@ -32,6 +33,16 @@
           <th>Descripcion interna</th>
           <th>Unidad</th>
         </thead>
+        <tbody>
+          <tr ng-repeat="it in cargueItems.resultados">
+            <td ng-bind="it.resultado"></td>
+            <td ng-bind="it[0]"></td>
+            <td ng-bind="it[1]"></td>
+            <td ng-bind="it[2]"></td>
+            <td ng-bind="it[3]"></td>
+            <td ng-bind="it[4]"></td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
@@ -45,7 +56,7 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-small red" ng-click="closeForm('#formUploadItems')"> Salir</button>
+    <button type="button" class="btn btn-small red" ng-click="closeForm('#formUploadItems'); getItemsByContrato( '<?= site_url('item/get_itemc') ?>', contrato.idcontrato )"> Salir</button>
   </div>
 
 </section>

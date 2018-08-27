@@ -47,7 +47,7 @@
       </tr>
     </thead>
     <tbody ng-init="itemCounter = 0">
-      <tr ng-repeat="i in filtereItems = (items| filter: filtroItems) | filter: filtroItems  | startFrom:currentPage*pageSize | limitTo:pageSize track by $index">
+      <tr ng-repeat="i in filtereItems = (items| filter: filtroItems) | startFrom:currentPage*pageSize | limitTo:pageSize track by $index">
         <td> <a href="#" ng-click="dialog('IDitemc: '+i.iditemc+'- IDitemf: '+i.iditemf)" ng-bind="$index+1"></a> </td>
         <td> <span ng-bind="i.item"></span></td>
         <td ng-bind="i.descripcion"> </td>

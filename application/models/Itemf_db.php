@@ -18,6 +18,7 @@ class Itemf_db extends CI_Model{
       'tipo' => $item->tipo,
       'itemc_iditemc' => $item->iditemc,
       'itemc_item' => $item->item,
+      'incidencia' => $item->incidencia,
       'idusuario' => $this->session->userdata('idusuario')
     );
     $this->db->insert('itemf', $data);
@@ -34,6 +35,7 @@ class Itemf_db extends CI_Model{
       'tipo' => $item->tipo,
       'itemc_iditemc' => $item->iditemc,
       'itemc_item' => $item->item,
+      'incidencia' => $item->incidencia,
       'idusuario' => $this->session->userdata('idusuario')
     );
     return $this->db->update('itemf', $data, 'iditemf = '.$item->iditemf);

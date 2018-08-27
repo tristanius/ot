@@ -3,6 +3,12 @@ var itemc = function($scope, $http, $timeout){
   $scope.items = [];
   $scope.validateItem = false;
 
+  $scope.cargueItems = {
+    status: false,
+    error:false,
+    resultados: []
+  }
+
   $scope.ventanaModal = [];
   $scope.pageSize = 20;
 
@@ -52,7 +58,6 @@ var itemc = function($scope, $http, $timeout){
   $scope.validacionItem = function(iditc){
     $http.post($scope.$parent.site_url+'/item/exist', {iditemc: iditc}).then(
       function(resp){
-
         console.log(resp.data);
       },
       function(resp){
@@ -82,26 +87,10 @@ var itemc = function($scope, $http, $timeout){
     }
   }
 
-
-  $scope.itemCounter = 0;
-  $scope.validCell = function(total){
-    $scope.itemCounter++;
-    if($scope.itemCounter==1){
-      if (total == 1) {
-        $scope.itemCounter = 0;
-      }
-      return true;
-    }
-    if ($scope.itemCounter >= total) {
-      $scope.itemCounter = 0;
-    }
-    return false;
-  }
-
-
   // ---------------------------- UPLOAD FILE -----------------------------------
   $scope.isSelectedFile = false;
   $scope.spinner = false;
+
   $scope.initAdjunto = function(ruta) {
     console.log(ruta)
     // Se guarda en una variable el objeto retornado del inicio de la funcion de carga
@@ -123,11 +112,19 @@ var itemc = function($scope, $http, $timeout){
         return true;
       },
       onSuccess: function(file, data, xhr){
-        console.log(data);
-        //data = JSON.parse(data);
         $timeout(function(){
-
-        });
+          var resp = $scope.parseJSON(data);
+          console.log(resp);
+          if(resp.status == true){
+            $scope.cargueItems = resp;
+            $scope.cargueItems.error = false;
+          }else if (resp.status == false) {
+            $scope.cargueItems = resp;
+            $scope.cargueItems.error = true;
+          }else{
+            alert('No se ha completado el cargue');
+          }
+        })
         $scope.isSelectedFile = false;
         $scope.spinner = false;
       },

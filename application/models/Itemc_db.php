@@ -17,6 +17,7 @@ class Itemc_db extends CI_Model{
       'tipo' => $item->tipo,
       'unidad' => $item->unidad,
       'idtipo_itemc' => $item->idtipo_itemc,
+      'und_minima' => $item->und_minima,
       'basedisp' => $item->basedisp,
       'hrdisp' => $item->hrdisp,
       'idusuario' => $this->session->userdata('idusuario'),
@@ -34,6 +35,7 @@ class Itemc_db extends CI_Model{
       'tipo' => $item->tipo,
       'unidad' => $item->unidad,
       'idtipo_itemc' => $item->idtipo_itemc,
+      'und_minima' => $item->und_minima,
       'basedisp' => $item->basedisp,
       'hrdisp' => $item->hrdisp,
       'idusuario' => $this->session->userdata('idusuario')
@@ -109,6 +111,12 @@ class Itemc_db extends CI_Model{
   {
     $this->load->database('ot');
     $this->db->trans_rollback();
+  }
+
+  public function commit()
+  {
+    $this->load->database('ot');
+    $this->db->trans_commit();
   }
 
 }

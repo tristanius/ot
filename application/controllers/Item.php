@@ -13,7 +13,7 @@ class Item extends CI_Controller {
 	{
 		$this->load->model('itemc_db','item');
 		$tipos_itemc = $this->item->getTiposItemc()->result();
-		$this->load->view('items/itemc/gestion', array('idcontrato'=>$idcontrato, 'tipos_itemc'=>$tipos_itemc));
+		$this->load->view('contrato/items/itemc/gestion', array('idcontrato'=>$idcontrato, 'tipos_itemc'=>$tipos_itemc));
 	}
 
 	# --------------------------------------------------------------------------
@@ -69,51 +69,100 @@ class Item extends CI_Controller {
 	# Importar items
 	public function import()
 	{
-		$this->directorioBase();
-		$path = '/uploads/items/cargue/'.date("Ymd");
+		;
+		$path = $this->directorioBase();
 		$config['upload_path'] = '.'.$path;
     $config['allowed_types'] = 'xlsx';
 		$config['file_name'] = 'cargue.xlsx';
+
+		$idcontrato = $this->input->post('idcontrato');
+
     $ret = new stdClass();
     $this->load->library('upload', $config);
 		if ( ! $this->upload->do_upload('myfile') ) {
       $ret->error = $this->upload->display_errors();
       $ret->status = FALSE;
       echo json_encode($ret);
-    }
-    else {
+    } else {
 			$udata = $this->upload->data();
-			$this->import_data_file('/uploads/items/cargue/'.date("Ymd").'/'.$udata['file_name']);
+			$ret = $this->import_data_file( $path.'/'.$udata['file_name'], $idcontrato );
+			echo json_encode($ret);
 		}
 	}
 
-	private function import_data_file($path)
+	private function import_data_file($path, $idcontrato)
 	{
 		$this->load->helper('xlsx');
 		$reader = getReader();
 		$reader->open(FCPATH.$path);
+
 		$this->load->model( array( 'itemc_db'=>'itc', 'itemf_db'=>'itf' ) );
+		$this->itc->init_transact();
+
+		$resultados = array();
+		$ret = new stdClass();
+		$ret->status =TRUE;
+
 		foreach ($reader->getSheetIterator() as $sheet) {
 			$j=0;
 			foreach ($sheet->getRowIterator() as $row) {
-				$this->import_set_data($row);
-				if($j > 100000)
-			  	break;
+				if( $j > 0 ){
+					$item = $this->getItemSchema($row, $idcontrato);
+					if(isset($item)){
+						$item->iditemc = $this->itc->add($item, $idcontrato); # Agregamos el item de contrato y obtenemos el ID
+						$this->itf->add($item); # Agregamos el item de factutracion interna
+						$row['resultado'] = 'Item OK, por agregar.';
+					}else{
+						$row['resultado'] = 'No se pudo formar la estructura del item.';
+						$ret->status = FALSE;
+					}
+					array_push($resultados, $row);
+				}
+				$j++;
 			}
     }
+		if($this->itc->transac_status() === FALSE || !$ret->status){
+			$this->itc->rollback();
+		}else{
+			$this->itc->commit();
+		}
     $reader->close();
+		$ret->resultados = $resultados;
+		return $ret;
 	}
 
-	private function import_set_data($row)
+	private function getItemSchema($row, $idcontrato)
 	{
-		print_r($row);
+		try {
+			$it = new stdClass();
+			$it->item = $row[0];
+			$it->codigo = $row[1];
+			$it->descripcion = $row[2];
+			$it->descripcion_interna = $row[3];
+			$it->unidad = $row[4];
+			$it->tipo = $row[5];
+			$it->idtipo_itemc = $row[6];
+			$it->basedisp = isset($row[7])?$row[7]:NULL;
+			$it->hrdisp = isset($row[8])?$row[8]:NULL;
+			$it->und_minima = isset($row[9])?$row[9]:NULL;
+			$it->idusuario = $this->session->userdata('idusuario');
+			$it->incidencia = isset($row[10])?$row[10]:NULL;
+			$it->grupo = isset($row[11])?$row[11]:NULL;
+			$it->idcontrato = $idcontrato;
+			return $it;
+		} catch (Exception $e) {
+			return NULL;
+		}
+
 	}
 
 	private function directorioBase()
 	{
 		$this->crear_directorio('./uploads/items');
 		$this->crear_directorio('./uploads/items/cargue');
-		$this->crear_directorio('./uploads/items/cargue/'.date("Ymd"));
+		$path = '/uploads/items/cargue/'.date("Ymd");
+		$this->crear_directorio('.'.$path);
+		return $path;
 	}
 
 	private function crear_directorio($carpeta)
