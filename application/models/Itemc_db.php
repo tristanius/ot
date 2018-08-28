@@ -42,6 +42,19 @@ class Itemc_db extends CI_Model{
     );
     return $this->db->update('itemc', $data, 'iditemc = '.$item->iditemc);
   }
+
+  public function getBy($where=NULL, $select = NULL)
+  {
+    $this->load->database('ot');
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    if (isset($select)) {
+      $this->db->select($select);
+    }
+    return $this->db->from('itemc')->join('contrato AS c', 'c.idcontrato = itemc.idcontrato')->get();
+  }
+
   # Consulta de items por contrato
   public function getByContrato($idcontrato)
   {

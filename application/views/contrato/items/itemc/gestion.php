@@ -50,7 +50,7 @@
 
       <button type="button" data-target="formUploadItems" class="modal-trigger btn btn-small indigo darken-4"> Importar items</button>
 
-      <button type="button" class="btn btn-small green">Exportar (xlsx)</button>
+      <a ng-href="<?= site_url('item/export_by') ?>/{{ contrato.idcontrato }}" class="btn btn-small green" >Exportar (xlsx)</a>
     </fieldset>
 
     <?php

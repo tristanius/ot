@@ -9,11 +9,16 @@ class Vigencia extends CI_Controller{
     //Codeigniter : Write Less Do More
   }
 
-  function index()
-  {
+  function index(){ }
 
+  public function gestion($idcontrato=NULL)
+  {
+    $this->load->view('contrato/vigencias/gestion', array('idcontrato'=>$idcontrato));
   }
 
+
+  # -----------------------------------------------------------------------------------
+  # Get tarifas By Vigencia
   public function get_tarifas($idvigencia=NULL)
   {
     if(isset($idvigencia)){

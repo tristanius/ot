@@ -1,5 +1,5 @@
 <div style="overflow: auto">
-  <table class="mytabla font11 striped">
+  <table id="itemsList" class="mytabla font11 striped" >
     <thead>
       <tr>
         <th class="blue-grey lighten-3" colspan="4">Items de contrato</th>

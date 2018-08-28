@@ -18,24 +18,24 @@
 
     <li ng-if="validGestion('contrato')"> <small class="groupItems">Contrato</small> </li>
     <li ng-if="validGestion('contrato')"> <!-- Revisar -->
-      <div class="collapsible-header">1. Información contratos  &nbsp; <span data-icon="~"></span> </div>
+      <div class="collapsible-header">1.1 Información contratos  &nbsp; <span data-icon="~"></span> </div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="font12" ng-click="clickeableLink('<?= site_url('contrato/gestion') ?>', $event, 'Maestro de contrato'); closeMenu()">1.2. Maestro de contratos</a> </li>
-          <li> <a href="#" class="sidenav-close font12">1.3. Items contratuales</a> </li>
-          <li> <a href="#" class="sidenav-close font12">1.4. Vigencias de contrato</a> </li>
-          <li> <a href="#" class="sidenav-close font12">1.5 Tarifas por vigencia</a> </li>
-          <li> <a href="#" class="sidenav-close font12">1.6. Inf. general contrato</a> </li>
+          <li> <a href="#" ng-click="clickeableLink('<?= site_url('contrato/gestion') ?>', $event, 'Maestro de contrato'); closeMenu()" class="font12">1.1.1. Maestro de contratos</a> </li>
+          <li> <a href="#" ng-click="clickeableLink('<?= site_url('item/gestion') ?>', $event, 'Items de contrato'); closeMenu()" class="font12">1.1.2. Items contratuales</a> </li>
+          <li> <a href="#" ng-click="clickeableLink('<?= site_url('vigencia/gestion') ?>', $event, 'Vigencias Contrato'); closeMenu()" class="font12">1.1.3. Vigencias de tarifas</a> </li>
+          <li> <a href="#" class="sidenav-close font12">1.1.4. Tarifas por vigencia</a> </li>
+          <li> <a href="#" class="sidenav-close font12">1.1.5. Inf. general contrato</a> </li>
         </ul>
       </div>
     </li>
 
     <li ng-if="validGestion('contrato')"> <!-- Revisar -->
-      <div class="collapsible-header">1.1. Centros de operacion &nbsp; <span data-icon="&#xe000;"></span> </div>
+      <div class="collapsible-header">1.2. Centros de operacion &nbsp; <span data-icon="&#xe000;"></span> </div>
       <div class="collapsible-body">
         <ul class="blue lighten-5">
-          <li> <a href="#" class="sidenav-close font12">1.1.1. Maestro de centros operacion</a> </li>
-          <li> <a href="#" class="sidenav-close font12">1.1.2. Relacionar C.O. a contratos </a> </li>
+          <li> <a href="#" class="sidenav-close font12">1.2.1. Maestro de centros operacion</a> </li>
+          <li> <a href="#" class="sidenav-close font12">1.2.2. Relacionar C.O. a contratos </a> </li>
         </ul>
       </div>
     </li>

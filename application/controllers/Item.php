@@ -109,9 +109,7 @@ class Item extends CI_Controller {
 				if( $j > 0 ){
 					$item = $this->getItemSchema($row, $idcontrato);
 					if(isset($item)){
-						$item->iditemc = $this->itc->add($item, $idcontrato); # Agregamos el item de contrato y obtenemos el ID
-						$this->itf->add($item); # Agregamos el item de factutracion interna
-						$row['resultado'] = 'Item OK, por agregar.';
+						$row['resultado'] = $this->addItem(); # Metodo creado para simplificar el codigo
 					}else{
 						$row['resultado'] = 'No se pudo formar la estructura del item.';
 						$ret->status = FALSE;
@@ -140,7 +138,7 @@ class Item extends CI_Controller {
 			$it->descripcion = $row[2];
 			$it->descripcion_interna = $row[3];
 			$it->unidad = $row[4];
-			$it->tipo = $row[5];
+			$it->tipo = isset($row[5])? strtolower($row[5]) :NULL;
 			$it->idtipo_itemc = $row[6];
 			$it->basedisp = isset($row[7])?$row[7]:NULL;
 			$it->hrdisp = isset($row[8])?$row[8]:NULL;
@@ -156,6 +154,17 @@ class Item extends CI_Controller {
 
 	}
 
+	public function addItem($item, $idcontrato)
+	{
+		$tipo = $item->tipo;
+		$items = $this->itc->getBy( array('itemc.item'=>$item->item, 'itemc.idcontrato'=>$idcontrato, 'itemc.tipo'=>$item->tipo) );
+		if ( $items->num_rows() <= 0 ) {
+			$item->iditemc = $this->itc->add($item, $idcontrato); # Agregamos el item de contrato y obtenemos el ID
+			$this->itf->add($item); # Agregamos el item de factutracion interna
+			return 'Item OK, por agregar.';
+		}
+		return 'Item y tipo ya existentes en el contrato.';
+	}
 	private function directorioBase()
 	{
 		$this->crear_directorio('./uploads/items');
@@ -169,6 +178,22 @@ class Item extends CI_Controller {
   {
     if (!file_exists($carpeta)) { mkdir($carpeta, 0777, true);  }
   }
+
+	# Exportar items por contrato
+	public function export_by($idcontrato)
+	{
+		if( $this->sesion_iniciada() ){
+			$this->load->helper('xlsxwriter');
+	    $this->load->helper('download');
+	    $this->load->model('itemc_db', 'item');
+	    $production = ( isset($fact) && $fact==1 )?TRUE:NULL;
+	    $rows = $this->item->getByContrato($idcontrato);
+			$file = 'ListItems'.date('Ymdhis');
+	    xlsx($rows->result_array(), $rows->list_fields(), './downloads/items/'.$file.'.xlsx', 'Items', array('cantidad_final'));
+	    force_download('./downloads/items/'.$file.'.xlsx', NULL);
+		}
+	}
+
 
 	# --------------------------------------------------------------------------
 	private function sesion_iniciada()

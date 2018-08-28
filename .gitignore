@@ -2,10 +2,14 @@
 /application/controllers/Sesion.*
 /application/controllers/Validator.*
 /application/config/*
+
 /uploads/personal/*
 /uploads/equipo/*
 /uploads/factura/*
+/uploads/items/*
+
 /downloads/personal/*
 /downloads/pmo/*
+/downloads/items/*
+
 /application/helpers/dompdf/lib/fonts/*
-application/config/*

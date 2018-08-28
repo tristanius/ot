@@ -46,8 +46,17 @@
           <td ng-bind="c.contratista"></td>
           <td ng-bind="c.cliente"></td>
           <td ng-bind="c.estado==true?'Activo':'Inactivo'"></td>
-          <td> <button type="button" class="btn btn-small lime lighten-4 black-text" ng-click="clickeableLink('<?= site_url('item/gestion') ?>/'+c.idcontrato, $event, 'Maestro items de contrato');"> <small>Items</small> </button> </td>
-          <td> <button type="button" class="btn btn-small green accent-2"> <small>Vigencias</small> </button> </td>
+          <td>
+            <button type="button" class="btn btn-small lime lighten-4 black-text"
+              ng-click="clickeableLink('<?= site_url('item/gestion') ?>/'+c.idcontrato, $event, 'Maestro items de contrato');">
+              <small>Items</small>
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-small green accent-2" ng-click="clickeableLink('<?= site_url('vigencia/gestion') ?>/'+c.idcontrato, $event, 'Vigencias de contrato');">
+              <small>Vigencias</small>
+            </button>
+          </td>
           <td ng-bind="c.fecha_inicio_estimado"></td>
           <td ng-bind="c.fecha_fin_estimado"></td>
           <td>
