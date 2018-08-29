@@ -42,9 +42,10 @@ class Export extends CI_Controller{
     $this->load->helper('download');
     $this->load->model('facturacion_db', 'fact');
     $rows = $this->fact->informeFacturacion($f1, $f2);
-    write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
+    $file_path = './uploads/informeProduccion/informeProduccion-'.date('YmdHis').'.xlsx';
+    write_xlsx($rows->result_array(), $rows->list_fields(), $file_path );
     //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
-    force_download('./uploads/informeProduccion.xlsx',NULL);
+    force_download($file_path, NULL);
     //informeFacturacion( $rows->result_array(), $rows->list_fields() );
     //$this->load->view('miscelanios/history/infoReportes', array('rows'=>$rows, 'nombre_ot'=>( isset($nombre_ot)?$nombre_ot:'' ) ) );
   }
@@ -61,8 +62,9 @@ class Export extends CI_Controller{
     $tipo_informe = $this->input->post("tipo_informe");
     $rows = $this->fact->informeFacturacion($f1, $f2, NULL, json_decode($bases), $tipo_informe);
 
-    write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informeProduccion.xlsx');
-    force_download('./uploads/informeProduccion.xlsx',NULL);
+    $file_path = './uploads/informeProduccion/informeProduccion-'.date('YmdHis').'.xlsx';
+    write_xlsx($rows->result_array(), $rows->list_fields(), $file_path);
+    force_download($file_path,NULL);
   }
 
   #=============================================================================
@@ -335,9 +337,10 @@ class Export extends CI_Controller{
     $rows = $this->ot->getPlaneacion(NULL, $bases);
     $this->load->helper('xlsxwriter');
     $this->load->helper('download');
-    write_xlsx($rows->result_array(), $rows->list_fields(), './uploads/informePMO'.date("Ymd").'.xlsx');
+    $path = './uploads/informePMO'.date("Ymd").'.xlsx';
+    write_xlsx($rows->result_array(), $rows->list_fields(), $path);
     //genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
-    force_download('./uploads/informePMO'.date("Ymd").'.xlsx',NULL, 'items OT y CO');
+    force_download($path, NULL, 'items OT y CO');
   }
 
   # =================================================================================
@@ -359,15 +362,6 @@ class Export extends CI_Controller{
 
   # =================================================================================
 
-  public function testXLSX($value='')
-  {
-    $this->load->helper('excel');
-    $this->load->model('facturacion_db', 'repo');
-    $rows = $this->repo->informeFacturacion();
-    informeFacturacion($rows);
-  }
-
-
   public function formatoEquiposTareaOT($idtr)
   {
     $this->load->model('item_db', 'it');
@@ -381,22 +375,5 @@ class Export extends CI_Controller{
   {
     $post = json_decode( file_get_contents('php://input') );
 		$this->load->model('Miscelanio_db', 'misc');
-  }
-
-  public function informeCargues($value='')
-  {
-    $this->load->model('ot_db');
-    $rows = $this->ot_db->informeCargues();
-    $this->load->view('miscelanios/excelGenerico', array( 'rows'=>$rows, 'nombre'=>'InformeRecursosCargadosOT') );
-  }
-
-  public function informesPrueba($value='')
-  {
-    $this->load->helper('xlsx');
-    $this->load->helper('download');
-    $this->load->model('facturacion_db', 'repo');
-    $rows = $this->repo->informeFacturacion();
-    genHojaCalculo($rows->result_array(), $rows->list_fields(), './uploads/informeFacturacion.xlsx');
-    force_download('./uploads/informeFacturacion.xlsx',NULL);
   }
 }

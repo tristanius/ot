@@ -105,7 +105,7 @@
           <select class="" ng-model="act.calidad" style="width: 11ex;">
             <option value="">-</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
-            <option value="PEMDIENTE">PEMDIENTE</option>
+            <option value="PENDIENTE">PENDIENTE</option>
             <option value="SATISFACTORIO">SATISFACTORIO</option>
             <option value="LIBERADO">LIBERADO</option>
             <option value="RECHAZADO">RECHAZADO</option>

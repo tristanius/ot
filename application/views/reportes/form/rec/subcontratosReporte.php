@@ -108,7 +108,7 @@
           <select class="" ng-model="sbc.calidad" style="width: 11ex;">
             <option value="">Sin seleccion</option>
             <option value="SIN PRUEBA">SIN PRUEBA</option>
-            <option value="PEMDIENTE">PEMDIENTE</option>
+            <option value="PENDIENTE">PENDIENTE</option>
             <option value="SATISFACTORIO">SATISFACTORIO</option>
             <option value="LIBERADO">LIBERADO</option>
             <option value="RECHAZADO">RECHAZADO</option>

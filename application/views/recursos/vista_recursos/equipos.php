@@ -17,7 +17,7 @@
     <?php $this->load->view('recursos/finders/addEquipoTemp'); ?>
   </div>
 
-  <table class="mytabla tabla-recursos font10">
+  <table id="tablaEquiposRecursosOT" class="mytabla tabla-recursos font10">
     <thead>
       <tr class="blue-grey lighten-4">
         <th>Codigo ERP / Temporal</th>
@@ -68,4 +68,6 @@
       </tr>
     </tbody>
   </table>
+  
+  <button type="button" class="btn green" ng-click="exportar_tabla('#tablaEquiposRecursosOT')" ng-if="condensado.guardado == true">Exportar</button>
 </div>

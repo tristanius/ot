@@ -815,6 +815,9 @@ var editReporte = function($scope, $http, $timeout){
       angular.forEach(val, function(v,k){
         if(v.idrecurso_reporte_diario != undefined && v.idrecurso_reporte_diario != ''){
           v.idrecurso_reporte_diario = undefined;
+          if( v.idavance_reporte ){
+            v.idavance_reporte = undefined;
+          }
         }
       });
     });
@@ -1288,6 +1291,8 @@ var frentes = function($scope, $http, $timeout){
       if(!$scope.existeRegistro($scope.$parent.rd.recursos.personal, 'identificacion', val.identificacion)){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
+        if ( val.idavance_reporte )
+          val.idavance_reporte = undefined;
         $scope.$parent.rd.recursos.personal.push(val);
       }
     });
@@ -1300,6 +1305,8 @@ var frentes = function($scope, $http, $timeout){
       ){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
+        if ( val.idavance_reporte )
+          val.idavance_reporte = undefined;
         $scope.$parent.rd.recursos.equipos.push(val);
       }
     });
@@ -1310,6 +1317,8 @@ var frentes = function($scope, $http, $timeout){
       if( !$scope.$parent.existeRegistroList($scope.$parent.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
+        if ( val.idavance_reporte )
+          val.idavance_reporte = undefined;
         $scope.$parent.rd.recursos.actividades.push(val);
       }
     });
@@ -1327,6 +1336,8 @@ var frentes = function($scope, $http, $timeout){
     angular.forEach( otros, function(val, key){
       val.idrecurso_reporte_diario = undefined;
       val.idreporte_diario = undefined;
+      if ( val.idavance_reporte )
+        val.idavance_reporte = undefined;
       $scope.$parent.rd.recursos.otros.push(val);
     });
   }
