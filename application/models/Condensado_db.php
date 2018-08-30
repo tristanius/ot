@@ -24,8 +24,8 @@ class Condensado_db extends CI_Model{
   public function generar($idreporte, $tipo=NULL, $frente=NULL)
   {
     $this->db->select('OT.nombre_ot, OT.idOT, rd.fecha_reporte, rd.idreporte_diario, rrd.cantidad, itf.codigo, itf.descripcion, itf.itemc_item, itf.unidad');
-    $this->db->select('"" AS actividad_asociada, CONCAT(ft.nombre, " - ",ft.ubicacion) AS nombre_frente, 0 AS cantidad_asociada, 0 AS alerta, IF(rot.costo_und IS NULL, t.tarifa, IF( rot.costo_und = 0, t.tarifa, rot.costo_und ) ) AS valor');
-    $this->db->select('SUM(rrd.cantidad) AS total ');
+    $this->db->select('"" AS actividad_asociada, CONCAT(ft.nombre, " - ",ft.ubicacion) AS nombre_frente, 0 AS cantidad_asociada, 0 AS alerta, IF(rot.costo_und IS NULL, t.tarifa, ');
+    $this->db->select('IF( rot.costo_und = 0, t.tarifa, rot.costo_und ) ) AS valor, SUM(rrd.cantidad) AS total ');
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
     $this->db->join('frente_ot AS ft', 'ft.idfrente_ot = rrd.idfrente_ot');
@@ -46,6 +46,7 @@ class Condensado_db extends CI_Model{
     $this->db->where('vg.fecha_fin_vigencia >= rd.fecha_reporte');
     $this->db->group_by('itf.codigo');
     $this->db->group_by('ft.idfrente_ot');
+    $this->db->group_by('IF( rot.costo_und = 0, t.tarifa, rot.costo_und ) )');
     $this->db->order_by('ft.idfrente_ot', 'asc');
     $this->db->order_by('itf.iditemf', 'asc');
     return $this->db->get();

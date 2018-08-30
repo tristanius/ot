@@ -556,6 +556,11 @@ class Reporte extends CI_Controller{
       foreach ($f2->items as $k2 => $item_c) {
         if($item_c->codigo == $item->codigo && $item_c->item_asociado == $item->item_asociado){
           $item->cantidad_asociada = $item_c->cantidad_asociada;
+          if($item_c->valor != $item->valor){
+            $item->added = 'newer';
+          }else{
+            $item->added = '';
+          }
         }
       }
       array_push($new_items, $item);

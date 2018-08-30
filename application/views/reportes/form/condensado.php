@@ -3,6 +3,25 @@
   <button type="button" class="btn mini-btn2 orange" ng-click="get_condensado('<?= site_url('reporte/gen_condensado/') ?>',rd.idreporte_diario)">Generar</button> &nbsp;
   <button type="button" ng-if="condensado.guardado == true" class="btn mini-btn2 light-green accent-1" ng-click="get_condensado('<?= site_url('reporte/actualizar_condensado/') ?>',rd.idreporte_diario)">Actualizar</button>
 
+  <table>
+    <thead>
+      <tr>
+        <th>Filtro de Frente</th>
+        <th>Filtro de No. Item</th>
+        <th>Filtro de Descripcion</th>
+        <th>Filtro de Item asociado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <input type="text" ng-model="filterCondensado.nombre_frente" placeholder="Filtro de frente"> </td>
+        <td> <input type="text" ng-model="filterCondensado.itemc_item" placeholder="Filtro de item"> </td>
+        <td> <input type="text" ng-model="filterCondensado.descripcion" placeholder="Filtro de descripcion"> </td>
+        <td> <input type="text" ng-model="filterCondensado.item_asociado" placeholder="Filtro de item asociado"> </td>
+      </tr>
+    </tbody>
+  </table>
+
   <table id="info_rd_condensado" class="mytabla">
       <caption style="border:1px solid #333">
         Consolidado de frentes y actividades generado en: {{ condensado.fecha }}
@@ -17,6 +36,7 @@
           <th>UND</th>
           <th>Asociado</th>
           <th>Total frente</th>
+          <th>Valor</th>
           <th>Cantidad asociada</th>
         </tr>
       </thead>
@@ -32,9 +52,11 @@
           <td class="tableexport-string"> <span ng-bind="it.descripcion"></span> </td>
           <td ng-bind="it.unidad"></td>
           <td ng-bind="it.item_asociado + ' ('+ it.descripcion_asociada +') '"></td>
+          <td ng-bind="it.valor" ng-class="it.added"></td>
           <td ng-bind="it.total"></td>
           <td>
-            <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada" ng-init="it.cantidad_asociada = it.cantidad_asociada*1" ng-change="validar_cantidad_frente('codigo', it.codigo, frente.items, it)">
+            <input type="number" ng-if="!condensado.guardado" ng-model="it.cantidad_asociada" ng-init="it.cantidad_asociada = it.cantidad_asociada*1"
+              ng-change="validar_cantidad_frente('codigo', it.codigo, frente.items, it)">
             <span ng-if="condensado.guardado" ng-bind="it.cantidad_asociada"></span>
             <span ng-if="it.alerta == true" style="color:red">La cantidad ingresada supera los valores maximos reportados del item en este frente.</span>
           </td>
@@ -48,3 +70,12 @@
     <button type="button" class="btn green" ng-click="exportar_tabla('#info_rd_condensado')" ng-if="condensado.guardado == true">Exportar</button>
   </div>
 </section>
+
+<style media="screen">
+  #info_rd_condensado .added{
+    background: #acb9f9;
+  }
+  #info_rd_condensado .newer{
+    background: #abfcfc;
+  }
+</style>

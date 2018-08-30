@@ -1225,7 +1225,7 @@ var condensado_rd = function($scope, $http, $timeout){
     sum = 0;
     acum = 0;
     angular.forEach(lista, function(v,k){
-      if(v[prop] == search){
+      if(v[prop] == search && v.valor == item.valor){
         sum = v.total;
         acum += v.cantidad_asociada;
       }
