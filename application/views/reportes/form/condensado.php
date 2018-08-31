@@ -44,7 +44,7 @@
         <tr style="background: #e1f5fe">
           <td colspan="9"> <b ng-bind="frente.nombre+' '+frente.ubicacion"></b>  </td>
         </tr>
-        <tr ng-repeat="it in frente.items" ng-class="it.odd">
+        <tr ng-repeat="it in frente.items | filter: filterCondensado " ng-class="it.odd">
           <td ng-bind="it.nombre_ot"></td>
           <td ng-bind="it.nombre_frente"></td>
           <td ng-bind="it.fecha_reporte"></td>

@@ -297,223 +297,57 @@ class Ot_db extends CI_Model {
 	public function getResumenCantItems($idOT)
 	{
 		$this->load->database('ot');
-		return $this->db->select(
-			'
-				OT.idOT,
-				OT.nombre_ot,
-				tr.nombre_tarea,
-				tr.fecha_inicio,
-				tr.fecha_fin,
-				tr.idtarea_ot,
-				itt.iditem_tarea_ot,
-				itt.unidad,
-				itt.tarifa,
-				itt.facturable,
-				SUM(itt.cantidad) AS cant_total_plan,
-				SUM(itt.duracion) AS dura_total_plan,
-				SUM(itt.valor_plan),
-				(
-					SELECT SUM(rrd.cantidad)
-					FROM recurso_reporte_diario AS rrd
-					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
-					WHERE rd.OT_idOT = OT.idOT
-					AND rrd.facturable = itt.facturable
-					AND rrd.itemf_iditemf = itf.iditemf
-				) AS cant_ejecutada,
-				itf.*
-			'
-			)->from('item_tarea_ot AS itt')
-			->join('tarea_ot AS tr','tr.idtarea_ot = itt.tarea_ot_idtarea_ot')
-			->join('OT','OT.idOT = tr.OT_idOT')
-			->join('itemf AS itf','itf.iditemf = itt.itemf_iditemf')
-			->where('estado_tarifa',TRUE) //CORREGIR esto !!!!!!!!
-			->where('OT.idOT',$idOT)
-			->group_by('itf.iditemf')
-			->order_by('itf.codigo','ASC')
-			->get();
 	}
 
 	# Donde se usa?
-	public function resumenOT($idOt='', $frentes=NULL)
+	public function resumenCantidades()
 	{
 		$this->load->database('ot');
-		$this->db->select('
-				titc.descripcion AS tipo_itemc,
-				OT.idOT,
-				OT.nombre_ot,
-				tr.nombre_tarea,
-				tr.fecha_inicio,
-				tr.fecha_fin,
-				tr.idtarea_ot,
-				itt.iditem_tarea_ot,
-				itt.unidad,
-				itt.tarifa,
-				itt.facturable,
-				itt.idsector_item_tarea,
-				SUM(itt.cantidad_planeada) AS cantidad_planeada,
-				itf.*
-			')
-			->from('OT')
-			->join('tarea_ot AS tr', 'tr.OT_idOT = OT.idOT')
-			->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tr.idtarea_ot')
-			->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf')
-			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
-			->join('tipo_itemc AS titc', 'titc.idtipo_itemc = itc.idtipo_itemc')
-			->where('OT.idOT',$idOt)
-			->group_by('itf.codigo')
-			->group_by('itt.facturable')
-			->group_by('itt.idsector_item_tarea');
-		$this->db->order_by('itf.tipo', 'ASC');
-		if(isset($frentes)){
-			$this->db->select('ft.nombre AS nombre_frente');
-			$this->db->select('
-				(
-					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
-					FROM recurso_reporte_diario AS rrd
-					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
-					WHERE rd.OT_idOT = OT.idOT
-					AND rrd.facturable = TRUE
-					AND rrd.cantidad > 0
-					AND rrd.itemf_iditemf = itf.iditemf
-					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
-					AND ft.idfrente_ot = rrd.idfrente_ot
-				) AS cant_ejecutada,
-				(
-					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
-					FROM recurso_reporte_diario AS rrd
-					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
-					WHERE rd.OT_idOT = OT.idOT
-					AND rrd.facturable = FALSE
-					AND rrd.cantidad > 0
-					AND rrd.itemf_iditemf = itf.iditemf
-					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
-					AND ft.idfrente_ot = rrd.idfrente_ot
-				) AS cant_ejecutada_nofact,
-			');
-			$this->db->join('frente_ot AS ft', 'ft.idfrente_ot = itt.idfrente_ot', 'left');
-			$this->db->group_by('ft.idfrente_ot');
-			$this->db->order_by('itt.idfrente_ot', 'ASC');
-		}else {
-			$this->db->select('
-				(
-					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
-					FROM recurso_reporte_diario AS rrd
-					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
-					WHERE rd.OT_idOT = OT.idOT
-					AND rrd.facturable = TRUE
-					AND rrd.cantidad > 0
-					AND rrd.itemf_iditemf = itf.iditemf
-					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
-				) AS cant_ejecutada,
-				(
-					SELECT SUM( getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) )
-					FROM recurso_reporte_diario AS rrd
-					JOIN reporte_diario AS rd ON rrd.idreporte_diario = rd.idreporte_diario
-					WHERE rd.OT_idOT = OT.idOT
-					AND rrd.facturable = FALSE
-					AND rrd.cantidad > 0
-					AND rrd.itemf_iditemf = itf.iditemf
-					AND itt.idsector_item_tarea = rrd.idsector_item_tarea
-				) AS cant_ejecutada_nofact,
-			');
-		}
-		$this->db->order_by('itf.codigo', 'ASC');
 		return $this->db->get();
 	}
 
-	public function avanceOT($idOT, $frentes = NULL)
+	public function resumenItems($idOT, $idfrente=NULL)
 	{
 		$this->load->database('ot');
-		$select = 'OT.nombre_ot, itf.itemc_item AS item,  itf.codigo, itf.descripcion, ';
-		$wh_frente_ejecutar ='';
-		$wh_frente_plan = '';
-		# Si tiene frentes
-		if( isset($frentes) ){
-			$wh_frente_plan = '
-			AND itt2.idfrente_ot = ft.idfrente_ot';
-			$wh_frente_ejecutar = '
-			AND rrd2.idfrente_ot = ft.idfrente_ot';
-			$this->db->order_by('ft.idfrente_ot');
+		$this->db->select('OT.idOT, OT.nombre_ot, OT.estado_doc, ');
+		$this->db->select('itf.iditemf, itc.item, itf.codigo, itf.descripcion,');
+		$this->db->select('( SELECT tarifa.tarifa FROM tarifa WHERE tarifa.itemf_iditemf = itf.iditemf ORDER BY tarifa.idtarifa DESC LIMIT 1 ) AS tarifa, ');
+		$this->db->select('tip.grupo_mayor AS tipo_item, IF(itt.facturable, "SI", "NO") AS facturable, ');
+		$this->db->select('IFNULL( (SELECT	SUM(itt2.cantidad) FROM item_tarea_ot AS itt2 WHERE itt2.itemf_iditemf = itt.itemf_iditemf'.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	) AS cantidad, ');
+		$this->db->select('IFNULL( (SELECT	SUM(itt2.duracion) FROM item_tarea_ot AS itt2 WHERE itt2.itemf_iditemf = itt.itemf_iditemf'.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	) AS duracion, ');
+		$this->db->select('IFNULL( (SELECT	SUM(itt2.cantidad_planeada) FROM item_tarea_ot AS itt2 WHERE itt2.itemf_iditemf = itt.itemf_iditemf'.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	) AS cantidad_planeada,');
+		if (isset($idfrente)) {
+			$this->db->select('( SELECT CONCAT(ft.nombre, " - ", ft.ubicacion) FROM frente_ot AS ft WHERE ft.idfrente_ot = '.$idfrente.' ) AS frente, ');
 		}
-		$select .= 'IFNULL(
-			( SELECT itt.tarifa
-			FROM itemf AS itf2
-			JOIN tarifa AS tarf ON tarf.itemf_iditemf = itf2.iditemf
-			WHERE itf2.iditemf = itf.iditemf
-			ORDER BY tarf.idvigencia_tarifas DESC
-			LIMIT 1
-			), 0) AS tarifa, ';
+		$this->db->select('(
+				SELECT SUM(rrd.cantidad) AS cant
+				FROM recurso_reporte_diario AS rrd
+				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
+				WHERE rd.OT_idOT = OT.idOT
+				AND rrd.itemf_iditemf = itf.iditemf
+				AND rrd.facturable = TRUE
+				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '').'
+			) AS cantidad_ejecuda_fact, '
+		);
 
-		$select .= 'IFNULL(( SELECT SUM(itt2.cantidad)
-			FROM item_tarea_ot AS itt2
-			JOIN tarea_ot AS tr2 ON tr2.idtarea_ot = itt2.tarea_ot_idtarea_ot
-			JOIN OT AS OT2 ON OT2.idOT = tr2.OT_idOT
-			WHERE OT2.idOT = OT.idOT
-			AND itt2.itemf_iditemf = itf.iditemf
-			AND itt2.facturable = TRUE '.$wh_frente_plan.'
-			), 0) AS cantidad, ';
-
-		$select .= 'IFNULL(( SELECT SUM(itt2.duracion)
-			FROM item_tarea_ot AS itt2
-			JOIN tarea_ot AS tr2 ON tr2.idtarea_ot = itt2.tarea_ot_idtarea_ot
-			JOIN OT AS OT2 ON OT2.idOT = tr2.OT_idOT
-			WHERE OT2.idOT = OT.idOT
-			AND itt2.itemf_iditemf = itf.iditemf
-			AND itt2.facturable = FALSE '.$wh_frente_plan.'
-			), 0) AS duracion, ';
-
-		$select .= 'IFNULL(( SELECT SUM(itt2.cantidad_planeada)
-			FROM item_tarea_ot AS itt2
-			JOIN tarea_ot AS tr2 ON tr2.idtarea_ot = itt2.tarea_ot_idtarea_ot
-			JOIN OT AS OT2 ON OT2.idOT = tr2.OT_idOT
-			WHERE OT2.idOT = OT.idOT
-			AND itt2.itemf_iditemf = itf.iditemf
-			AND itt2.facturable = TRUE '.$wh_frente_plan.'
-			), 0) AS planeado_fact, ';
-
-		$select .= 'IFNULL(( SELECT SUM(itt2.cantidad_planeada)
-			FROM item_tarea_ot AS itt2
-			JOIN tarea_ot AS tr2 ON tr2.idtarea_ot = itt2.tarea_ot_idtarea_ot
-			JOIN OT AS OT2 ON OT2.idOT = tr2.OT_idOT
-			WHERE OT2.idOT = OT.idOT
-			AND itt2.itemf_iditemf = itf.iditemf
-			AND itt2.facturable = FALSE '.$wh_frente_plan.'
-			), 0) AS planeado_no_fact, ';
-
-		$select .= 'IFNULL(( SELECT SUM(rrd2.cantidad)
-			FROM recurso_reporte_diario AS rrd2
-			JOIN reporte_diario AS rd2 ON rd2.idreporte_diario = rrd2.idreporte_diario
-			JOIN OT AS OT2 ON OT2.idOT = rd2.OT_idOT
-			WHERE OT2.idOT = OT.idOT
-			AND rrd2.itemf_iditemf = itf.iditemf
-			AND rrd2.facturable = TRUE '.$wh_frente_ejecutar.'
-			), 0)  AS ejecutado_fact, ';
-
-		$select .= 'IFNULL(( SELECT SUM(rrd2.cantidad)
-			FROM recurso_reporte_diario AS rrd2
-			JOIN reporte_diario AS rd2 ON rd2.idreporte_diario = rrd2.idreporte_diario
-			JOIN OT AS OT2 ON OT2.idOT = rd2.OT_idOT
-			WHERE OT2.idOT = OT.idOT
-			AND rrd2.itemf_iditemf = itf.iditemf
-			AND rrd2.facturable = FALSE '.$wh_frente_ejecutar.'
-			), 0)  AS ejecutado_no_fact ';
-
-		$this->db->from('OT')
-					->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
-					->join('item_tarea_ot AS itt','itt.tarea_ot_idtarea_ot = tr.idtarea_ot ','LEFT')
-					->join('itemf AS itf','itf.iditemf = itt.itemf_iditemf','LEFT')
-					->join('reporte_diario AS rd', 'rd.OT_idOT = OT.idOT','LEFT')
-					->join('recurso_reporte_diario AS rrd', 'rrd.idreporte_diario = rd.idreporte_diario AND rrd.itemf_iditemf = itf.iditemf','LEFT')
-					->where('OT.idOT',$idOT)
-					->group_by('itf.codigo')
-					->order_by('itf.iditemf, itf.codigo');
-
-		if(isset($frentes)){
-			$select .= ', CONCAT(ft.nombre, " - ", ft.ubicacion) as frente, ';
-			$this->db->join('frente_ot AS ft','ft.idfrente_ot = itt.idfrente_ot OR ft.idfrente_ot = rrd.idfrente_ot','LEFT');
-			$this->db->group_by('ft.idfrente_ot');
-		}
-		$this->db->select($select);
+		$this->db->select('(
+				SELECT SUM(rrd.cantidad) AS cant
+				FROM recurso_reporte_diario AS rrd
+				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
+				WHERE rd.OT_idOT = OT.idOT
+				AND rrd.itemf_iditemf = itf.iditemf
+				AND rrd.facturable = FALSE
+				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '').'
+			) AS cantidad_ejecuda_nofact '
+		);
+		$this->db->from('OT');
+		$this->db->join('tarea_ot AS tarea', 'tarea.OT_idOT = OT.idOT');
+		$this->db->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tarea.idtarea_ot');
+		$this->db->join('itemf AS itf', 'itf.iditemf = itt.itemf_iditemf');
+		$this->db->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc');
+		$this->db->join('tipo_itemc AS tip', 'tip.idtipo_itemc = itc.idtipo_itemc');
+		$this->db->where('OT.idOT', $idOT);
+		$this->db->group_by('itf.iditemf, itt.facturable');
 		return $this->db->get();
 	}
 	// Mejora en el resumen

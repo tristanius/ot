@@ -705,46 +705,26 @@ class Ot extends CI_Controller {
 		return false;
 	}
 
-	# Resumen de tareas
-	public function resumenItems($idOT)
-	{
-		$this->load->model('ot_db', 'ot');
-		$frentes = $this->ot->getFrentesOT($idOT);
-		if($frentes->num_rows() > 0){
-			$resumen = $this->ot->resumenOT($idOT, TRUE);
-		}else{
-			$resumen = $this->ot->resumenOT($idOT);
-		}
-		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT) );
-		//$items = $this->ot->getResumenCantItems($idOT);
-		//echo $this->load->view('ot/forms/consolidado', array('items'=>$items), TRUE );
-	}
-
-	public function avanceOT($idOT)
-	{
-		$this->load->model('ot_db', 'ot');
-		$frentes = $this->ot->getFrentesOT($idOT);
-		if($frentes->num_rows() > 0){
-			$resumen = $this->ot->resumenOT($idOT, TRUE);
-		}else{
-			$resumen = $this->ot->resumenOT($idOT);
-		}
-		$this->load->view('ot/vista_resumen', array('items'=>$resumen, 'idOT'=>$idOT ) );
-	}
-
+	# Resumen de OT
 	public function resumenOT($idOT)
 	{
 		$this->load->model(array('ot_db'=>'ot'));
-		$this->load->helper('xlsxwriter');
-		$this->load->helper('download');
-
-		$frentes = $this->ot->avanceOT($idOT, TRUE);
-		$general = $this->ot->avanceOT($idOT);
-
-		$this->load->view('ot/vistas_status/avance/vista_resumen', array('frentes'=>$frentes, 'general'=>$general) );
+		//$this->load->helper('xlsxwriter');
+		//$this->load->helper('download');
+		$frentes = $this->ot->getFrentesOT($idOT);
+		$items_frentes = array();
+		if( isset($frentes) ){
+			foreach ($frentes->result() as $key => $ft) {
+				$it = $this->ot->resumenItems($idOT, $ft->idfrente_ot);
+				array_push($items_frentes, $it);
+			}
+		}
+		$items_general = $this->ot->resumenItems($idOT);
+		$this->load->view('ot/vistas_status/avance/vista_resumen', array('frentes'=>$items_frentes, 'general'=>$items_general) );
 		//xlsx($rows->result_array(), $rows->list_fields(), './downloads/informeAvanceOT.xlsx', 'AvanceOT');
 		//force_download('./downloads/informeAvanceOT.xlsx',NULL);
 	}
+
 	# ===============================================================================
 	// Informes de PYCO en excel
 	public function getInformes($value='')
