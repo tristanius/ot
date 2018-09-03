@@ -726,14 +726,14 @@ class Ot extends CI_Controller {
 		//xlsx($rows->result_array(), $rows->list_fields(), './downloads/informeAvanceOT.xlsx', 'AvanceOT');
 		//force_download('./downloads/informeAvanceOT.xlsx',NULL);
 	}
-	
+
 	private function cruzarItems($items_principal, $items_reportes)
 	{
 		foreach ($items_principal->result() as $key => $item) {
 			foreach ($items_reportes->result() as $key => $it) {
 				if($item->iditemf == $it->iditemf){
-					if( $item->facturable == $it->facturable ){
-						$item->cantidad_ejecuda_fact = $it->cantidad ;
+					if( $it->facturable ){
+						$item->cantidad_ejecuda_fact = $it->cantidad;
 					}else{
 						$item->cantidad_ejecuda_nofact = $it->cantidad;
 					}
