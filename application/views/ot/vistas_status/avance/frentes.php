@@ -28,7 +28,7 @@
   <tbody>
     <?php foreach ($frentes as $key => $ft): ?>
       <?php foreach ($ft->result() as $key => $item): ?>
-        <tr>
+        <tr  class="<?= ($item->facturable=='SI' && ($item->cantidad_ejecuda_fact > $item->cantidad_planeada) )? 'red lighten-4':'' ?>">
           <td><?= $item->nombre_ot ?></td>
           <td><?= $item->frente ?></td>
           <td><?= $item->item ?></td>
@@ -44,7 +44,9 @@
           <td><?= $item->facturable ?></td>
           <td><?= $item->cantidad_planeada ?></td>
           <td class="<?= $item->facturable=='SI'?'':'grey lighten-2' ?>"><?= $item->cantidad_ejecuda_fact ?></td>
-          <td class="<?= $item->facturable=='SI'?'grey lighten-2':'' ?>"><?= $item->cantidad_ejecuda_nofact ?></td>
+          <td class="<?= $item->facturable=='SI'?'grey lighten-2':'' ?>">
+            <span class="<?= ($item->facturable!='SI' && ($item->cantidad_ejecuda_nofact > $item->cantidad_planeada) )? 'red-text':'' ?>"> <?= $item->cantidad_ejecuda_nofact ?> </span>
+          </td>
           <td></td>
         </tr>
       <?php endforeach; ?>

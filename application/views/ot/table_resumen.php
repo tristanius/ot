@@ -55,7 +55,7 @@
           <td>$ <?= number_format($v->tarifa )?></td>
           <td style="border:1px green solid"><?= $v->facturable?'SI':'NO'; ?></td>
           <td><?= number_format($v->cantidad_planeada, 2) ?></td>
-          <td>$ <?= number_format( ( $v->facturable? ( $v->tarifa * $v->cantidad_planeada ) :0 ), 2 ) ?></td>
+          <td>$ <?= number_format( ( $v->facturable? ( $v->tarifa * $v->cantidad_planeada ) : 0 ), 2 ) ?></td>
           <td style="border:1px green solid; <?= !$v->facturable?'background:#EEE':''; ?>; color: #000;"> <?= number_format($v->cant_ejecutada, 2) ?></td>
           <td style="border:1px green solid; text-align: right; <?= !$v->facturable?'background:#EEE':''; ?>; color: #000; ">$ <?= number_format($v->cant_ejecutada*$v->tarifa) ?></td>
 

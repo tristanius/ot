@@ -328,8 +328,8 @@ class Ot_db extends CI_Model {
 		$this->db->join('tipo_itemc AS tip', 'tip.idtipo_itemc = itc.idtipo_itemc');
 		$this->db->where('OT.idOT', $idOT);
 		$this->db->group_by('itf.iditemf, itt.facturable');
-		$this->db->order_by('itf.iditemf','DESC');
-		$this->db->order_by('itt.facturable', 'DESC');
+		$this->db->order_by('itf.codigo','ASC');
+		$this->db->order_by('itt.facturable', 'ASC');
 		return $this->db->get();
 	}
 
@@ -346,8 +346,8 @@ class Ot_db extends CI_Model {
 			$this->db->where('rrd.idfrente_ot', $idfrente);
 		}
 		$this->db->group_by('rrd.itemf_iditemf, rrd.facturable');
-		$this->db->order_by('itf.iditemf','DESC');
-		$this->db->order_by('rrd.facturable', 'DESC');
+		$this->db->order_by('itf.codigo','ASC');
+		$this->db->order_by('rrd.facturable', 'ASC');
 		return $this->db->get();
 	}
 	// Mejora en el resumen
