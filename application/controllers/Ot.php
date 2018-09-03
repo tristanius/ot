@@ -716,23 +716,30 @@ class Ot extends CI_Controller {
 		if( isset($frentes) ){
 			foreach ($frentes->result() as $key => $ft) {
 				$items = $this->ot->resumenItems($idOT, $ft->idfrente_ot);
-				foreach ($items->result() as $key => $item) {
-					$cantidades = $this->ot->getCantidadesItems($idOT, $item->iditemf, $ft->idfrente_ot);
-					$item->cantidad_ejecuda_fact = isset($cantidades->cantidad_ejecuda_fact)?$cantidades->cantidad_ejecuda_fact:'-';
-					$item->cantidad_ejecuda_nofact = isset($cantidades->cantidad_ejecuda_nofact)?$cantidades->cantidad_ejecuda_nofact:'-';
-				}
+				$this->cruzarItems( $items, $this->ot->getCantidadesItems($idOT, $ft->idfrente_ot) );
 				array_push($items_frentes, $items);
 			}
 		}
 		$items_general = $this->ot->resumenItems($idOT);
-		foreach ($items_general->result() as $key => $item) {
-			$cantidades = $this->ot->getCantidadesItems($idOT, $item->iditemf);
-			$item->cantidad_ejecuda_fact = isset($cantidades->cantidad_ejecuda_fact)?$cantidades->cantidad_ejecuda_fact:'-';
-			$item->cantidad_ejecuda_nofact = isset($cantidades->cantidad_ejecuda_nofact)?$cantidades->cantidad_ejecuda_nofact:'-';
-		}
+		$this->cruzarItems( $items_general, $this->ot->getCantidadesItems($idOT) );
 		$this->load->view('ot/vistas_status/avance/vista_resumen', array('frentes'=>$items_frentes, 'general'=>$items_general) );
 		//xlsx($rows->result_array(), $rows->list_fields(), './downloads/informeAvanceOT.xlsx', 'AvanceOT');
 		//force_download('./downloads/informeAvanceOT.xlsx',NULL);
+	}
+	
+	private function cruzarItems($items_principal, $items_reportes)
+	{
+		foreach ($items_principal->result() as $key => $item) {
+			foreach ($items_reportes->result() as $key => $it) {
+				if($item->iditemf == $it->iditemf){
+					if( $item->facturable == $it->facturable ){
+						$item->cantidad_ejecuda_fact = $it->cantidad ;
+					}else{
+						$item->cantidad_ejecuda_nofact = $it->cantidad;
+					}
+				}
+			}
+		}
 	}
 
 	# ===============================================================================

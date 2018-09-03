@@ -319,6 +319,7 @@ class Ot_db extends CI_Model {
 		if (isset($idfrente)) {
 			$this->db->select('( SELECT CONCAT(ft.nombre, " - ", ft.ubicacion) FROM frente_ot AS ft WHERE ft.idfrente_ot = '.$idfrente.' ) AS frente, ');
 		}
+		$this->db->select('"0" AS cantidad_ejecuda_fact, "0" AS cantidad_ejecuda_nofact');
 		$this->db->from('OT');
 		$this->db->join('tarea_ot AS tarea', 'tarea.OT_idOT = OT.idOT');
 		$this->db->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tarea.idtarea_ot');
@@ -327,32 +328,27 @@ class Ot_db extends CI_Model {
 		$this->db->join('tipo_itemc AS tip', 'tip.idtipo_itemc = itc.idtipo_itemc');
 		$this->db->where('OT.idOT', $idOT);
 		$this->db->group_by('itf.iditemf, itt.facturable');
+		$this->db->order_by('itf.iditemf','DESC');
+		$this->db->order_by('itt.facturable', 'DESC');
 		return $this->db->get();
 	}
 
-	public function getCantidadesItems($idOT, $iditemf, $idfrente = NULL)
+	public function getCantidadesItems($idOT, $idfrente = NULL)
 	{
 		$cantidades = new stdClass();
-		$cantidades->cantidad_ejecuda_fact = $this->db->query('
-				SELECT SUM(rrd.cantidad) AS cant
-				FROM recurso_reporte_diario AS rrd
-				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
-				WHERE rd.OT_idOT = '.$idOT.'
-				AND rrd.itemf_iditemf = '.$iditemf.'
-				AND rrd.facturable = TRUE
-				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '')
-		)->row()->cant;
-
-		$cantidades->cantidad_ejecuda_nofact = $this->db->query('
-				SELECT SUM(rrd.cantidad) AS cant
-				FROM recurso_reporte_diario AS rrd
-				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
-				WHERE rd.OT_idOT = '.$idOT.'
-				AND rrd.itemf_iditemf = '.$iditemf.'
-				AND rrd.facturable = FALSE
-				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '')
-		)->row()->cant;
-		return $cantidades;
+		$this->db->select('SUM(rrd.cantidad) AS cantidad, rrd.facturable, itf.iditemf');
+		$this->db->from('recurso_reporte_diario AS rrd');
+		$this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
+		$this->db->join('OT', 'OT.idOT = rd.OT_idOT');
+		$this->db->join('itemf AS itf', 'itf.iditemf = rrd.itemf_iditemf');
+		$this->db->where('OT.idOT', $idOT);
+		if (isset($idfrente)) {
+			$this->db->where('rrd.idfrente_ot', $idfrente);
+		}
+		$this->db->group_by('rrd.itemf_iditemf, rrd.facturable');
+		$this->db->order_by('itf.iditemf','DESC');
+		$this->db->order_by('rrd.facturable', 'DESC');
+		return $this->db->get();
 	}
 	// Mejora en el resumen
 	# =================================================================================
