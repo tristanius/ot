@@ -715,11 +715,21 @@ class Ot extends CI_Controller {
 		$items_frentes = array();
 		if( isset($frentes) ){
 			foreach ($frentes->result() as $key => $ft) {
-				$it = $this->ot->resumenItems($idOT, $ft->idfrente_ot);
-				array_push($items_frentes, $it);
+				$items = $this->ot->resumenItems($idOT, $ft->idfrente_ot);
+				foreach ($items->result() as $key => $item) {
+					$cantidades = $this->ot->getCantidadesItems($idOT, $item->iditemf, $ft->idfrente_ot);
+					$item->cantidad_ejecuda_fact = isset($cantidades->cantidad_ejecuda_fact)?$cantidades->cantidad_ejecuda_fact:'-';
+					$item->cantidad_ejecuda_nofact = isset($cantidades->cantidad_ejecuda_nofact)?$cantidades->cantidad_ejecuda_nofact:'-';
+				}
+				array_push($items_frentes, $items);
 			}
 		}
 		$items_general = $this->ot->resumenItems($idOT);
+		foreach ($items_general->result() as $key => $item) {
+			$cantidades = $this->ot->getCantidadesItems($idOT, $item->iditemf);
+			$item->cantidad_ejecuda_fact = isset($cantidades->cantidad_ejecuda_fact)?$cantidades->cantidad_ejecuda_fact:'-';
+			$item->cantidad_ejecuda_nofact = isset($cantidades->cantidad_ejecuda_nofact)?$cantidades->cantidad_ejecuda_nofact:'-';
+		}
 		$this->load->view('ot/vistas_status/avance/vista_resumen', array('frentes'=>$items_frentes, 'general'=>$items_general) );
 		//xlsx($rows->result_array(), $rows->list_fields(), './downloads/informeAvanceOT.xlsx', 'AvanceOT');
 		//force_download('./downloads/informeAvanceOT.xlsx',NULL);

@@ -319,27 +319,6 @@ class Ot_db extends CI_Model {
 		if (isset($idfrente)) {
 			$this->db->select('( SELECT CONCAT(ft.nombre, " - ", ft.ubicacion) FROM frente_ot AS ft WHERE ft.idfrente_ot = '.$idfrente.' ) AS frente, ');
 		}
-		$this->db->select('(
-				SELECT SUM(rrd.cantidad) AS cant
-				FROM recurso_reporte_diario AS rrd
-				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
-				WHERE rd.OT_idOT = OT.idOT
-				AND rrd.itemf_iditemf = itf.iditemf
-				AND rrd.facturable = TRUE
-				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '').'
-			) AS cantidad_ejecuda_fact, '
-		);
-
-		$this->db->select('(
-				SELECT SUM(rrd.cantidad) AS cant
-				FROM recurso_reporte_diario AS rrd
-				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
-				WHERE rd.OT_idOT = OT.idOT
-				AND rrd.itemf_iditemf = itf.iditemf
-				AND rrd.facturable = FALSE
-				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '').'
-			) AS cantidad_ejecuda_nofact '
-		);
 		$this->db->from('OT');
 		$this->db->join('tarea_ot AS tarea', 'tarea.OT_idOT = OT.idOT');
 		$this->db->join('item_tarea_ot AS itt', 'itt.tarea_ot_idtarea_ot = tarea.idtarea_ot');
@@ -349,6 +328,31 @@ class Ot_db extends CI_Model {
 		$this->db->where('OT.idOT', $idOT);
 		$this->db->group_by('itf.iditemf, itt.facturable');
 		return $this->db->get();
+	}
+
+	public function getCantidadesItems($idOT, $iditemf, $idfrente = NULL)
+	{
+		$cantidades = new stdClass();
+		$cantidades->cantidad_ejecuda_fact = $this->db->query('
+				SELECT SUM(rrd.cantidad) AS cant
+				FROM recurso_reporte_diario AS rrd
+				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
+				WHERE rd.OT_idOT = '.$idOT.'
+				AND rrd.itemf_iditemf = '.$iditemf.'
+				AND rrd.facturable = TRUE
+				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '')
+		)->row()->cant;
+
+		$cantidades->cantidad_ejecuda_nofact = $this->db->query('
+				SELECT SUM(rrd.cantidad) AS cant
+				FROM recurso_reporte_diario AS rrd
+				JOIN reporte_diario AS rd ON rd.idreporte_diario = rrd.idreporte_diario
+				WHERE rd.OT_idOT = '.$idOT.'
+				AND rrd.itemf_iditemf = '.$iditemf.'
+				AND rrd.facturable = FALSE
+				'.(isset($idfrente)?'AND rrd.idfrente_ot = '.$idfrente : '')
+		)->row()->cant;
+		return $cantidades;
 	}
 	// Mejora en el resumen
 	# =================================================================================
