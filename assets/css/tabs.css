@@ -1,0 +1,27 @@
+.mytabs{
+  background: #6d6a6a;
+  margin: 0 auto;
+  padding: 0;
+  clear: left;
+  border: 1px solid #888;
+  overflow: auto;
+}
+.mytabs::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.mytabs .mytab{
+  padding: 1ex;
+  color: #FFF;
+  float: left;
+  display: block;
+  cursor: pointer;
+  border-right: 1px solid #CCC;
+}
+
+.mytabs .mytab.active{
+  background: #F1F1F1;
+  color: #333;
+}

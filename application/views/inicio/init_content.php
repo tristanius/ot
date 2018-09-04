@@ -1,5 +1,5 @@
   <div class="row" style="display:block">
-  	<h4>Sistema de Información y Control operativo</h4>
+  	<h4>Sistema de Información para Control Operativo</h4>
 		<h5>S.I.C.O. App</h5>
 
 		<div class="row">

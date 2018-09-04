@@ -66,6 +66,33 @@ var itemc = function($scope, $http, $timeout){
     );
   }
 
+  // Obtener todos los Contratos para selecionarlos
+  $scope.contratos = [];
+  $scope.getContratos = function(lnk){
+    $http.post(lnk,{}).then(
+      function(resp){
+        if(resp.data.status){
+          $scope.contratos = resp.data.contratos;
+        }else{
+          alert("Error al cargar los contratos");
+          console.log(resp.data);
+        }
+      },
+      function(resp){
+        alert("Error de servidor");
+        console.log(resp.data);
+      }
+    );
+  }
+
+  $scope.selecionarContrato = function(c, el){
+    if(c){
+      var lnk = $scope.$parent.site_url+'/item/get_itemc/';
+      M.Modal.getInstance($(el)).close();
+      $scope.getItemsByContrato(lnk, c.idcontrato);
+    }
+  }
+
   // ------ Consulta de items por contrato -------
   $scope.getItemsByContrato = function(lnk, idcontrato){
     if(idcontrato){

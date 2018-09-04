@@ -6,7 +6,7 @@
       <div class="col s12 m6 l4">
         <span>No. Contrato: </span>
         <b ng-bind="contrato.no_contrato"></b>
-        <button type="button" class="btn btn-small blue-grey darken-4">Selecionar contrato</button>
+        <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="formSelectContrato">Selecionar contrato</button>
       </div>
 
       <div class="col s12 m6 l5">
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="card padding1ex">
+  <div class="card padding1ex" ng-init="getContratos('<?= site_url('contrato/get_contratos') ?>')">
     <h5>Listado general de items del contrato</h5>
 
     <fieldset ng-show="contrato != undefined">
@@ -60,4 +60,5 @@
 
   <?php  $this->load->view('contrato/items/itemc/form_item'); ?>
   <?php  $this->load->view('contrato/items/itemc/form_cargue'); ?>
+  <?php  $this->load->view('contrato/select_contrato'); ?>
 </section>

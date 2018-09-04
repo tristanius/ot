@@ -1,11 +1,11 @@
-<section ng-controller="vigencias">
+<section ng-controller="vigencia_tarifas">
   <h4>Vigencias de tarifas por contrato</h4>
 
-  <div class="card-panel row">
-    <div class="col s12 m5">
+  <div class="row" ng-init="getVigencias( '<?= site_url('vigencia/get_By') ?>', <?= isset($idcontrato)?$idcontrato:'undefined'; ?> )">
+    <div class="col s12 m4">
       <label>No. Contrato: </label>
       <b ng-bind="contrato.no_contrato"></b>
-      <button type="button" class="btn btn-small blue-grey darken-4">Seleccionar</button>
+      <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="formSelectContrato">Seleccionar</button>
     </div>
 
     <div class="col s12 m7">
@@ -33,11 +33,16 @@
         </tbody>
       </table>
     </div>
+
+    <div class="col m12">
+      <button type="button" class="btn btn-small green">Agregar vigencia</button>
+    </div>
+
   </div>
-
   <br>
+  <div class="" ng-init="getContratos('<?= site_url('contrato/get_contratos') ?>')">
+    <?php $this->load->view('contrato/vigencias/tabs_vigencias'); ?>
 
-  <div class="card-panel">
-    
+    <?php  $this->load->view('contrato/select_contrato'); ?>
   </div>
 </section>

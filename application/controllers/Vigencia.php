@@ -11,9 +11,34 @@ class Vigencia extends CI_Controller{
 
   function index(){ }
 
+  # Cargar la visualización del gestion de vigencias
   public function gestion($idcontrato=NULL)
   {
     $this->load->view('contrato/vigencias/gestion', array('idcontrato'=>$idcontrato));
+  }
+
+  # Consulta de vigencias por contrato
+  public function get_By($idcontrato)
+  {
+    $this->load->model(array('vigencia_db'=>"vg"));
+    $ret = new stdClass();
+    $ret->vigencias = $this->vg->getBy( array('c.idcontrato'=>$idcontrato) )->result();
+    $ret->status = TRUE;
+    echo json_encode($ret);
+  }
+  # guardado de vigencias
+  public function save($value='')
+  {
+    $this->load->model(array('vigencia_db'=>"vg"));
+    $ret = new stdClass();
+  }
+  # Agregar una vigencia
+  private function add($value='')
+  {
+  }
+  # Modificar una vigencia
+  private function mod($value='')
+  {
   }
 
 

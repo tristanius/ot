@@ -47,13 +47,13 @@
           <td ng-bind="c.cliente"></td>
           <td ng-bind="c.estado==true?'Activo':'Inactivo'"></td>
           <td>
-            <button type="button" class="btn btn-small lime lighten-4 black-text"
+            <button type="button" class="btn btn-small yellow black-text"
               ng-click="clickeableLink('<?= site_url('item/gestion') ?>/'+c.idcontrato, $event, 'Maestro items de contrato');">
               <small>Items</small>
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-small green accent-2" ng-click="clickeableLink('<?= site_url('vigencia/gestion') ?>/'+c.idcontrato, $event, 'Vigencias de contrato');">
+            <button type="button" class="btn btn-small blue darken-4" ng-click="clickeableLink('<?= site_url('vigencia/gestion') ?>/'+c.idcontrato, $event, 'Vigencias de contrato');">
               <small>Vigencias</small>
             </button>
           </td>

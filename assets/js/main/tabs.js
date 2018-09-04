@@ -378,6 +378,12 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
       $('.tooltipped').tooltip();
     } );
   }
+
+  $scope.initJquerytTabs = function(selector){
+    $( function() {
+      $( selector ).tabs();
+    } );
+  }
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });
@@ -472,6 +478,10 @@ app.controller("form_contrato", function($scope, $http, $timeout){
 });
 app.controller("itemc",function($scope, $http, $timeout){
   itemc($scope, $http, $timeout);
+});
+
+app.controller("vigencia_tarifas",function($scope, $http, $timeout){
+  vigencia_tarifas($scope, $http, $timeout);
 });
 
 //let's make a startFrom filter
