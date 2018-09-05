@@ -54,7 +54,6 @@ var vigencia_tarifas = function($scope, $http, $timeout){
 
   // Obtener vigencias de tarifas
   $scope.getVigencias = function(lnk, idcontrato){
-    console.log(idcontrato)
     if(idcontrato){
       $scope.peticion(lnk+"/"+idcontrato, {}, function(resp){
         if(resp.data.status){
@@ -102,6 +101,7 @@ var vigencia_tarifas = function($scope, $http, $timeout){
 
   $scope.selecionarContrato = function(c, el){
     if(c){
+      $scope.vg = {};
       $scope.contrato = c;
       $scope.loader=true;
       var lnk = $scope.$parent.site_url+'/vigencia/get_by/';

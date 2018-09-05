@@ -1,3 +1,4 @@
+<?php $idtag = 'formSelectContrato'.rand(); ?>
 <section ng-controller="itemc" ng-init="getItemsByContrato( '<?= site_url('item/get_itemc') ?>', <?= isset($idcontrato)?$idcontrato:'undefined'; ?> )">
   <div class="card-panel padding1ex">
     <h5>Maestro de Items de contrato</h5>
@@ -6,7 +7,7 @@
       <div class="col s12 m6 l4">
         <span>No. Contrato: </span>
         <b ng-bind="contrato.no_contrato"></b>
-        <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="formSelectContrato">Selecionar contrato</button>
+        <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Selecionar contrato</button>
       </div>
 
       <div class="col s12 m6 l5">
@@ -60,5 +61,5 @@
 
   <?php  $this->load->view('contrato/items/itemc/form_item'); ?>
   <?php  $this->load->view('contrato/items/itemc/form_cargue'); ?>
-  <?php  $this->load->view('contrato/select_contrato'); ?>
+  <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag ) ); ?>
 </section>

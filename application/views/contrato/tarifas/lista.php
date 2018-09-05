@@ -33,7 +33,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="tf in vg.tarifas | filter: filterTarifaVigencia">
-      <th> <i class="fas fa-info-circle" ng-click="dialog(tf.iditemf)"></i> </th>
+      <th> <span data-icon="&#xe039;" ng-click="dialog(tf.iditemf)"></dpan> </th>
       <td ng-bind="tf.codigo"></td>
       <td ng-bind="tf.item"></td>
       <td ng-bind="tf.descripcion"></td>

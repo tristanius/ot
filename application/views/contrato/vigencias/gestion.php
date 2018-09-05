@@ -1,3 +1,4 @@
+<?php $idtag = 'formSelectContrato'.rand(); ?>
 <section ng-controller="vigencia_tarifas">
   <h4>Vigencias de tarifas por contrato</h4>
 
@@ -5,7 +6,7 @@
     <div class="col s12 m4">
       <label>No. Contrato: </label>
       <b ng-bind="contrato.no_contrato"></b>
-      <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="formSelectContrato">Seleccionar</button>
+      <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
     </div>
 
     <div class="col s12 m7">
@@ -43,6 +44,6 @@
   <div class="" ng-init="getContratos('<?= site_url('contrato/get_contratos') ?>')">
     <?php $this->load->view('contrato/vigencias/tabs_vigencias'); ?>
 
-    <?php  $this->load->view('contrato/select_contrato'); ?>
+    <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
   </div>
 </section>

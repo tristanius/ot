@@ -23,7 +23,7 @@ class Export extends CI_Controller{
     $production = ( isset($fact) && $fact==1 )?TRUE:NULL;
     $rows = $this->repo->getHistoryBy($idOT, $production);
     xlsx($rows->result_array(), $rows->list_fields(), './uploads/'.$nombre_ot.'.xlsx', 'historial', array('cantidad_final'));
-    force_download('./uploads/'.$nombre_ot.'.xlsx',NULL);
+    force_download('./uploads/reportes/'.$nombre_ot.'.xlsx',NULL);
     //$this->load->view('miscelanios/history/infoReportes', array('rows'=>$rows, 'nombre_ot'=>$nombre_ot) );
   }
 

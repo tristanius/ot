@@ -1,5 +1,5 @@
 <!-- Modal Structure -->
- <section id="formSelectContrato" class="modal modal-fixed-footer" ng-init="initModals('#formSelectContrato');" >
+ <section id="<?= $idtag ?>" class="modal modal-fixed-footer" ng-init="initModals('#<?= $idtag ?>');" >
    <div class="modal-content">
      <h4>Selecciona un contrato para continuar:</h4>
 
@@ -24,7 +24,7 @@
            <td ng-bind="c.contratista"></td>
            <td ng-bind="c.cliente"></td>
            <td>
-             <button type="button" class="btn btn-small" ng-click="selecionarContrato(c, '#formSelectContrato');">Seleccionar</button>
+             <button type="button" class="btn btn-small" ng-click="selecionarContrato(c, '#<?= $idtag ?>');">Seleccionar</button>
            </td>
          </tr>
        </tbody>
