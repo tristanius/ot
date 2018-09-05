@@ -48,7 +48,7 @@
         </div>
 
         <div class="card-panel col m12" >
-          <?php $this->load->view('contrato/vigencias/lista'); ?>
+          <?php $this->load->view('contrato/tarifas/lista'); ?>
         </div>
 
       </div>

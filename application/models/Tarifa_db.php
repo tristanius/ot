@@ -26,10 +26,13 @@ class Tarifa_db extends CI_Model{
       $this->db->where( $where );
     }
     $this->db->select('itc.iditemc, itc.item, itc.descripcion, tip.grupo_mayor AS tipo, itf.iditemf, itf.codigo, itf.descripcion AS descripcion_interna');
-    $this->db->select('tf.tarifa, tf.idtarifa, vg.idvigencia_tarifas, vg.descripcion_vigencia');
-    return $this->db->from('tarifa AS tf')->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tf.idvigencia_tarifas')
-          ->join('itemf AS itf', 'tf.itemf_iditemf = itf.iditemf')->join('itemc AS itc','itc.iditemc = itf.itemc_iditemc')
-          ->join('tipo_itemc AS tip', 'itc.idtipo_itemc = tip.idtipo_itemc')->get();
+    $this->db->select('IFNULL(tf.tarifa, "-") AS tarifa, tf.idtarifa, vg.idvigencia_tarifas, vg.descripcion_vigencia');
+    return $this->db->from('itemc AS itc')
+        ->join('itemf AS itf', 'itf.itemc_iditemc = itc.iditemc')
+        ->join('tarifa AS tf','tf.itemf_iditemf = itf.iditemf', 'LEFT')
+        ->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tf.idvigencia_tarifas','LEFT')
+        ->join('tipo_itemc AS tip', 'itc.idtipo_itemc = tip.idtipo_itemc')
+        ->get();
   }
   #=============================================================================
   public function getVigencias( $idcontrato )
