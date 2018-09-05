@@ -15,7 +15,7 @@
 
         <div class="col m7">
           <br>
-          <table class="mytabla">
+          <table class="mytabla font11">
             <thead>
               <tr>
                 <th colspan="6">Informacion de la vigencia</th>
@@ -34,9 +34,9 @@
                 <td ng-bind="vg.descripcion_vigencia"></td>
                 <td ng-bind="vg.fecha_inicio_vigencia"></td>
                 <td ng-bind="vg.fecha_fin_vigencia"></td>
-                <td ng-bind="vg.a * 1"></td>
-                <td ng-bind="vg.i * 1"></td>
-                <td ng-bind="vg.u * 1"></span>
+                <td ng-bind="( vg.a * 1 )"></td>
+                <td ng-bind="( vg.i * 1 )"></td>
+                <td ng-bind="( vg.u * 1 )"></span>
               </tr>
             </tbody>
           </table>
@@ -44,10 +44,10 @@
 
         <div class="col m5">
           <h5>Opciones de tarifas: </h5>
-          <button type="button" class="btn btn-small blue">Consultar tarifas</button>
+          <button type="button" class="btn btn-small blue" ng-click="getTarifas('<?= site_url('tarifa/get_by_vigencia/') ?>', vg.idvigencia_tarifas)">Consultar tarifas</button>
         </div>
 
-        <div class="card-panel col m12">
+        <div class="card-panel col m12" >
           <?php $this->load->view('contrato/vigencias/lista'); ?>
         </div>
 

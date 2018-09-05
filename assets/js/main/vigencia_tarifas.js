@@ -54,11 +54,15 @@ var vigencia_tarifas = function($scope, $http, $timeout){
 
   // Obtener vigencias de tarifas
   $scope.getVigencias = function(lnk, idcontrato){
+    console.log(idcontrato)
     if(idcontrato){
       $scope.peticion(lnk+"/"+idcontrato, {}, function(resp){
         if(resp.data.status){
           $scope.vigencias = resp.data.vigencias;
-          $scope.setTabs();
+          if( !$scope.contrato.idcontrato && resp.data.vigencias[0].idcontrato){
+            $scope.contrato.idcontrato = resp.data.vigencias[0].idcontrato;
+            $scope.contrato.no_contrato = resp.data.vigencias[0].no_contrato;
+          }
         }else{
           alert('Algo no ha salido bien en la consulta.');
         }
@@ -104,6 +108,16 @@ var vigencia_tarifas = function($scope, $http, $timeout){
       M.Modal.getInstance($(el)).close();
       $scope.getVigencias(lnk, c.idcontrato);
     }
+  }
+
+  $scope.getTarifas = function(lnk, idvg){
+    $scope.loader=true;
+    $scope.peticion(lnk+"/"+idvg, {idvigencia_tarifas: idvg }, function(resp){
+      if(resp.data.status){
+        $scope.vg.tarifas = resp.data.tarifas;
+      }
+      $scope.loader=false;
+    });
   }
 
 }

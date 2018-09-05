@@ -9,7 +9,7 @@
     </div>
 
     <div class="col s12 m7">
-      <table class="mytabla">
+      <table class="mytabla font11">
         <thead class=" indigo lighten-5">
           <tr>
             <th colspan="4">Informacion contrato No. <span ng-bind="contrato.no_contrato"></span> </th>

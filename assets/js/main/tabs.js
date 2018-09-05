@@ -339,7 +339,6 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
     return Math.ceil(lista.length/pageSize);
   }
 
-
   $scope.datatable = function(selector){
     $(selector+' thead tr.filters th').each( function () {
         var title = $(this).text();

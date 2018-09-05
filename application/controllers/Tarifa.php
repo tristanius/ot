@@ -13,9 +13,13 @@ class Tarifa extends CI_Controller {
 		// code...
 	}
 
-	public function getTarifas($idvigencias)
+	public function get_by_vigencia( $idvigencia )
 	{
-		// code...
+		$this->load->model(array('tarifa_db'=>'tf'));
+		$ret = new stdClass();
+		$ret->tarifas = $this->tf->getBy( array('vg.idvigencia_tarifas'=>$idvigencia) )->result();
+		$ret->status = TRUE;
+		echo json_encode( $ret );
 	}
 
 	public function save($value='')

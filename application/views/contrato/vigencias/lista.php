@@ -3,14 +3,38 @@
 <button type="button" class="btn btn-small light-green accent-4">Agregar</button>
 <button type="button" class="btn btn-small indigo darken-3">Importar</button>
 <button type="button" class="btn btn-small orange">Exportar</button>
-<table class="mytabla staked">
+
+<div class="">
+  <br>
+</div>
+
+<table class="mytabla staked font11">
   <thead>
     <tr>
+      <th>ID</th>
       <th>Codigo</th>
       <th>Item</th>
       <th>Descripción</th>
       <th>Tipo</th>
       <th>Tarifa</th>
     </tr>
+    <tr>
+      <th></th>
+      <th> <input type="text" ng-model="filterTarifaVigencia.codigo" placeholder="filtro"> </th>
+      <th> <input type="text" ng-model="filterTarifaVigencia.item" placeholder="filtro"> </th>
+      <th> <input type="text" ng-model="filterTarifaVigencia.descripcion" placeholder="filtro"> </th>
+      <th> <input type="text" ng-model="filterTarifaVigencia.tipo" placeholder="filtro"> </th>
+      <th> </th>
+    </tr>
   </thead>
+  <tbody>
+    <tr ng-repeat="tf in vg.tarifas | filter: filterTarifaVigencia">
+      <th> <i class="fas fa-info-circle" ng-click="dialog(tf.iditemf)"></i> </th>
+      <td ng-bind="tf.codigo"></td>
+      <td ng-bind="tf.item"></td>
+      <td ng-bind="tf.descripcion"></td>
+      <td ng-bind="tf.tipo"></td>
+      <td ng-bind="tf.tarifa | currency:'$ ':2 "></td>
+    </tr>
+  </tbody>
 </table>
