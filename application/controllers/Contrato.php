@@ -9,10 +9,8 @@ class Contrato extends CI_Controller{
     //Codeigniter : Write Less Do More
   }
 
-  function index()
-  {
+  function index() { }
 
-  }
   public function gestion($value='')
   {
     if( $this->sesion_iniciada() ){
@@ -28,7 +26,7 @@ class Contrato extends CI_Controller{
   public function save()
   {
     if( $this->sesion_iniciada() ){
-      $contrato = json_decode( file_get_contents('php://input'));
+      $contrato = json_decode( file_get_contents('php://input') );
       $ret = new stdClass();
       if (isset($contrato->idcontrato)) {
         $id = $contrato->idcontrato;

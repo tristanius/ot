@@ -27,15 +27,18 @@ class Tarifa extends CI_Controller {
 		// code...
 	}
 
-	public function add($value='')
+	private function add($value='')
 	{
 		// code...
 	}
 
-	public function mod($value='')
+	private function mod($value='')
 	{
 		// code...
 	}
+
+	
+
 }
 
 /* End of file  */

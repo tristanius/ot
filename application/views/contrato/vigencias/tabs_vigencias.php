@@ -1,56 +1,56 @@
-<section class="noMaterialStyles" ng-if="contrato.idcontrato">
+<section ng-if="vg.idvigencia_tarifas">
   <?php $i = rand(); ?>
 
   <div id="myTabsVigencias<?= $i ?>">
-    <div class="mytabs">
-      <a ng-repeat="vig in vigencias" ng-click="setVigencia(vig)" ng-bind="($index+1)+'. '+vig.descripcion_vigencia" class="mytab {{ (vg == vig)?'active':'' }}"> </a>
-    </div>
 
-    <div ng-if="vg.idvigencia_tarifas">
-      <img ng-show="loader" src="<?= base_url('assets/img/loader.gif') ?>" style="width: 50px; height: 50px">
+    <div class="row card ">
 
-      <div class="row">
-
-        <img ng-show="loader" src="<?= base_url('assets/img/loader.gif') ?>" style="width: 50px; height: 50px">
-
-        <div class="col m7">
-          <br>
-          <table class="mytabla font11">
-            <thead>
-              <tr>
-                <th colspan="6">Informacion de la vigencia</th>
-              </tr>
-              <tr>
-                <th> Descripción vigencia </th>
-                <th> F. inicio </th>
-                <th> F. Final </th>
-                <th> A </th>
-                <th> I </th>
-                <th> U </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td ng-bind="vg.descripcion_vigencia"></td>
-                <td ng-bind="vg.fecha_inicio_vigencia"></td>
-                <td ng-bind="vg.fecha_fin_vigencia"></td>
-                <td ng-bind="( vg.a * 1 )"></td>
-                <td ng-bind="( vg.i * 1 )"></td>
-                <td ng-bind="( vg.u * 1 )"></span>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col m4">
+        <div>
+          <h6>Opciones de vigencia:</h6>
+          <button type="button" class="btn btn-small blue" ng-if="vg.idvigencia_tarifas" ng-click="getTarifas('<?= site_url('tarifa/get_by_vigencia/') ?>', vg.idvigencia_tarifas)">Consultar tarifas</button>
         </div>
 
-        <div class="col m5">
-          <h5>Opciones de tarifas: </h5>
-          <button type="button" class="btn btn-small blue" ng-click="getTarifas('<?= site_url('tarifa/get_by_vigencia/') ?>', vg.idvigencia_tarifas)">Consultar tarifas</button>
-        </div>
+        <img ng-show="loader" src="<?= base_url('assets/img/loader.gif') ?>" style="width: 40px; height: 40px">
+      </div>
 
-        <div class="card-panel col m12" >
-          <?php $this->load->view('contrato/tarifas/lista'); ?>
-        </div>
+      <div class="col m8">
+        <img ng-show="loader" src="<?= base_url('assets/img/loader.gif') ?>" style="width: 40px; height: 40px">
+        <table class="mytabla font11">
+          <thead>
+            <tr class="indigo lighten-5">
+              <th colspan="9">Informacion de la vigencia selecionada</th>
+            </tr>
+            <tr>
+              <th> Contratista: </th>
+              <th> Cliente: </th>
+              <th> Contratista: </th>
+              <th> Descripción vigencia </th>
+              <th> F. inicio </th>
+              <th> F. Final </th>
+              <th> A </th>
+              <th> I </th>
+              <th> U </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td ng-bind="contrato.contratista"></td>
+              <td ng-bind="contrato.cliente"></td>
+              <td ng-bind="contrato.contratista"></td>
+              <td ng-bind="vg.descripcion_vigencia"></td>
+              <td ng-bind="vg.fecha_inicio_vigencia"></td>
+              <td ng-bind="vg.fecha_fin_vigencia"></td>
+              <td ng-bind="( vg.a * 1 )"></td>
+              <td ng-bind="( vg.i * 1 )"></td>
+              <td ng-bind="( vg.u * 1 )"></span>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
+      <div class="col s12">
+        <hr>
+        <?php $this->load->view('contrato/tarifas/lista'); ?>
       </div>
 
     </div>

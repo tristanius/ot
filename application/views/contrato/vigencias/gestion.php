@@ -1,42 +1,19 @@
 <?php $idtag = 'formSelectContrato'.rand(); ?>
-<section ng-controller="vigencia_tarifas">
-  <h4>Vigencias de tarifas por contrato</h4>
+<section ng-controller="vigencia_tarifas" class="noMaterialStyles" >
+  <h5>Vigencias de tarifas por contrato</h5>
 
   <div class="row" ng-init="getVigencias( '<?= site_url('vigencia/get_By') ?>', <?= isset($idcontrato)?$idcontrato:'undefined'; ?> )">
+
     <div class="col s12 m4">
-      <label>No. Contrato: </label>
-      <b ng-bind="contrato.no_contrato"></b>
+      <b>No. Contrato: </b>
+      <span ng-bind="contrato.no_contrato"></span>
       <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
     </div>
 
-    <div class="col s12 m7">
-      <table class="mytabla font11">
-        <thead class=" indigo lighten-5">
-          <tr>
-            <th colspan="4">Informacion contrato No. <span ng-bind="contrato.no_contrato"></span> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>Contratista:</th>
-            <td ng-bind="contrato.contratista"></td>
-
-            <th>Objeto del contrato:</th>
-            <td ng-bind="contrato.objeto"></td>
-          </tr>
-          <tr>
-            <th>Cliente:</th>
-            <td ng-bind="contrato.cliente"></td>
-
-            <th>Estado:</th>
-            <td ng-bind="contrato.estado?'Activo':'No activo'"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="col m12">
-      <button type="button" class="btn btn-small green">Agregar vigencia</button>
+    <div class="col s12 m8 regularForm">
+      <b>Seleccionar vigencia</b>
+      <select class="" ng-model="vg" ng-options="v as ( v.descripcion_vigencia ) for v in vigencias"></select>
+      <button type="button" ng-disabled="vigencias.length == 0" class="btn btn-small green">Agregar vigencia</button>
     </div>
 
   </div>

@@ -115,9 +115,14 @@ var vigencia_tarifas = function($scope, $http, $timeout){
     $scope.peticion(lnk+"/"+idvg, {idvigencia_tarifas: idvg }, function(resp){
       if(resp.data.status){
         $scope.vg.tarifas = resp.data.tarifas;
+        console.log(resp.data);
       }
       $scope.loader=false;
     });
   }
+
+}
+
+var tarifas_vigencia = function($scope, $http, $timeout){
 
 }
