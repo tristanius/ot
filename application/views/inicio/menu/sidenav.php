@@ -87,8 +87,8 @@
           <li>
             <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('reporte/listado') ?>', $event, 'Gestion reportes'); closeMenu()">  4.1. <b>Reportes diarios de O.T.</b> </a>
           </li>
-          <li ng-if="validPriv(80)">
-            <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('reporte/cargue_reporte') ?>', $event, 'Cargue de reportes'); closeMenu()"> 4.2. Cargue de reportes </a>
+          <li ng-if="validPriv(68)">
+            <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('historicoreportes/form') ?>', $event, 'Cargue de reportes'); closeMenu()"> 4.2. Cargue de reportes </a>
           </li>
           <li ng-if="validPriv(68)">
             <a href="#" class="sidenav-close font12" ng-click="clickeableLink('<?= site_url('consulta/form_estado_reportes') ?>', $event, 'Estados de reportes'); closeMenu()"> 4.3. Estados de reportes </a>

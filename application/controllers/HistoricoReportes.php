@@ -10,11 +10,12 @@ class HistoricoReportes extends CI_Controller{
   function index(){}
 
   public function form(){
+    $this->crear_directorio('./uploads/reportes');
+    $this->crear_directorio('./uploads/reportes/cargue');
     $this->load->view('reportes/cargue/form');
   }
 
   public function upload_file(){
-
   }
 
   private function leerArchivo( $path ){

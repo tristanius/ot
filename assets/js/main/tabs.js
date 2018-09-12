@@ -460,8 +460,8 @@ app.controller("imprimirRD", function($scope, $http, $timeout){
   imprimirRD($scope, $http, $timeout);
 });
 
-app.controller("historico_fact", function($scope, $http, $timeout){
-  historico_fact($scope, $http, $timeout);
+app.controller("cargues_historicos", function($scope, $http, $timeout){
+  cargues_historicos($scope, $http, $timeout);
 });
 app.controller("condensado_rd", function($scope, $http, $timeout){
   condensado_rd($scope, $http, $timeout);

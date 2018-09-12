@@ -98,3 +98,55 @@ var historico_fact =  function($scope, $http, $timeout){
     $scope.spinner  = false;
   }
 }
+
+var cargues_historicos =  function($scope, $http, $timeout){
+  $scope.resultado_cargue = [];
+  $scope.resultados = [];
+
+  $scope.loader = false;
+  /*
+  Se desea realizar un cargue masivo mas generico para este tipo de gestiones, se desea un procedimiento estandard,
+  el procedimiento seria el siguiente:
+  1. Sequiere primero inicializar el uploader
+  2. Los cargues primero deben selecionar un contrato.
+  3. Los
+  */
+  $scope.initAdjunto = function(ruta, tag) {
+    $scope.loader = true;
+    $timeout(
+      function(){
+        $scope.adjunto = $(tag).uploadFile({
+          url:ruta,
+          autoSubmit: false,
+          fileName:"file",
+          dynamicFormData: function(){
+            var data ={
+              id:$scope.$parent.log.idusuario,
+              usuario:$scope.$parent.log.nombre_usuario
+            }
+            return data;
+          },
+          onSuccess: function(file, data){
+            $scope.loader = false;
+            console.log(data);
+            var respuesta = JSON.parse(data);
+            $timeout(function(){
+              if(respuesta.status){
+              }
+            });
+          },
+          onError: function(files,status,errMsg,pd){
+            $scope.loader = false;
+            alert(JSON.stringify(errMsg));
+          }
+
+        });
+      }
+    );
+  }
+
+  $scope.IniciarUploadAdjunto = function(){
+    $scope.adjunto.startUpload();
+  }
+
+}
