@@ -13,8 +13,7 @@ class Reporte extends CI_Controller{
   function index(){ }
   #===========================================================================================================
   # add
-  public function addvalid($idOT, $fecha)
-  {
+  public function addvalid($idOT, $fecha){
     $date1=date_create($fecha);
     $date2=date_create(date('Y-m-d H:i:s'));
     $diff=$date1->diff($date2);
@@ -35,6 +34,7 @@ class Reporte extends CI_Controller{
       echo "toolong";
     }
   }
+
   # form add reporte
   public function add($idOT, $fecha){
     $this->load->model('Ot_db', 'otdb');
@@ -62,7 +62,8 @@ class Reporte extends CI_Controller{
 			)
 		);
   }
-  # insetar el reporte
+  # ==============================================================================
+  # insetar el reporte [SIMPLIFICAR]
   public function insert(){
     $this->load->library('session');
     $post = json_decode( file_get_contents("php://input") );
@@ -105,7 +106,6 @@ class Reporte extends CI_Controller{
           $response->material = $var->material;
           $response->otros = $var->otros;
           $response->subcontratos = $var->subcontratos;
-          echo json_encode($response);
         }else{
           show_404();
         }
@@ -120,13 +120,15 @@ class Reporte extends CI_Controller{
       $response->material = $validReporte->material;
       $response->otros = $validReporte->otros;
       $response->subcontratos = $validReporte->subcontratos;
-      echo json_encode($response);
     }
+    echo json_encode($response);
   }
+
   public function insertarRecursoRep($list, $idr){
     $this->load->library('session');
+    $this->load->model(array('recurso_reporte_db'=>'rec_repo'));
     foreach ($list as $key => $value) {
-      $idrrd = $this->repo->addRecursoRepo($value, $idr);
+      $idrrd = $this->rec_repo->addRecursoRepo($value, $idr);
       // agregar avance de obra
       $this->avanceRecurso($value, $idrrd);
     }
@@ -139,8 +141,10 @@ class Reporte extends CI_Controller{
   {
     $identificacion = ( $conjunto == "equipos" )? $val->codigo_siesa: $val->identificacion;
     $val->valid = TRUE;
+
+    $this->load->model(array('recurso_reporte_db'=>'rec_repo'));
     # Consultamos registros el mismo día en otras OT
-    $rows = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
+    $rows = $this->rec_repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT);
     # Si existe
     if($rows->num_rows() > 0){
       # si NO es un codigo excepto continuamos
@@ -148,7 +152,7 @@ class Reporte extends CI_Controller{
         $fact= FALSE;
         $select='SUM(rrd.cantidad) AS cantidad_acumulada';
         $facturable = NULL;
-        $acumulados = $this->repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, $facturable, $select)->row();
+        $acumulados = $this->rec_repo->recursoRepoFechaBy($conjunto, $identificacion, $fecha, $idOT, $facturable, $select)->row();
         # Validamos
         $acumulado = $acumulados->cantidad_acumulada + $val->cantidad;
         if($acumulado >= 1){
@@ -292,6 +296,7 @@ class Reporte extends CI_Controller{
   public function getRecursoData($idReporte)
   {
     $this->load->model('reporte_db', 'repo');
+    $this->load->model('recurso_reporte_db', 'rec_repo');
     $myrepo = $this->repo->get($idReporte)->row();
 
     $recursos = new stdClass();
@@ -300,15 +305,16 @@ class Reporte extends CI_Controller{
     $recursos->validado_pyco = $myrepo->validado_pyco;
     $recursos->observaciones_pyco = json_decode($myrepo->observaciones_pyco);
     $recursos->info = json_decode( $this->getInfo($idReporte) );
-    $recursos->personal = $this->repo->getRecursos($idReporte, 'personal')->result();
-    $recursos->equipos = $this->repo->getRecursos($idReporte, 'equipos')->result();
-    $recursos->actividades = $this->repo->getRecursos($idReporte, 'actividades')->result();
-    $recursos->material = $this->repo->getRecursos($idReporte, 'material')->result();
-    $recursos->otros = $this->repo->getRecursos($idReporte, 'otros')->result();
-    $recursos->subcontratos = $this->repo->getRecursos($idReporte, 'subcontrato')->result();
+    $recursos->personal = $this->rec_repo->getRecursos($idReporte, 'personal')->result();
+    $recursos->equipos = $this->rec_repo->getRecursos($idReporte, 'equipos')->result();
+    $recursos->actividades = $this->rec_repo->getRecursos($idReporte, 'actividades')->result();
+    $recursos->material = $this->rec_repo->getRecursos($idReporte, 'material')->result();
+    $recursos->otros = $this->rec_repo->getRecursos($idReporte, 'otros')->result();
+    $recursos->subcontratos = $this->rec_repo->getRecursos($idReporte, 'subcontrato')->result();
     return $recursos;
   }
   # ===========================================================================================================
+  # Actualizar reporte [SIMPLIFICAR]
   public function update($value='')
   {
     $this->load->library('session');
@@ -346,9 +352,6 @@ class Reporte extends CI_Controller{
         if($validReporte->succ){
           $response->success = 'success';
           $response->msj = 'Guardado correctamente. '.date('Y-m-d H:i:s');
-        }elseif ($post->info->validado_pyco == 'CORREGIR') {
-          $response->success = 'unsuccess';
-          $response->msj = 'Los recursos deben ser validados pero el reporte al estar por CORREGIR se ha guardado. '.date('Y-m-d H:i:s');
         }
         $response->personal = $var->personal;
         $response->equipos = $var->equipos;
@@ -356,9 +359,9 @@ class Reporte extends CI_Controller{
         $response->material = $var->material;
         $response->otros = $var->otros;
         $response->subcontratos = $var->subcontratos;
-        echo json_encode($response);
       }else{
-        echo "Falló la inserción";
+        $response->success = 'unsuccess';
+        $response->msj = 'La actualizacion de datos no se ha completado.';
       }
     }else {
       $response = new stdClass();
@@ -370,8 +373,8 @@ class Reporte extends CI_Controller{
       $response->material = $validReporte->recursos->material;
       $response->otros = $validReporte->recursos->otros;
       $response->subcontratos = $validReporte->recursos->otros;
-      echo json_encode($response);
     }
+    echo json_encode($response);
   }
 
   public function updateData($value='')
@@ -392,14 +395,15 @@ class Reporte extends CI_Controller{
   public function actualizarRecursos($recursos, $idr, $fecha_reporte)
   {
     $this->load->library('session');
+    $this->load->model(array('recurso_reporte_db'=>'rec_repo'));
     $cambios = array();
     foreach ($recursos as $key => $rec) {
       if( !isset($rec->idrecurso_reporte_diario) ){
-        $idrrd = $this->repo->addRecursoRepo($rec, $idr);
+        $idrrd = $this->rec_repo->addRecursoRepo($rec, $idr);
         $rec->idrecurso_reporte_diario = $idrrd;
         $this->avanceRecurso($rec, $idrrd); # Agregamos avance de actividad si lo tiene
       }else{
-        if ( $this->repo->editRecursoRepo($rec, $idr) ) {
+        if ( $this->rec_repo->editRecursoRepo($rec, $idr) ) {
           $this->avanceRecurso($rec, $rec->idrecurso_reporte_diario); # Agregamos avance de actividad si lo tiene
         }
       }
@@ -410,12 +414,11 @@ class Reporte extends CI_Controller{
   public function avanceRecurso($rec, $idrrd=NULL)
   {
     if (isset($rec->idavance_reporte)) {
-      $this->repo->modAvance($rec);
+      $this->rec_repo->modAvance($rec);
     }else{
-      $this->repo->addAvance($rec, $idrrd);
+      $this->rec_repo->addAvance($rec, $idrrd);
     }
   }
-
 
   public function updateEstado()
   {
@@ -434,37 +437,6 @@ class Reporte extends CI_Controller{
     }
   }
 
-  # ===========================================================================================================
-  public function exiteReporte()
-  {
-    $this->load->model('reporte_db','repo');
-    $r = $this->repo->get($idReporte);
-    if ($r->num_rows() < 0) {
-      echo 0;
-    }else{
-      echo 1;
-    }
-  }
-  # ============================================================================================================
-  # Datos de relleno para pruebas
-  public function getByOT($value='')
-  {
-    $reportes = array();
-		for ($i=15; $i <= 31 ; $i++) {
-			$fecha = date('Y-m-d', strtotime('2016-08-'.$i));
-			$report = array(
-				'idreporte'=>$i,
-				'OT_idOT' => '27',
-				'nombre_ot'=>'VITPCLLTEST',
-				'fecha_reporte'=>$fecha,
-				'dia'=> date('d', strtotime($fecha)),
-				'mes'=> date('m', strtotime($fecha)),
-				'valido'=> ( ($i%2==0)?true: false)
-			);
-			array_push($reportes, $report);
-		}
-		echo json_encode($reportes);
-  }
   #===============================================================================================================
   # Obtener recursos preparados para agregar a la O.T.
   public function getRecursosByOT($idOT, $fecha = NULL){
@@ -594,27 +566,27 @@ class Reporte extends CI_Controller{
   public function get_recursos_reporte_by($idOT, $idFrente, $idReporte)
   {
     $this->load->model('reporte_db','rd');
+    $this->load->model('recurso_reporte_db','rec_repo');
     $ret = new StdClass();
     $ret->recursos = new StdClass();
-    $ret->recursos->personal = $this->rd->getRecursos($idReporte, 'personal', $idFrente)->result();
-    $ret->recursos->equipos = $this->rd->getRecursos($idReporte, 'equipos', $idFrente)->result();
-    $ret->recursos->actividades = $this->rd->getRecursos($idReporte, 'actividades', $idFrente)->result();
-    $ret->recursos->material = $this->rd->getRecursos($idReporte, 'material', $idFrente)->result();
-    $ret->recursos->otros = $this->rd->getRecursos($idReporte, 'otros', $idFrente)->result();
+    $ret->recursos->personal = $this->rec_repo->getRecursos($idReporte, 'personal', $idFrente)->result();
+    $ret->recursos->equipos = $this->rec_repo->getRecursos($idReporte, 'equipos', $idFrente)->result();
+    $ret->recursos->actividades = $this->rec_repo->getRecursos($idReporte, 'actividades', $idFrente)->result();
+    $ret->recursos->material = $this->rec_repo->getRecursos($idReporte, 'material', $idFrente)->result();
+    $ret->recursos->otros = $this->rec_repo->getRecursos($idReporte, 'otros', $idFrente)->result();
     $ret->success = TRUE;
     echo json_encode($ret);
   }
 
   # ============================================================================================================
   # Eliminaciones
-
   public function eliminarRecursosReporte($idrecurso_reporte_diario)
   {
     if ( isset($idrecurso_reporte_diario) && $idrecurso_reporte_diario != 'undefined') {
-      $this->load->model('reporte_db', 'repo');
-      $this->repo->init_transact();
-      $this->repo->deleteRecursoReporte($idrecurso_reporte_diario);
-      $val = $this->repo->end_transact();
+      $this->load->model('recurso_reporte_db', 'rec_repo');
+      $this->rec_repo->init_transact();
+      $this->rec_repo->deleteRecursoReporte($idrecurso_reporte_diario);
+      $val = $this->rec_repo->end_transact();
       if($val != FALSE){
         echo "success";
       }else{
@@ -624,7 +596,6 @@ class Reporte extends CI_Controller{
       echo "Error";
     }
   }
-
   public function deleteReporte($idreporte_diario)
   {
     $this->load->database('ot');
@@ -633,7 +604,7 @@ class Reporte extends CI_Controller{
     echo "success";
   }
 
-  //calendario js+angular
+  //calendario js+angular REVISAR UTILIDAD
   public function calendar($ot)
 	{
 		$this->load->model('ot_db', 'myot');
@@ -641,44 +612,4 @@ class Reporte extends CI_Controller{
 		$this->load->view('reportes/calendar', array('ot'=>$ot->row()));
 	}
 
-  # UTILIDADES
-
-  public function calcularCantidad($rec)
-  {
-    $cant = 0;
-    if ($rec->tipo == 3) {
-      if ($rec->unidad == 'hr') {
-        $cant = ($rec->horas_operacion-4 > 0)? $rec->horas_operacion: 4;
-      }else if ($rec->horas_operacion == 0 && $rec->hrdisp > 0) {
-        $disp  = ($rec->hrdisp / $rec->basedisp);
-        $cant = ($rec->horas_disponible > 0.00)?$disp:0;
-      }else{
-        $cant = 1;
-      }
-    }else{
-      $cant = 1;
-    }
-    return round($cant,6) * $rec->cant_und;
-  }
-
-  public function restoreDates($update=FALSE)
-  {
-    $this->load->database('ot');
-    $rows = $this->db->query(
-      '
-      SELECT
-        OT.nombre_ot, rd.fecha_reporte, rd.json_r, rd.idreporte_diario,
-        (SELECT COUNT(myrd.fecha_reporte) FROM reporte_diario AS myrd WHERE myrd.fecha_reporte = rd.fecha_reporte AND myrd.OT_idOT = rd.OT_idOT ) AS num_rd
-      FROM reporte_diario AS rd JOIN OT ON OT.idOT = rd.OT_idOT
-      HAVING num_rd > 1
-      '
-    );
-    foreach ($rows->result() as $key => $rd) {
-      $json = json_decode($rd->json_r);
-      echo $rd->idreporte_diario." ".$rd->nombre_ot." ".$json->fecha_reporte.' '.$rd->fecha_reporte.'<br>';
-      if($update){
-        $this->db->update('reporte_diario', array('fecha_reporte'=>$json->fecha_reporte), 'idreporte_diario = '.$rd->idreporte_diario);
-      }
-    }
-  }
 }

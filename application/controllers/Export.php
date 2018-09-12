@@ -33,7 +33,7 @@ class Export extends CI_Controller{
   {
     $this->load->database('ot');
     $bases = $this->db->get('base');
-    $this->load->view('miscelanios/produccion/form_informeProduccion',array('bases'=>$bases));
+    $this->load->view( 'miscelanios/produccion/form_informeProduccion', array('bases'=>$bases) );
   }
 
   public function informeFacturacion($f1=NULL, $f2=NULL)
@@ -128,13 +128,13 @@ class Export extends CI_Controller{
 
   public function reportePDF($idOT, $idrepo)
   {
-    $this->load->model('reporte_db', 'repo');
+    $this->load->model( array('reporte_db'=>'repo', 'recurso_reporte_db'=>'rec_repo') );
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
     $json_r = json_decode($row->json_r);
     $recursos = new stdClass();
-    $rpers = $this->repo->getRecursos($idrepo,"personal");
-    $requs = $this->repo->getRecursos($idrepo,"equipos");
-    $racts = $this->repo->getRecursos($idrepo,"actividades");
+    $rpers = $this->rec_repo->getRecursos($idrepo,"personal");
+    $requs = $this->rec_repo->getRecursos($idrepo,"equipos");
+    $racts = $this->rec_repo->getRecursos($idrepo,"actividades");
     $recursos->personal = $rpers->result();
     $recursos->equipos = $requs->result();
     $recursos->actividades = $racts->result();
@@ -152,14 +152,15 @@ class Export extends CI_Controller{
   {
     setlocale(LC_ALL,"es_ES");
     $this->load->helper('reporte_pma');
-    $this->load->model('reporte_db', 'repo');
+    $this->load->model( array('reporte_db'=>'repo', 'recurso_reporte_db'=>'rec_repo') );
+    $this->load->model('ot_db');
     $row = $this->repo->getBy($idOT, NULL, $idrepo)->row();
-    $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
+    $row->sap_tarea =  $this->ot_db->getSAP($idOT, $row->fecha_reporte);
     $json_r = json_decode($row->json_r);
     $recursos = new stdClass();
-    $recursos->personal = $this->repo->getRecursos($idrepo,"personal")->result();
-    $recursos->equipos = $this->repo->getRecursos($idrepo,"equipos")->result();
-    $recursos->actividades = $this->repo->getRecursos($idrepo,"actividades")->result();
+    $recursos->personal = $this->rec_repo->getRecursos($idrepo,"personal")->result();
+    $recursos->equipos = $this->rec_repo->getRecursos($idrepo,"equipos")->result();
+    $recursos->actividades = $this->rec_repo->getRecursos($idrepo,"actividades")->result();
     $vw = $this->load->view( $formato , array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
     // generamos un pdf con el helper de pdf
     $this->load->helper('pdf');
@@ -169,14 +170,14 @@ class Export extends CI_Controller{
   public function reportePDFHTML($idOT, $idrepo)
   {
     $this->load->helper('pdf');
-    $this->load->model('reporte_db', 'repo');
+    $this->load->model( array('reporte_db'=>'repo', 'recurso_reporte_db'=>'rec_repo') );
 
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
     $json_r = json_decode($row->json_r);
     $recursos = new stdClass();
-    $rpers = $this->repo->getRecursos($idrepo,"personal");
-    $requs = $this->repo->getRecursos($idrepo,"equipos");
-    $racts = $this->repo->getRecursos($idrepo,"actividades");
+    $rpers = $this->rec_repo->getRecursos($idrepo,"personal");
+    $requs = $this->rec_repo->getRecursos($idrepo,"equipos");
+    $racts = $this->rec_repo->getRecursos($idrepo,"actividades");
     $recursos->personal = $rpers->result();
     $recursos->equipos = $requs->result();
     $recursos->actividades = $racts->result();
@@ -194,11 +195,11 @@ class Export extends CI_Controller{
 
   public function printSelection($idOT, $idrepo)
   {
-    $this->load->model('reporte_db', 'repo');
+    $this->load->model( array('reporte_db'=>'repo', 'recurso_reporte_db'=>'rec_repo') );
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
-    $rpers = $this->repo->getRecursos($idrepo,"personal");
-    $requs = $this->repo->getRecursos($idrepo,"equipos");
-    $racts = $this->repo->getRecursos($idrepo,"actividades");
+    $rpers = $this->rec_repo->getRecursos($idrepo,"personal");
+    $requs = $this->rec_repo->getRecursos($idrepo,"equipos");
+    $racts = $this->rec_repo->getRecursos($idrepo,"actividades");
 
     $recursos = new stdClass();
     $recursos->json_r = json_decode($row->json_r);
@@ -216,6 +217,7 @@ class Export extends CI_Controller{
     $this->load->helper('pdf');
     $this->load->helper('reporte_pma');
     $this->load->model('reporte_db', 'repo');
+    $this->load->model('ot_db');
     $post = json_decode($this->input->post('jsonSelection'));
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
     $json_r = json_decode($row->json_r);
@@ -241,7 +243,7 @@ class Export extends CI_Controller{
           doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
         break;
       case 2:
-        $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
+        $row->sap_tarea =  $this->ot_db->getSAP($idOT, $row->fecha_reporte);
         if($fecha >= date('Y-m-d', strtotime('2018-01-01')) ){
           $formato = 'reportes/imprimir_pma/v2018/rd';
         }else{
@@ -251,7 +253,7 @@ class Export extends CI_Controller{
         doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, TRUE);
         break;
       default:
-        $row->sap_tarea =  $this->repo->getSAP($idOT, $row->fecha_reporte);
+        $row->sap_tarea =  $this->ot_db->getSAP($idOT, $row->fecha_reporte);
         $vw = $this->load->view('reportes/imprimir_pma/v2018/rd', array( 'recursos'=>$recursos, 'r'=>$row, 'json_r'=>$json_r, 'export'=>FALSE ), TRUE);
         doPDF($vw, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
         break;
@@ -324,7 +326,6 @@ class Export extends CI_Controller{
     $writer->close();
   }
 
-
   # Informe Items PMO
   public function form_informe_items($value='')
   {
@@ -361,7 +362,6 @@ class Export extends CI_Controller{
   }
 
   # =================================================================================
-
   public function formatoEquiposTareaOT($idtr)
   {
     $this->load->model('item_db', 'it');

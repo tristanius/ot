@@ -172,10 +172,24 @@ class Ot_db extends CI_Model {
 		}
 		return $this->db->get();
 	}
-
+	// funcion para obtener el numero SAP
+  public function getSAP($idOT='', $fecha)
+  {
+    $this->load->database('ot');
+    $rows = $this->db->select('tr.sap')
+                ->from( 'OT' )
+                ->join( 'tarea_ot AS tr', 'tr.OT_idOT = OT.idOT' )
+                ->where( 'OT.idOT', $idOT )
+                ->where( 'tr.fecha_inicio <= "'.$fecha.'"' )
+                ->order_by('tr.idtarea_ot','DESC')
+                ->get();
+    if($rows->num_rows() > 0){
+      return $rows->row()->sap;
+    }
+    return "";
+  }
 
 	# ============================================================================
-
 	# Frentes de TRABAJO
 
 	public function addFrenteOT($frente)
