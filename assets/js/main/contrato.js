@@ -42,6 +42,22 @@ var contrato = function($scope, $http, $timeout){
       }
     );
   }
+
+  $scope.contrato = undefined;
+
+  $scope.selecionarContrato = function(cont, tag){
+    $scope.contrato = cont;
+    $scope.closeModal(tag);
+  }
+
+  $scope.initModals = function(el){
+    M.Modal.init( $(el) );
+  }
+
+  $scope.closeModal = function(tag){
+    var modal = M.Modal.getInstance( $(tag) );
+    modal.close();
+  }
 }
 
 var form_contrato = function($scope, $http, $timeout){

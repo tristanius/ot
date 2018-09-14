@@ -83,7 +83,7 @@ function genObservaciones($rows){
 
 // -------------------------------------
 // getting for external construction
-function getReader($value='')
+function getReader()
 {
   return ReaderFactory::create(Type::XLSX);
 }

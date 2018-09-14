@@ -1,54 +1,63 @@
-<section ng-controller="cargues_historicos">
-  <div class="card-panel">
-    <h4>Fomulario de cargue de historicos de reportes diarios: </h4>
-    <div>
-      <p>Selecione un contrato, adjunte la plantilla diligenciada de cargue, monte el archivo y importe los datos.</p>
+<?php $idtag = 'formSelectContrato'.rand(); ?>
+<section ng-controller="contrato">
 
-      <p>
-        Contrato:
-        <span ng-bind="formData.contrato.idcontrato"></span>
-        <button type="button" class="btn btn-small">Seleccionar</button>
-      </p>
+  <div ng-controller="cargues_historicos">
 
-      <p>
-        <div class="" ng-init="initAdjunto('<?= site_url("recurso/uploadFile/personal") ?>', '#fileuploader')">
-          Archivo:
-          <div id="fileuploader" style="display:inline">Seleccionar</div>
-        </div>
-      </p>
+    <div class="card-panel noMaterialStyles" ng-init="getContratos('<?= site_url('contrato/get_contratos') ?>')">
+      <h4>Fomulario de cargue de historicos de reportes diarios: </h4>
+      <div>
+        <p>Selecione un contrato, adjunte la plantilla diligenciada de cargue, monte el archivo y importe los datos.</p>
 
-      <hr>
-      <button type="button" class="btn blue" ng-disabled="true">Montar archivo</button>
-      <button type="button" class="btn green" ng-disabled="true">Importar datos</button>
+        <p>
+          <big> <label>Contrato:</label> </big>
+          <b ng-bind="contrato.no_contrato"></b>
+          <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
+        </p>
+
+        <p ng-show="!contrato.idcontrato">
+          <div class="" ng-init="initAdjunto('<?= site_url("historicoreportes/uploadFile/personal") ?>', '#fileuploader')">
+            <big><label>Archivo:</label></big>
+            <div id="fileuploader" style="display:inline">Seleccionar</div>
+          </div>
+        </p>
+
+        <hr>
+        <button type="button" class="btn blue" ng-disabled="selected_file">Montar archivo</button>
+        <button type="button" class="btn green" ng-disabled="selected_file">Importar datos</button>
+
+      </div>
 
     </div>
 
+    <div class="card-panel">
+      Respuesta resumen: <span ng-bind="mensaje_resultados"></span>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Resultado</th>
+            <th>Fecha</th>
+            <th>OT</th>
+            <th>Item</th>
+            <th>cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+      <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
+
   </div>
 
-  <div class="card-panel">
-    Respuesta resumen: <span></span>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Resultado</th>
-          <th>Fecha</th>
-          <th>OT</th>
-          <th>Item</th>
-          <th>cantidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 
 </section>
 

@@ -100,16 +100,20 @@ var historico_fact =  function($scope, $http, $timeout){
 }
 
 var cargues_historicos =  function($scope, $http, $timeout){
-  $scope.resultado_cargue = [];
+  $scope.mensaje_resultados = '';
   $scope.resultados = [];
 
   $scope.loader = false;
+  $scope.selected_file = true;
   /*
-  Se desea realizar un cargue masivo mas generico para este tipo de gestiones, se desea un procedimiento estandard,
+  - Se desea realizar un cargue masivo mas generico para este tipo de gestiones, se desea un procedimiento estandard,
   el procedimiento seria el siguiente:
-  1. Sequiere primero inicializar el uploader
+  1. Sequiere primero inicializar el uploader.
   2. Los cargues primero deben selecionar un contrato.
-  3. Los
+  3.1 Descargar plantilla.
+  3.2 Seleccionar la plantilla seleccionada.
+  4. Realizar la carga del archivo.
+  5. Confirmar la lectura del archivo.
   */
   $scope.initAdjunto = function(ruta, tag) {
     $scope.loader = true;
@@ -126,12 +130,29 @@ var cargues_historicos =  function($scope, $http, $timeout){
             }
             return data;
           },
+          onSelect:function(files){
+              //files[0].name;
+              //files[0].size;
+              //return true; //to allow file submission.
+              $timeout(function(){
+                $scope.selected_file = false;
+              });
+              return true;
+          },
+          onCancel: function(files, pd){
+            $timeout(function(){
+              $scope.selected_file = true;
+            });
+            return true;
+          },
           onSuccess: function(file, data){
             $scope.loader = false;
             console.log(data);
             var respuesta = JSON.parse(data);
             $timeout(function(){
               if(respuesta.status){
+                //$scope.resultados = respuesta.resultados;
+                $scope.mensaje_resultados = respuesta.mensaje_resultados
               }
             });
           },
