@@ -22,11 +22,9 @@ class Reportepersonal extends CI_Controller{
         case 1:
           $this->tl_termo($idOT, $idReporte);
           break;
-
         case 2:
           $this->tl_pma($idOT, $idReporte);
           break;
-
         default:
           $this->tl_termo($idOT, $idReporte);
           break;
@@ -86,7 +84,7 @@ class Reportepersonal extends CI_Controller{
     $this->load->helper('download');
     $this->load->model('reportepersonal_db', 'rper');
     $rows = $this->rper->tiempoLaboradoGeneral($ini, $fin, $base);
-    $nombre = 'tiemposReportados'.$base.'-gen'.date('Ymdhis')'.xlsx';
+    $nombre = 'tiemposReportados'.$base.'-gen'.date('Ymdhis').'.xlsx';
     xlsx($rows->result_array(), $rows->list_fields(), './downloads/'.$nombre);
     force_download('./downloads/'.$nombre, NULL);
     //$this->load->view('miscelanios/excelGenerico', array("rows"=>$rows, "nombre"=>$base."Informetiempos".$year.$mes));

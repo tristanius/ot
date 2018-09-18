@@ -25,7 +25,7 @@ class HistoricoReportes extends CI_Controller{
     $ret = new stdClass();
     $this->load->library('upload', $config);
     if ( ! $this->upload->do_upload('myfile') ) {
-      $ret->error = $this->upload->display_errors();
+      $ret->msj = $this->upload->display_errors();
       $ret->status = FALSE;
     }else{
       $upload_data = $this->upload->data();
@@ -42,17 +42,28 @@ class HistoricoReportes extends CI_Controller{
     $reader = getReader();
     $reader->open( FCPATH.$post->file_path );
     $ret = new stdClass();
+    $this->load->model( array(  'reporte_db'=>'repo', 'recurso_reporte_db'=>'recrepo') );
+    $this->repo->init_transact();
+    $ret->exitosos = 0;
+    $ret->fallidos = 0;
     foreach ($reader->getSheetIterator() as $key => $sheet) {
       $fila = 0;
-      $this->load->model( array(  'reporte_db'=>'repo', 'recurso_reporte_db'=>'recrepo') );
       foreach ($sheet->getRowIterator() as $key => $row) {
         if($fila != 0){
-          $this->insertarFila( $row );
+          $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
         }
         $fila++;
         # ( strtolower($row[0]) == 'contrato' && strtolower($row[1]) == 'orden' && strtolower($row[2]) == 'subcontratista' )
       }
     }
+    if ( $ret->fallidos <= 0 ) {
+      $ret->msj = 'Lectura correcta.';
+      $ret->status = TRUE;
+    }else{
+      $ret->msj = 'Algunos registros no han cargado';
+      $ret->status = FALSE;
+    }
+    $this->repo->rollback();
     echo json_encode($ret);
   }
 
@@ -91,15 +102,18 @@ class HistoricoReportes extends CI_Controller{
           $rec->setAvanceReporte( $rec, $rec->idrecurso_reporte_diario );
           # 5. Registrar respuesta OK
           $fila['resultado'] = 'Campos registrados, verificalos.';
+          $registros_exitosos++;
         }
       }else {
         # 5. Registrar respuesta Error
         $fila['resultado'] = 'Codigo de item no encontrado';
+        $registros_fallidos++;
       }
     }
     else{
       # 5. Registrar respuest Error
       $fila['resultado'] = 'OT no encontrada';
+      $registros_fallidos++;
     }
     return $fila;
   }
@@ -135,9 +149,9 @@ class HistoricoReportes extends CI_Controller{
     return $rec;
   }
 
-  private function getOT( $nombre_ot ){
+  private function getOT( $nombre_ot, $idcontrato ){
     $this->load->model('ot_db');
-    $rows = $this->ot_db->getOtBy('nombre_ot', $nombre_ot);
+    $rows = $this->ot_db->getBy( array( 'nombre_ot'=>$nombre_ot, 'idcontrato'=>$idcontrato ) );
     if( $rows->num_rows() > 0 ){
       return $rows->row()->idOT;
     }

@@ -30,7 +30,12 @@
     </div>
 
     <div class="card-panel">
-      Respuesta resumen: <span ng-bind="mensaje_resultados"></span>
+      <p>
+        <ul>
+          <li>Resultados exitosos: <span ng-bind="respuesta.exitosos"></span> </li>
+          <li>Resultados fallidos: <span ng-bind="respuesta.fallidos"></span> </li>
+        </ul>
+      </p>
 
       <table>
         <thead>

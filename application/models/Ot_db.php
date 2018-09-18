@@ -253,6 +253,19 @@ class Ot_db extends CI_Model {
 		return $this->db->from('OT')->like( $campo, $valorbuscado )->get();
 	}
 
+	public function getBy($where)
+	{
+		$this->load->database('ot');
+		foreach ($where as $key => $val) {
+			if($key == 'nombre_ot'){
+				$this->db->like($key, $val);
+			}else{
+				$this->db->where($key, $val);
+			}
+		}
+		return $this->db->from('OT')->get();
+	}
+
 	# ===========================================================================
 	# Consulta de items de OT
 	# ===========================================================================

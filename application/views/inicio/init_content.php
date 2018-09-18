@@ -4,13 +4,13 @@
 
 		<div class="row">
 
-			<div class="col s12 m4 l4 padding1ex card-panel">
+			<div class="col s12 m4 l4 padding1ex">
 
 				<div class="row padding1ex">
 
 					<div class="row">
-						<div class="col s1 m1 l2"> </div>
-				    <div class="col s11 m10 l8">
+						<div class="col s1 m1 l1"> </div>
+				    <div class="col s10 m8 l8">
 				      <div class="card">
 				        <div class="card-image">
 				          <img src="<?= base_url("assets/img/icons/icon-user-by.png") ?>">
@@ -21,12 +21,9 @@
 										<li>Rol: <span ng-bind="log.nombre_rol"></span> </li>
                     <li>C.O. asociado: <span ng-bind="log.base"></span> </li>
                     <li>Tipo visualizacion: <span ng-bind="log.tipo_visualizacion"></span> </li>
-										<li>Estado: Activo</li>
 									</ul>
 								</div>
-				        <div class="card-action">
-				          <a href="#">Ir al panel de sesion</a>
-				        </div>
+                <div class="card-action"><a href="#">Ir al panel de sesion</a> </div>
 				      </div>
 				    </div>
 				  </div>
@@ -38,7 +35,8 @@
 			<div class="col s12 m4 l4 padding1ex">
 
 			  <div class="row">
-			    <div class="col s12 m12">
+          <div class="col s1 m1"> </div>
+			    <div class="col s10 m10">
 			      <div class="card">
 			        <div class="card-image">
 			          <img src="<?= base_url('assets/img/ot.png') ?>">

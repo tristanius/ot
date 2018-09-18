@@ -304,4 +304,15 @@ class Reporte_db extends CI_Model{
 		}
 		return $status;
 	}
+  public function commit($value='')
+  {
+    $this->load->database('ot');
+    $this->db->trans_commit();
+  }
+
+  public function rollback()
+  {
+    $this->load->database('ot');
+    $this->db->trans_rollback();
+  }
 }

@@ -100,8 +100,10 @@ var historico_fact =  function($scope, $http, $timeout){
 }
 
 var cargues_historicos =  function($scope, $http, $timeout){
-  $scope.mensaje_resultados = '';
+  $scope.respuesta_upload = undefined;
+  $scope.respuesta_cargue = undefined;
   $scope.resultados = [];
+  $scope.file_path = undefined;
 
   $scope.loader = false;
   $scope.selected_file = true;
@@ -131,9 +133,7 @@ var cargues_historicos =  function($scope, $http, $timeout){
             return data;
           },
           onSelect:function(files){
-              //files[0].name;
-              //files[0].size;
-              //return true; //to allow file submission.
+              //files[0].name; files[0].size; return true;
               $timeout(function(){
                 $scope.selected_file = false;
               });
@@ -148,19 +148,23 @@ var cargues_historicos =  function($scope, $http, $timeout){
           onSuccess: function(file, data){
             $scope.loader = false;
             console.log(data);
-            var respuesta = JSON.parse(data);
-            $timeout(function(){
-              if(respuesta.status){
-                //$scope.resultados = respuesta.resultados;
-                $scope.mensaje_resultados = respuesta.mensaje_resultados
-              }
-            });
+            // ----------------------------------------------
+            if ( $scope.isJSON($data) ) {
+              timeout(function(){
+                $scope.respuesta_upload = JSON.parse(data);
+                alert($scope.respuesta_upload.msj);
+                if ($scope.respuesta_upload.status) {
+                  $scope.file_path = $scope.respuesta_upload.file_path;
+                }
+              });
+            }else{
+              alert('No se puede procesar el mensaje de respuesta.')
+            }
           },
           onError: function(files,status,errMsg,pd){
             $scope.loader = false;
             alert(JSON.stringify(errMsg));
           }
-
         });
       }
     );
@@ -170,4 +174,26 @@ var cargues_historicos =  function($scope, $http, $timeout){
     $scope.adjunto.startUpload();
   }
 
+  $scope.leerArchivo = function(lnk, path){
+    var post = {file_path: path};
+    // Enviamos id de contrato si existe
+    if( $scope.$parent.contrato.idcontrato ){
+      post.idcontrato = $scope.$parent.contrato.idcontrato;
+      // enviamos solo si tenemos un contrato al que cargar un historico
+      $http.post( lnk, post ).then(
+        function(resp){
+          console.log(resp.data);
+          if(resp.data.status){
+            $scope.respuesta_cargue = resp.data;
+          }else{
+            alert("Error en el proceso de lectura: ".resp.data.msj)
+          }
+        },
+        function(resp){
+          console.log(resp.data);
+          alert('Error al consultar el servidor.');
+        }
+      );
+    }
+  }
 }
