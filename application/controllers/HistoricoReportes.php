@@ -19,12 +19,12 @@ class HistoricoReportes extends CI_Controller{
   }
 
   public function upload_file(){
-    $config['upload_path'] = '.'.$path;
+    $config['upload_path'] = '.'.$this->path;
     $config['allowed_types'] = 'xlsx';
     $config['file_name'] = 'Cargue'.date('YmdHis');
     $ret = new stdClass();
     $this->load->library('upload', $config);
-    if ( ! $this->upload->do_upload('myfile') ) {
+    if ( ! $this->upload->do_upload('file') ) {
       $ret->msj = $this->upload->display_errors();
       $ret->status = FALSE;
     }else{
@@ -36,34 +36,42 @@ class HistoricoReportes extends CI_Controller{
     echo json_encode($ret);
   }
 
-  public function leerArchivo( ){
-    $post = json_decode('php://input');
+  public function leer_archivo( ){
+    $post = json_decode( file_get_contents('php://input') );
     $this->load->helper('xlsx');
     $reader = getReader();
-    $reader->open( FCPATH.$post->file_path );
     $ret = new stdClass();
-    $this->load->model( array(  'reporte_db'=>'repo', 'recurso_reporte_db'=>'recrepo') );
-    $this->repo->init_transact();
-    $ret->exitosos = 0;
-    $ret->fallidos = 0;
-    foreach ($reader->getSheetIterator() as $key => $sheet) {
-      $fila = 0;
-      foreach ($sheet->getRowIterator() as $key => $row) {
-        if($fila != 0){
-          $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
+    try {
+      $reader->open( FCPATH.$post->file_path );
+      $this->load->model( array(  'reporte_db'=>'repo', 'recurso_reporte_db'=>'recrepo') );
+      $this->repo->init_transact();
+      $ret->exitosos = 0;
+      $ret->fallidos = 0;
+      $ret->resultados = array();
+      foreach ($reader->getSheetIterator() as $key => $sheet) {
+        $fila = 0;
+        foreach ($sheet->getRowIterator() as $key => $row) {
+          if($fila != 0){
+            $resp = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
+            array_push( $ret->resultados, $resp );
+            if ($resp['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
+          }
+          $fila++;
         }
-        $fila++;
-        # ( strtolower($row[0]) == 'contrato' && strtolower($row[1]) == 'orden' && strtolower($row[2]) == 'subcontratista' )
       }
-    }
-    if ( $ret->fallidos <= 0 ) {
-      $ret->msj = 'Lectura correcta.';
-      $ret->status = TRUE;
-    }else{
-      $ret->msj = 'Algunos registros no han cargado';
+      if ( $ret->fallidos <= 0 ) {
+        $ret->msj = 'Lectura correcta.';
+        $ret->status = TRUE;
+      }else{
+        $ret->msj = 'Algunos registros no han cargado';
+        $ret->status = FALSE;
+      }
+      $this->repo->rollback(); # validar
+    } catch ( Exception $e ) {
+      $ret->msj = $e->getMessage();
       $ret->status = FALSE;
+      $this->repo->rollback();
     }
-    $this->repo->rollback();
     echo json_encode($ret);
   }
 
@@ -81,12 +89,11 @@ class HistoricoReportes extends CI_Controller{
     return $data;
   }
 
-  private function insertarFila( $fila )
-  {
+  private function insertarFila( $fila, $idcontrato, $registros_exitosos, $registros_fallidos ) {
     # 1. Crear objeto de insercción
     $rec = $this->getDataObject($fila);
     # 2 Validar OT
-    $idOT = $this->getOT( $rec->nombre_ot );
+    $idOT = $this->getOT( $rec->nombre_ot, $idcontrato );
     if ($idOT != FALSE) {
       $rec->idOT  = $idOT;
       # 2.1 Validar items en la OT
@@ -102,18 +109,18 @@ class HistoricoReportes extends CI_Controller{
           $rec->setAvanceReporte( $rec, $rec->idrecurso_reporte_diario );
           # 5. Registrar respuesta OK
           $fila['resultado'] = 'Campos registrados, verificalos.';
-          $registros_exitosos++;
+          $fila['status'] = TRUE;
         }
       }else {
         # 5. Registrar respuesta Error
         $fila['resultado'] = 'Codigo de item no encontrado';
-        $registros_fallidos++;
+        $fila['status'] = FALSE;
       }
     }
     else{
       # 5. Registrar respuest Error
       $fila['resultado'] = 'OT no encontrada';
-      $registros_fallidos++;
+      $fila['status'] = FALSE;
     }
     return $fila;
   }
@@ -151,7 +158,7 @@ class HistoricoReportes extends CI_Controller{
 
   private function getOT( $nombre_ot, $idcontrato ){
     $this->load->model('ot_db');
-    $rows = $this->ot_db->getBy( array( 'nombre_ot'=>$nombre_ot, 'idcontrato'=>$idcontrato ) );
+    $rows = $this->ot_db->getBy( array( 'OT.nombre_ot'=>$nombre_ot, 'OT.idcontrato'=>$idcontrato ) );
     if( $rows->num_rows() > 0 ){
       return $rows->row()->idOT;
     }
@@ -159,7 +166,7 @@ class HistoricoReportes extends CI_Controller{
   }
 
   private function getReporte( $idOT, $fecha_reporte ){
-    $rows = $this->repo->getBy( array('rd.OT_idOT'=>$idOT, 'rd.fecha_reporte'=>$fecha_reporte) );
+    $rows = $this->repo->getWhere( array('rd.OT_idOT'=>$idOT, 'rd.fecha_reporte'=>$fecha_reporte) );
     if( $rows->num_rows() > 0 ){
       return $rows->row()->idreporte_diario;
     }else{

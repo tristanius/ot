@@ -257,7 +257,7 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		foreach ($where as $key => $val) {
-			if($key == 'nombre_ot'){
+			if($key == 'OT.nombre_ot'){
 				$this->db->like($key, $val);
 			}else{
 				$this->db->where($key, $val);

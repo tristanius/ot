@@ -106,7 +106,7 @@ class Reporte_db extends CI_Model{
       )->from('reporte_diario AS rd')->join('OT', 'OT.idOT = rd.OT_idOT')->where('rd.OT_idOT', $idOT)->order_by('fecha_reporte','ASC')->get();
   }
 
-  public function getBy($where)
+  public function getWhere($where)
   {
     $this->load->database('ot');
     return $this->db->select('rd.*, OT.idOT, OT.nombre_ot')->from('rerpote_diario AS rd')->join('OT', 'rd.OT_idOT = OT.idOT')->where($where)->get();

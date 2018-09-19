@@ -101,7 +101,7 @@ var historico_fact =  function($scope, $http, $timeout){
 
 var cargues_historicos =  function($scope, $http, $timeout){
   $scope.respuesta_upload = undefined;
-  $scope.respuesta_cargue = undefined;
+  $scope.respuesta_cargue = {};
   $scope.resultados = [];
   $scope.file_path = undefined;
 
@@ -149,8 +149,8 @@ var cargues_historicos =  function($scope, $http, $timeout){
             $scope.loader = false;
             console.log(data);
             // ----------------------------------------------
-            if ( $scope.isJSON($data) ) {
-              timeout(function(){
+            if ( $scope.isJSON(data) ) {
+              $timeout(function(){
                 $scope.respuesta_upload = JSON.parse(data);
                 alert($scope.respuesta_upload.msj);
                 if ($scope.respuesta_upload.status) {
@@ -183,10 +183,13 @@ var cargues_historicos =  function($scope, $http, $timeout){
       $http.post( lnk, post ).then(
         function(resp){
           console.log(resp.data);
-          if(resp.data.status){
+          if(resp.data.status == true){
             $scope.respuesta_cargue = resp.data;
+          }else if(resp.data.status == false){
+            $scope.respuesta_cargue = resp.data;
+            alert("Error en el proceso de lectura: "+resp.data.msj)
           }else{
-            alert("Error en el proceso de lectura: ".resp.data.msj)
+            alert("Respuesta del servidor inesperada");
           }
         },
         function(resp){

@@ -214,7 +214,7 @@ var reportes = function($scope, $http, $timeout) {
         val.hora_inicio = '7:00'; val.hora_fin = '12:00'; val.hora_inicio2 = '13:00';
         if (ambito.rd.idbase == 172 || ambito.rd.idbase == 173 || ambito.rd.idbase == 174){
           val.hora_fin2 = '17:00'; val.horas_ordinarias = 9;
-        }else if ( ambito.rd.idbase == 262 || ambito.rd.idbase == 244) {
+        }else if (ambito.rd.idbase == 244) {
           if (ambito.dia_semana == 'sábado') {
             val.hora_fin = '-'; val.hora_inicio2 = '-'; val.hora_fin2 = '10:00';
             val.horas_ordinarias = 3;
@@ -222,6 +222,8 @@ var reportes = function($scope, $http, $timeout) {
             val.hora_fin2 = '17:00';
             val.horas_ordinarias = 9;
           }
+        }else if ( ambito.rd.idbase == 262 ) {
+
         }else{
           val.hora_fin2 = '16:00';
           val.horas_ordinarias = 8;

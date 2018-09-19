@@ -15,15 +15,15 @@
         </p>
 
         <p ng-show="!contrato.idcontrato">
-          <div class="" ng-init="initAdjunto('<?= site_url("historicoreportes/uploadFile/personal") ?>', '#fileuploader')">
+          <div class="" ng-init="initAdjunto('<?= site_url("historicoreportes/upload_file") ?>', '#fileuploader')">
             <big><label>Archivo:</label></big>
             <div id="fileuploader" style="display:inline">Seleccionar</div>
           </div>
         </p>
 
         <hr>
-        <button type="button" class="btn blue" ng-disabled="selected_file">Montar archivo</button>
-        <button type="button" class="btn green" ng-disabled="selected_file">Importar datos</button>
+        <button type="button" class="btn blue" ng-disabled="selected_file" ng-click="IniciarUploadAdjunto()">Montar archivo</button>
+        <button type="button" class="btn green" ng-disabled="selected_file" ng-click="leerArchivo( '<?= site_url('historicoreportes/leer_archivo') ?>', file_path )">Importar datos</button>
 
       </div>
 
@@ -32,8 +32,8 @@
     <div class="card-panel">
       <p>
         <ul>
-          <li>Resultados exitosos: <span ng-bind="respuesta.exitosos"></span> </li>
-          <li>Resultados fallidos: <span ng-bind="respuesta.fallidos"></span> </li>
+          <li>Resultados exitosos: <span ng-bind="respuesta_cargue.exitosos"></span> </li>
+          <li>Resultados fallidos: <span ng-bind="respuesta_cargue.fallidos"></span> </li>
         </ul>
       </p>
 
@@ -59,7 +59,7 @@
       </table>
     </div>
 
-      <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
+    <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
 
   </div>
 
