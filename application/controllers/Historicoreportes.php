@@ -97,7 +97,7 @@ class Historicoreportes extends CI_Controller{
     if ($idOT != FALSE) {
       $rec->idOT  = $idOT;
       # 2.1 Validar items en la OT
-      $iditemf = $this->getIditemf( 'itemf_codigo', $rec->itemf_codigo );
+      $iditemf = $this->getIditemf( $rec->idOT, $rec->itemf_codigo );
       if ($iditemf != FALSE) {
         $rec->itemf_iditemf = $iditemf;
         # 2.2 Validar si existe reporte, sino crear uno
@@ -183,9 +183,9 @@ class Historicoreportes extends CI_Controller{
     return NULL;
   }
 
-  public function getIditemf( $campo, $item ){
+  public function getIditemf( $idOT, $codigo ){
     $this->load->model('tarea_db', 'tar');
-    $rows = $this->tar->getItemOTSUM($idOT,$codigo);
+    $rows = $this->tar->getItemOTSUM( $idOT, $codigo );
     if($rows->num_rows() > 0){
       return $rows->row()->idOT;
     }
