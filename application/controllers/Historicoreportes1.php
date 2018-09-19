@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class HistoricoReportes extends CI_Controller{
+class Historicoreportes extends CI_Controller{
 
   private $path = '/uploads/reportes/cargue/';
 
