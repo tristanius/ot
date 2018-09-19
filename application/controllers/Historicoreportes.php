@@ -101,7 +101,7 @@ class Historicoreportes extends CI_Controller{
       if ($iditemf != FALSE) {
         $rec->itemf_iditemf = $iditemf;
         # 2.2 Validar si existe reporte, sino crear uno
-        $rec->idreporte_diario =  $this->getReporte($rec->idOT, $rec->fecha_reporte);
+        $rec->idreporte_diario =  $this->getReporte($rec->idOT, $rec->fecha_reporte );
         if ( isset($rec->idreporte_diario) ) {
           # 3. Intentar insertar el recurso reportado
           $rec->idrecurso_reporte_diario = $rec->setRecursoReporte( $rec );

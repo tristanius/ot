@@ -109,7 +109,11 @@ class Reporte_db extends CI_Model{
   public function getWhere($where)
   {
     $this->load->database('ot');
-    return $this->db->select('rd.*, OT.idOT, OT.nombre_ot')->from('rerpote_diario AS rd')->join('OT', 'rd.OT_idOT = OT.idOT')->where($where)->get();
+    return $this->db->select('rd.*, OT.idOT, OT.nombre_ot')
+      ->from('rerpote_diario AS rd')
+      ->join('OT', 'rd.OT_idOT = OT.idOT')
+      ->where($where)
+      ->get();
   }
 
   # =====================================================================================
