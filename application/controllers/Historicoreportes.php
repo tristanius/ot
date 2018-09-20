@@ -58,6 +58,8 @@ class Historicoreportes extends CI_Controller{
             array_push( $ret->resultados, $row );
             if ($row['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
           }else{
+            array_push($row, 'resultado');
+            array_push($row, 'status');
             $headers = $row;
           }
           $fila++;
@@ -134,9 +136,7 @@ class Historicoreportes extends CI_Controller{
         $fila['resultado'] = 'Error: '.$e->getMessage();
         $fila['status'] = FALSE;
       }
-
-    }
-    else{
+    }else{
       # 5. Registrar respuest Error
       $fila['resultado'] = 'OT no encontrada';
       $fila['status'] = FALSE;
