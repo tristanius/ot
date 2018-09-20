@@ -110,7 +110,7 @@ class Reporte_db extends CI_Model{
   {
     $this->load->database('ot');
     return $this->db->select('rd.*, OT.idOT, OT.nombre_ot')
-      ->from('rerpote_diario AS rd')
+      ->from('reporte_diario AS rd')
       ->join('OT', 'rd.OT_idOT = OT.idOT')
       ->where($where)
       ->get();

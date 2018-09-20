@@ -111,7 +111,7 @@ class Historicoreportes extends CI_Controller{
         $rec->idreporte_diario =  $this->getReporte($rec->idOT, $rec->fecha_reporte );
         if ( isset($rec->idreporte_diario) ) {
           # 3. Intentar insertar el recurso reportado
-          $rec->idrecurso_reporte_diario = $rec->setRecursoReporte( $rec );
+          $rec->idrecurso_reporte_diario = $this->setRecursoReporte( $rec, $rec->idreporte_diario );
           # 4. Insertar el avance de obra relacionado
           $rec->setAvanceReporte( $rec, $rec->idrecurso_reporte_diario );
           # 5. Registrar respuesta OK
@@ -186,7 +186,7 @@ class Historicoreportes extends CI_Controller{
       $reporte->idOT = $idOT;
       $reporte->fecha_reporte = $fecha_reporte;
       $reporte->festivo = FALSE;
-      $w = date('w', strtotime($repote->fecha_reporte) );
+      $w = date('w', strtotime($reporte->fecha_reporte) );
       if ( $w == 0) {
         $reporte->festivo = TRUE;
       }
@@ -204,8 +204,8 @@ class Historicoreportes extends CI_Controller{
     return FALSE;
   }
 
-  public function setRecursoReporte( $rec ){
-    return $this->recrepo->addRecursoRepo($rec);
+  public function setRecursoReporte( $rec, $idreporte ){
+    return $this->recrepo->addRecursoRepo($rec, $idreporte);
   }
 
   public function setAvanceReporte( $rec, $idrecurso_reporte_diario ){
