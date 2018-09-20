@@ -179,6 +179,9 @@ var cargues_historicos =  function($scope, $http, $timeout){
   }
 
   $scope.leerArchivo = function(lnk, path){
+    if (!confirm("estas seguro de realizar el cargue de información? Este proceso no se podrá retroceder aquí directamente.")) {
+      return;
+    }
     $scope.loader = true;
     var post = {file_path: path};
     // Enviamos id de contrato si existe
@@ -205,11 +208,5 @@ var cargues_historicos =  function($scope, $http, $timeout){
         }
       );
     }
-  }
-  $scope.download_table = function(tag){
-    $(tag).tableExport({
-     formats: ['xlsx'],
-     exportButtons: false
-   });
   }
 }

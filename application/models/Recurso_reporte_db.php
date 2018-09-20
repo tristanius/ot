@@ -52,6 +52,7 @@ class Recurso_reporte_db extends CI_Model{
       'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
       'combustible_und'=>isset($recurso->combustible_und)?$recurso->combustible_und:NULL,
 
+      'no_cargue'=>isset($recurso->no_cargue)?$recurso->no_cargue:NULL,
       'last_log'=>$log." - ".date('Y-m-d H:i:s')
     );
     $this->db->insert('recurso_reporte_diario', $data);

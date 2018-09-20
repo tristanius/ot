@@ -50,11 +50,12 @@ class Historicoreportes extends CI_Controller{
       $ret->exitosos = 0;
       $ret->fallidos = 0;
       $ret->resultados = array();
+      $rec->no_cargue =  $post->idcontrato."-".date('YmdHis');
       foreach ($reader->getSheetIterator() as $key => $sheet) {
         $fila = 0;
         foreach ($sheet->getRowIterator() as $key => $row) {
           if($fila != 0){
-            $row = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
+            $row = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos, $rec->no_cargue);
             array_push( $ret->resultados, $row );
             if ($row['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
           }else{
@@ -70,11 +71,12 @@ class Historicoreportes extends CI_Controller{
       if ( $ret->fallidos <= 0 ) {
         $ret->msj = 'Lectura correcta.';
         $ret->status = TRUE;
+        $ret->end_status = $this->repo->end_transact();
       }else{
-        $ret->msj = 'Algunos registros no han cargado';
+        $ret->msj = 'Algunos registros no han cargado, proceso anulado.';
         $ret->status = FALSE;
+        $this->repo->rollback(); # validar
       }
-      $this->repo->rollback(); # validar
     } catch ( Exception $e ) {
       $ret->msj = $e->getMessage();
       $ret->status = FALSE;
@@ -97,9 +99,9 @@ class Historicoreportes extends CI_Controller{
     return $data;
   }
 
-  private function insertarFila( $fila, $idcontrato, $registros_exitosos, $registros_fallidos ) {
+  private function insertarFila( $fila, $idcontrato, $registros_exitosos, $registros_fallidos, $no_cargue ) {
     # 1. Crear objeto de insercción
-    $rec = $this->getDataObject($fila);
+    $rec = $this->getDataObject($fila, $no_cargue);
     # Si no regresa lo esperadpo reportear como fallo en informacion.
     if(!isset($rec)){
       $fila['resultado'] = 'Datos mal formados.';
@@ -144,7 +146,7 @@ class Historicoreportes extends CI_Controller{
     return $fila;
   }
 
-  public function getDataObject($fila){
+  public function getDataObject($fila, $no_cargue){
     $rec = new stdClass();
     $rec->contratista =  $fila[0];
     $rec->nombre_ot = $fila[1];
@@ -177,6 +179,7 @@ class Historicoreportes extends CI_Controller{
     $rec->tipo_ejecucion = isset($fila[23] )? $fila[23]: NULL;
     $rec->a_cargo = isset($fila[24] )? $fila[24]: NULL;
     $rec->calidad = isset($fila[25] )? $fila[25]: NULL;
+    $rec->no_cargue = $no_cargue;
     return $rec;
   }
 
@@ -207,7 +210,7 @@ class Historicoreportes extends CI_Controller{
     return NULL;
   }
 
-  public function getIditemf( $idOT, $codigo ){
+  private function getIditemf( $idOT, $codigo ){
     $this->load->model('tarea_db', 'tar');
     $rows = $this->tar->getItemOTSUM( $idOT, $codigo );
     if($rows->num_rows() > 0){
@@ -216,17 +219,16 @@ class Historicoreportes extends CI_Controller{
     return FALSE;
   }
 
-  public function setRecursoReporte( $rec, $idreporte ){
+  private function setRecursoReporte( $rec, $idreporte ){
     return $this->recrepo->addRecursoRepo($rec, $idreporte);
   }
 
-  public function setAvanceReporte( $rec, $idrecurso_reporte_diario ){
+  private function setAvanceReporte( $rec, $idrecurso_reporte_diario ){
     return $this->recrepo->addAvance( $rec, $idrecurso_reporte_diario );
   }
 
   # crear un subdirectorio
-  private function crear_directorio($carpeta)
-  {
+  private function crear_directorio($carpeta){
     if (!file_exists($carpeta)) { mkdir($carpeta, 0777, true);  }
   }
 

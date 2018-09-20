@@ -308,6 +308,7 @@ class Reporte_db extends CI_Model{
 		}
 		return $status;
 	}
+  
   public function commit($value='')
   {
     $this->load->database('ot');

@@ -46,6 +46,7 @@
       <a class="btn btn-small green" ng-href="<?= base_url() ?>{{ respuesta_cargue.download }}" target="_blank">Exportar resultados</a>
       <table id="tableCargueHistorico<?= $rand ?>" class="mytabla" ng-init="table_tag = '#tableCargueHistorico<?= $rand ?>';">
         <thead>
+          <caption>Cargue No. {{ respuesta_cargue.no_cargue }}</caption>
           <tr>
             <th>Resultado</th>
             <th>Fecha</th>
