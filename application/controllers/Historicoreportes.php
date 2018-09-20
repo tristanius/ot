@@ -128,6 +128,7 @@ class Historicoreportes extends CI_Controller{
             # 5. Registrar respuesta OK
             $fila['resultado'] = 'Campos registrados, verificalos.';
             $fila['status'] = TRUE;
+            $fila['idrecurso_reporte_diario'] = $rec->idrecurso_reporte_diario;
           }
         }else {
           # 5. Registrar respuesta Error
