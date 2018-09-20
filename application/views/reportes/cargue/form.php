@@ -38,6 +38,7 @@
     <div class="card-panel">
       <p>
         <ul>
+          <li class="green accent-4"> <code ng-bind="respuesta_cargue.no_cargue"></code>, usa este numero para solicitar un retroceso.</li>
           <li>Resultados exitosos: <span ng-bind="respuesta_cargue.exitosos"></span> </li>
           <li>Resultados fallidos: <span ng-bind="respuesta_cargue.fallidos"></span> </li>
         </ul>

@@ -50,12 +50,12 @@ class Historicoreportes extends CI_Controller{
       $ret->exitosos = 0;
       $ret->fallidos = 0;
       $ret->resultados = array();
-      $rec->no_cargue =  $post->idcontrato."-".date('YmdHis');
+      $ret->no_cargue =  $post->idcontrato."-".date('YmdHis');
       foreach ($reader->getSheetIterator() as $key => $sheet) {
         $fila = 0;
         foreach ($sheet->getRowIterator() as $key => $row) {
           if($fila != 0){
-            $row = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos, $rec->no_cargue);
+            $row = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos, $ret->no_cargue);
             array_push( $ret->resultados, $row );
             if ($row['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
           }else{
