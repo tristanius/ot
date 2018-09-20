@@ -52,9 +52,9 @@ class Historicoreportes extends CI_Controller{
         $fila = 0;
         foreach ($sheet->getRowIterator() as $key => $row) {
           if($fila != 0){
-            $resp = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
-            array_push( $ret->resultados, $resp );
-            if ($resp['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
+            $row = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
+            array_push( $ret->resultados, $row );
+            if ($row['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
           }
           $fila++;
         }
@@ -92,6 +92,13 @@ class Historicoreportes extends CI_Controller{
   private function insertarFila( $fila, $idcontrato, $registros_exitosos, $registros_fallidos ) {
     # 1. Crear objeto de insercción
     $rec = $this->getDataObject($fila);
+    # Si no regresa lo esperadpo reportear como fallo en informacion.
+    if(!isset($rec)){
+      $fila['resultado'] = 'Datos mal formados.';
+      $fila['status'] = FALSE;
+      return $fila;
+    }
+    $fila[2] = $rec->fecha_reporte;
     # 2 Validar OT
     $idOT = $this->getOT( $rec->nombre_ot, $idcontrato );
     if ($idOT != FALSE) {
@@ -129,7 +136,12 @@ class Historicoreportes extends CI_Controller{
     $rec = new stdClass();
     $rec->contratista =  $fila[0];
     $rec->nombre_ot = $fila[1];
-    $rec->fecha_reporte = isset( $fila[2]->date )? $fila[2]->date : $fila[2];
+    try {
+      $fecha = $fila[2];
+      $rec->fecha_reporte = $fecha->format('Y-m-d') != NULL?$fecha->format('Y-m-d'):$fecha;
+    } catch (Exception $e) {
+      return NULL;
+    }
     $rec->festivo = $fila[3];
     $rec->itemf_codigo = $fila[4];
     $rec->descripcion = isset($fila[5] )? $fila[5]: NULL;

@@ -118,7 +118,6 @@ var cargues_historicos =  function($scope, $http, $timeout){
   5. Confirmar la lectura del archivo.
   */
   $scope.initAdjunto = function(ruta, tag) {
-    $scope.loader = true;
     $timeout(
       function(){
         $scope.adjunto = $(tag).uploadFile({
@@ -140,6 +139,7 @@ var cargues_historicos =  function($scope, $http, $timeout){
               return true;
           },
           onCancel: function(files, pd){
+            $scope.loader = false;
             $timeout(function(){
               $scope.selected_file = true;
             });
@@ -171,10 +171,12 @@ var cargues_historicos =  function($scope, $http, $timeout){
   }
 
   $scope.IniciarUploadAdjunto = function(){
+    $scope.loader = true;
     $scope.adjunto.startUpload();
   }
 
   $scope.leerArchivo = function(lnk, path){
+    $scope.loader = true;
     var post = {file_path: path};
     // Enviamos id de contrato si existe
     if( $scope.$parent.contrato.idcontrato ){
@@ -191,10 +193,12 @@ var cargues_historicos =  function($scope, $http, $timeout){
           }else{
             alert("Respuesta del servidor inesperada");
           }
+          $scope.loader = false;
         },
         function(resp){
           console.log(resp.data);
           alert('Error al consultar el servidor.');
+          $scope.loader = false;
         }
       );
     }

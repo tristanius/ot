@@ -1,4 +1,7 @@
-<?php $idtag = 'formSelectContrato'.rand(); ?>
+<?php
+  $rand = rand();
+  $idtag = 'formSelectContrato'.$rand;
+?>
 <section ng-controller="contrato">
 
   <div ng-controller="cargues_historicos">
@@ -27,6 +30,8 @@
 
       </div>
 
+      <img src="<?= base_url('assets/img/ajax-loader.gif') ?>" style="width: 50px" ng-show="loader" ng-init="loader = false">
+
     </div>
 
     <div class="card-panel">
@@ -37,7 +42,8 @@
         </ul>
       </p>
 
-      <table>
+      <button type="button" ng-click="exportar_tabla('#resultadosCargueHistorico<?= $rand ?>')" class="btn btn-small green">Exportar resultados</button>
+      <table id="resultadosCargueHistorico<?= $rand ?>" class="mytabla">
         <thead>
           <tr>
             <th>Resultado</th>
@@ -48,12 +54,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr ng-repeat="r in respuesta_cargue.resultados">
+            <td ng-bind="r.resultado"></td>
+            <td ng-bind="r[2]"></td>
+            <td ng-bind="r[1]"></td>
+            <td ng-bind="r[4]"></td>
+            <td ng-bind="r[21]"></td>
           </tr>
         </tbody>
       </table>
