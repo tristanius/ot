@@ -26,7 +26,7 @@
         <p ng-show="file_path?true:false"> <strong>Ruta: </strong> <span ng-bind="file_path"></span> </p>
 
         <hr>
-        <button type="button" class="btn blue" ng-disabled="!selected_file || loader" ng-click="IniciarUploadAdjunto()">Montar archivo</button>
+        <button type="button" class="btn blue" ng-disabled="!selected_file || loader || (file_path?true:false)" ng-click="IniciarUploadAdjunto()">Montar archivo</button>
         <button type="button" class="btn green" ng-disabled="!selected_file || loader" ng-click="leerArchivo( '<?= site_url('historicoreportes/leer_archivo') ?>', file_path )">Importar datos</button>
 
       </div>
