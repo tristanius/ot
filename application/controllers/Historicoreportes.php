@@ -58,8 +58,6 @@ class Historicoreportes extends CI_Controller{
             array_push( $ret->resultados, $row );
             if ($row['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
           }else{
-            array_push($row, 'resultado');
-            array_push($row, 'status');
             $headers = $row;
           }
           $fila++;
@@ -102,8 +100,8 @@ class Historicoreportes extends CI_Controller{
     $rec = $this->getDataObject($fila);
     # Si no regresa lo esperadpo reportear como fallo en informacion.
     if(!isset($rec)){
-      $fila['resultado'] = 'Datos mal formados.';
-      $fila['status'] = FALSE;
+      $fila[26] = 'Datos mal formados.';
+      $fila[27] = FALSE;
       return $fila;
     }
     $fila[2] = $rec->fecha_reporte;
@@ -124,22 +122,22 @@ class Historicoreportes extends CI_Controller{
             # 4. Insertar el avance de obra relacionado
             $this->setAvanceReporte( $rec, $rec->idrecurso_reporte_diario );
             # 5. Registrar respuesta OK
-            $fila['resultado'] = 'Campos registrados, verificalos.';
-            $fila['status'] = TRUE;
+            $fila[26] = 'Campos registrados, verificalos.';
+            $fila[27] = TRUE;
           }
         }else {
           # 5. Registrar respuesta Error
-          $fila['resultado'] = 'Codigo de item no encontrado';
-          $fila['status'] = FALSE;
+          $fila[26] = 'Codigo de item no encontrado';
+          $fila[27] = FALSE;
         }
       } catch (Exception $e) {
-        $fila['resultado'] = 'Error: '.$e->getMessage();
-        $fila['status'] = FALSE;
+        $fila[26] = 'Error: '.$e->getMessage();
+        $fila[27] = FALSE;
       }
     }else{
       # 5. Registrar respuest Error
-      $fila['resultado'] = 'OT no encontrada';
-      $fila['status'] = FALSE;
+      $fila[26] = 'OT no encontrada';
+      $fila[27] = FALSE;
     }
     return $fila;
   }
