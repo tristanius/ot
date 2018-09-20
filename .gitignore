@@ -12,6 +12,6 @@ uploads/reportes/
 downloads/personal/
 downloads/pmo/
 downloads/items/
-uploads/reportes/
+downloads/reportes/
 
 /application/helpers/dompdf/lib/fonts/*

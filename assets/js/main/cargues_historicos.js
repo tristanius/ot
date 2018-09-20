@@ -106,7 +106,8 @@ var cargues_historicos =  function($scope, $http, $timeout){
   $scope.file_path = undefined;
 
   $scope.loader = false;
-  $scope.selected_file = true;
+  $scope.selected_file = false;
+  $scope.table_tag = '';
   /*
   - Se desea realizar un cargue masivo mas generico para este tipo de gestiones, se desea un procedimiento estandard,
   el procedimiento seria el siguiente:
@@ -123,7 +124,9 @@ var cargues_historicos =  function($scope, $http, $timeout){
         $scope.adjunto = $(tag).uploadFile({
           url:ruta,
           autoSubmit: false,
+          multiple:false,
           fileName:"file",
+          showStatusAfterSuccess: false,
           dynamicFormData: function(){
             var data ={
               id:$scope.$parent.log.idusuario,
@@ -134,14 +137,14 @@ var cargues_historicos =  function($scope, $http, $timeout){
           onSelect:function(files){
               //files[0].name; files[0].size; return true;
               $timeout(function(){
-                $scope.selected_file = false;
+                $scope.selected_file = true;
               });
               return true;
           },
           onCancel: function(files, pd){
             $scope.loader = false;
             $timeout(function(){
-              $scope.selected_file = true;
+              $scope.selected_file = false;
             });
             return true;
           },
@@ -202,5 +205,11 @@ var cargues_historicos =  function($scope, $http, $timeout){
         }
       );
     }
+  }
+  $scope.download_table = function(tag){
+    $(tag).tableExport({
+     formats: ['xlsx'],
+     exportButtons: false
+   });
   }
 }

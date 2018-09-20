@@ -15,6 +15,8 @@ class Historicoreportes extends CI_Controller{
   public function form(){
     $this->crear_directorio('./uploads/reportes');
     $this->crear_directorio('./uploads/reportes/cargue');
+    $this->crear_directorio('./downloads/reportes');
+    $this->crear_directorio('./downloads/reportes/cargue');
     $this->load->view('reportes/cargue/form');
   }
 
@@ -55,10 +57,14 @@ class Historicoreportes extends CI_Controller{
             $row = $this->insertarFila( $row, $post->idcontrato, $ret->exitosos, $ret->fallidos );
             array_push( $ret->resultados, $row );
             if ($row['status']) { $ret->exitosos++; }else{ $ret->fallidos++; }
+          }else{
+            $headers = $row;
           }
           $fila++;
         }
       }
+      $ret->download = '/downloads/reportes/cargue'.date('YmdHis').'.xlsx';
+      writeXlsx( $ret->resultados, $headers, '.'.$ret->download, 'Cargue masivo de reportes');
       if ( $ret->fallidos <= 0 ) {
         $ret->msj = 'Lectura correcta.';
         $ret->status = TRUE;
@@ -102,27 +108,33 @@ class Historicoreportes extends CI_Controller{
     # 2 Validar OT
     $idOT = $this->getOT( $rec->nombre_ot, $idcontrato );
     if ($idOT != FALSE) {
-      $rec->idOT  = $idOT;
-      # 2.1 Validar items en la OT
-      $iditemf = $this->getIditemf( $rec->idOT, $rec->itemf_codigo );
-      if ($iditemf != FALSE) {
-        $rec->itemf_iditemf = $iditemf;
-        # 2.2 Validar si existe reporte, sino crear uno
-        $rec->idreporte_diario =  $this->getReporte($rec->idOT, $rec->fecha_reporte );
-        if ( isset($rec->idreporte_diario) ) {
-          # 3. Intentar insertar el recurso reportado
-          $rec->idrecurso_reporte_diario = $this->setRecursoReporte( $rec, $rec->idreporte_diario );
-          # 4. Insertar el avance de obra relacionado
-          $rec->setAvanceReporte( $rec, $rec->idrecurso_reporte_diario );
-          # 5. Registrar respuesta OK
-          $fila['resultado'] = 'Campos registrados, verificalos.';
-          $fila['status'] = TRUE;
+      try {
+        $rec->idOT  = $idOT;
+        # 2.1 Validar items en la OT
+        $iditemf = $this->getIditemf( $rec->idOT, $rec->itemf_codigo );
+        if ($iditemf != FALSE) {
+          $rec->itemf_iditemf = $iditemf;
+          # 2.2 Validar si existe reporte, sino crear uno
+          $rec->idreporte_diario =  $this->getReporte($rec->idOT, $rec->fecha_reporte );
+          if ( isset($rec->idreporte_diario) ) {
+            # 3. Intentar insertar el recurso reportado
+            $rec->idrecurso_reporte_diario = $this->setRecursoReporte( $rec, $rec->idreporte_diario );
+            # 4. Insertar el avance de obra relacionado
+            $this->setAvanceReporte( $rec, $rec->idrecurso_reporte_diario );
+            # 5. Registrar respuesta OK
+            $fila['resultado'] = 'Campos registrados, verificalos.';
+            $fila['status'] = TRUE;
+          }
+        }else {
+          # 5. Registrar respuesta Error
+          $fila['resultado'] = 'Codigo de item no encontrado';
+          $fila['status'] = FALSE;
         }
-      }else {
-        # 5. Registrar respuesta Error
-        $fila['resultado'] = 'Codigo de item no encontrado';
+      } catch (Exception $e) {
+        $fila['resultado'] = 'Error: '.$e->getMessage();
         $fila['status'] = FALSE;
       }
+
     }
     else{
       # 5. Registrar respuest Error

@@ -55,6 +55,21 @@ function readXlsx($path='', $super=NULL, $methodname=NULL)
   }
   return $reader;
 }
+function writeXlsx($datos, $cabeceras , $filePath = './uploads/informeFacturacion.xlsx' ){
+  $writer = WriterFactory::create(Type::XLSX); // for XLSX files
+  //$writer = WriterFactory::create(Type::CSV); // for CSV files
+  //$writer = WriterFactory::create(Type::ODS); // for ODS files
+  $writer->openToFile($filePath); // write data to a file or to a PHP stream
+  //$writer->openToBrowser($fileName); // stream data directly to the browser
+  $style = (new StyleBuilder())->setFontBold()->setFontColor(Color::WHITE)->setBackgroundColor(Color::BLUE)->build();
+	$writer->addRowWithStyle($cabeceras, $style);
+  foreach ($datos as $key => $value ) {
+    $writer->addRow($value); // add a row at a time
+  }
+  //$writer->addRows($multipleRows); // add multiple rows at a time
+  $writer->close();
+
+}
 
 function genObservaciones($rows){
   $writer = WriterFactory::create(Type::XLSX);

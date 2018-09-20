@@ -14,19 +14,20 @@
         <p>
           <big> <label>Contrato:</label> </big>
           <b ng-bind="contrato.no_contrato"></b>
-          <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
+          <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger" ng-disabled="selected_file" data-target="<?= $idtag ?>">Seleccionar</button>
         </p>
 
         <p ng-show="!contrato.idcontrato">
-          <div class="" ng-init="initAdjunto('<?= site_url("historicoreportes/upload_file") ?>', '#fileuploader')">
+          <div ng-show="file_path?false:true" ng-init="initAdjunto('<?= site_url("historicoreportes/upload_file") ?>', '#fileuploader')">
             <big><label>Archivo:</label></big>
             <div id="fileuploader" style="display:inline">Seleccionar</div>
           </div>
         </p>
+        <p ng-show="file_path?true:false"> <strong>Ruta: </strong> <span ng-bind="file_path"></span> </p>
 
         <hr>
-        <button type="button" class="btn blue" ng-disabled="selected_file" ng-click="IniciarUploadAdjunto()">Montar archivo</button>
-        <button type="button" class="btn green" ng-disabled="selected_file" ng-click="leerArchivo( '<?= site_url('historicoreportes/leer_archivo') ?>', file_path )">Importar datos</button>
+        <button type="button" class="btn blue" ng-disabled="!selected_file || loader" ng-click="IniciarUploadAdjunto()">Montar archivo</button>
+        <button type="button" class="btn green" ng-disabled="!selected_file || loader" ng-click="leerArchivo( '<?= site_url('historicoreportes/leer_archivo') ?>', file_path )">Importar datos</button>
 
       </div>
 
@@ -42,8 +43,8 @@
         </ul>
       </p>
 
-      <button type="button" ng-click="exportar_tabla('#resultadosCargueHistorico<?= $rand ?>')" class="btn btn-small green">Exportar resultados</button>
-      <table id="resultadosCargueHistorico<?= $rand ?>" class="mytabla">
+      <a class="btn btn-small green" ng-href="<?= base_url() ?>{{ respuesta_cargue.download }}" target="_blank">Exportar resultados</a>
+      <table id="tableCargueHistorico<?= $rand ?>" class="mytabla" ng-init="table_tag = '#tableCargueHistorico<?= $rand ?>';">
         <thead>
           <tr>
             <th>Resultado</th>
