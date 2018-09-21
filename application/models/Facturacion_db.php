@@ -111,10 +111,7 @@ class Facturacion_db extends CI_Model{
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
         IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und,
-        rrd.abscisa_ini,
-        rrd.abscisa_fin,
-        rrd.tipo_instalacion,
-        avance.*,
+        avance.*
       ';
     }else{
       return 'year(rd.fecha_reporte) as año,
