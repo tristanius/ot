@@ -4,11 +4,13 @@
       <tr>
         <th></th>
         <th colspan="7">Inf. Equipo</th>
+        <th></th>
 
         <th></th>
         <th></th>
         <th></th>
         <th></th>
+
         <th colspan="2">Horometro / <br> kilometraje</th>
         <th colspan="3">Reporte horas</th>
         <th colspan="3" class="orange lighten-5">Combustible</th>
@@ -27,9 +29,9 @@
 
         <th>C.O.</th>
         <th>C.C.</th>
-
         <th class="yellow lighten-4">Cant.</th>
         <th>UND</th>
+
         <th>Inicial</th>
         <th>Final</th>
         <th>OPER.</th>
@@ -56,9 +58,9 @@
 
         <td></td>
         <td></td>
-
         <td class="yellow lighten-4"></td>
         <td></td>
+
         <td></td>
         <td></td>
         <td></td>
@@ -100,9 +102,12 @@
         <td ng-bind="eq.descripcion_equipo"></td>
         <td ng-bind="eq.descripcion"></td>
         <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+
+        <!-- CO / CC / cant / und -->
         <td class="noMaterialStyles">
           <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
+
         <td class="noMaterialStyles">
           <input type="text" ng-model="eq.cc" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
@@ -110,7 +115,9 @@
         <td class="inputSmall" class="yellow lighten-4">
           <input type="number" ng-model="eq.cantidad"  ng-init="eq.cantidad = parseNumb(eq.cantidad)"  ng-change="eq.cantidad = parseNumb(eq.cantidad)" style="width:6ex;" step=any min=0  ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
+
         <td class="inputSmall" ng-bind="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <!-- Fin: CO / CC / cant / und -->
 
         <td class="inputSmall"> <input type="text" ng-model="eq.horometro_ini" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputSmall"> <input type="text" ng-model="eq.horometro_fin" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
