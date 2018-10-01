@@ -128,7 +128,7 @@
           <input type="text" ng-model="pr.procedencia" placeholder="Desde" style="width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
         <td class="noMaterialStyles">
-          <input type="text" ng-model="pr.cc" placeholder="C.C." style="width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="pr.cc" ng-change="validarRecursoReporte(rd.recursos.personal, 1, 'identificacion', pr.identificacion)" placeholder="C.C." style="width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
 
         <td style="background: #FCE8E9">
@@ -162,7 +162,7 @@
         </td>
 
         <td style="border: green 1px solid;" >
-            <input type="number" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-change="pr.cantidad = parseNumb(pr.cantidad)" ng-readonly="rd.info.estado == 'CERRADO'" style="width:6ex;"  min=0 max=1>
+            <input type="number" ng-model="pr.cantidad" ng-init="pr.cantidad = parseNumb(pr.cantidad)" ng-change="pr.cantidad = parseNumb(pr.cantidad);" ng-readonly="rd.info.estado == 'CERRADO'" style="width:6ex;"  min=0 max=1>
         </td>
         <td style="background: #F4F9FD ">
           <input type="number" style="width:6ex; border: green 1px solid; " ng-model="pr.horas_ordinarias" ng-init="pr.horas_ordinarias = parseNumb(pr.horas_ordinarias)" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true">

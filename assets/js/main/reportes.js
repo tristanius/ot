@@ -350,7 +350,24 @@ var reportes = function($scope, $http, $timeout) {
       }
     });
   }
-
+  // Validar cantidades de recursos reportados
+  $scope.validarRecursoReporte = function(listado, cantidadTope, field, searchBy){
+    let items = [];
+    let suma = 0;
+    let repetidos = 0;
+    angular.forEach(listado, function(value, key){
+      if ( value[field] == searchBy) {
+        suma += value.cantidad;
+        items.push(value);
+      }
+    });
+    if(suma > cantidadTope){
+      angular.forEach(items, function(it, key){
+        it.msj = "Los elementos superan las cantidades maximas de la unidad.";
+        it.valid = false;
+      });
+    }
+  }
 }
 
 // ============================================================================================

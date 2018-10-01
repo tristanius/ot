@@ -373,6 +373,12 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
   $scope.toggleTag = function(tag){
     $(tag).toggle();
   }
+
+  $scope.contarDuplicados = function(){
+    var counts = {};
+    lista.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
+    return counts;
+  }
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });
