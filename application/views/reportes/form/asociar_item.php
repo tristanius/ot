@@ -22,4 +22,5 @@
     </tbody>
   </table>
 
+  <button type="button" class="btn mini-btn2 red" ng-click="toggleTag('#asociarItem')">(X) Salir</button>
 </section>

@@ -259,7 +259,7 @@ var reportes = function($scope, $http, $timeout) {
   $scope.agregarEquipos = function(ambito){
     var msj = ''
     angular.forEach(ambito.equiposOT, function(val, key){
-      if( ( (!ambito.existeRegistroFull(ambito.rd.recursos.equipos, val, ['codigo_siesa', 'itemc_item', 'cc']) && val.add ) || (val.codigo_siesa == "Temporal" && val.add) )
+      if( ( !ambito.existeRegistroFull(ambito.rd.recursos.equipos, val, ['codigo_siesa', 'itemc_item', 'cc']) && val.add ) || (val.codigo_siesa == "Temporal" && val.add) )
       {
         val.horas_oper = 0;
         val.horas_disp = 1;

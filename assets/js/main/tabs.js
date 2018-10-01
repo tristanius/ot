@@ -369,6 +369,10 @@ app.controller("tabs", function($scope, $sce, $compile, $http, $templateCache, $
       $( selector ).tabs();
     } );
   }
+
+  $scope.toggleTag = function(tag){
+    $(tag).toggle();
+  }
 });
 
 app.controller('OT', function($scope, $http, $timeout){ OT($scope, $http, $timeout); });
