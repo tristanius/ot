@@ -125,7 +125,7 @@
         </td>
 
         <td class="noMaterialStyles">
-          <input type="text" ng-model="pr.procedencia" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="pr.procedencia" style="border: green 1px solid; width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
         <td class="noMaterialStyles">
           <input type="text" ng-model="pr.cc" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">

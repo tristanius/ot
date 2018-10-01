@@ -70,6 +70,7 @@ var reportes = function($scope, $http, $timeout) {
       angular.forEach(propiedades, function(val, k){
         if( val[k] != item[k] ){
           bandera = false;
+          console.log(k);
         }
       });
     });
@@ -209,7 +210,7 @@ var reportes = function($scope, $http, $timeout) {
   $scope.agregarPersonal = function(ambito){
     var msj = '';
     angular.forEach(ambito.personalOT, function(val, key){
-      if( !$scope.existeRegistroFull( ambito.rd.recursos.personal, val, ['identificacion', 'cc'] ) && val.add ){
+      if( !$scope.existeRegistroFull( ambito.rd.recursos.personal, val, ['identificacion', 'itemf_iditemf', 'cc'] ) && val.add ){
         val.hora_inicio = '7:00'; val.hora_fin = '12:00'; val.hora_inicio2 = '13:00';
         if (ambito.rd.idbase == 172 || ambito.rd.idbase == 173 || ambito.rd.idbase == 174){
           val.hora_fin2 = '17:00';
@@ -248,7 +249,9 @@ var reportes = function($scope, $http, $timeout) {
         }
         ambito.rd.recursos.personal.push(val);
       }else{
-        msj += 'La persona: '+val.identificacion+' '+val.nombre_completo+' ya existe con ese CC. \n';
+        if(val.add){
+          msj += 'La persona: '+val.identificacion+' '+val.nombre_completo+' ya existe con ese CC. \n';
+        }
       }
     });
     if(msj){
@@ -259,7 +262,7 @@ var reportes = function($scope, $http, $timeout) {
   $scope.agregarEquipos = function(ambito){
     var msj = ''
     angular.forEach(ambito.equiposOT, function(val, key){
-      if( ( !ambito.existeRegistroFull(ambito.rd.recursos.equipos, val, ['codigo_siesa', 'itemc_item', 'cc']) && val.add ) || (val.codigo_siesa == "Temporal" && val.add) )
+      if( ( !ambito.existeRegistroFull(ambito.rd.recursos.equipos, val, ['codigo_siesa', 'itemf_iditemf', 'cc']) && val.add ) || (val.codigo_siesa == "Temporal" && val.add) )
       {
         val.horas_oper = 0;
         val.horas_disp = 1;
@@ -272,8 +275,10 @@ var reportes = function($scope, $http, $timeout) {
         }
         ambito.rd.recursos.equipos.push(val);
       }else{
-        msj += 'El equipo: '+val.codigo_siesa+' ya existe con ese CC. \n';
         console.log("No ha sido agregado "+val.codigo_siesa)
+        if(val.add){
+          msj += 'El equipo: '+val.codigo_siesa+' ya existe con ese CC. \n';
+        }
       }
     });
   }
