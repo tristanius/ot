@@ -68,7 +68,7 @@ var reportes = function($scope, $http, $timeout) {
     var bandera = true;
     angular.forEach(list, function(volores,key){
       angular.forEach(propiedades, function(val, k){
-        if( val[k] != item[k] ){
+        if( val[val] != item[val] ){
           bandera = false;
           console.log(k);
         }

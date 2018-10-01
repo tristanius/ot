@@ -125,10 +125,10 @@
         </td>
 
         <td class="noMaterialStyles">
-          <input type="text" ng-model="pr.procedencia" style="border: green 1px solid; width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="pr.procedencia" placeholder="Desde" style="border: green 1px solid; width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
         <td class="noMaterialStyles">
-          <input type="text" ng-model="pr.cc" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="pr.cc" placeholder="C.C." style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
 
         <td style="background: #FCE8E9">
@@ -179,8 +179,8 @@
           </select>
         </td>
         <td> <input type="checkbox" ng-model="pr.hr_almuerzo" ng-init="pr.hr_almuerzo = parseBool(pr.hr_almuerzo)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
-        <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
-        <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'"> </td>
+        <td> <input type="text" style="width:5ex" ng-model="pr.gasto_viaje_pr" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'" placeholder="R/P"> </td>
+        <td> <input type="text" style="width:8ex" ng-model="pr.gasto_viaje_lugar" ng-readonly="rd.info.estado == 'CERRADO' && rd.info.validado_pyco != 'CORREGIR GV'" placeholder="Lugar"> </td>
         <td class="font9">
           <span ng-if="pr.item_asociado"> (<span ng-bind="pr.item_asociado" style="color: #934B10"></span>)</span>
           <button type="button" class="btn mini-btn2 blue" ng-click="viewAsociarItem(pr, '#asociarItem')"

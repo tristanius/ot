@@ -101,7 +101,7 @@
         <td ng-bind="eq.referencia"></td>
         <td ng-bind="eq.descripcion_equipo" class="center-align"></td>
         <td ng-bind="eq.descripcion | lowercase" class="center-align"></td>
-        <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' " placeholder="operador"> </td>
 
         <!-- CO / CC / cant / und -->
         <td class="noMaterialStyles">
