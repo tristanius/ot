@@ -280,7 +280,7 @@ var reportes = function($scope, $http, $timeout) {
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(ambito){
     angular.forEach(ambito.actividadesOT, function(val, key){
-      if(val.add && !ambito.$parent.existeRegistro(ambito.rd.recursos.actividades, ['itemc_iditemc' 'idfrente_ot'temc) ){
+      if(val.add) ){
         var rec = angular.copy(val);
         rec.facturable = true;
         rec.cantidad = 0;
