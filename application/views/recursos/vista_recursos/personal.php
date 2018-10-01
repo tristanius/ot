@@ -26,6 +26,7 @@
         <th>Asignacion como: </th>
         <th>Propio? </th>
         <th>U.N.</th>
+        <th>Estado</th>
       </tr>
       <tr>
         <th></th>
@@ -36,6 +37,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th><input type="text" ng-model="filterPer.estado_activo"></th>
       </tr>
     </thead>
     <tbody>
@@ -59,6 +61,7 @@
           </span>
           <span ng-bind="p.item_asociado"></span> - <span ng-bind="p.UN"></span>
         </td>
+        <td></td> <!-- Estado -->
       </tr>
     </tbody>
   </table>

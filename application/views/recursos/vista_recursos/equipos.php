@@ -29,6 +29,7 @@
         <th>propio?</th>
         <th>U.N.</th>
         <th>Costo</th>
+        <th>Activo</th>
       </tr>
       <tr>
         <th><input type="text" ng-model="filterEq.codigo_siesa"></th>
@@ -40,6 +41,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th><input type="text" ng-model="filterEq.estado_activo"></th>
       </tr>
     </thead>
     <tbody>
@@ -65,9 +67,11 @@
           <span ng-bind="e.UN"></span>
         </td>
         <td ng-bind="e.costo_und"></td>
+
+        <td></td> <!-- Estado -->
       </tr>
     </tbody>
   </table>
-  
+
   <button type="button" class="btn green" ng-click="exportar_tabla('#tablaEquiposRecursosOT')" ng-if="condensado.guardado == true">Exportar</button>
 </div>
