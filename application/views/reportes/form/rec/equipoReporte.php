@@ -99,13 +99,13 @@
 
         <td ng-bind="eq.codigo_siesa"></td>
         <td ng-bind="eq.referencia"></td>
-        <td ng-bind="eq.descripcion_equipo | lowercase"></td>
-        <td ng-bind="eq.descripcion | lowercase"></td>
+        <td ng-bind="eq.descripcion_equipo" class="center-align"></td>
+        <td ng-bind="eq.descripcion | lowercase" class="center-align"></td>
         <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <!-- CO / CC / cant / und -->
         <td class="noMaterialStyles">
-          <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
 
         <td class="noMaterialStyles">
@@ -119,8 +119,8 @@
         <td class="inputSmall" ng-bind="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <!-- Fin: CO / CC / cant / und -->
 
-        <td class="inputSmall"> <input type="text" ng-model="eq.horometro_ini" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td class="inputSmall"> <input type="text" ng-model="eq.horometro_fin" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.horometro_ini" ng-readonly="rd.info.estado == 'CERRADO' " style="width:6ex;" > </td>
+        <td class="inputSmall"> <input type="text" ng-model="eq.horometro_fin" ng-readonly="rd.info.estado == 'CERRADO' " style="width:6ex;" > </td>
 
         <td class="inputSmall">
           <input style="width:6ex; border: green 1px solid; " type="number" min=0 ng-model="eq.horas_operacion" ng-init="eq.horas_operacion = parseNumb(eq.horas_operacion)" ng-readonly="rd.info.estado == 'CERRADO' ">
