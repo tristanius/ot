@@ -16,13 +16,12 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
   <?php endforeach; ?>
 
 </div>
-<div ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'></div>
 <?php $this->load->view('reportes/form/frentes/duplicar', array() );  ?>
 
 <?php
 }
 ?>
-<section style="padding:1ex" class="card-panel" >
+<section style="padding:1ex" class="card-panel"  ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'>
 
   <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
     <h5 style="color:#14931d" >Frente de trabajo: {{ getFrente(myfrente) }} </h5>

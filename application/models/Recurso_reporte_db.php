@@ -46,7 +46,9 @@ class Recurso_reporte_db extends CI_Model{
       'idsector_item_tarea'=>isset($recurso->idsector_item_tarea)?$recurso->idsector_item_tarea:1,
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
+
       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+      'cc'=>isset($recurso->cc)?$recurso->cc:NULL,
 
       'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
       'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
@@ -98,6 +100,7 @@ class Recurso_reporte_db extends CI_Model{
       'idfrente_ot'=>isset($recurso->idfrente_ot)?$recurso->idfrente_ot:NULL,
       'item_asociado'=>isset($recurso->item_asociado)?$recurso->item_asociado:NULL,
       'procedencia'=>isset($recurso->procedencia)?$recurso->procedencia:NULL,
+      'cc'=>isset($recurso->cc)?$recurso->cc:NULL,
 
       'combustible_cantidad'=>isset($recurso->combustible_cantidad)?$recurso->combustible_cantidad:NULL,
       'combustible_valor'=>isset($recurso->combustible_valor)?$recurso->combustible_valor:NULL,
@@ -223,10 +226,7 @@ class Recurso_reporte_db extends CI_Model{
     $this->load->database('ot');
     $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
-      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente,
-      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud, avance.ancho, avance.alto,
-      avance.cant_elementos, avance.cant_varillas, avance.diametro_acero, avance.peso_und, avance.idavance_reporte,
-      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion, avance.a_cargo, avance.calidad'
+      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente, avance.*'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');

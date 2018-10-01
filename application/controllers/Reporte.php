@@ -444,7 +444,7 @@ class Reporte extends CI_Controller{
       $this->load->model('tarea_db','tarea');
       $pers = $this->recdb->getPersonalOtBy($idOT, 'persona');
       $equs = $this->recdb->getEquiposOtBy($idOT, 'equipo');
-      $acts = $this->tarea->getActividadesPlaneadas($idOT,1, NULL, $fecha);
+      $acts = $this->tarea->getActividadesPlaneadas($idOT, 1, NULL, $fecha);
       $mats = $this->recdb->getRecursoByOT($idOT, 'material');
       $otros = $this->recdb->getRecursoByOT($idOT, 'otros');
       $subs = $this->tarea->getActividadesPlaneadas($idOT,'subcontrato', NULL, NULL);

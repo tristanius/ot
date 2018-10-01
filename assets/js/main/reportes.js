@@ -64,16 +64,14 @@ var reportes = function($scope, $http, $timeout) {
     });
     return bandera;
   }
-  $scope.existeRegistroList = function(list, props, valor) {
-    var bandera = false;
-    angular.forEach(list, function(val, key){
-      var row = true;
-      angular.forEach(props, function(v, k){
-        if(val[v] != valor){
-          row = false;
+  $scope.existeRegistroFull = function(list, item, propiedades){
+    var bandera = true;
+    angular.forEach(list, function(volores,key){
+      angular.forEach(propiedades, function(val, k){
+        if( val[k] != item[k] ){
+          bandera = false;
         }
       });
-      if(row){ bandera = true; }
     });
     return bandera;
   }
@@ -209,21 +207,27 @@ var reportes = function($scope, $http, $timeout) {
   }
   // Agregar el personal seleccionado al reporte
   $scope.agregarPersonal = function(ambito){
+    var msj = '';
     angular.forEach(ambito.personalOT, function(val, key){
-      if(!$scope.existeRegistro( ambito.rd.recursos.personal, 'identificacion', val.identificacion) && val.add){
+      if( !$scope.existeRegistroFull( ambito.rd.recursos.personal, val, ['identificacion', 'cc'] ) && val.add ){
         val.hora_inicio = '7:00'; val.hora_fin = '12:00'; val.hora_inicio2 = '13:00';
         if (ambito.rd.idbase == 172 || ambito.rd.idbase == 173 || ambito.rd.idbase == 174){
-          val.hora_fin2 = '17:00'; val.horas_ordinarias = 9;
-        }else if (ambito.rd.idbase == 244) {
+          val.hora_fin2 = '17:00';
+          val.horas_ordinarias = 9;
+        }else if (ambito.rd.idbase == 244 || ambito.rd.idbase == 262) {
           if (ambito.dia_semana == 'sábado') {
-            val.hora_fin = '-'; val.hora_inicio2 = '-'; val.hora_fin2 = '10:00';
+            val.hora_fin = '-';
+            val.hora_inicio2 = '-';
+            val.hora_fin2 = '10:00';
             val.horas_ordinarias = 3;
+          }else if (ambito.dia_semana == 'viernes' &&  ambito.rd.idbase == 262) {
+            val.hora_inicio2 = '-';
+            val.hora_fin2 = '04:00';
+            val.horas_ordinarias = 8;
           }else{
             val.hora_fin2 = '17:00';
             val.horas_ordinarias = 9;
           }
-        }else if ( ambito.rd.idbase == 262 ) {
-
         }else{
           val.hora_fin2 = '16:00';
           val.horas_ordinarias = 8;
@@ -243,17 +247,19 @@ var reportes = function($scope, $http, $timeout) {
           val.idfrente_ot = f;
         }
         ambito.rd.recursos.personal.push(val);
+      }else{
+        msj += 'La persona: '+val.identificacion+' '+val.nombre_completo+' ya existe con ese CC. \n';
       }
     });
+    if(msj){
+      alert( msj );
+    }
   }
   // Agregar equipos seleccionados al reporte
   $scope.agregarEquipos = function(ambito){
+    var msj = ''
     angular.forEach(ambito.equiposOT, function(val, key){
-      if(
-        (!ambito.existeRegistro(ambito.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && val.add) ||
-        (ambito.existeRegistro(ambito.rd.recursos.equipos, 'codigo_siesa', val.codigo_siesa) && !ambito.existeRegistro(ambito.rd.recursos.equipos, 'itemc_item', val.itemc_item) && val.add ) ||
-        (val.codigo_siesa == "Temporal" && val.add)
-      )
+      if( ( (!ambito.existeRegistroFull(ambito.rd.recursos.equipos, val, ['codigo_siesa', 'itemc_item', 'cc']) && val.add ) || (val.codigo_siesa == "Temporal" && val.add) )
       {
         val.horas_oper = 0;
         val.horas_disp = 1;
@@ -266,16 +272,15 @@ var reportes = function($scope, $http, $timeout) {
         }
         ambito.rd.recursos.equipos.push(val);
       }else{
+        msj += 'El equipo: '+val.codigo_siesa+' ya existe con ese CC. \n';
         console.log("No ha sido agregado "+val.codigo_siesa)
       }
     });
   }
-
-
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(ambito){
     angular.forEach(ambito.actividadesOT, function(val, key){
-      if(val.add && !ambito.$parent.existeRegistroList(ambito.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
+      if(val.add && !ambito.$parent.existeRegistro(ambito.rd.recursos.actividades, ['itemc_iditemc' 'idfrente_ot'temc) ){
         var rec = angular.copy(val);
         rec.facturable = true;
         rec.cantidad = 0;
@@ -1290,7 +1295,7 @@ var frentes = function($scope, $http, $timeout){
 
   $scope.agregarPersonal = function(personal){
     angular.forEach( personal, function(val, key){
-      if(!$scope.existeRegistro($scope.$parent.rd.recursos.personal, 'identificacion', val.identificacion)){
+      if(!$scope.existeRegistroFull( ambito.rd.recursos.personal, val, ['identificacion', 'cc']) ){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
         if ( val.idavance_reporte )
@@ -1316,7 +1321,7 @@ var frentes = function($scope, $http, $timeout){
   // Agregar actividades seleccionadas al reporte
   $scope.agregarActividades = function(actividades){
     angular.forEach( actividades , function(val, key){
-      if( !$scope.$parent.existeRegistroList($scope.$parent.rd.recursos.actividades, ['itemc_iditemc', 'idfrente_ot', 'idsector_item_tarea'], val.itemc_iditemc) ){
+      if( !$scope.$parent.existeRegistro($scope.$parent.rd.recursos.actividades, 'itemc_iditemc', val.itemc_iditemc) ){
         val.idrecurso_reporte_diario = undefined;
         val.idreporte_diario = undefined;
         if ( val.idavance_reporte )

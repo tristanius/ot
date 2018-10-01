@@ -26,6 +26,7 @@
             <th>Cod. cargo</th>
             <th>Cargo</th>
             <th>Asignación</th>
+            <th>unidad negocio</th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +54,7 @@
             <td ng-bind="p.codigo"></td>
             <td ng-bind="p.descripcion"></td>
             <td ng-bind="p.propietario_observacion"></td>
+            <td ng-bind="p.unidad_negocio"></td>
           </tr>
         </tbody>
       </table>

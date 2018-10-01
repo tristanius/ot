@@ -196,10 +196,8 @@ class Reporte_db extends CI_Model{
       if( e.descripcion IS NULL , rot.descripcion_temporal, e.descripcion ) AS equipo,
       rot.propietario_observacion AS asignado_a,
       IF( rot.propietario_recurso, "SI", "NO" ) AS propio,
-      avance.abscisa_ini, avance.abscisa_fin, avance.tipo_instalacion, avance.tipo_ejecucion,
-      avance.ubicacion, avance.margen, avance.MH_inicio, avance.MH_fin, avance.longitud,
-      avance.ancho, avance.alto,  avance.cant_elementos, avance.cant_varillas,
-      avance.diametro_acero, avance.peso_und, avance.a_cargo, avance.calidad
+      rrd.cc,
+      IFNULL(rot.UN, r.unidad_negocio) AS UN
       '
     );
     $this->db->from('reporte_diario AS rd');
@@ -308,7 +306,7 @@ class Reporte_db extends CI_Model{
 		}
 		return $status;
 	}
-  
+
   public function commit($value='')
   {
     $this->load->database('ot');

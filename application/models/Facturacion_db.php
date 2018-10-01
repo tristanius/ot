@@ -66,11 +66,11 @@ class Facturacion_db extends CI_Model{
         c.no_contrato as contrato,
         year(rd.fecha_reporte) as año,
         month(rd.fecha_reporte) as mes,
+        day(rd.fecha_reporte) as dia,
         OT.nombre_departamento_ecp as nombre_departamento,
         bs.nombre_base as base,
         OT.base_idbase as CO,
         itf.codigo,
-        titc.grupo_mayor AS UN,
         rd.fecha_reporte,
         rd.festivo,
         OT.nombre_ot AS No_OT,
@@ -78,9 +78,10 @@ class Facturacion_db extends CI_Model{
         OT.locacion as lugar,
         OT.municipio,
         OT.abscisa as pk,
-        p.identificacion as cedula,
-        p.nombre_completo,
         itf.itemc_item as item,
+        titc.grupo_mayor AS tipo,
+        rot.cc,
+        IFNULL( rot.UN, r.unidad_negocio) AS UN,
         if(titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
         itc.descripcion,
         if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
@@ -100,6 +101,8 @@ class Facturacion_db extends CI_Model{
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
+        p.identificacion as cedula,
+        p.nombre_completo,
         e.referencia as placa_equipo,
         e.codigo_siesa,
         if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) as referencia,
@@ -110,8 +113,7 @@ class Facturacion_db extends CI_Model{
         rrd.hora_fin2 AS tr2_salida,
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
-        IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und,
-        avance.*
+        IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und
       ';
     }else{
       return 'year(rd.fecha_reporte) as año,
@@ -127,7 +129,7 @@ class Facturacion_db extends CI_Model{
       tp.nombre_tipo_ot as tipo_mtto,
       sp.nombre_especialidad as especialidad,
       itf.codigo,
-      titc.grupo_mayor AS UN,
+      titc.grupo_mayor AS tipo_un,
       rd.fecha_reporte,
       rd.festivo,
       OT.nombre_ot AS No_OT,
@@ -193,7 +195,9 @@ class Facturacion_db extends CI_Model{
       rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
       rd.validado_pyco AS estado_reporte,
       rot.propietario_observacion AS asignacion,
-      IFNULL(rot.costo_und, tr.tarifa) AS costo_und ';
+      IFNULL(rot.costo_und, tr.tarifa) AS costo_und,
+      rot.cc,
+      IFNULL( rot.UN, r.unidad_negocio) AS UN';
     }
   }
 

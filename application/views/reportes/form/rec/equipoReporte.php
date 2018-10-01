@@ -3,13 +3,8 @@
     <thead id="thead2" style="background: #EEE; box-shadow:0px 0px 4px #333;">
       <tr>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th colspan="7">Inf. Equipo</th>
+
         <th></th>
         <th></th>
         <th></th>
@@ -29,7 +24,9 @@
         <th>Equipo</th>
         <th>Descripción <a href="" ng-click="myOrderBy_eq = 'descripcion'" ng-show="myOrderBy_eq != 'descripcion'" data-icon="&#xe029;"></a</th>
         <th>Operador</th>
+
         <th>C.O.</th>
+        <th>C.C.</th>
 
         <th class="yellow lighten-4">Cant.</th>
         <th>UND</th>
@@ -56,7 +53,10 @@
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.descripcion_equipo"> </td>
         <td> <input style="width: 8ex" type="text" ng-model="equipoFilter.descripcion_"> </td>
         <td> <input style="width: 13ex" type="text" ng-model="equipoFilter.nombre_operador"> </td>
+
         <td></td>
+        <td></td>
+
         <td class="yellow lighten-4"></td>
         <td></td>
         <td></td>
@@ -100,23 +100,38 @@
         <td ng-bind="eq.descripcion_equipo"></td>
         <td ng-bind="eq.descripcion"></td>
         <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td class="noMaterialStyles"> <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:9ex;"> </td>
+        <td class="noMaterialStyles">
+          <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+        </td>
+        <td class="noMaterialStyles">
+          <input type="text" ng-model="eq.cc" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+        </td>
 
         <td class="inputSmall" class="yellow lighten-4">
-          <input type="number" ng-model="eq.cantidad"  ng-init="eq.cantidad = parseNumb(eq.cantidad)"  ng-change="eq.cantidad = parseNumb(eq.cantidad)" step=any min=0  ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="number" ng-model="eq.cantidad"  ng-init="eq.cantidad = parseNumb(eq.cantidad)"  ng-change="eq.cantidad = parseNumb(eq.cantidad)" style="width:6ex;" step=any min=0  ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
-        <td class="inputSmall"> <input type="text" ng-model="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td class="inputSmall" ng-bind="eq.unidad" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <td class="inputSmall"> <input type="text" ng-model="eq.horometro_ini" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
         <td class="inputSmall"> <input type="text" ng-model="eq.horometro_fin" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
-        <td class="inputSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_operacion" ng-init="eq.horas_operacion = parseNumb(eq.horas_operacion)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td class="inputSmall"> <input style="border: green 1px solid; " type="number" min=0 ng-model="eq.horas_disponible" ng-init="eq.horas_disponible = parseNumb(eq.horas_disponible)" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td class="inputSmall">
+          <input style="width:6ex; border: green 1px solid; " type="number" min=0 ng-model="eq.horas_operacion" ng-init="eq.horas_operacion = parseNumb(eq.horas_operacion)" ng-readonly="rd.info.estado == 'CERRADO' ">
+        </td>
+        <td class="inputSmall">
+          <input style="width:6ex; border: green 1px solid; " type="number" min=0 ng-model="eq.horas_disponible" ng-init="eq.horas_disponible = parseNumb(eq.horas_disponible)" ng-readonly="rd.info.estado == 'CERRADO' ">
+        </td>
         <td class="inputSmall noMaterialStyles"> <input type="checkbox" ng-model="eq.varado" ng-init="eq.varado = parseBool(eq.varado)" ng-disabled="rd.info.estado == 'CERRADO' "> </td>
 
-        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_cantidad" placeholder="cantidad"> </td>
-        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_valor" placeholder="valor $"> </td>
-        <td class="inputSmall"> <input type="text" ng-model="eq.combustible_und" placeholder="Unidad"> </td>
+        <td class="inputSmall"> <input type="text" style="width:6ex; height: 1.5ex;" ng-model="eq.combustible_cantidad" placeholder="cantidad"> </td>
+        <td class="inputSmall"> <input type="text" style="width:6ex; height: 1.5ex;" ng-model="eq.combustible_valor" placeholder="valor $"> </td>
+        <td class="inputSmall">
+          <select  ng-model="eq.combustible_und" ng-init="eq.combustible_und = 'GL'" style="max-width: 5ex;">
+            <option value="GL">GL</option>
+            <option value="M3">M3</option>
+            <option value="LT">LT</option>
+          </select>
+        </td>
 
         <td class="font9">
           <span ng-if="eq.item_asociado">  (<span ng-bind="eq.item_asociado" style="color: #934B10"></span>)</span>
@@ -135,7 +150,9 @@
         <th>Equipo</th>
         <th>Descrip. item</th>
         <th>Operador / Conductor</th>
-        <th>Base</th>
+
+        <th>C.O.</th>
+        <th>C.C.</th>
 
         <th>Cant.</th>
         <th>UND</th>
