@@ -105,11 +105,11 @@
 
         <!-- CO / CC / cant / und -->
         <td class="noMaterialStyles">
-          <input type="text" ng-model="eq.procedencia" style="border: green 1px solid; width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="eq.procedencia" style="width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' " placeholder="Desde">
         </td>
 
         <td class="noMaterialStyles">
-          <input type="text" ng-model="eq.cc" style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="eq.cc" style="width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' " placeholder="C.C.">
         </td>
 
         <td class="inputSmall" class="yellow lighten-4">

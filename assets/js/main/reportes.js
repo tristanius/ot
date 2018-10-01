@@ -66,11 +66,11 @@ var reportes = function($scope, $http, $timeout) {
   }
   $scope.existeRegistroFull = function(list, item, propiedades){
     var bandera = true;
-    angular.forEach(list, function(volores,key){
-      angular.forEach(propiedades, function(val, k){
-        if( val[val] != item[val] ){
+    angular.forEach(list, function(valor,key){
+      angular.forEach(propiedades, function(v, k){
+        if( valor[v] != item[v] ){
           bandera = false;
-          console.log(k);
+          console.log(v);
         }
       });
     });

@@ -70,8 +70,8 @@
           <td><input type="text" style="max-width: 11ex" ng-model="personalFilter.descripcion"></td>
           <td style="max-width: 7ex"></td>
 
-          <td>C.O.</td>
-          <td>C.C.</td>
+          <td></td>
+          <td></td>
           <td style="background: #FCE8E9; text-align:center"></td>
           <td style="background: #FCE8E9; text-align:center"></td>
           <td></td>
@@ -125,10 +125,10 @@
         </td>
 
         <td class="noMaterialStyles">
-          <input type="text" ng-model="pr.procedencia" placeholder="Desde" style="border: green 1px solid; width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="pr.procedencia" placeholder="Desde" style="width:6ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
         <td class="noMaterialStyles">
-          <input type="text" ng-model="pr.cc" placeholder="C.C." style="border: green 1px solid; width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="pr.cc" placeholder="C.C." style="width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' ">
         </td>
 
         <td style="background: #FCE8E9">
