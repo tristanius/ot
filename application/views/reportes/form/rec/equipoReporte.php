@@ -99,8 +99,8 @@
 
         <td ng-bind="eq.codigo_siesa"></td>
         <td ng-bind="eq.referencia"></td>
-        <td ng-bind="eq.descripcion_equipo"></td>
-        <td ng-bind="eq.descripcion"></td>
+        <td ng-bind="eq.descripcion_equipo | lowercase"></td>
+        <td ng-bind="eq.descripcion | lowercase"></td>
         <td> <input type="text" style="width:12ex" ng-model="eq.nombre_operador" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <!-- CO / CC / cant / und -->
@@ -132,8 +132,8 @@
 
         <td class="inputSmall"> <input type="text" style="width:6ex; height: 1.5ex;" ng-model="eq.combustible_cantidad" placeholder="cantidad"> </td>
         <td class="inputSmall"> <input type="text" style="width:6ex; height: 1.5ex;" ng-model="eq.combustible_valor" placeholder="valor $"> </td>
-        <td class="inputSmall">
-          <select  ng-model="eq.combustible_und" ng-init="eq.combustible_und = 'GL'" style="max-width: 5ex;">
+        <td>
+          <select  ng-model="eq.combustible_und" ng-init="eq.combustible_und = 'GL'">
             <option value="GL">GL</option>
             <option value="M3">M3</option>
             <option value="LT">LT</option>
