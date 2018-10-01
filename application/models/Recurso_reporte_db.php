@@ -226,7 +226,7 @@ class Recurso_reporte_db extends CI_Model{
     $this->load->database('ot');
     $this->db->select('rrd.*, itf.itemc_item, itf.codigo, itf.descripcion, itf.unidad, itc.descripcion AS descripcion_item,
       rot.propietario_recurso, rot.propietario_observacion, rrd.item_asociado,
-      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente, avance.*'
+      frente.nombre AS nombre_frente, frente.ubicacion AS ubicacion_frente, avance.*, rrd.idrecurso_reporte_diario'
     );
     $this->db->from('recurso_reporte_diario AS rrd');
     $this->db->join('reporte_diario AS rd', 'rd.idreporte_diario = rrd.idreporte_diario');
