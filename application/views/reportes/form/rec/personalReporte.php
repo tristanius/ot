@@ -41,7 +41,7 @@
           <th>Cargo</th>
           <th>Est.</th>
 
-          <th> <small>C.O./ Ofic.</small> </th>
+          <th> <small>C.O. /<br> Ofic.</small> </th>
           <th>C.C.</th>
           <th class="red lighten-5 inputsSmall">Turno 1</th>
           <th class="red lighten-5 inputsSmall">Turno 2</th>

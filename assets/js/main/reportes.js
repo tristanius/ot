@@ -214,43 +214,44 @@ var reportes = function($scope, $http, $timeout) {
     var msj = '';
     angular.forEach(ambito.personalOT, function(val, key){
       if( !$scope.existeRegistroFull( ambito.rd.recursos.personal, val, ['identificacion', 'itemf_iditemf', 'cc'] ) && val.add ){
-        val.hora_inicio = '7:00'; val.hora_fin = '12:00'; val.hora_inicio2 = '13:00';
+        var per = angular.copy(val);
+        per.hora_inicio = '7:00'; per.hora_fin = '12:00'; per.hora_inicio2 = '13:00';
         if (ambito.rd.idbase == 172 || ambito.rd.idbase == 173 || ambito.rd.idbase == 174){
-          val.hora_fin2 = '17:00';
-          val.horas_ordinarias = 9;
+          per.hora_fin2 = '17:00';
+          per.horas_ordinarias = 9;
         }else if (ambito.rd.idbase == 244 || ambito.rd.idbase == 262) {
           if (ambito.dia_semana == 'sábado') {
-            val.hora_fin = '-';
-            val.hora_inicio2 = '-';
-            val.hora_fin2 = '10:00';
-            val.horas_ordinarias = 3;
+            per.hora_fin = '-';
+            per.hora_inicio2 = '-';
+            per.hora_fin2 = '10:00';
+            per.horas_ordinarias = 3;
           }else if (ambito.dia_semana == 'viernes' &&  ambito.rd.idbase == 262) {
-            val.hora_inicio2 = '-';
-            val.hora_fin2 = '04:00';
-            val.horas_ordinarias = 8;
+            per.hora_inicio2 = '-';
+            per.hora_fin2 = '04:00';
+            per.horas_ordinarias = 8;
           }else{
-            val.hora_fin2 = '17:00';
-            val.horas_ordinarias = 9;
+            per.hora_fin2 = '17:00';
+            per.horas_ordinarias = 9;
           }
         }else{
-          val.hora_fin2 = '16:00';
-          val.horas_ordinarias = 8;
+          per.hora_fin2 = '16:00';
+          per.horas_ordinarias = 8;
         }
-        val.idestado_labor = '1';
-        val.cantidad = 1;
-        val.horas_rn = 0;
-        val.horas_hed = 0;
-        val.horas_hen = 0;
-        val.gasto_viaje_pr = '';
-        val.gasto_viaje_lugar = '';
-        val.racion = 0;
-        val.facturable = true;
+        per.idestado_labor = '1';
+        per.cantidad = 1;
+        per.horas_rn = 0;
+        per.horas_hed = 0;
+        per.horas_hen = 0;
+        per.gasto_viaje_pr = '';
+        per.gasto_viaje_lugar = '';
+        per.racion = 0;
+        per.facturable = true;
         // AQUI SE AGREGA EL FRENTE SELECCIONADO
         if(ambito.myfrente){
           var f = ambito.myfrente;
-          val.idfrente_ot = f;
+          per.idfrente_ot = f;
         }
-        ambito.rd.recursos.personal.push(val);
+        ambito.rd.recursos.personal.push(per);
       }else{
         if(val.add){
           msj += 'La persona: '+val.identificacion+' '+val.nombre_completo+' ya existe con ese CC. \n';
