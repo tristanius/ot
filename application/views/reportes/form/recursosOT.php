@@ -21,7 +21,7 @@ if (isset($frentes) && sizeof($frentes) > 0 ) {
 <?php
 }
 ?>
-<section style="padding:1ex" class="card-panel"  ng-init='initItemsPlaneados(<?= json_encode($items_planeados); ?>)'>
+<section style="padding:1ex" class="card-panel"  ng-init="initItemsPlaneados('<?= base_url('ot/items_planeados/'.$ot->idOT) ?>')">
 
   <?php if (isset($frentes) && sizeof($frentes) > 0 ): ?>
     <h5 style="color:#14931d" >Frente de trabajo: {{ getFrente(myfrente) }} </h5>

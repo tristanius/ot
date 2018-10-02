@@ -80,7 +80,7 @@ class Facturacion_db extends CI_Model{
         OT.abscisa as pk,
         itf.itemc_item as item,
         titc.grupo_mayor AS tipo,
-        rot.cc,
+        rrd.cc,
         IFNULL( rot.UN, r.unidad_negocio) AS UN,
         if(titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
         itc.descripcion,
@@ -196,7 +196,7 @@ class Facturacion_db extends CI_Model{
       rd.validado_pyco AS estado_reporte,
       rot.propietario_observacion AS asignacion,
       IFNULL(rot.costo_und, tr.tarifa) AS costo_und,
-      rot.cc,
+      rrd.cc,
       IFNULL( rot.UN, r.unidad_negocio) AS UN';
     }
   }

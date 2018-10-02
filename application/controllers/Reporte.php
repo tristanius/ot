@@ -275,8 +275,10 @@ class Reporte extends CI_Controller{
     $diasemana = $dias[ date( "w", strtotime($r->fecha_reporte) ) ];
     $this->load->view('reportes/edit/edit',
       array(
-        'r'=>$r, 'frentes'=>$frentes,
-        'estados'=>$estados, 'diasemana'=>$diasemana,
+        'r'=>$r,
+        'frentes'=>$frentes,
+        'estados'=>$estados,
+        'diasemana'=>$diasemana,
         'estados_labor'=>$this->misc->getEstadosLabor()->result(),
         'items_planeados' => $items_planeados->result()
       )

@@ -197,8 +197,20 @@ var reportes = function($scope, $http, $timeout) {
     return dato;
   }
 
-  $scope.initItemsPlaneados = function( lista ){
-    $scope.items_planeados = lista;
+  $scope.initItemsPlaneados = function( lnk ){
+    $http.get(lnk).then(
+      function(resp){
+        if(resp.data.status){
+          $scope.items_planeados = resp.data.items_planeados;
+        }else{
+          $scope.items_planeados = [];
+          alert("No ha podido completar el proceso de consulta items planeados");
+        }
+      },
+      function(resp){
+        alert('Algo ha fallado al conectar al servidor.');
+        console.console.log(resp.data); }
+    );
   }
 
   $scope.viewAsociarItem = function(obj, tag){
