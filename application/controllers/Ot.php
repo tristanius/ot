@@ -672,8 +672,10 @@ class Ot extends CI_Controller {
 	public function items_planeados($idOT)
 	{
 		$this->load->model('Ot_db', 'otdb');
-		$items_planeados = $this->otdb->getPlanByFrentes($idOT);
-		echo json_encode($items_planeados);
+		$ret = new stdClass();
+		$ret->items_planeados = $this->otdb->getPlanByFrentes($idOT);
+		$ret->status = TRUE;
+		echo json_encode($ret);
 	}
 
 	# ============================================================================
