@@ -433,7 +433,7 @@ class Ot_db extends CI_Model {
 		$this->load->database('ot');
 		$select = 'OT.nombre_ot, IF(OT.basica, "SI", "NO") AS orden_primaria, tr.nombre_tarea, tr.fecha_inicio, tr.fecha_fin, ';
 		$select .= 'itf.codigo, itf.descripcion, itf.unidad, itf.itemc_item, itt.cantidad, itt.duracion, itt.cantidad_planeada, ';
-		$select .= 'tarf.tarifa, itt.subtarifa, tipo.descripcion AS tipo';
+		$select .= 'itt.tarifa, itt.subtarifa, tipo.descripcion AS tipo';
 		$this->db->select($select);
 		if (isset($where)) {
 			$this->db->where($where);
@@ -446,10 +446,9 @@ class Ot_db extends CI_Model {
 			->join('itemf AS itf', 'itt.itemf_iditemf = itf.iditemf')
 			->join('itemc AS itc', 'itc.iditemc = itf.itemc_iditemc')
 			->join('tipo_itemc AS tipo', 'tipo.idtipo_itemc = itc.idtipo_itemc')
-			->join('tarifa AS tarf', 'tarf.itemf_iditemf = itf.iditemf')
-			->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tarf.idvigencia_tarifas')
+			->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = itt.idvigencia_tarifas', 'LEFT')
+			->join('tarifa AS tarf', 'tarf.itemf_iditemf = itt.itemf_iditemf','LEFT')
 			->join('contrato AS c', 'c.idcontrato = OT.idcontrato')
-			->where('vg.idvigencia_tarifas = tarf.idvigencia_tarifas')
 			->get();
 	}
 }
