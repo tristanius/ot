@@ -14,11 +14,9 @@ class Material extends CI_Controller{
 
   }
 
-
   #===============================================================================================
   #==================== PROCESO DE CARGA DE Material X OT DESDE UN ARCHIVO =======================
   #===============================================================================================
-
   public function formUploadByOT()
   {
     $this->load->view('material/uploadByOT');

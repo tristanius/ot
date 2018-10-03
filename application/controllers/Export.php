@@ -319,7 +319,7 @@ class Export extends CI_Controller{
               $row["observacion"] = $it->alerta?"La cantidad ingresada supera los valores maximos reportados del item en este frente.":"";
               $writer->addRow($row);
             }
-          } // Cierre for rows
+          } // cierre for rows
         } // cierre if existe info frente
       } // cierre if existe condensado
     }// cierre de iteracion de reportes

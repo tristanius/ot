@@ -9,6 +9,7 @@
         <th>item <a href="" ng-click="myOrderBy_act = 'itemc_item'" ng-show="myOrderBy_act == 'itemc_item'" data-icon="&#xe029;"></a></th>
         <th>Descripcion <a href="" ng-click="myOrderBy_act = 'descripcion'" ng-show="myOrderBy_act == 'descripcion'" data-icon="&#xe029;"></a></th>
         <th>UND</th>
+        <th>C.C.</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Ejecc.</th>
         <th class="light-blue lighten-5" ng-show="vista_extendida">A Cargo</th>
@@ -41,6 +42,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th> <!-- cc -->
 
         <th ng-show="vista_extendida"></th>
         <th ng-show="vista_extendida"></th>
@@ -49,18 +51,18 @@
         <th ng-show="vista_extendida"></th>
         <th ng-show="vista_extendida"></th>
 
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th> <!-- tipo instalacion -->
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th> <!-- tipo instalacion -->
         <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
-        <th class="light-blue lighten-5" ng-show="vista_extendida"></th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
+        <th class="light-blue lighten-5" ng-show="vista_extendida"> </th>
 
         <th class="yellow lighten-4"></th>
         <th ng-show="!vista_extendida"></th>
@@ -82,6 +84,10 @@
         <td> <a href="" ng-click="mensaje(act.descripcion)"  ng-bind="act.itemc_item"></a> </td>
         <td> <div ng-bind="act.descripcion" style="max-width: 1000px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="act.unidad"></td>
+
+        <td class="noMaterialStyles" style="background: #F4F9FD ">
+          <input type="checkbox" ng-model="act.cc" placeholder="C.C." ng-disabled="rd.info.estado == 'CERRADO' ">
+        </td>
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
@@ -113,8 +119,8 @@
           </select>
         </th>
 
-        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_ini" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
-        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_fin" style="width: 8ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_ini" style="width: 7ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
+        <td ng-show="vista_extendida"> <input type="text" ng-model="act.abscisa_fin" style="width: 7ex;" ng-readonly="rd.info.estado == 'CERRADO' "> </td>
 
         <td  class="light-blue lighten-5" ng-show="vista_extendida">
           <select class="" ng-model="act.tipo_instalacion" style="width: 11ex;" ng-disabled="rd.info.estado == 'CERRADO'">
