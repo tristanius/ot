@@ -9,6 +9,7 @@
         <th>item <a href="" ng-click="myOrderBy_sub = 'itemc_item'" ng-show="myOrderBy_sub == 'itemc_item'" data-icon="&#xe029;"></a></th>
         <th>Descripcion <a href="" ng-click="myOrderBy_sub = 'itemc_item'" ng-show="myOrderBy_sub == 'itemc_item'" data-icon="&#xe029;"></a></th>
         <th>UND</th>
+        <th>C.C.</th>
 
         <th class="light-blue lighten-5" ng-show="vista_extendida">Ejecc.</th>
         <th class="light-blue lighten-5" ng-show="vista_extendida">A Cargo</th>
@@ -40,6 +41,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th> <!-- cc -->
 
         <th ng-show="vista_extendida"></th>
         <th ng-show="vista_extendida"></th>
@@ -85,6 +87,9 @@
         <td> <a href="" ng-click="mensaje(sbc.descripcion)"  ng-bind="sbc.itemc_item"></a> </td>
         <td> <div ng-bind="sbc.descripcion" style="max-width: 1000px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="sbc.unidad"></td>
+        <td class="noMaterialStyles" style="background: #F4F9FD ">
+          <input type="text" ng-model="sbc.cc" placeholder="C.C." ng-disabled="rd.info.estado == 'CERRADO' ">
+        </td>
 
         <!-- AVANCE DE OBRA -->
         <th ng-show="vista_extendida">
