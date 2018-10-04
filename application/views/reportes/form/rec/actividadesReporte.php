@@ -86,7 +86,7 @@
         <td ng-bind="act.unidad"></td>
 
         <td class="noMaterialStyles" style="background: #F4F9FD ">
-          <input type="text" ng-model="act.cc" placeholder="C.C." ng-disabled="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="act.cc" placeholder="C.C." style="width: 7ex;" ng-disabled="rd.info.estado == 'CERRADO' ">
         </td>
 
         <!-- AVANCE DE OBRA -->

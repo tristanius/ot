@@ -88,7 +88,7 @@
         <td> <div ng-bind="sbc.descripcion" style="max-width: 1000px; max-height: 5ex; overflow: hidden"></div> </td>
         <td ng-bind="sbc.unidad"></td>
         <td class="noMaterialStyles" style="background: #F4F9FD ">
-          <input type="text" ng-model="sbc.cc" placeholder="C.C." ng-disabled="rd.info.estado == 'CERRADO' ">
+          <input type="text" ng-model="sbc.cc" placeholder="C.C." style="width: 7ex;" ng-disabled="rd.info.estado == 'CERRADO' ">
         </td>
 
         <!-- AVANCE DE OBRA -->
