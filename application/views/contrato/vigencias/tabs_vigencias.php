@@ -1,6 +1,6 @@
 <section>
   <div class="">
-
+    <button type="button" class="btn btn-small green">+ Agregar Vigencia</button>
   </div>
 
   <div id="listado" class="card-panel">

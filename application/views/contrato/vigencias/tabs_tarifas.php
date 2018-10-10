@@ -41,7 +41,7 @@
               <td ng-bind="vg.fecha_fin_vigencia"></td>
               <td ng-bind="( vg.a * 1 )"></td>
               <td ng-bind="( vg.i * 1 )"></td>
-              <td ng-bind="( vg.u * 1 )"></span>
+              <td ng-bind="( vg.u * 1 )"></td>
             </tr>
           </tbody>
         </table>
