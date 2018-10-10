@@ -26,5 +26,7 @@
       </div>
     </div>
 
+    <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
+
   <div>
 </section>
