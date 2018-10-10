@@ -1,4 +1,7 @@
-<?php $idtag = 'formSelectContrato'.rand(); ?>
+<?php
+  $random = rand();
+  $idtag = 'formSelectContrato'.$random;
+?>
 <section ng-controller="vigencia_tarifas" class="noMaterialStyles" >
   <h5>Vigencias de tarifas por contrato</h5>
 
@@ -10,17 +13,18 @@
       <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
     </div>
 
-    <div class="col s12 m8 regularForm">
-      <b>Seleccionar vigencia</b>
-      <select class="" ng-model="vg" ng-options="v as ( v.descripcion_vigencia ) for v in vigencias"></select>
-      <button type="button" ng-disabled="vigencias.length == 0" class="btn btn-small green">Agregar vigencia</button>
+    <div id="myTabsVigencias<?= $random ?>" ng-init="initTabs('#myTabsFactura<?= $random ?>')">
+      <ul>
+        <li><a href="#tabs-1">Vigencias</a></li>
+        <li><a href="#tabs-2">Tarifas</a></li>
+      </ul>
+      <div id="tabs-1">
+        <?php $this->load->view('contrato/vigencias/tabs_vigencias'); ?>
+      </div>
+      <div id="tabs-2">
+        <?php $this->load->view('contrato/vigencias/tabs_tarifas'); ?>
+      </div>
     </div>
 
-  </div>
-  <br>
-  <div class="" ng-init="getContratos('<?= site_url('contrato/get_contratos') ?>')">
-    <?php $this->load->view('contrato/vigencias/tabs_vigencias'); ?>
-
-    <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
-  </div>
+  <div>
 </section>
