@@ -1,7 +1,7 @@
 <section ng-if="vg.idvigencia_tarifas">
   <?php $i = rand(); ?>
 
-  <div id="myTabsVigencias<?= $i ?>">
+  <div id="tabTarifas<?= $i ?>">
 
     <div class="row card ">
 
@@ -33,7 +33,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td ng-bind="contrato.contratista"></td>
+            <tr>
+              <td ng-bind="contrato.contratista"></td>
               <td ng-bind="contrato.cliente"></td>
               <td ng-bind="contrato.contratista"></td>
               <td ng-bind="vg.descripcion_vigencia"></td>

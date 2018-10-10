@@ -1,4 +1,4 @@
-<section>
+<section id="tabVigencias">
   <div class="">
     <button type="button" class="btn btn-small green">+ Agregar Vigencia</button>
   </div>
