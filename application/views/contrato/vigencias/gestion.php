@@ -5,7 +5,7 @@
 <section ng-controller="vigencia_tarifas" class="noMaterialStyles" >
   <h5>Vigencias de tarifas por contrato</h5>
 
-  <div ng-init="getVigencias( '<?= site_url('vigencia/get_By') ?>', <?= isset($idcontrato)?$idcontrato:'undefined'; ?> )">
+  <div ng-init="getContratos('<?= site_url('contrato/get_contratos') ?>')">
 
     <div class="card-panel">
       <b>No. Contrato: </b>
