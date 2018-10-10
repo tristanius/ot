@@ -13,7 +13,7 @@
       <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
     </div>
 
-    <div id="myTabsVigencias<?= $random ?>" ng-init="initTabs('#myTabsFactura<?= $random ?>')">
+    <div id="myTabsVigencias<?= $random ?>" ng-init="initJquerytTabs('#myTabsFactura<?= $random ?>')">
       <ul>
         <li><a href="#tabs-1">Vigencias</a></li>
         <li><a href="#tabs-2">Tarifas</a></li>
