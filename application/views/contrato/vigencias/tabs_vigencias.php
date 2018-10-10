@@ -4,7 +4,7 @@
   </div>
 
   <div id="listado" class="card-panel">
-    <table>
+    <table class="mytabla">
       <thead>
         <tr>
           <th> Vigencia </th>
