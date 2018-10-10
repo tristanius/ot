@@ -1,4 +1,4 @@
-<section ng-if="vg.idvigencia_tarifas">
+<section>
   <?php $i = rand(); ?>
 
   <div id="tabTarifas<?= $i ?>">
@@ -48,7 +48,7 @@
         </table>
       </div>
 
-      <div class="col s12">
+      <div class="col s12" ng-if="vg.idvigencia_tarifas">
         <hr>
         <?php $this->load->view('contrato/tarifas/lista'); ?>
       </div>
