@@ -510,8 +510,8 @@ class Ot extends CI_Controller {
 				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL ),
 				$it->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
 				$it->idfrente_ot,
-				isset($item->fecha_ini)?$item->fecha_ini:NULL,
-				isset($item->fecha_fin)?$item->fecha_fin:NULL
+				isset($it->fecha_ini)?$it->fecha_ini:NULL,
+				isset($it->fecha_fin)?$it->fecha_fin:NULL
 			);
 	}
 

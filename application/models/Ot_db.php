@@ -163,7 +163,7 @@ class Ot_db extends CI_Model {
 	public function getTareas($id, $arr_tareas=NULL)
 	{
 		$this->load->database('ot');
-		$this->db->select('tr.*, IFNULL(tr.a, vg.a) AS a, IFNULL(tr.i, vg.i) AS i, IFNULL(tr.u, vg.u)');
+		$this->db->select('tr.*, IFNULL(tr.a, vg.a) AS a, IFNULL(tr.i, vg.i) AS i, IFNULL(tr.u, vg.u) AS u');
 		$this->db->from('tarea_ot AS tr');
 		$this->db->join('vigencia_tarifas AS vg', 'vg.idvigencia_tarifas = tr.idvigencia_tarifas', 'left');
 		$this->db->where('OT_idOT', $id);

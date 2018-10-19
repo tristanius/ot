@@ -218,9 +218,9 @@ var OT = function($scope, $http, $timeout){
 		$http.get(lnk).then(
 			function(resp){
 				ambito.items = resp.data.items;
-				ambito.tr.a = resp.data.a;
-				ambito.tr.i = resp.data.i;
-				ambito.tr.u = resp.data.u;
+				ambito.tr.a = ambito.tr.a?ambito.tr.a:resp.data.a; // Asignación de AIU correcto.
+				ambito.tr.i = ambito.tr.i?ambito.tr.i:resp.data.i; // Asignación de AIU correcto.
+				ambito.tr.u = ambito.tr.u?ambito.tr.u:resp.data.u; // Asignación de AIU correcto.
 				$scope.loader = false;
 			},
 			function(resp){
