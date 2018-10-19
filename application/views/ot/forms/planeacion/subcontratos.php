@@ -28,9 +28,9 @@
 
       		<td  style="display:none" ng-bind="sb.tarifa | currency:'$ ':0"></td>
 
-			<td style="text-align: right"> 
-				<small ng-bind="sb.subtarifa | currency:'$ ':2 "></small> 
-				<input type="text" ng-model="sb.subtarifa" style="max-width:10ex;" ng-init="sb.subtarifa = sb.subtarifa?sb.subtarifa:sb.tarifa" ng-change="sb.tarifa = sb.subtarifa; calcularSubtotales()"> 
+			<td style="text-align: right">
+				<small ng-bind="sb.subtarifa | currency:'$ ':2 "></small>
+				<input type="text" ng-model="sb.subtarifa" style="max-width:10ex;" ng-init="sb.subtarifa = sb.subtarifa?sb.subtarifa:sb.tarifa" ng-change="sb.tarifa = sb.subtarifa; calcularSubtotales()">
 			</td>
 
 			<td style="text-align: right">
@@ -41,7 +41,9 @@
 			<td>
 				<select ng-model="sb.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="sb.idfrente_ot = sb.idfrente_ot">	</select>
 			</td>
-			<td class="font9" >{{ sb.fecha_agregado }}</td>
+      <td class="font9"> <input type="text" ng-model="sb.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9"> <input type="text" ng-model="sb.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9">  <span  ng-click="dialog('Agregado en: '+sb.fecha_agregado )" data-icon="&#xe039;"></span> </td>
 		</tr>
 
 		<tr>

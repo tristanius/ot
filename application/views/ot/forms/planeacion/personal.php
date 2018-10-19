@@ -16,7 +16,7 @@
       <td class="noMaterialStyles"> <input type="checkbox" ng-model="per.facturable" ng-init="per.facturable = toboolean(per.facturable)"> </td>
       <td>{{ per.unidad }}</td>
       <td><input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="per.cantidad" ng-init="per.cantidad = strtonum(per.cantidad)" style="width:7ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
-      <td><input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="per.duracion" ng-init="per.duracion = strtonum(per.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+      <td><input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="per.duracion" ng-init="per.duracion = strtonum(per.duracion)" style="width:10ex" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
       <td style="text-align: right" ng-bind="per.tarifa | currency:'$':0"></td>
 
       <td style="display:none" >
@@ -30,7 +30,9 @@
       <td>
         <select ng-model="per.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot">	</select>
       </td>
-      <td class="font9">{{ per.fecha_agregado }}</td>
+      <td class="font9"> <input type="text" ng-model="per.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9"> <input type="text" ng-model="per.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9">  <span  ng-click="dialog('Agregado en: '+per.fecha_agregado )" data-icon="&#xe039;"></span> </td>
     </tr>
 
     <tr>

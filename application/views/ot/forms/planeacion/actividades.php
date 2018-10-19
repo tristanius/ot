@@ -16,7 +16,7 @@
       <td class="noMaterialStyles"> <input type="checkbox" ng-model="act.facturable" ng-init="act.facturable = toboolean(act.facturable)"> </td>
       <td ng-bind="act.unidad"></td>
       <td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=0.01 ng-model="act.cantidad" ng-init="act.cantidad = strtonum(act.cantidad)" style="width:8ex" ng-change="calcularSubtotales(); act.cantidad = strtonum(act.cantidad)" ng-readonly="!tr.editable"> </td>
-      <td> <input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales(); act.duracion = strtonum(act.duracion)" ng-readonly="!tr.editable"> </td>
+      <td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="act.duracion" ng-init="act.duracion = strtonum(act.duracion)" style="width:10ex" ng-change="calcularSubtotales(); act.duracion = strtonum(act.duracion)" ng-readonly="!tr.editable"> </td>
       <td style="text-align: right" ng-bind="act.tarifa | currency:'$':0"></td>
 
       <td style="display:none;">
@@ -30,7 +30,9 @@
       <td>
         <select ng-model="act.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot">	</select>
       </td>
-      <td class="font9">{{ act.fecha_agregado }}</td>
+      <td class="font9"> <input type="text" ng-model="act.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9"> <input type="text" ng-model="act.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9">  <span  ng-click="dialog('Agregado en: '+act.fecha_agregado )" data-icon="&#xe039;"></span> </td>
     </tr>
 
     <tr>

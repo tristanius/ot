@@ -280,8 +280,10 @@ class Ot extends CI_Controller {
 				$idTr,
 				( isset($item->facturable)?$item->facturable:FALSE ),
 				( isset($item->idsector_item_tarea)?$item->idsector_item_tarea:NULL ),
-				$item->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
-				isset($item->idfrente_ot)?$item->idfrente_ot:NULL// Nuevo preparar BD !!!!!!!!!!
+				$item->idvigencia_tarifas,
+				isset($item->idfrente_ot)?$item->idfrente_ot:NULL,
+				isset($item->fecha_ini)?$item->fecha_ini:NULL,
+				isset($item->fecha_fin)?$item->fecha_fin:NULL
 			);
 	}
 	#=============================================================================
@@ -507,7 +509,9 @@ class Ot extends CI_Controller {
 				isset($it->facturable)?$it->facturable:FALSE,
 				( isset($it->idsector_item_tarea)?$it->idsector_item_tarea:NULL ),
 				$it->idvigencia_tarifas,// Nuevo preparar BD !!!!!!!!!!
-				$it->idfrente_ot
+				$it->idfrente_ot,
+				isset($item->fecha_ini)?$item->fecha_ini:NULL,
+				isset($item->fecha_fin)?$item->fecha_fin:NULL
 			);
 	}
 

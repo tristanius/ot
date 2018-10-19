@@ -28,7 +28,9 @@
 					<th class="font10" style="max-width:70px; display:none">Sub. Tarifa</th>
 					<th>Valor calc.</th>
 					<th>Frente</th>
-					<th>Agregado</th>
+					<th class="font9">F. Inicio</th>
+					<th class="font9">F. Final</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody class="font11">

@@ -15,7 +15,7 @@
       <td class="noMaterialStyles"> <input type="checkbox" ng-model="eq.facturable" ng-init="eq.facturable = toboolean(eq.facturable)"> </td>
       <td ng-bind="eq.unidad"></td>
       <td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="eq.cantidad" ng-init="eq.cantidad = strtonum(eq.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
-      <td> <input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+      <td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="eq.duracion" ng-init="eq.duracion = strtonum(eq.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
       <td style="text-align: right" ng-bind="eq.tarifa | currency:'$':0"></td>
 
       <td style="display:none">
@@ -29,7 +29,9 @@
       <td>
         <select ng-model="eq.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot">	</select>
       </td>
-      <td class="font9">{{ eq.fecha_agregado }}</td>
+      <td class="font9"> <input type="text" ng-model="eq.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9"> <input type="text" ng-model="eq.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
+      <td class="font9">  <span  ng-click="dialog('Agregado en: '+eq.fecha_agregado )" data-icon="&#xe039;"></span> </td>
     </tr>
 
     <tr>

@@ -1,5 +1,6 @@
 <section id="tabVigencias" ng-init="getVigencias( '<?= site_url('vigencia/get_By') ?>', <?= isset($idcontrato)?$idcontrato:'undefined'; ?> )">
   <div class="">
+    <h5>Listado de Vigencias del contrato <span ng-bind="contrato.no_contrato"></span> </h5>
     <button type="button" class="btn btn-small green">+ Agregar Vigencia</button>
   </div>
 

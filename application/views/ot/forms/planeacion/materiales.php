@@ -29,7 +29,9 @@
 				<td>
 					<select ng-model="m.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="m.idfrente_ot = m.idfrente_ot">	</select>
 				</td>
-				<td class="font9">{{ m.fecha_agregado }}</td>
+	      <td class="font9"> <input type="text" ng-model="m.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
+	      <td class="font9"> <input type="text" ng-model="m.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
+	      <td class="font9">  <span  ng-click="dialog('Agregado en: '+m.fecha_agregado )" data-icon="&#xe039;"></span> </td>
 			</tr>
 
 			<tr>
