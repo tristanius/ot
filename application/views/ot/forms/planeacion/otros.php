@@ -1,6 +1,6 @@
 
 			<tr>
-				<th colspan="12" rowspan="" style="background:#ddedd0">OTROS: </th>
+				<th colspan="14" rowspan="" style="background:#ddedd0">OTROS: </th>
 			</tr>
 			<tr ng-repeat="o in tr.otros | orderBy: 'codigo'">
 				<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+o.codigo)"></span> <span ng-bind="o.item"></span> </td>
@@ -15,8 +15,13 @@
 				</th>
 				<td class="noMaterialStyles"> <input type="checkbox" ng-model="o.facturable" ng-init="o.facturable = toboolean(o.facturable)"> </td>
 				<td ng-bind="o.unidad"></td>
+				
+	      <td class="font9"> <input type="text" class="datepicker" ng-model="o.fecha_ini" style="border: 1px solid #E65100; width:10ex"> </td>
+	      <td class="font9"> <input type="text" class="datepicker" ng-model="o.fecha_fin" style="border: 1px solid #E65100; width:10ex"> </td>
+
 				<td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="o.cantidad" ng-init="o.cantidad = strtonum(o.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 				<td> <input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="o.duracion" ng-init="o.duracion = strtonum(o.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+
 				<td style="text-align: right" ng-bind="o.tarifa | currency:'$':0"></td>
 
 				<td style="display:none"> <small ng-bind="o.subtarifa"></small> <input type="text" ng-model="o.subtarifa" style="max-width:10ex;" ng-init="o.subtarifa = o.subtarifa?o.subtarifa:o.tarifa"> </td>
@@ -28,8 +33,7 @@
 				<td>
 					<select ng-model="o.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="o.idfrente_ot = o.idfrente_ot">	</select>
 				</td>
-	      <td class="font9"> <input type="text" class="datepicker" ng-model="o.fecha_ini" style="border: 1px solid #E65100; width:10ex"> </td>
-	      <td class="font9"> <input type="text" class="datepicker" ng-model="o.fecha_fin" style="border: 1px solid #E65100; width:10ex"> </td>
+
 	      <td class="font9">  <span  ng-click="dialog('Agregado en: '+o.fecha_agregado )" data-icon="&#xe039;" ng-init="datepicker_init()"></span> </td>
 			</tr>
 

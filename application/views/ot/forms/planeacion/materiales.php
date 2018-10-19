@@ -1,5 +1,5 @@
 			<tr>
-				<th colspan="12" rowspan="" style="background:#ddedd0">MATERIAL: </th>
+				<th colspan="14" rowspan="" style="background:#ddedd0">MATERIAL: </th>
 			</tr>
 			<tr ng-repeat="m in tr.material | orderBy: 'codigo'">
 				<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+m.codigo)"></span> <span ng-bind="m.item"></span> </td>
@@ -14,8 +14,13 @@
 				</th>
 				<td class="noMaterialStyles"> <input type="checkbox" ng-model="m.facturable" ng-init="m.facturable = toboolean(m.facturable)"> </td>
 				<td ng-bind="m.unidad"></td>
+
+	      <td class="font9"> <input type="text" ng-model="m.fecha_ini" class="datepicker" style="border: 1px solid #E65100; width:10ex"> </td>
+	      <td class="font9"> <input type="text" ng-model="m.fecha_fin" class="datepicker" style="border: 1px solid #E65100; width:10ex"> </td>
+
 				<td> <input type="number" style="border: 1px solid #E65100; width:7ex" step=any ng-model="m.cantidad" ng-init="m.cantidad = strtonum(m.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
 				<td> <input type="number" style="border: 1px solid #E65100; width:10ex" step=any ng-model="m.duracion" ng-init="m.duracion = strtonum(m.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable"> </td>
+
 				<td style="text-align: right" ng-bind="m.tarifa | currency:'$':0"></td>
 
 				<td style="display:none">
@@ -29,8 +34,7 @@
 				<td>
 					<select ng-model="m.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="m.idfrente_ot = m.idfrente_ot">	</select>
 				</td>
-	      <td class="font9"> <input type="text" ng-model="m.fecha_ini" class="datepicker" style="border: 1px solid #E65100; width:10ex"> </td>
-	      <td class="font9"> <input type="text" ng-model="m.fecha_fin" class="datepicker" style="border: 1px solid #E65100; width:10ex"> </td>
+
 	      <td class="font9">  <span  ng-click="dialog('Agregado en: '+m.fecha_agregado )" data-icon="&#xe039;" ng-init="datepicker_init()"></span> </td>
 			</tr>
 

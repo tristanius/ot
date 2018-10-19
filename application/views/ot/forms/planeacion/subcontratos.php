@@ -1,6 +1,6 @@
 
 		<tr>
-			<th colspan="12" rowspan="" style="background:#ddedd0">SUBCONTRATOS: </th>
+			<th colspan="14" rowspan="" style="background:#ddedd0">SUBCONTRATOS: </th>
 		</tr>
 		<tr ng-repeat="sb in tr.subcontratos | orderBy: 'codigo'">
 			<td> <span data-icon="&#xe039;" style="color:#6ce25d" ng-click="dialog('Codigo interno: '+sb.codigo)"></span> <span ng-bind="sb.item"></span> </td>
@@ -19,12 +19,16 @@
 			<td class="noMaterialStyles"> <input type="checkbox" ng-model="sb.facturable" ng-init="sb.facturable = toboolean(sb.facturable)"> </td>
 			<td ng-bind="sb.unidad"></td>
 
+
+      <td class="font9"> <input type="text" class="datepicker" ng-model="sb.fecha_ini" style="border: 1px solid #E65100; width:10ex"> </td>
+      <td class="font9"> <input type="text" class="datepicker" ng-model="sb.fecha_fin" style="border: 1px solid #E65100; width:10ex"> </td>
+
 			<td>
-      			<input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="sb.cantidad" ng-init="sb.cantidad = strtonum(sb.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable">
-    		</td>
+      	<input type="number" style="border: 1px solid #E65100; width:7ex" min="0" step=any ng-model="sb.cantidad" ng-init="sb.cantidad = strtonum(sb.cantidad)" ng-change="calcularSubtotales()" ng-readonly="!tr.editable">
+			</td>
 			<td>
-      			<input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="sb.duracion" ng-init="sb.duracion = strtonum(sb.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable">
-      		</td>
+				<input type="number" style="border: 1px solid #E65100; width:10ex" min="0" step=any ng-model="sb.duracion" ng-init="sb.duracion = strtonum(sb.duracion)"  ng-change="calcularSubtotales()" ng-readonly="!tr.editable">
+      </td>
 
       		<td  style="display:none" ng-bind="sb.tarifa | currency:'$ ':0"></td>
 
@@ -41,8 +45,7 @@
 			<td>
 				<select ng-model="sb.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="sb.idfrente_ot = sb.idfrente_ot">	</select>
 			</td>
-      <td class="font9"> <input type="text" class="datepicker" ng-model="sb.fecha_ini" style="border: 1px solid #E65100; width:10ex"> </td>
-      <td class="font9"> <input type="text" class="datepicker" ng-model="sb.fecha_fin" style="border: 1px solid #E65100; width:10ex"> </td>
+
       <td class="font9">  <span  ng-click="dialog('Agregado en: '+sb.fecha_agregado )" data-icon="&#xe039;" ng-init="datepicker_init()"></span> </td>
 		</tr>
 

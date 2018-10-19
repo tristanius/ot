@@ -21,15 +21,18 @@
 					<th>Descripción</th>
 					<th style="max-width:70px; display:none">Sector</th>
 					<th>Fact.</th>
-					<th>UND</th>
-					<th>Cantidad</th>
+					<th>Und.</th>
+					
+					<th>F. Inicio</th>
+					<th>F. Final</th>
+
+					<th>Cant.</th>
 					<th>Duración</th>
+
 					<th>Tarifa </th>
 					<th class="font10" style="max-width:70px; display:none">Sub. Tarifa</th>
-					<th>Valor calc.</th>
+					<th>Subtotal.</th>
 					<th>Frente</th>
-					<th class="font9">F. Inicio</th>
-					<th class="font9">F. Final</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -50,8 +53,8 @@
 				<?php $this->load->view('ot/forms/planeacion/subcontratos') ?>
 
 				<tr>
-					<td colspan="9" rowspan="" style="text-align: right">Sutotal de recursos: </td>
-					<td colspan="3" rowspan="" headers="">
+					<td colspan="10" rowspan="" style="text-align: right">Sutotal de recursos: </td>
+					<td colspan="4" rowspan="" headers="">
 						<big>
 							<b ng-bind="tr.eqsubtotal+tr.actsubtotal+tr.persubtotal+tr.msubtotal+tr.otrsubtotal+tr.subactsubtotal | currency:'$ ':0"></b>
 						</big>
