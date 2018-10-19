@@ -129,6 +129,8 @@ class Tarea_db extends CI_Model{
         itt.itemf_codigo,
         itt.tarea_ot_idtarea_ot,
         itt.facturable,
+        itt.fecha_ini,
+        itt.fecha_fin,
         itf.codigo,
         itf.descripcion,
         itf.itemc_item,
