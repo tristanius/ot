@@ -29,11 +29,11 @@
       <td>
         <select ng-model="eq.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot">	</select>
       </td>
-      <td class="font9"> <input type="text" ng-model="eq.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
-      <td class="font9"> <input type="text" ng-model="eq.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
-      <td class="font9">  <span  ng-click="dialog('Agregado en: '+eq.fecha_agregado )" data-icon="&#xe039;"></span> </td>
+      <td class="font9"> <input type="text" ng-model="eq.fecha_ini" class="datepicker" style="border: 1px solid #E65100; width:10ex"> </td>
+      <td class="font9"> <input type="text" ng-model="eq.fecha_fin" class="datepicker" style="border: 1px solid #E65100; width:10ex"> </td>
+      <td class="font9">  <span  ng-click="dialog('Agregado en: '+eq.fecha_agregado )" data-icon="&#xe039;" ng-init="datepicker_init()"></span> </td>
     </tr>
 
     <tr>
-      <td colspan="11" class="right-align" > <b>Subtotal equipos: </b> <span ng-bind="tr.eqsubtotal | currency"></span> </td>
+      <td colspan="14" class="right-align" > <b>Subtotal equipos: </b> <span ng-bind="tr.eqsubtotal | currency"></span> </td>
     </tr>

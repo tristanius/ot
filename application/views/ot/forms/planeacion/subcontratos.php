@@ -41,11 +41,11 @@
 			<td>
 				<select ng-model="sb.idfrente_ot" ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="sb.idfrente_ot = sb.idfrente_ot">	</select>
 			</td>
-      <td class="font9"> <input type="text" ng-model="sb.fecha_ini" style="border: 1px solid #E65100; width:7ex"> </td>
-      <td class="font9"> <input type="text" ng-model="sb.fecha_fin" style="border: 1px solid #E65100; width:7ex"> </td>
-      <td class="font9">  <span  ng-click="dialog('Agregado en: '+sb.fecha_agregado )" data-icon="&#xe039;"></span> </td>
+      <td class="font9"> <input type="text" class="datepicker" ng-model="sb.fecha_ini" style="border: 1px solid #E65100; width:10ex"> </td>
+      <td class="font9"> <input type="text" class="datepicker" ng-model="sb.fecha_fin" style="border: 1px solid #E65100; width:10ex"> </td>
+      <td class="font9">  <span  ng-click="dialog('Agregado en: '+sb.fecha_agregado )" data-icon="&#xe039;" ng-init="datepicker_init()"></span> </td>
 		</tr>
 
 		<tr>
-			<td colspan="12" class="right-align" > <b>Subtotal subcontratos: </b> <span ng-bind="tr.subactsubtotal | currency:'$ ':2"></span> </td>
+			<td colspan="14" class="right-align" > <b>Subtotal subcontratos: </b> <span ng-bind="tr.subactsubtotal | currency:'$ ':2"></span> </td>
 		</tr>

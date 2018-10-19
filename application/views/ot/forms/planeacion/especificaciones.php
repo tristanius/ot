@@ -2,16 +2,16 @@
   <div class="col s12 m5">
     <div class="selectEnabled" style="margin:1ex;">
         <label class="right-align"><b style="color:#0D47A1">FECHA INICIO: </b>
-        <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="tr.fecha_inicio"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer" readonly/>
+        <input type="text" class="datepicker" ng-model="tr.fecha_inicio"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer" readonly/>
       </label>
     </div>
     <div class="selectEnabled" style="margin-right:1ex;">
         <label class="right-align"><b style="color:#0D47A1">FECHA FINAL: </b>
-        <input type="text" class="datepicker" ng-init="datepicker_init()" ng-model="tr.fecha_fin"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer"  readonly/>
+        <input type="text" class="datepicker"  ng-model="tr.fecha_fin"  value="<?= date('Y-m-d') ?>" placeholder=" fecha" style="cursor: pointer"  readonly/>
       </label>
     </div>
 
-    <div class="">
+    <div ng-init="datepicker_init()"> <!-- Iniciamos los datepickers -->
       <div class="red lighten-4">
         <span ng-if="tr.fecha_fin < tr.fecha_inicio">Las fecha no tiene un orden cronologico correcto.</span>
       </div>
