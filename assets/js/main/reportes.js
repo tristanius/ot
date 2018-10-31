@@ -389,6 +389,7 @@ var reportes = function($scope, $http, $timeout) {
     }
     return false;
   }
+
   $scope.calcHoras = function(rec, horas_laborales ){
     let ini_noche = moment('21:00','hh:mm'); // Inicio noche
     let media_noche = moment('00:00','hh:mm'); // Media noche
@@ -401,20 +402,21 @@ var reportes = function($scope, $http, $timeout) {
         let hr = $scope.timeOfTheDay( rec[label] );
         if( ant && hr && !label.includes('inicio') ){
           // si hay una hora anterior y si hay una hora actual, admeas el actual no es un inicio de turno el actual
-          horas += hr.diff(ant, 'hours');
+          horas += hr.diff(ant, 'hours', true);
           // Calc. horas madrugada
-          let madrugada = fin_noche.diff(ant, 'hours');
-          rec.horas_recargo += (madrugada >0)?madrugada:0; // Asignamos el recargo (RECARGO)
+          let madrugada = fin_noche.diff(ant, 'hours', true);
+          rec.horas_recargo += (madrugada > 0)?madrugada:0; // Asignamos el recargo (RECARGO)
           // Calc. horas noche
-          let noche = hr.diff(ini_noche, 'hours');
+          let noche = hr.diff(ini_noche, 'hours', true);
           if(horas > horas_laborales && noche > 0){
             horas = horas - noche;
             horas_extra_noc += noche;
-          }else{
+          }else if(noche > 0){
             horas_recargo += noche;
           }
           // Calc. horas extra dia
           horas_extra_dia += (horas > horas_laborales)?(horas - horas_laborales): 0;
+          horas = horas - horas_extra_dia;
         }
         ant = undefined; // anulamos el anterior
         if( label.includes('inicio') && hr ){

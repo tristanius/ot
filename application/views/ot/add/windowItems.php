@@ -12,6 +12,7 @@
           <th>Descripcion</th>
           <th>Unidad</th>
 					<th>Tarifa</th>
+          <th>Grupo</th>
 					<th>Cant</th>
 					<th>Duración</th>
 					<th>Basico/Opcional</th>
@@ -28,6 +29,7 @@
 					<td> <input type="text" ng-model="filtroItems.descripcion" placeholder="descripcion"/> </td>
 					<td> <input type="text" ng-model="filtroItems.unidad" placeholder="unidad"/> </td>
 					<td> </td>
+          <td> <input type="text" ng-model="filtroItems.grupo" placeholder="grupo"/> </td>
 					<td> </td>
 					<td> </td>
 					<td> </td>
@@ -43,6 +45,7 @@
 					<td ng-bind="it.descripcion"></td>
 					<td ng-bind="it.unidad"></td>
 					<td style="text-align: right" ng-bind="it.tarifa | currency"></td>
+          <td ng-bind="it.grupo"></td>
 					<td> <input type="number" style="border: 1px solid #E65100; width:8ex"  ng-model="it.cantidad" ng-init="it.cantidad = 0" > </td>
 					<td> <input type="number" style="border: 1px solid #E65100; width:10ex"  ng-model="it.duracion" ng-init="it.duracion = 0" > </td>
 					<td ng-bind="it.BO"> </td>
