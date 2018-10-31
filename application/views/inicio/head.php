@@ -21,6 +21,11 @@
     <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/vendor/angular.min.js') ?>"></script>
 
+    <!-- momentJS -->
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment.js">
+
+    </script>
+
     <!-- Materialize -->
     <script type="text/javascript" src="<?= base_url('assets/materialize/js/materialize.min.js') ?>"></script>
 
