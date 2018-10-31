@@ -39,7 +39,7 @@ class Vigencia_db extends CI_Model{
       $this->db->where($where);
     }
     $fields = 'itc.iditemc, itc.item, itf.iditemf, itf.codigo, itf.descripcion, itf.tipo, tar.idtarifa, tar.tarifa, ';
-    $fields .= 'tip.BO, tip.CL, tip.item AS cod_tipo, tip.grupo_mayor, itf.unidad, tar.idvigencia_tarifas, tip.descripcion as clasificacion_item';
+    $fields .= 'tip.BO, tip.CL, tip.item AS cod_tipo, tip.grupo_mayor, itf.unidad, tar.idvigencia_tarifas, tip.descripcion as clasificacion_item, itc.grupo';
     return $this->db->select($fields)
               ->from('itemc AS itc')
               ->join('itemf AS itf','itf.itemc_iditemc = itc.iditemc')
