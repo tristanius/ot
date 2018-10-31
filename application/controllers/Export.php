@@ -20,10 +20,11 @@ class Export extends CI_Controller{
     $this->load->helper('xlsxwriter');
     $this->load->helper('download');
     $this->load->model('reporte_db', 'repo');
+    $this->crear_directorio('./downloads/reportes'):
     $production = ( isset($fact) && $fact==1 )?TRUE:NULL;
     $rows = $this->repo->getHistoryBy($idOT, $production);
-    xlsx($rows->result_array(), $rows->list_fields(), './uploads/'.$nombre_ot.'.xlsx', 'historial', array('cantidad_final'));
-    force_download('./uploads/reportes/'.$nombre_ot.'.xlsx',NULL);
+    xlsx($rows->result_array(), $rows->list_fields(), './downloads/reportes/history'.$nombre_ot.'.xlsx', 'historial', array('cantidad_final'));
+    force_download('./downloads/reportes/history'.$nombre_ot.'.xlsx',NULL);
     //$this->load->view('miscelanios/history/infoReportes', array('rows'=>$rows, 'nombre_ot'=>$nombre_ot) );
   }
 
@@ -376,4 +377,10 @@ class Export extends CI_Controller{
     $post = json_decode( file_get_contents('php://input') );
 		$this->load->model('Miscelanio_db', 'misc');
   }
+
+  # crear un subdirectorio
+  private function crear_directorio($carpeta){
+    if (!file_exists($carpeta)) { mkdir($carpeta, 0777, true);  }
+  }
+
 }
