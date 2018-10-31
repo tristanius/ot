@@ -135,12 +135,12 @@
           <table>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_inicio" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Ini" required  />
+                <input ng-model="pr.hora_inicio" type="text" ng-change="calcHoras(pr, 9)" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Ini" required  />
               </td>
             </tr>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_fin" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Fin" required  />
+                <input ng-model="pr.hora_fin" type="text" ng-change="calcHoras(pr, 9)" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Fin" required  />
               </td>
             </tr>
           </table>
@@ -150,12 +150,12 @@
           <table>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_inicio2" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Ini" required  />
+                <input ng-model="pr.hora_inicio2" type="text" ng-change="calcHoras(pr, 9)" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Ini" required  />
               </td>
             </tr>
             <tr style="border:none;">
               <td class="inputsSmall" style="border:none;">
-                <input ng-model="pr.hora_fin2" type="text" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Fin" required  />
+                <input ng-model="pr.hora_fin2" type="text" ng-change="calcHoras(pr, 9)" style="width:6ex; height: 1.5ex;" ng-readonly="!( (pr.nomina==1) || (rd.info.estado=='CERRADO' && rd.info.validado_pyco!='CORREGIR HE') )?false:true" placeholder="Hora Fin" required  />
               </td>
             </tr>
           </table>
