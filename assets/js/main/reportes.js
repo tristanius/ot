@@ -399,7 +399,7 @@ var reportes = function($scope, $http, $timeout) {
     turno.horas = fin_turno.diff(inicio_turno, "hours", true);
     // Calc. horas recargo madrugada
     let madrugada = fin_noche.diff(inicio_turno, 'hours', true);
-    turno.horas_recargo += (madrugada > 0)?madrugada:0;
+    turno.madrugada += (madrugada > 0)?madrugada:0;
     // Calc. horas noche
     let noche = fin_turno.diff(ini_noche, 'hours', true);
     turno.noche = noche > 0 ? noche: 0;
@@ -417,10 +417,12 @@ var reportes = function($scope, $http, $timeout) {
       turno = $scope.calcHorasTurno( inicio_turno1, fin_turno2 );
     }else if( inicio_turno1 || inicio_turno2 ){
       // Si existe algun turno 1 o 2 (horas de inicio)
-      var t1 = { horas:0, noche:0, madrugada:0 }, t2={ horas:0, noche:0, madrugada:0 };
+      let t1 = { horas:0, noche:0, madrugada:0 };
+      let t2 = { horas:0, noche:0, madrugada:0 };
       if( inicio_turno1 && fin_turno1 ){
         t1 = $scope.calcHorasTurno( inicio_turno1, fin_turno1 ); // turno 1
-      }else if( inicio_turno2 && fin_turno2 ){
+      }
+      if( inicio_turno2 && fin_turno2 ){
         t2 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio2 ), $scope.timeOfTheDay( rec.horas_fin2 ) ); // turno 2
       }
       turno.horas = t1.horas+t2.horas;
@@ -431,11 +433,13 @@ var reportes = function($scope, $http, $timeout) {
     // Validacion de turno con valores de horas
     if(turno.horas > horas_laborales){
       let x = (turno.horas - horas_laborales) > 0?(turno.horas - horas_laborales):0;
-      rec.horas_extra_dia = x - turno.noche;
-      rec.horas_extra_noc = turno.noche - x;
+      rec.horas_extra_dia = (x - turno.noche) > 0?(x - turno.noche):0;
+      rec.horas_extra_noc = (turno.noche - x) > 0?(turno.noche - x):0;
+      rec.horas_recargo = turno.madrugada;
       rec.horas_ordinarias = turno.horas - x;
-    }else if(turno.madrugada>0 || turno.noche>0){
+    }else if(turno.madrugada > 0 || turno.noche > 0){
       rec.horas_recargo = turno.madrugada+turno.noche;
+      rec.horas_ordinarias = turno.horas;
     }
     return rec;
   }
