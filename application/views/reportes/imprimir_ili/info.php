@@ -46,7 +46,6 @@
   </tbody>
 </table>
 <br>
-<p></p>
 
 <table  class="font8" cellpadding="0" cellspacing="0" border="1">
   <thead>
@@ -84,6 +83,7 @@
     </tr>
   </tbody>
 </table>
+<br>
 
 <table class="font8" cellpadding="0" cellspacing="0" border="1">
   <thead>
@@ -120,5 +120,3 @@
     </tr>
   </tbody>
 </table>
-<br>
-<p></p>
