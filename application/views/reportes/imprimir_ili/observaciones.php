@@ -12,9 +12,16 @@
         <td style="width:50%"> </td>
       </tr>
     <?php endforeach; ?>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
+
 <p></p>
+<br>
+
 <table class="font9 nocenter" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE">
     <tr>

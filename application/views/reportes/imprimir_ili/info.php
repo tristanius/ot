@@ -3,7 +3,7 @@
     <tr class="font10">
       <th colspan="1"> <img src="<?= base_url('assets/img/termotecnica.jpg') ?>" style="max-width: 70px" alt=""> </th>
       <th colspan="5">REPORTE DIARIO DE TIEMPO TRABAJADO Y ACTIVIDADES DE OBRA EJECUTADA</th>
-      <th rowspan="1">CONTRATO: <br> MA-0032887</th>
+      <th rowspan="1">CONTRATO: <br>CENIT 8000004433 I</th>
     </tr>
   </thead>
   <tbody class="font8">
@@ -15,7 +15,8 @@
         </div>
       </td>
       <td rowspan="2"  colspan="4">
-        EJECUCIÓN DE OBRAS Y TRABAJOS DE MANTENIMIENTO DE SISTEMAS DE TRANSPORTE DE HIDROCARBUROS
+        OBRAS REQUERIDAS REQUERIDAS PARA LA ATENCIÓN DE ANOMALÍAS MECÁNICAS EN
+        PUNTOS DE ESPECIFICOS PRESENTES EN LAS LÍNEAS DE TRANSPORTE DE CENIT.
       </td>
       <td rowspan="2" colspan="1" style="padding:0">
             <table style="" cellpadding="0" cellspacing="0" >
@@ -44,6 +45,8 @@
     </tr>
   </tbody>
 </table>
+<br>
+<p></p>
 
 <table  class="font8" cellpadding="0" cellspacing="0" border="1">
   <thead>
@@ -69,7 +72,7 @@
       </td>
       <td>Base: <?= $r->nombre_base ?></td>
       <td>C.O.: <?= $r->base_idbase ?></td>
-      <td>K.P.: <?= isset($json_r->pk)?$json_r->pk:''; ?></td>
+      <td>P.K.: <?= isset($json_r->pk)?$json_r->pk:''; ?></td>
       <td colspan="2">Abscisa: <?= $r->abscisa ?></td>
       <td>Vereda: <?= isset($r->vereda)?$r->vereda:''; ?></td>
     </tr>
@@ -77,7 +80,7 @@
       <td>Municipio: <?= isset($json_r->municipio)?$json_r->municipio:$r->municipio; ?></td>
       <td colspan="1">Coordenadas GPS: <?= isset($json_r->coordenadas)?$json_r->coordenadas:''; ?></td>
       <td colspan="3">Linea: <?= isset($json_r->Linea)? $json_r->Linea: $r->nombre_especialidad ; ?></td>
-      <td colspan="2">Centro Costo ECP: <?= $r->cc_ecp ?></td>
+      <td colspan="2">Contrato: <b>8000004433</b> </td>
     </tr>
   </tbody>
 </table>
