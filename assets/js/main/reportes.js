@@ -413,9 +413,9 @@ var reportes = function($scope, $http, $timeout) {
     }else if( $scope.timeOfTheDay( rec.hora_inicio ) || $scope.timeOfTheDay( rec.hora_inicio2 ) ){ // si existe algun turno 1 o 2 (horas de inicio)
       var t1 = { horas:0, noche:0, madrugada:0 }, t2={ horas:0, noche:0, madrugada:0 };
       if( $scope.timeOfTheDay( rec.hora_inicio ) && $scope.timeOfTheDay( rec.horas_fin ) ){
-        t1 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ); // turno 1
+        t1 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ) ); // turno 1
       }else if( $scope.timeOfTheDay( rec.hora_inicio2 ) && $scope.timeOfTheDay( rec.horas_fin2 ) ){
-        t2 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio2 ), $scope.timeOfTheDay( rec.horas_fin2 ); // turno 2
+        t2 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio2 ), $scope.timeOfTheDay( rec.horas_fin2 ) ); // turno 2
       }
       turno.horas = t1.horas+t2.horas;
       turno.noche = t1.noche+t2.noche;
