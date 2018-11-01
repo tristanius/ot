@@ -115,11 +115,11 @@ class Export extends CI_Controller{
         break;
       case 2:
         $fecha = date('Y-m-d', strtotime($row->fecha_reporte) );
-        if($fecha >= date('Y-m-d', strtotime('2018-01-01')) ){
-          $this->rd_pma($idOT, $idrepo, 'reportes/imprimir_pma/v2018/rd', FALSE);
-        }else{
-          $this->rd_pma($idOT, $idrepo, 'reportes/imprimir_pma/v2017/rd/rd');
-        }
+        $this->rd_pma($idOT, $idrepo, 'reportes/imprimir_pma/v2017/rd/rd');
+        break;
+      case 9:
+        $fecha = date('Y-m-d', strtotime($row->fecha_reporte) );
+        $this->reportePDF($idOT, $idrepo, 'reportes/imprimir_ili/reporte_diario');
         break;
       default:
         $this->reportePDF($idOT, $idrepo);
@@ -127,7 +127,7 @@ class Export extends CI_Controller{
     }
   }
 
-  public function reportePDF($idOT, $idrepo)
+  public function reportePDF($idOT, $idrepo, $vista = 'reportes/imprimir/reporte_diario')
   {
     $this->load->model( array('reporte_db'=>'repo', 'recurso_reporte_db'=>'rec_repo') );
     $row = $this->repo->getBy($idOT, NULL,$idrepo)->row();
@@ -142,7 +142,7 @@ class Export extends CI_Controller{
 	  $semanadias = array("domingo","lunes","martes","mi&eacute;rcoles","jueves","viernes","s&aacute;bado");
     // generamos un pdf con el helper de pdf
     $this->load->helper('pdf');
-    $html = $this->load->view('reportes/imprimir/reporte_diario',
+    $html = $this->load->view($vista,
       array('r'=>$row, 'json_r'=>$json_r, 'recursos'=>$recursos, 'semanadias'=>$semanadias, 'footer'=>$this->getStatusFooter($row->validado_pyco) ),
       TRUE);
     doPDF($html, 'Reporte-'.$row->nombre_ot, NULL, FALSE);
