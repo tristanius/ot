@@ -423,7 +423,7 @@ var reportes = function($scope, $http, $timeout) {
         t1 = $scope.calcHorasTurno( inicio_turno1, fin_turno1 ); // turno 1
       }
       if( inicio_turno2 && fin_turno2 ){
-        t2 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio2 ), $scope.timeOfTheDay( rec.horas_fin2 ) ); // turno 2
+        t2 = $scope.calcHorasTurno( inicio_turno2, fin_turno2 ); // turno 2
       }
       turno.horas = t1.horas+t2.horas;
       turno.noche = t1.noche+t2.noche;
