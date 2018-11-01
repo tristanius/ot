@@ -409,7 +409,7 @@ var reportes = function($scope, $http, $timeout) {
   $scope.calcHoras = function(rec, horas_laborales){
     var turno = {};
     if( $scope.timeOfTheDay( rec.hora_inicio )  && $scope.timeOfTheDay( rec.horas_fin2 ) && !$scope.timeOfTheDay( rec.hora_inicio2 ) && !$scope.timeOfTheDay( rec.hora_fin ) ){
-      turno = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ); // turno integral
+      turno = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ) ); // turno integral
     }else if( $scope.timeOfTheDay( rec.hora_inicio ) || $scope.timeOfTheDay( rec.hora_inicio2 ) ){ // si existe algun turno 1 o 2 (horas de inicio)
       var t1 = { horas:0, noche:0, madrugada:0 }, t2={ horas:0, noche:0, madrugada:0 };
       if( $scope.timeOfTheDay( rec.hora_inicio ) && $scope.timeOfTheDay( rec.horas_fin ) ){
@@ -431,7 +431,7 @@ var reportes = function($scope, $http, $timeout) {
     }
     return rec;
   }
-  
+
 }
 
 // ============================================================================================
