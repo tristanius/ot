@@ -390,45 +390,48 @@ var reportes = function($scope, $http, $timeout) {
     return false;
   }
 
-  $scope.calcHoras = function(rec, horas_laborales ){
+  $scope.calcHorasTurno = function(inicio_turno, fin_turno){
     let ini_noche = moment('21:00','hh:mm'); // Inicio noche
     let media_noche = moment('00:00','hh:mm'); // Media noche
     let fin_noche = moment('06:00','hh:mm'); // Inicio de día
+    let turno = {};
+    // Cal. horas totales
+    turno.horas = fin_turno.diff(inicio_turno, "hours", true);
+    // Calc. horas recargo madrugada
+    let madrugada = fin_noche.diff(inicio_turno, 'hours', true);
+    turno.horas_recargo += (madrugada > 0)?madrugada:0;
+    // Calc. horas noche
+    let noche = hr.diff(ini_noche, 'hours', true);
+    turno.noche = noche > 0 ? noche: 0;
+    return turno;
+  }
 
-    let horas = 0, horas_recargo = 0, horas_extra_noc = 0, horas_extra_dia = 0;
-    let ant = undefined;
-    angular.forEach( ['hora_inicio', 'hora_fin', 'hora_inicio2', 'hora_fin2'], function(label, indkey){
-      try {
-        let hr = $scope.timeOfTheDay( rec[label] );
-        if( ant && hr && !label.includes('inicio') ){
-          // si hay una hora anterior y si hay una hora actual, admeas el actual no es un inicio de turno el actual
-          horas += hr.diff(ant, 'hours', true);
-          // Calc. horas madrugada
-          let madrugada = fin_noche.diff(ant, 'hours', true);
-          horas_recargo += (madrugada > 0)?madrugada:0; // Asignamos el recargo (RECARGO)
-          // Calc. horas noche
-          let noche = hr.diff(ini_noche, 'hours', true);
-          noche = noche > 0 ? noche: 0;
-          if(horas > horas_laborales){
-            let x = (horas - horas_laborales)>0?(horas - horas_laborales):0;
-            horas_extra_dia = (x - noche)>0?(x - noche):0;
-            horas_extra_noc = noche;
-          }else{
-            horas_recargo += noche;
-          }
-          ant = undefined; // anulamos el anterior
-        }
-        if( label.includes('inicio') && hr ){
-          ant = hr;
-        }
-      } catch (e) { }
-    });
-    rec.horas_ordinarias = horas?horas:rec.horas_ordinarias;
-    rec.horas_recargo = horas_recargo?horas_recargo:rec.horas_recargo;
-    rec.horas_extra_dia = horas_extra_dia?horas_extra_dia:rec.horas_extra_dia;
-    rec.horas_extra_noc = horas_extra_noc?horas_extra_noc:rec.horas_extra_noc;
+  $scope.calcHoras = function(rec, horas_laborales){
+    var turno = {};
+    if( $scope.timeOfTheDay( rec.hora_inicio )  && $scope.timeOfTheDay( rec.horas_fin2 ) && !$scope.timeOfTheDay( rec.hora_inicio2 ) && !$scope.timeOfTheDay( rec.hora_fin ) ){
+      turno = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ); // turno integral
+    }else if( $scope.timeOfTheDay( rec.hora_inicio ) || $scope.timeOfTheDay( rec.hora_inicio2 ) ){ // si existe algun turno 1 o 2 (horas de inicio)
+      var t1 = { horas:0, noche:0, madrugada:0 }, t2={ horas:0, noche:0, madrugada:0 };
+      if( $scope.timeOfTheDay( rec.hora_inicio ) && $scope.timeOfTheDay( rec.horas_fin ) ){
+        t1 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ); // turno 1
+      }else if( $scope.timeOfTheDay( rec.hora_inicio2 ) && $scope.timeOfTheDay( rec.horas_fin2 ) ){
+        t2 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio2 ), $scope.timeOfTheDay( rec.horas_fin2 ); // turno 2
+      }
+      turno.horas = t1.horas+t2.horas;
+      turno.noche = t1.noche+t2.noche;
+      turno.madrugada = t1.madrugada+t2.madrugada;
+    }
+    if(turno.horas > horas_laborales){
+      let x = (turno.horas - horas_laborales) > 0?(turno.horas - horas_laborales):0;
+      rec.horas_extra_dia = x - turno.noche;
+      rec.horas_extra_noc = turno.noche - x;
+      rec.horas_ordinarias = turno.horas - x;
+    }else{
+      rec.horas_recargo = turno.madrugada+turno.noche;
+    }
     return rec;
   }
+  
 }
 
 // ============================================================================================
