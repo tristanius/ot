@@ -1,3 +1,4 @@
+<br>
 <table class="font7 nocenter" cellpadding="0" cellspacing="0" border="1">
   <thead style="background:#EEE;">
     <tr>
@@ -18,8 +19,6 @@
     </tr>
   </tbody>
 </table>
-
-<p></p>
 <br>
 
 <table class="font9 nocenter" cellpadding="0" cellspacing="0" border="1">
