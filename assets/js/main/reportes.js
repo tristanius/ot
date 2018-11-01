@@ -427,6 +427,7 @@ var reportes = function($scope, $http, $timeout) {
       turno.noche = t1.noche+t2.noche;
       turno.madrugada = t1.madrugada+t2.madrugada;
     }
+    console.log(turno);
     // Validacion de turno con valores de horas
     if(turno.horas > horas_laborales){
       let x = (turno.horas - horas_laborales) > 0?(turno.horas - horas_laborales):0;
