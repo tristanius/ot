@@ -408,25 +408,32 @@ var reportes = function($scope, $http, $timeout) {
 
   $scope.calcHoras = function(rec, horas_laborales){
     var turno = {};
-    if( $scope.timeOfTheDay( rec.hora_inicio )  && $scope.timeOfTheDay( rec.horas_fin2 ) && !$scope.timeOfTheDay( rec.hora_inicio2 ) && !$scope.timeOfTheDay( rec.hora_fin ) ){
-      turno = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ) ); // turno integral
-    }else if( $scope.timeOfTheDay( rec.hora_inicio ) || $scope.timeOfTheDay( rec.hora_inicio2 ) ){ // si existe algun turno 1 o 2 (horas de inicio)
+    inicio_turno1 = $scope.timeOfTheDay( rec.hora_inicio );
+    fin_turno1 = $scope.timeOfTheDay( rec.hora_fin );
+    inicio_turno2 = $scope.timeOfTheDay( rec.hora_inicio2 );
+    fin_turno2 = $scope.timeOfTheDay( rec.hora_fin2 );
+    if( inicio_turno1 && fin_turno2 && !inicio_turno2 && !fin_turno1 ){
+      // Cuando es turno integral
+      turno = $scope.calcHorasTurno( inicio_turno1, fin_turno2 );
+    }else if( inicio_turno1 || inicio_turno2 ){
+      // Si existe algun turno 1 o 2 (horas de inicio)
       var t1 = { horas:0, noche:0, madrugada:0 }, t2={ horas:0, noche:0, madrugada:0 };
-      if( $scope.timeOfTheDay( rec.hora_inicio ) && $scope.timeOfTheDay( rec.horas_fin ) ){
-        t1 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio ), $scope.timeOfTheDay( rec.horas_fin ) ); // turno 1
-      }else if( $scope.timeOfTheDay( rec.hora_inicio2 ) && $scope.timeOfTheDay( rec.horas_fin2 ) ){
+      if( inicio_turno1 && fin_turno1 ){
+        t1 = $scope.calcHorasTurno( inicio_turno1, fin_turno1 ); // turno 1
+      }else if( inicio_turno2 && fin_turno2 ){
         t2 = $scope.calcHorasTurno( $scope.timeOfTheDay( rec.hora_inicio2 ), $scope.timeOfTheDay( rec.horas_fin2 ) ); // turno 2
       }
       turno.horas = t1.horas+t2.horas;
       turno.noche = t1.noche+t2.noche;
       turno.madrugada = t1.madrugada+t2.madrugada;
     }
+    // Validacion de turno con valores de horas
     if(turno.horas > horas_laborales){
       let x = (turno.horas - horas_laborales) > 0?(turno.horas - horas_laborales):0;
       rec.horas_extra_dia = x - turno.noche;
       rec.horas_extra_noc = turno.noche - x;
       rec.horas_ordinarias = turno.horas - x;
-    }else{
+    }else if(turno.madrugada>0 || turno.noche>0){
       rec.horas_recargo = turno.madrugada+turno.noche;
     }
     return rec;
