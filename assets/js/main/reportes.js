@@ -401,7 +401,7 @@ var reportes = function($scope, $http, $timeout) {
     let madrugada = fin_noche.diff(inicio_turno, 'hours', true);
     turno.horas_recargo += (madrugada > 0)?madrugada:0;
     // Calc. horas noche
-    let noche = hr.diff(ini_noche, 'hours', true);
+    let noche = fin_turno.diff(ini_noche, 'hours', true);
     turno.noche = noche > 0 ? noche: 0;
     return turno;
   }

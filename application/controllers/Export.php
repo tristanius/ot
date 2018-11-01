@@ -20,7 +20,7 @@ class Export extends CI_Controller{
     $this->load->helper('xlsxwriter');
     $this->load->helper('download');
     $this->load->model('reporte_db', 'repo');
-    $this->crear_directorio('./downloads/reportes'):
+    $this->crear_directorio('./downloads/reportes');
     $production = ( isset($fact) && $fact==1 )?TRUE:NULL;
     $rows = $this->repo->getHistoryBy($idOT, $production);
     xlsx($rows->result_array(), $rows->list_fields(), './downloads/reportes/history'.$nombre_ot.'.xlsx', 'historial', array('cantidad_final'));
