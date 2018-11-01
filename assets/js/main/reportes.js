@@ -408,19 +408,16 @@ var reportes = function($scope, $http, $timeout) {
           horas_recargo += (madrugada > 0)?madrugada:0; // Asignamos el recargo (RECARGO)
           // Calc. horas noche
           let noche = hr.diff(ini_noche, 'hours', true);
-          if(horas > horas_laborales && noche > 0){
-            horas = horas - noche;
-            horas_extra_noc += noche;
-          }else if(noche > 0){
+          noche = noche > 0 ? noche: 0;
+          if(horas > horas_laborales){
+            let x = (horas - horas_laborales)>0?(horas - horas_laborales):0;
+            horas_extra_dia = (x - noche)>0?(x - noche):0;
+            horas_extra_noc = noche;
+          }else{
             horas_recargo += noche;
           }
-          // Calc. horas extra dia
-          if (horas > horas_laborales) {
-            horas_extra_dia += horas - horas_laborales;
-            horas = horas - horas_extra_dia;
-          }
+          ant = undefined; // anulamos el anterior
         }
-        ant = undefined; // anulamos el anterior
         if( label.includes('inicio') && hr ){
           ant = hr;
         }
