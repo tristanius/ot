@@ -83,9 +83,9 @@
       $pdf->page_text($x, $y, "Pagina {PAGE_NUM} de {PAGE_COUNT} - Status: <?= $footer." ".( isset($partial)?"*":"" ) ?> ", $font, $size);
     }
     </script>
-    <?php $this->load->view('reportes/imprimir/info', array('r'=>$r, 'json_r'=>$json_r)); ?>
-    <?php $this->load->view('reportes/imprimir/recursosActividades', array('recursos'=>$recursos)); ?>
-    <?php $this->load->view('reportes/imprimir/observaciones', array('observaciones'=>$json_r->observaciones, 'json_r'=>$json_r)); ?>
+    <?php $this->load->view('reportes/imprimir_ili/info', array('r'=>$r, 'json_r'=>$json_r)); ?>
+    <?php $this->load->view('reportes/imprimir_ili/recursosActividades', array('recursos'=>$recursos)); ?>
+    <?php $this->load->view('reportes/imprimir_ili/observaciones', array('observaciones'=>$json_r->observaciones, 'json_r'=>$json_r)); ?>
 
   </body>
 </html>
