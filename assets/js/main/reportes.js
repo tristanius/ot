@@ -433,7 +433,7 @@ var reportes = function($scope, $http, $timeout) {
     if(turno.horas > horas_laborales){
       let x = (turno.horas - horas_laborales) > 0?(turno.horas - horas_laborales):0;
       rec.horas_extra_dia = (x - turno.noche) > 0?(x - turno.noche):0;
-      rec.horas_extra_noc = (turno.noche - rec.horas_extra_dia) > 0?(turno.noche - rec.horas_extra_dia):0;
+      rec.horas_extra_noc = x - rec.horas_extra_dia;
       rec.horas_recargo = turno.madrugada;
       rec.horas_ordinarias = turno.horas - x;
     }else if(turno.madrugada > 0 || turno.noche > 0){
