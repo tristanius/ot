@@ -429,18 +429,22 @@ var reportes = function($scope, $http, $timeout) {
       turno.noche = t1.noche+t2.noche;
       turno.madrugada = t1.madrugada+t2.madrugada;
     }
-    console.log(turno);
     // Validacion de turno con valores de horas
     if(turno.horas > horas_laborales){
       let x = (turno.horas - horas_laborales) > 0?(turno.horas - horas_laborales):0;
       rec.horas_extra_dia = (x - turno.noche) > 0?(x - turno.noche):0;
-      rec.horas_extra_noc = (turno.noche - x) > 0?(turno.noche - x):0;
+      rec.horas_extra_noc = (turno.noche - rec.horas_extra_dia) > 0?(turno.noche - rec.horas_extra_dia):0;
       rec.horas_recargo = turno.madrugada;
       rec.horas_ordinarias = turno.horas - x;
     }else if(turno.madrugada > 0 || turno.noche > 0){
       rec.horas_recargo = turno.madrugada+turno.noche;
       rec.horas_ordinarias = turno.horas;
+      rec.horas_extra_dia = 0;
+      rec.horas_extra_noc = 0;
     }else {
+      rec.horas_recargo = 0;
+      rec.horas_extra_dia = 0;
+      rec.horas_extra_noc = 0;
       rec.horas_ordinarias = turno.horas;
     }
     return rec;
