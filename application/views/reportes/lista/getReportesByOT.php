@@ -22,9 +22,7 @@
 
             <div class="noMaterialStyles row col l3 m4 s12">
               <b class="col l3 m4 s4">Estado:</b>
-              <select ng-model="consulta.estado" class="col l8 m8 s8" style="height:4ex;">
-                <option value="">No Seleccionado</option>
-                <option value="POR EJECUTAR">POR EJECUTAR</option>
+              <select ng-model="consulta.estado" class="col l8 m8 s8" style="height:4ex;" ng-init="consulta.estado = 'ACTIVA'">
                 <option value="ACTIVA">ACTIVA</option>
                 <option value="FINALIZÓ">FINALIZÓ</option>
               </select>
