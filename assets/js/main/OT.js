@@ -372,7 +372,6 @@ var OT = function($scope, $http, $timeout){
 				}
 			}
 		});
-		console.log(valor)
 		return valor;
 	}
 	//====================================================================================
