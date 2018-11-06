@@ -52,7 +52,8 @@ class Reportepersonal_db extends CI_Model{
       "" as estado,
       rrd.gasto_viaje_pr,
       rrd.gasto_viaje_lugar,
-      "" as firma,
+      "" as firma,'
+      /*
       itf.itemc_item,
       itf.codigo,
       itf.iditemf,
@@ -60,6 +61,7 @@ class Reportepersonal_db extends CI_Model{
       ft.ubicacion AS ubicacion_frente,
       rot.propietario_observacion AS asignado_como,
       IF(rot.propietario_recurso,"SI","NO") AS propio'
+      */
     );
     // if(rd.festivo,rrd.horas_ordinarias,0) as horas_ordfestivas,
     $this->db->from('reporte_diario AS rd');

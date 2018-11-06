@@ -22,6 +22,9 @@ th,td{
 .f12{
   font-size: 12px;
 }
+.f14{
+  font-size: 14px;
+}
 .f16{
   font-size: 16px;
 }
@@ -52,10 +55,10 @@ th,td{
     </tr>
     <tr>
       <th>DIA</th>
-      <th colspan="3" class="f16"><?= $dias_semana[$laOT->row()->dia_semana-1] ?><?= $laOT->row()->festivo?"(F)":"" ?></th>
+      <th colspan="3" class="f14"><?= $dias_semana[$laOT->row()->dia_semana-1] ?><?= $laOT->row()->festivo?" (Fest.)":"" ?></th>
     </tr>
     <tr>
-    	<th rowspan="2" colspan="2">CONTRATO: MA-0032887</th>
+    	<th rowspan="2" colspan="2">CONTRATO: <?= $contrato->no_contrato ?></th>
         <th colspan="2">O.T. No.</th>
         <th colspan="14">DESCRIPCION DE LA O.T.</th>
         <th rowspan="2" style="width:1.3cm;">FECHA</th>
@@ -113,7 +116,7 @@ th,td{
                   echo "<td  class='thCentro'>";
             }
             if ($k=='cantidad'){
-                echo $v * $horasDia;
+                echo $value->horas_ordinarias;
              }else{
                 $swFormato=false;
                 switch ($k) {

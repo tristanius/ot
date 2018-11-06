@@ -15,31 +15,32 @@ class Reportepersonal extends CI_Controller{
   # add
   public function tiempolaborado($idOT, $idReporte)
   {
-    $this->load->model('Reportepersonal_db', 'repoper');
+    $this->load->model(array('Reportepersonal_db'=>'repoper', 'contrato_db'=>'cont'));
     $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
     if( $rowOT->num_rows()>0 ){
-      switch ($rowOT->row()->idcontrato ) {
+      $contato = $this->cont->getContratos( $rowOT->row()->idcontrato )->row();
+      switch ( $rowOT->row()->idcontrato ) {
         case 1:
-          $this->tl_termo($idOT, $idReporte);
+          $this->tl_termo($idOT, $idReporte, $contato);
           break;
         case 2:
           $this->tl_pma($idOT, $idReporte);
           break;
         default:
-          $this->tl_termo($idOT, $idReporte);
+          $this->tl_termo($idOT, $idReporte, $contato);
           break;
       }
     }
   }
 
-  public function tl_termo($idOT, $idReporte)
+  public function tl_termo($idOT, $idReporte, $contrato)
   {
     $post = json_decode( file_get_contents("php://input") );
     $rows = $this->repoper->getBy($idOT, $idReporte);
     $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
     $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
     $this->load->view('miscelanios/reportepersonal/reportepersonal',
-      array('elpersonal'=>$rowsPersonas,'laOT'=>$rowOT,'nodownload'=>false)
+      array('elpersonal'=>$rowsPersonas,'laOT'=>$rowOT,'nodownload'=>false, 'contrato'=>$contrato)
     );
   }
 

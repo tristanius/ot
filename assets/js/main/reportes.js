@@ -443,7 +443,7 @@ var reportes = function($scope, $http, $timeout) {
       rec.horas_recargo = turno.madrugada+turno.noche;
       rec.horas_ordinarias = turno.horas;
     }else {
-      rec.horas_ordinarias = turno.horas;
+      rec.horas_ordinarias = turno.horas>0?turno.horas:horas_laborales;
     }
     return rec;
   }
