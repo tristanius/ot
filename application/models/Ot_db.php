@@ -431,9 +431,9 @@ class Ot_db extends CI_Model {
 	public function getPlaneacion($where, $bases)
 	{
 		$this->load->database('ot');
-		$select = 'OT.nombre_ot, IF(OT.basica, "SI", "NO") AS orden_primaria, tr.nombre_tarea, itt.fecha_ini AS inicio_item, itt.fecha_fin AS final_item, ';
-		$select .= 'itf.codigo, itf.descripcion, itf.unidad, itf.itemc_item, itt.cantidad, itt.duracion, itt.cantidad_planeada, ';
-		$select .= 'itt.tarifa, itt.subtarifa, tipo.descripcion AS tipo, tr.fecha_inicio AS inicio_tarea, tr.fecha_fin AS fin_tarea';
+		$select = 'OT.nombre_ot, tr.nombre_tarea, itf.codigo, itf.descripcion, itt.fecha_ini AS inicio_item, itt.fecha_fin AS final_item, itf.unidad, ';
+		$select .= 'itc.item, itt.cantidad, itt.duracion, itt.cantidad_planeada, itt.tarifa, itt.subtarifa, tipo.descripcion AS tipo, ';
+		$select .= 'itc.grupo AS agrupacion, tr.fecha_inicio AS inicio_tarea, tr.fecha_fin AS fin_tarea ';
 		$this->db->select($select);
 		if (isset($where)) {
 			$this->db->where($where);

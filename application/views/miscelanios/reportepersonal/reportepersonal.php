@@ -36,7 +36,7 @@ th,td{
       <th rowspan="2" colspan="3"><img src="<?= base_url('assets/img/termotecnica.jpg') ?>" width="180" height="40"></th>
       <th rowspan="2" colspan="15" class="f16">REPORTE DIARIO DE TIEMPO LABORADO</th>
       <th>BASE</th>
-      <th colspan="3" class="f16"><?= $laOT->row()->nombre_base ?></th>
+      <th colspan="3" class="f16"><?= $laOT->row()->base_idbase ?></th>
 <?php
             switch ($laOT->row()->nombre_base) {
                 case 'Ayacucho':
