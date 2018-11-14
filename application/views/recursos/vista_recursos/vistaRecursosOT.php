@@ -21,8 +21,11 @@
     </div>
     <!--
     <div id="tabs-3">
-      <?php $this->load->view('recursos/vista_recursos/material'); ?>
-    </div>  -->
+      <?php
+      # $this->load->view('recursos/vista_recursos/material');
+      ?>
+    </div>
+    -->
     <div id="tabs-4">
       <?php $this->load->view('recursos/vista_recursos/otros'); ?>
     </div>

@@ -240,10 +240,10 @@ class Tarea_db extends CI_Model{
     $this->db->join('tarea_ot AS tarea', 'OT.idOT = tarea.OT_idOT');
     $this->db->join('item_tarea_ot AS itt', 'tarea.idtarea_ot = itt.tarea_ot_idtarea_ot');
     $this->db->join('itemf AS itf', 'itf.iditemf = itt.tarea_ot_idtarea_ot');
-    $this->db->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot','LEFT')
+    $this->db->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot','LEFT');
     $this->db->where('OT.idOT', $idOT);
     $this->db->where('itf.tipo', $tipo);
-    $this->db->get();
+    return $this->db->get();
   }
 
   public function getCantidadSum($fecha, $item, $idsector, $idOT)
