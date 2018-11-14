@@ -659,6 +659,7 @@ var addReporte = function($scope, $http, $timeout) {
           $scope.materialOT = response.data.material;
           $scope.otrosOT = response.data.otros;
           $scope.subcontratosOT = response.data.subcontratos;
+          console.log(response.data);
         },
         function(response){
           console.log(response.data);

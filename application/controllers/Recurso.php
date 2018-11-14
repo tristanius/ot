@@ -28,6 +28,7 @@ class Recurso extends CI_Controller{
     $pers = $this->recdb->getPersonalOtBy($post->idOT, 'persona');
     $equs = $this->recdb->getEquiposOtBy($post->idOT, 'equipo');
     $material = $this->recdb->getRecursoByOT($post->idOT, 'material');
+    $recursos->sql_material = $this->db->last_query();
     $otros = $this->recdb->getRecursoByOT($post->idOT, 'otros');
     $subcontratos = $this->recdb->getRecursoByOT($post->idOT, 'subcontrato');
 
