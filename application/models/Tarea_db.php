@@ -243,7 +243,7 @@ class Tarea_db extends CI_Model{
     $this->db->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot','LEFT');
     $this->db->where('OT.idOT', $idOT);
     $this->db->where('itf.tipo', $tipo);
-    $this->db->group_by('itf.codigo')
+    $this->db->group_by('itf.codigo');
     return $this->db->get();
   }
 
