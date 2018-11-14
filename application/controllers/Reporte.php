@@ -448,6 +448,7 @@ class Reporte extends CI_Controller{
       $equs = $this->recdb->getEquiposOtBy($idOT, 'equipo');
       $acts = $this->tarea->getActividadesPlaneadas($idOT, 1, NULL, $fecha);
       $mats = $this->tarea->getItemsPlaneadosBy($idOT, 'material');
+      $sql_material = $this->db->last_query();
       $otros = $this->recdb->getRecursoByOT($idOT, 'otros');
       $subs = $this->tarea->getActividadesPlaneadas($idOT,'subcontrato', NULL, NULL);
       $data = array(
@@ -456,7 +457,8 @@ class Reporte extends CI_Controller{
           'actividad'=> $acts->result(),
           'material'=>$mats->result(),
           'otros' =>$otros->result(),
-          'subcontratos' =>$subs->result()
+          'subcontratos' =>$subs->result(),
+          'sql'=>$sql_material
         );
       echo json_encode($data);
   }
