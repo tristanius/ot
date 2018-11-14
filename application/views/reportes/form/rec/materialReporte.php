@@ -7,11 +7,13 @@
         <th>item</th>
         <th>Descripcion</th>
         <th>Unidad</th>
+        <th>C.C.</th>
         <th>Cant. día</th>
         <th>Frente</th>
         <th data-icon="*"> </th>
       </tr>
       <tr style="background: #b9dae5">
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -38,6 +40,11 @@
         </td>
         <td ng-bind="m.descripcion"></td>
         <td ng-bind="m.unidad"></td>
+
+        <td class="noMaterialStyles">
+          <input type="text" ng-model="m.cc" style="width:7ex;" ng-readonly="rd.info.estado == 'CERRADO' " placeholder="C.C.">
+        </td>
+
         <td> <input type="number" ng-model="m.cantidad" ng-init="m.cantidad = parseNumb(m.cantidad)" ng-change="m.cantidad = parseNumb(m.cantidad)" ng-readonly="rd.info.estado == 'CERRADO' " style="width: 10ex;"> </td>
         <td ng-bind="m.idfrente_ot"></td>
         <td  class="font9">

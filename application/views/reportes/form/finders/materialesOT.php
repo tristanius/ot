@@ -13,8 +13,8 @@
           <tr>
             <th>No. </th>
             <th>item</th>
-            <th>Referencia</th>
             <th>Descripción</th>
+            <th>Tipo</th>
             <th>Unidad negocio</th>
           </tr>
           <tr>
@@ -36,14 +36,14 @@
             </tdequipoByOT>
             <td><input type="text" ng-model="fil_mOT.itemc_item" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_mOT.descripcion" placeholder="filtrar"></td>
-            <td><input type="text" ng-model="fil_mOT.descripcion_recurso" placeholder="filtrar"></td>
+            <td><input type="text" ng-model="fil_mOT.tipo" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_mOT.unidad_negocio" placeholder="filtrar"></td>
           </tr>
-          <tr ng-repeat="m in materialOT | filter: fil_mOT | orderBy: 'itemc_item' " style="{{ m.propietario_recurso==true?'':'background: #ffc46d' }}">
+          <tr ng-repeat="m in materialOT | filter: fil_mOT | orderBy: 'itemc_item' ">
             <td class="noMaterialStyles"> <input type="checkbox" ng-model="m.add" ng-click="setSelecteState(m.add)"> </td>
             <td ng-bind="m.itemc_item"></td>
             <td ng-bind="m.descripcion"></td>
-            <td ng-bind="m.descripcion_recurso"></td>
+            <td ng-bind="m.tipo"></td>
             <td ng-bind="m.unidad_negocio"></td>
           </tr>
         </tbody>
