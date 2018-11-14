@@ -10,7 +10,7 @@
     <ul>
       <li><a href="#tabs-1">Personal</a></li>
       <li><a href="#tabs-2">Equipos</a></li>
-      <li><a href="#tabs-3">Material</a></li>
+      <!--<li><a href="#tabs-3">Material</a></li>-->
       <li><a href="#tabs-4">Otros</a></li>
     </ul>
     <div id="tabs-1">
@@ -19,9 +19,10 @@
     <div id="tabs-2">
       <?php $this->load->view('recursos/vista_recursos/equipos'); ?>
     </div>
+    <!--
     <div id="tabs-3">
       <?php $this->load->view('recursos/vista_recursos/material'); ?>
-    </div>
+    </div>  -->
     <div id="tabs-4">
       <?php $this->load->view('recursos/vista_recursos/otros'); ?>
     </div>

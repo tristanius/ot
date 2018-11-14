@@ -12,18 +12,16 @@
         <thead>
           <tr>
             <th>No. </th>
-            <th>Referencia</th>
             <th>item</th>
             <th>Referencia</th>
             <th>Descripción</th>
             <th>Unidad negocio</th>
-            <th>Asignacion</th>
           </tr>
           <tr>
             <th class="noMaterialStyles">
               Todos <input type="checkbox" ng-click="selectionAll(materialOT, 'add');">
             </th>
-            <th colspan="6">
+            <th colspan="4">
 
             </th>
           </tr>
@@ -36,21 +34,17 @@
                 <big ng-if="fil_mOT.add == true" data-icon="&#xe04c;"></big>
               </button>
             </tdequipoByOT>
-            <td><input type="text" ng-model="fil_mOT.referencia" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_mOT.itemc_item" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_mOT.descripcion" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_mOT.descripcion_recurso" placeholder="filtrar"></td>
             <td><input type="text" ng-model="fil_mOT.unidad_negocio" placeholder="filtrar"></td>
-            <td></td>
           </tr>
           <tr ng-repeat="m in materialOT | filter: fil_mOT | orderBy: 'itemc_item' " style="{{ m.propietario_recurso==true?'':'background: #ffc46d' }}">
             <td class="noMaterialStyles"> <input type="checkbox" ng-model="m.add" ng-click="setSelecteState(m.add)"> </td>
-            <td ng-bind="m.referencia"></td>
             <td ng-bind="m.itemc_item"></td>
             <td ng-bind="m.descripcion"></td>
             <td ng-bind="m.descripcion_recurso"></td>
             <td ng-bind="m.unidad_negocio"></td>
-            <td ng-bind="m.propietario_observacion"></td>
           </tr>
         </tbody>
       </table>

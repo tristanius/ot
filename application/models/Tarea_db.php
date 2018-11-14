@@ -232,6 +232,20 @@ class Tarea_db extends CI_Model{
         ->get();
   }
 
+  public function getItemsPlaneadosBy($idOT, $tipo = NULL)
+  {
+    $this->load->database('ot');
+    $this->db->select('OT.idOT, OT.nombre_ot, itt.iditem_tarea_ot, itt.cantidad_planeada, itf.*, "material" AS unidad_negocio');
+    $this->db->from('OT');
+    $this->db->join('tarea_ot AS tarea', 'OT.idOT = tarea.OT_idOT');
+    $this->db->join('item_tarea_ot AS itt', 'tarea.idtarea_ot = itt.tarea_ot_idtarea_ot');
+    $this->db->join('itemf AS itf', 'itf.iditemf = itt.tarea_ot_idtarea_ot');
+    $this->db->join('frente_ot AS f', 'f.idfrente_ot = itt.idfrente_ot','LEFT')
+    $this->db->where('OT.idOT', $idOT);
+    $this->db->where('itf.tipo', $tipo);
+    $this->db->get();
+  }
+
   public function getCantidadSum($fecha, $item, $idsector, $idOT)
   {
     $this->load->database('ot');

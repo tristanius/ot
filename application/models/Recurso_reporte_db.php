@@ -268,7 +268,10 @@ class Recurso_reporte_db extends CI_Model{
       $this->db->join('sector_item_tarea AS sec', 'sec.idsector_item_tarea = rrd.idsector_item_tarea', 'LEFT');
       $this->db->where('rrd.idrecurso_ot', NULL);
       $this->db->where('itf.tipo', $tipo);
-    }elseif ($tipo=='material' || $tipo=='otros'){
+    }elseif ($tipo=='material'){
+      $this->db->where('rrd.idrecurso_ot', NULL);
+      $this->db->where('itf.tipo', $tipo);
+    }elseif ($tipo=='otros') {
       $this->db->select('
         rot.descripcion_temporal AS descripcion_recurso, rot.codigo_temporal AS referencia, rot.*, titc.BO, titc.CL, titc.grupo_mayor');
       $this->db->where('rot.tipo', $tipo);

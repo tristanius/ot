@@ -35,7 +35,7 @@
         </div>
       </section>
 
-      <div class="col s12 l6 m6">
+      <div class="col s12 l8 m12">
         <?php $this->load->view('reportes/lista/otSelection'); ?>
       </div>
     </fieldset>
