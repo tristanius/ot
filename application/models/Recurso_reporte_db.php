@@ -269,7 +269,6 @@ class Recurso_reporte_db extends CI_Model{
       $this->db->where('rrd.idrecurso_ot', NULL);
       $this->db->where('itf.tipo', $tipo);
     }elseif ($tipo=='material'){
-      $this->db->where('rrd.idrecurso_ot', NULL);
       $this->db->where('itf.tipo', $tipo);
     }elseif ($tipo=='otros') {
       $this->db->select('
