@@ -68,7 +68,7 @@ class Reporte extends CI_Controller{
     $this->load->library('session');
     $post = json_decode( file_get_contents("php://input") );
 
-    $validReporte = $this->validarRecursos("retornable", $post);
+    $validReporte = $this->validarRecursos(TRUE, $post);
     if ($validReporte->succ) {
       $info = $post->info;
       $this->load->model('reporte_db', 'repo');
@@ -117,9 +117,9 @@ class Reporte extends CI_Controller{
       $response->personal = $validReporte->recursos->personal;
       $response->equipos = $validReporte->recursos->equipos;
       $response->actividades = $validReporte->recursos->actividades;
-      $response->material = $validReporte->material;
-      $response->otros = $validReporte->otros;
-      $response->subcontratos = $validReporte->subcontratos;
+      $response->material = $validReporte->recursos->material;
+      $response->otros = $validReporte->recursos->otros;
+      $response->subcontratos = $validReporte->recursos->subcontratos;
     }
     echo json_encode($response);
   }
@@ -222,7 +222,7 @@ class Reporte extends CI_Controller{
         }
       }
     }
-    if (isset($tipo)) {
+    if (isset($tipo) && $tipo) {
       return $post;
     }else {
       echo json_encode($post);
