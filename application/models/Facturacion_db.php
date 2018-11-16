@@ -101,6 +101,11 @@ class Facturacion_db extends CI_Model{
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
+
+        (SELECT tarea_ot.a FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1) AS a,
+        (SELECT tarea_ot.i FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1) AS i,
+        (SELECT tarea_ot.u FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1) AS u,
+        
         p.identificacion as cedula,
         p.nombre_completo,
         e.referencia as placa_equipo,
