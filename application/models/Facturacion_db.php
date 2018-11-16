@@ -35,6 +35,7 @@ class Facturacion_db extends CI_Model{
     $this->db->join('tipo_ot as tp', 'OT.tipo_ot_idtipo_ot = tp.idtipo_ot','LEFT');
     $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT');
     $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
+    $this->db->join('vigencia_tarifas AS vg', 'tr.idvigencia_tarifas = vg.idvigencia_tarifas');
     $this->db->join('frente_ot as ft', 'ft.idfrente_ot = rrd.idfrente_ot','LEFT');
     if (isset($idOT)) {
       $this->db->where('rd.OT_idOT', $idOT);
@@ -102,10 +103,10 @@ class Facturacion_db extends CI_Model{
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
 
-        (SELECT tarea_ot.a FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1) AS a,
-        (SELECT tarea_ot.i FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1) AS i,
-        (SELECT tarea_ot.u FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1) AS u,
-        
+        IFNUL((SELECT tarea_ot.a FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1), vg.a ) AS a,
+        IFNUL((SELECT tarea_ot.i FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1), vg.i ) AS i,
+        IFNUL((SELECT tarea_ot.u FROM tarea_ot WHERE tr.OT_idOT = OT.idOT ORDER BY tr.idtarea_ot ASC LIMIT 1), vg.u ) AS u,
+
         p.identificacion as cedula,
         p.nombre_completo,
         e.referencia as placa_equipo,
