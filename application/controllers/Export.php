@@ -89,7 +89,19 @@ class Export extends CI_Controller{
       $where = "tr.fecha_inicio >= '".$f_inicio."'";
     }
     $rows = $this->infofac->informeOtPyco($where);
-    $this->load->view('miscelanios/informesPyco/informeMesesOT', array('rows'=>$rows,'nodownload'=>$nodownload, "nombre"=>"InformeOrdenesPYCO") );
+    $this->load->helper(array('xlsx'));
+    $writer = getWriter();
+    $writer->openToBrowser('InfConsolidadoOT.xlsx');
+    $style = (new StyleBuilder())->setFontBold()->build();
+    foreach ($rows->result() as $key => $fila) {
+      $fila->subtotal_directo = $fila->actividad_apu + $fila->personal + $fila->equipo + $fila->material + $fila->otros;
+      $fila->subtotal_a = $fila->a * $fila->subtotal_directo;
+      $fila->subtotal_i = $fila->i * $fila->subtotal_directo;
+      $fila->subtotal_u = $fila->u * $fila->subtotal_directo;
+      $fila->total = $fila->subtotal_directo + $fila->subtotal_a + $fila->subtotal_i + $fila->subtotal_u;
+      $writer->addRow($fila);
+    }
+    $writer->close();
   }
   public function informePYCO( $f_inicio=NULL, $f_final=NULL, $nodownload=FALSE)
   {
