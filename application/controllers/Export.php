@@ -101,6 +101,7 @@ class Export extends CI_Controller{
       $fila->total = $fila->subtotal_directo + $fila->subtotal_a + $fila->subtotal_i + $fila->subtotal_u;
       $writer->addRow((array) $fila);
     }
+    force_download('./downloads/infConsolidadoOT.xlsx',NULL);
     $writer->close();
   }
   public function informePYCO( $f_inicio=NULL, $f_final=NULL, $nodownload=FALSE)
