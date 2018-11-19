@@ -92,9 +92,17 @@ class Export extends CI_Controller{
     $this->load->helper(array('xlsx','download'));
     $writer = getWriter();
     $style = getStyleFont(165, 211, 255);
-    $writer->openToFile('./downloads/infConsolidadoOT.xlsx', $style);
-    $writer->addRowWithStyle((array) $rows->list_fields());
+    $writer->openToFile('./downloads/infConsolidadoOT.xlsx');
+    $writer->addRowWithStyle((array) $rows->list_fields(), $style);
     foreach ($rows->result() as $key => $fila) {
+      $fila->actividad_apu = $fila->actividad_apu*1;
+      $fila->actividad_apu = $fila->personal*1;
+      $fila->actividad_apu = $fila->equipo*1;
+      $fila->actividad_apu = $fila->material*1;
+      $fila->actividad_apu = $fila->otros*1;
+      $fila->a = $fila->a *1;
+      $fila->i = $fila->i *1;
+      $fila->u = $fila->u *1;
       $fila->subtotal_directo = $fila->actividad_apu + $fila->personal + $fila->equipo + $fila->material + $fila->otros;
       $fila->subtotal_a = $fila->a * $fila->subtotal_directo;
       $fila->subtotal_i = $fila->i * $fila->subtotal_directo;
