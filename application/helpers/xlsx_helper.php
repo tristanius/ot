@@ -108,6 +108,6 @@ function getWriter(){
 function getStyleBuilder(){
   return new StyleBuilder();
 }
-function getStyleFont($r, $g, $b){
-  return (new StyleBuilder())->setFontColor(Color::rgb($r,$g,$b))->setFontBold()->build();
+function getStyleFont($r=NULL, $g=NULL, $b=NULL){
+  return (new StyleBuilder())->setFontBold()->setFontColor(Color::WHITE)->setBackgroundColor(Color::BLUE)->build();
 }
