@@ -414,7 +414,7 @@ class Facturacion_db extends CI_Model{
       ->join('tipo_ot AS tp', 'tp.idtipo_ot = OT.tipo_ot_idtipo_ot')
       ->join('vigencia_tarifas AS vg','vg.idvigencia_tarifas = tr.idvigencia_tarifas',"LEFT")
       ->order_by('tr.idtarea_ot','DESC')
-      ->group_by('tr.idtarea_ot');
+      ->group_by('tr.idtarea_ot')
       ->get();
   }
 }
