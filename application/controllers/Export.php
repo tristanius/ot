@@ -94,7 +94,7 @@ class Export extends CI_Controller{
     $style = getStyleFont();
     $writer->openToFile('./downloads/infConsolidadoOT.xlsx');
     $cabeceras = array();
-    foreach ($variable as $key => $value) {
+    foreach ($rows->list_fields() as $key => $value) {
       array_push( $cabeceras, ucwords(str_replace("_", " ", $value)) );
     }
     $writer->addRowWithStyle($cabeceras, $style);
