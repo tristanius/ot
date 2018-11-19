@@ -92,14 +92,14 @@ class Export extends CI_Controller{
     $this->load->helper(array('xlsx'));
     $writer = getWriter();
     $writer->openToFile('./downloads/infConsolidadoOT.xlsx');
-    $style = (new StyleBuilder())->setFontBold()->build();
+    $writer->addRow((array) $rows->list_fields());
     foreach ($rows->result() as $key => $fila) {
       $fila->subtotal_directo = $fila->actividad_apu + $fila->personal + $fila->equipo + $fila->material + $fila->otros;
       $fila->subtotal_a = $fila->a * $fila->subtotal_directo;
       $fila->subtotal_i = $fila->i * $fila->subtotal_directo;
       $fila->subtotal_u = $fila->u * $fila->subtotal_directo;
       $fila->total = $fila->subtotal_directo + $fila->subtotal_a + $fila->subtotal_i + $fila->subtotal_u;
-      $writer->addRow($fila);
+      $writer->addRow((array) $fila);
     }
     $writer->close();
   }
