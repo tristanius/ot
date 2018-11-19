@@ -371,20 +371,11 @@ class Facturacion_db extends CI_Model{
       OT.clasificacion_ot AS clasificacion,
       (SELECT taot.sap FROM tarea_ot AS taot WHERE taot.OT_idOT = OT.idOT GROUP BY taot.OT_idOT) AS numero_sap,
       if(OT.basica, "BASICA","NO BASICA") AS ot_basica,
-      CONCAT( b.idbase, " - ", b.nombre_base ) AS base,
+      CONCAT( b.idbase, " - ", b.nombre_base ) AS CO,
       OT.gerencia,
-      OT.departamento_ecp,
-      OT.vereda,
-      OT.actividad,
-      MIN(tr.fecha_inicio) AS fecha_inicio_planeado,
-      MAX(tr.fecha_fin) AS fecha_fin_planeado,
-      DATEDIFF(MIN(tr.fecha_fin), MIN(tr.fecha_inicio) ) AS plazo_planeado,
       esp.nombre_especialidad,
       tp.nombre_tipo_ot,
       OT.estado_doc AS estado_ot,
-      OT.fecha_inicio,
-      OT.fecha_fin,
-
       (
         SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
         JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
@@ -408,7 +399,7 @@ class Facturacion_db extends CI_Model{
       (
         SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
         JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
-        WHERE itemf.tipo = "otros" AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT 
+        WHERE itemf.tipo = "otros" AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT
       ) AS otros,
 
       IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a ) AS a,
@@ -421,11 +412,18 @@ class Facturacion_db extends CI_Model{
       0 AS subtotal_u,
       0 AS total,
 
-      DATEDIFF(tr.fecha_fin, tr.fecha_inicio ) AS plazo_ejecutado,
+      OT.vereda,
+      OT.actividad,
+      MIN(tr.fecha_inicio) AS inicio_planeado,
+      MAX(tr.fecha_fin) AS fin_planeado,
+      DATEDIFF(MIN(tr.fecha_fin), MIN(tr.fecha_inicio) ) AS duracion,
       (SELECT usuario_creacion FROM reporte_diario WHERE OT_idOT = OT.idOT GROUP BY OT_idOT) AS digitador,
       (SELECT COUNT(idreporte_diario) FROM reporte_diario WHERE OT_idOT = OT.idOT ) AS cant_reportes,
       OT.presupuesto_porcent_ini AS porcentaje_utilidad_inicial,
-      OT.presupuesto_porcent_fin AS porcentaje_utilidad_fin
+      OT.presupuesto_porcent_fin AS porcentaje_utilidad_fin,
+
+      OT.fecha_inicio,
+      OT.fecha_fin
       '
       )->from('OT')
       ->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
