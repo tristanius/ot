@@ -91,7 +91,7 @@ class Export extends CI_Controller{
     $rows = $this->infofac->informeOtPyco($where);
     $this->load->helper(array('xlsx'));
     $writer = getWriter();
-    $writer->openToBrowser('InfConsolidadoOT.xlsx');
+    $writer->openToFile('./downloads/infConsolidadoOT.xlsx');
     $style = (new StyleBuilder())->setFontBold()->build();
     foreach ($rows->result() as $key => $fila) {
       $fila->subtotal_directo = $fila->actividad_apu + $fila->personal + $fila->equipo + $fila->material + $fila->otros;
