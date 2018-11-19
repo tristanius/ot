@@ -91,7 +91,7 @@ class Export extends CI_Controller{
     $rows = $this->infofac->informeOtPyco($where);
     $this->load->helper(array('xlsx','download'));
     $writer = getWriter();
-    $style = getStyleFont();
+    $style = getStyleFont(165, 211, 255);
     $writer->openToFile('./downloads/infConsolidadoOT.xlsx', $style);
     $writer->addRowWithStyle((array) $rows->list_fields());
     foreach ($rows->result() as $key => $fila) {
