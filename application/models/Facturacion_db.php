@@ -411,7 +411,7 @@ class Facturacion_db extends CI_Model{
       ->join('tarea_ot AS tr','tr.OT_idOT = OT.idOT')
       ->join('base AS b','b.idbase = OT.base_idbase')
       ->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad')
-      ->join('tipo_ot AS tp','tp.idtipo_ot = OT.tipo_ot_idtipo_ot')
+      ->join('vigencia_tarifas AS vg','vg.idvigencia_tarifas = tr.idvigencia_tarifas')
       ->join('costo_mes_ot AS regot', 'regot.OT_idOT = OT.idOT',"LEFT")
       ->order_by('tr.idtarea_ot','DESC')
       ->group_by('IFNULL(regot.idcosto_mes_ot, OT.idOT)')->get();
