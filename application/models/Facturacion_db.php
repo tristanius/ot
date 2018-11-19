@@ -368,7 +368,7 @@ class Facturacion_db extends CI_Model{
       '
       OT.nombre_ot,
       COUNT(tr.idtarea_ot) AS no_tareas,
-      OT.clasificacion_ot,
+      OT.clasificacion_ot AS clasificacion,
       (SELECT taot.sap FROM tarea_ot AS taot WHERE taot.OT_idOT = OT.idOT GROUP BY taot.OT_idOT) AS numero_sap,
       if(OT.basica, "BASICA","NO BASICA") AS ot_basica,
       CONCAT( b.idbase, " - ", b.nombre_base ) AS base,
@@ -385,11 +385,31 @@ class Facturacion_db extends CI_Model{
       OT.fecha_inicio,
       OT.fecha_fin,
 
-      ( SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN itemf ON itemf.iditemf = itt.itemf_iditemf WHERE itemf.tipo = 1 AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE ) AS actividad_apu,
-      ( SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN itemf ON itemf.iditemf = itt.itemf_iditemf WHERE itemf.tipo = 2 AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE ) AS personal,
-      ( SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN itemf ON itemf.iditemf = itt.itemf_iditemf WHERE itemf.tipo = 3 AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE ) AS equipo,
-      ( SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN itemf ON itemf.iditemf = itt.itemf_iditemf WHERE itemf.tipo = "material" AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE ) AS material,
-      ( SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt JOIN itemf ON itemf.iditemf = itt.itemf_iditemf WHERE itemf.tipo = "otros" AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE ) AS otros,
+      (
+        SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
+        JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
+        WHERE itemf.tipo = 1 AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT
+      ) AS actividad_apu,
+      (
+        SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
+        JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
+        WHERE itemf.tipo = 2 AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT
+      ) AS personal,
+      (
+        SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
+        JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
+        WHERE itemf.tipo = 3 AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT
+      ) AS equipo,
+      (
+        SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
+        JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
+        WHERE itemf.tipo = "material" AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT
+      ) AS material,
+      (
+        SELECT SUM(itt.valor_plan) FROM item_tarea_ot AS itt
+        JOIN itemf ON itemf.iditemf = itt.itemf_iditemf
+        WHERE itemf.tipo = "otros" AND itt.tarea_ot_idtarea_ot = tr.idtarea_ot AND itt.facturable = TRUE AND tr.OT_idOT = OT.idOT 
+      ) AS otros,
 
       IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a ) AS a,
       IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i ) AS i,
@@ -413,8 +433,8 @@ class Facturacion_db extends CI_Model{
       ->join('especialidad AS esp','esp.idespecialidad = OT.especialidad_idespecialidad')
       ->join('tipo_ot AS tp', 'tp.idtipo_ot = OT.tipo_ot_idtipo_ot')
       ->join('vigencia_tarifas AS vg','vg.idvigencia_tarifas = tr.idvigencia_tarifas',"LEFT")
-      ->order_by('tr.idtarea_ot','DESC')
-      ->group_by('tr.idtarea_ot')
+      ->order_by('OT.idOT','DESC')
+      ->group_by('OT.idOT')
       ->get();
   }
 }
