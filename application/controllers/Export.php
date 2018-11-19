@@ -95,7 +95,7 @@ class Export extends CI_Controller{
     $writer->openToFile('./downloads/infConsolidadoOT.xlsx');
     $cabeceras = array();
     foreach ($variable as $key => $value) {
-      $cabeceras[$key] = ucwords(str_replace("_", " ", $value));
+      array_push( $cabeceras, ucwords(str_replace("_", " ", $value)) );
     }
     $writer->addRowWithStyle($cabeceras, $style);
     foreach ($rows->result() as $key => $fila) {
