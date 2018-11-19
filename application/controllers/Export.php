@@ -93,7 +93,11 @@ class Export extends CI_Controller{
     $writer = getWriter();
     $style = getStyleFont();
     $writer->openToFile('./downloads/infConsolidadoOT.xlsx');
-    $writer->addRowWithStyle((array) $rows->list_fields(), $style);
+    $cabeceras = array();
+    foreach ($variable as $key => $value) {
+      $cabeceras[$key] = str_replace("_", " ", $value);
+    }
+    $writer->addRowWithStyle($cabeceras, $style);
     foreach ($rows->result() as $key => $fila) {
       $fila->actividad_apu = $fila->actividad_apu*1;
       $fila->personal = $fila->personal*1;
