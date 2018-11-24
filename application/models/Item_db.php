@@ -362,13 +362,16 @@ class Item_db extends CI_Model {
 								->get();
 	}
 
-	public function getItemByOT($ot, $codigo=NULL, $item=NULL)
+	public function getItemByOT($ot, $codigo=NULL, $item=NULL, $tipo=NULL)
 	{
 		$this->load->database('ot');
 		if(isset($codigo)){
 			$this->db->where('itf.codigo',$codigo);
 		}elseif (isset($item)) {
 			$this->db->where('itf.itemc_item',$item);
+		}
+		if (isset($tipo)) {
+			$this->db->where('itf.tipo', $tipo);
 		}
 		return $this->db->select('OT.idOT, OT.nombre_ot, tr.idtarea_ot, tr.nombre_tarea, itt.*, itf.*, tarf.idtarifa, tarf.idvigencia_tarifas, tarf.estado_tarifa, tarf.tarifa, tarf.salario')
 								->from('OT')

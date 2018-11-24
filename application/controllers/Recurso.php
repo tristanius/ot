@@ -143,11 +143,11 @@ class Recurso extends CI_Controller{
       if ($process == 'personal') {
         if( strtolower($cell['A']) != 'comentario' && $cell['B'] != 'Id C.O.' && strtolower($cell['C']) != 'empleado'){
           $ots = $this->ot->getOtBy( 'nombre_ot', $cell['F'] );
-          $items = $this->item->getItemByOT( $cell['F'] , $cell['G'], NULL );
+          $items = $this->item->getItemByOT( $cell['F'] , $cell['G'], NULL, 2 );
           if( isset($cell['L']) && $ots->num_rows() < 1 ){
             // Se hace una verificacion si no se encuentra la OT se busca si tiene una OT Mayor o contenedora
             $ots = $this->ot->getOtBy( 'nombre_ot', $cell['L'] );
-            $items = $this->item->getItemByOT( $cell['L'] , $cell['G'], NULL );
+            $items = $this->item->getItemByOT( $cell['L'] , $cell['G'], NULL, 2 );
           }
           # echo "No.OT:".$ots->num_rows()." | No.Items:".$items->num_rows()."<br>";
           if ($ots->num_rows() > 0 && $items->num_rows() > 0) {

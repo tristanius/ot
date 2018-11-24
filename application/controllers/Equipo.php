@@ -133,7 +133,7 @@ class Equipo extends CI_Controller{
   			if($equipos->num_rows() > 0){
   				$equipo = $equipos->row();
   				$ots = $this->equ->getField('nombre_ot LIKE "'.$val['B'].'"', 'idOT', 'OT');
-  				$its = $this->item->getItemByOT( $val['B'], NULL, $val['C'] );
+  				$its = $this->item->getItemByOT( $val['B'], NULL, $val['C'], 3 );
 
   				if($ots->num_rows() > 0 ){
   					if($its->num_rows() > 0 ){

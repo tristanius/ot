@@ -114,7 +114,8 @@ class Persona extends CI_Controller{
             $num_insert++;
           }
           if(isset($persona->nombre_ot) && isset($persona->itemf_codigo)){
-            $it = $this->pers->getField('codigo = '.$persona->itemf_codigo, 'iditemf', 'itemf')->row();
+            $its = $this->item->getItemByOT( $persona->nombre_ot, $persona->itemf_codigo, NULL, 2 );
+            $it = $its->row();
             $persona->itemf_iditemf = $it->iditemf;
 
             $row = $this->pers->getField('nombre_ot LIKE "%'.$persona->nombre_ot.'" ', 'idOT', 'OT')->row();
