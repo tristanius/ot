@@ -28,7 +28,7 @@
 
         </div>
       </div>
-      <div class="col s12 m12 l2 noMaterialStyles" ng-init="lasbases = []" style="max-heigth: 25ex">
+      <div class="col s12 m12 l4 noMaterialStyles" ng-init="lasbases = []" style="max-heigth: 25ex">
         <div ng-repeat="b in log.bases">
           <label class="regularForm" style="width: 100%; display: block">
             <input class=""
