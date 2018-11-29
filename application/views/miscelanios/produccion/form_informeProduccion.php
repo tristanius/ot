@@ -23,6 +23,7 @@
           <select class="" ng-model="tipo_informe" ng-init="tipo_informe = '2'">
             <option value="1">Sabana de control de MTTO (ECP)</option>
             <option value="2">Sabana de control Obras</option>
+            <option value="3">Sabana de obras Anomalias</option>
           </select>
 
         </div>

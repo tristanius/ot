@@ -15,7 +15,7 @@ class Reportepersonal extends CI_Controller{
   # add
   public function tiempolaborado($idOT, $idReporte)
   {
-    $this->load->model(array('Reportepersonal_db'=>'repoper', 'contrato_db'=>'cont'));
+    $this->load->model(array('contrato_db'=>'cont', 'Reportepersonal_db'=>'repoper'));
     $rowOT = $this->repoper->getDatosOT($idOT,$idReporte);
     if( $rowOT->num_rows()>0 ){
       $contato = $this->cont->getContratos( $rowOT->row()->idcontrato )->row();
@@ -35,6 +35,7 @@ class Reportepersonal extends CI_Controller{
 
   public function tl_termo($idOT, $idReporte, $contrato)
   {
+    $this->load->model('Reportepersonal_db', 'repoper');
     $post = json_decode( file_get_contents("php://input") );
     $rows = $this->repoper->getBy($idOT, $idReporte);
     $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);
@@ -46,6 +47,7 @@ class Reportepersonal extends CI_Controller{
 
   public function tl_pma($idOT, $idReporte)
   {
+    $this->load->model('Reportepersonal_db', 'repoper');
     $post = json_decode( file_get_contents("php://input") );
     $rows = $this->repoper->getBy($idOT, NULL,$idReporte);
     $rowsPersonas = $this->repoper->getRegistroDia($idOT,$idReporte);

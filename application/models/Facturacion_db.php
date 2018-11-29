@@ -33,7 +33,8 @@ class Facturacion_db extends CI_Model{
 
     $this->db->join('base as bs', 'OT.base_idbase = bs.idbase','LEFT');
     $this->db->join('tipo_ot as tp', 'OT.tipo_ot_idtipo_ot = tp.idtipo_ot','LEFT');
-    $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT');
+    $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT')
+    $this->db->join('municipio as mun', 'mun.','LEFT');
     $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
     $this->db->join('vigencia_tarifas AS vg', 'tr.idvigencia_tarifas = vg.idvigencia_tarifas');
     $this->db->join('frente_ot as ft', 'ft.idfrente_ot = rrd.idfrente_ot','LEFT');
@@ -62,7 +63,53 @@ class Facturacion_db extends CI_Model{
 
   private function consultaTipo($tipo)
   {
-    if( $tipo == 2){
+    if( $tipo == 3 ){
+      return '
+        year(rd.fecha_reporte) as año,
+        month(rd.fecha_reporte) as mes,
+        if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
+        c.no_contrato as contrato,
+        OT.gerencia as gerencia,
+        OT.departamento_ecp as departamento_ecp,
+        bs.sector as sector,
+        bs.nombre_base as nombre_CO,
+        OT.base_idbase as CO,
+        tp.nombre_tipo_ot as tipo_mtto,
+        sp.nombre_especialidad as especialidad,
+        itf.codigo AS codigo,
+        titc.grupo_mayor AS tipo_un,
+        rd.fecha_reporte,
+        IF(rd.festivo, "SI", "NO"),
+        OT.nombre_ot AS No_OT,
+        IFNULL(
+          (
+            SELECT mytr.sap
+            FROM tarea_ot AS mytr
+            WHERE mytr.OT_idOT = OT.idOT
+            AND mytr.fecha_inicio <= rd.fecha_reporte
+            GROUP BY mytr.OT_idOT DESC
+            ORDER BY mytr.idtarea_ot DESC
+          ), ""
+        ) as numero_sap,
+        "" as tarea,
+        itf.itemc_item as item,
+        if(titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
+        itc.descripcion,
+        itf.unidad,
+        titc.descripcion as clasificacion_item,
+        if(rrd.facturable,"SI","NO") AS facturable,
+        rrd.cantidad AS cant_und,
+        tr.tarifa,
+        rrd.cantidad * tr.tarifa) as valor_subtotal,
+
+        IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a )*(rrd.cantidad * tr.tarifa) AS subtotal_a,
+        IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i )*(rrd.cantidad * tr.tarifa) AS subtotal_i,
+        IFNULL((SELECT tarea_ot.u FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.u )*(rrd.cantidad * tr.tarifa) AS subtotal_u,
+
+        OT.departamento,
+        OT.municipio
+      ';
+    }elseif( $tipo == 2){
       return '
         c.no_contrato as contrato,
         year(rd.fecha_reporte) as año,
@@ -130,7 +177,6 @@ class Facturacion_db extends CI_Model{
       month(rd.fecha_reporte) as mes,
       if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
       c.no_contrato as contrato,
-      OT.gerencia as gerencia,
       OT.nombre_departamento_ecp as nombre_departamento,
       OT.departamento_ecp as departamento_ecp,
       bs.sector as sector,
