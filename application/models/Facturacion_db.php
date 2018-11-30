@@ -135,16 +135,7 @@ class Facturacion_db extends CI_Model{
         if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
         titc.descripcion as clasificacion_item,
         if(rrd.facturable,"SI","NO") AS facturable,
-        tr.tarifa,
-        (
-          SELECT itt.subtarifa
-          FROM item_tarea_ot AS itt
-          JOIN tarea_ot AS tarea ON tarea.idtarea_ot = itt.tarea_ot_idtarea_ot
-          WHERE tarea.OT_idOT = OT.idOT
-          AND itt.itemf_iditemf = itf.iditemf
-          ORDER BY itf.iditemf DESC
-          LIMIT 1
-        ) AS subtatifa,
+        tr.tarifa
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,

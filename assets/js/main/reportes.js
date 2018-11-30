@@ -857,12 +857,17 @@ var editReporte = function($scope, $http, $timeout){
     $scope.myestado_doc = new_estado;
     $scope.myvalidacion_doc = new_validacion;
   }
-  $scope.aplicarEstado = function(new_estado, new_validacion){
-    var myfecha = new Date();
-    $scope.rd.info.estado = new_estado;
-    $scope.rd.info.validado_pyco = new_validacion;// REEMPLADO DE VENTANA EMERGENTE
-    $scope.mensaje_log = "Estado aplicado "+new_validacion+" - "+myfecha.toLocaleString()+". A la espera de evento de guardado.";
-    $scope.mensaje_log_color = 'yellow accent-1';
+  $scope.aplicarEstado = function(new_estado, new_validacion, obspyco){
+    if( obspyco != undefined && obspyco != '' ){
+      var myfecha = new Date();
+      $scope.rd.info.estado = new_estado;
+      $scope.rd.info.validado_pyco = new_validacion; // REEMPLADO DE VENTANA EMERGENTE
+      $scope.mensaje_log = "Estado aplicado "+new_validacion+" - "+myfecha.toLocaleString()+". A la espera de evento de guardado.";
+      $scope.mensaje_log_color = 'yellow accent-1';
+      $scope.addObservacion2(obspyco);
+    }else{
+      alert("Debes agregar una observacion de cambios del reporte");
+    }
   }
   $scope.guardarestado = function() {
     new_estado = $scope.rd.info.estado;
@@ -1123,6 +1128,9 @@ var editReporte = function($scope, $http, $timeout){
         fecha: f.toLocaleString(),
         usuario: $scope.$parent.log.nombre_usuario
       };
+    if (obspyco.length < 3) {
+      obspyco = '(By SICO: Se realizan cambios no especificados) '+obspyco;
+    }
     $scope.rd.observaciones_pyco.push(data);
   }
   // CORREGIR
