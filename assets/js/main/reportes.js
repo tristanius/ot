@@ -858,7 +858,7 @@ var editReporte = function($scope, $http, $timeout){
     $scope.myvalidacion_doc = new_validacion;
   }
   $scope.aplicarEstado = function(new_estado, new_validacion, obspyco){
-    if( obspyco != undefined && obspyco != '' ){
+    if( (obspyco != undefined && obspyco != '') || (new_validacion == 'ELABORADO' && new_validacion == 'CORREGIDO') ){
       var myfecha = new Date();
       $scope.rd.info.estado = new_estado;
       $scope.rd.info.validado_pyco = new_validacion; // REEMPLADO DE VENTANA EMERGENTE

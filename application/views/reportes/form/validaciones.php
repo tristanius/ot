@@ -17,16 +17,13 @@
     }
 </style>
 <div class="noMaterialStyles" ng-init='getEstadosDoc(<?= json_encode($estados) ?>)'>
-  <div class="row" ng-if="myvalidacion_doc">
-    <b>Estado validacion por aplicar: <span style="color:#874d08" ng-bind="myvalidacion_doc"></span> </b>
-    <button type="button" ng-click="aplicarEstado(myestado_doc, myvalidacion_doc, obspyco)" class="btn mini-btn2">Aplicar</button>
-  </div>
   <br>
+  <p></p>
 
   <section>
-  	<div class="">
+  	<div class="padding1ex">
   	  <label for="">Add. Observación de validación:</label>
-  	  <textarea ng-model="obspyco"></textarea>
+  	  <textarea ng-model="obspyco" ></textarea>
   	</div>
   </section>
 
@@ -54,5 +51,13 @@
         <button type="button" class="btn mini-btn2 green darken-1" ng-click="appyEstadoDoc('CERRADO','FACTURADO')" ng-disabled="!validPriv(70)">Firmado</button>
     </fieldset>
   </section>
+  <p></p>
+
+  <div class="row" ng-if="myvalidacion_doc">
+    <b>Estado validacion por aplicar: <span style="color:#874d08" ng-bind="myvalidacion_doc"></span> </b>
+    <button type="button" ng-click="aplicarEstado(myestado_doc, myvalidacion_doc, obspyco)" class="btn mini-btn2">Aplicar</button>
+  </div>
+
+  <p> </p>
 
 </div>
