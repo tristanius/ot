@@ -33,7 +33,7 @@ class Facturacion_db extends CI_Model{
 
     $this->db->join('base as bs', 'OT.base_idbase = bs.idbase','LEFT');
     $this->db->join('tipo_ot as tp', 'OT.tipo_ot_idtipo_ot = tp.idtipo_ot','LEFT');
-    $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT')
+    $this->db->join('especialidad as sp', 'OT.especialidad_idespecialidad = sp.idespecialidad','LEFT');
     $this->db->join('tarifa AS tr', 'itf.iditemf = tr.itemf_iditemf');
     $this->db->join('vigencia_tarifas AS vg', 'tr.idvigencia_tarifas = vg.idvigencia_tarifas');
     $this->db->join('frente_ot as ft', 'ft.idfrente_ot = rrd.idfrente_ot','LEFT');

@@ -17,7 +17,6 @@
     }
 </style>
 <div class="noMaterialStyles" ng-init='getEstadosDoc(<?= json_encode($estados) ?>)'>
-  <br>
   <p></p>
 
   <section>

@@ -7,7 +7,7 @@
           <b>Menú</b>
         </a>
       </li>
-      <li style="color:#222;"> <span class="valign-wrapper" style="min-height:35px">Version: 1.9.1</span> </li>
+      <li style="color:#222;"> <span class="valign-wrapper" style="min-height:35px">Version: 1.9.3</span> </li>
     </ul>
     <ul class="center">
       <li data-target="slide-out" class="hide-on-med-and-up sidenav-trigger"><a> Menú </a></li>
