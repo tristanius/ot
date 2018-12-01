@@ -858,7 +858,7 @@ var editReporte = function($scope, $http, $timeout){
     $scope.myvalidacion_doc = new_validacion;
   }
   $scope.aplicarEstado = function(new_estado, new_validacion, obspyco){
-    if( (obspyco != undefined && obspyco != '') || (new_validacion == 'ELABORADO' && new_validacion == 'CORREGIDO') ){
+    if( (obspyco != undefined && obspyco != '') || (new_validacion == 'ELABORADO' || new_validacion == 'CORREGIDO') ){
       var myfecha = new Date();
       $scope.rd.info.estado = new_estado;
       $scope.rd.info.validado_pyco = new_validacion; // REEMPLADO DE VENTANA EMERGENTE
@@ -1123,14 +1123,14 @@ var editReporte = function($scope, $http, $timeout){
   // CORREGIR
   $scope.addObservacion2 = function(obspyco){
     var f = new Date();
-    var data = {
-        msj:obspyco,
-        fecha: f.toLocaleString(),
-        usuario: $scope.$parent.log.nombre_usuario
-      };
     if (obspyco.length < 3) {
       obspyco = '(By SICO: Se realizan cambios no especificados) '+obspyco;
     }
+    var data = {
+      msj:obspyco,
+      fecha: f.toLocaleString(),
+      usuario: $scope.$parent.log.nombre_usuario
+    };
     $scope.rd.observaciones_pyco.push(data);
   }
   // CORREGIR
