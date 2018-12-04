@@ -155,7 +155,6 @@ class Facturacion_db extends CI_Model{
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
-        rrd.cc AS cc_reportado,
 
         IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a ) AS a,
         IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i ) AS i,
@@ -165,6 +164,7 @@ class Facturacion_db extends CI_Model{
         IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i )*(rrd.cantidad * tr.tarifa) AS subtotal_i,
         IFNULL((SELECT tarea_ot.u FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.u )*(rrd.cantidad * tr.tarifa) AS subtotal_u,
 
+        rrd.cc AS cc_reportado,
         p.identificacion as cedula,
         p.nombre_completo,
         e.referencia as placa_equipo,
