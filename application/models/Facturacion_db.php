@@ -87,7 +87,7 @@ class Facturacion_db extends CI_Model{
             JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
             AND item_tr.itemf_iditemf = itf.iditemf
-            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio = mytr.fecha_fin)
+            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin)
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
@@ -126,7 +126,7 @@ class Facturacion_db extends CI_Model{
             JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
             AND item_tr.itemf_iditemf = itf.iditemf
-            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio = mytr.fecha_fin)
+            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin)
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
@@ -204,7 +204,7 @@ class Facturacion_db extends CI_Model{
             JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
             AND item_tr.itemf_iditemf = itf.iditemf
-            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio = mytr.fecha_fin)
+            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio AND mytr.fecha_fin)
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
