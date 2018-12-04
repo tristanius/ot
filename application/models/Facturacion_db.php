@@ -78,14 +78,16 @@ class Facturacion_db extends CI_Model{
         itf.codigo AS codigo,
         titc.grupo_mayor AS tipo_un,
         rd.fecha_reporte,
-        IF(rd.festivo, "SI", "NO"),
+        IF(rd.festivo, "SI", "NO") AS festivo,
         OT.nombre_ot AS No_OT,
         IFNULL(
           (
             SELECT mytr.sap
             FROM tarea_ot AS mytr
+            JOIN item_tarea_ot ON item_tarea_ot.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
             AND mytr.fecha_inicio <= rd.fecha_reporte
+            AND item_tarea_ot.itemf_iditemf = itf.iditemf
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
@@ -105,6 +107,7 @@ class Facturacion_db extends CI_Model{
         IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i )*(rrd.cantidad * tr.tarifa) AS subtotal_i,
         IFNULL((SELECT tarea_ot.u FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.u )*(rrd.cantidad * tr.tarifa) AS subtotal_u,
 
+        rrd.cc AS cc_reportado,
         OT.departamento,
         OT.municipio
       ';
@@ -116,11 +119,24 @@ class Facturacion_db extends CI_Model{
         day(rd.fecha_reporte) as dia,
         OT.nombre_departamento_ecp as nombre_departamento,
         bs.nombre_base as base,
+        IFNULL(
+          (
+            SELECT mytr.sap
+            FROM tarea_ot AS mytr
+            JOIN item_tarea_ot ON item_tarea_ot.tarea_ot_idtarea_ot = mytr.idtarea_ot
+            WHERE mytr.OT_idOT = OT.idOT
+            AND mytr.fecha_inicio <= rd.fecha_reporte
+            AND item_tarea_ot.itemf_iditemf = itf.iditemf
+            GROUP BY mytr.OT_idOT DESC
+            ORDER BY mytr.idtarea_ot DESC
+          ), ""
+        ) as numero_sap,
         OT.base_idbase as CO,
         itf.codigo,
         rd.fecha_reporte,
-        rd.festivo,
+        IF(rd.festivo, "SI", "NO") AS festivo,
         OT.nombre_ot AS No_OT,
+        OT.cc_ecp as centro_costo,
         ft.nombre AS Frente_OT,
         OT.locacion as lugar,
         OT.municipio,
@@ -135,10 +151,11 @@ class Facturacion_db extends CI_Model{
         if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
         titc.descripcion as clasificacion_item,
         if(rrd.facturable,"SI","NO") AS facturable,
-        tr.tarifa
+        tr.tarifa,
         itf.unidad,
         rrd.cantidad,
         (rrd.cantidad * tr.tarifa) as valor_subtotal,
+        rrd.cc AS cc_reportado,
 
         IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a ) AS a,
         IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i ) AS i,
@@ -164,86 +181,88 @@ class Facturacion_db extends CI_Model{
       ';
     }else{
       return 'year(rd.fecha_reporte) as año,
-      month(rd.fecha_reporte) as mes,
-      if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
-      c.no_contrato as contrato,
-      OT.nombre_departamento_ecp as nombre_departamento,
-      OT.departamento_ecp as departamento_ecp,
-      bs.sector as sector,
-      bs.nombre_base as base,
-      OT.base_idbase as CO,
-      tp.nombre_tipo_ot as tipo_mtto,
-      sp.nombre_especialidad as especialidad,
-      itf.codigo,
-      titc.grupo_mayor AS tipo_un,
-      rd.fecha_reporte,
-      rd.festivo,
-      OT.nombre_ot AS No_OT,
-      ft.nombre AS Frente_OT,
-      IFNULL(
-        (
-          SELECT mytr.sap
-          FROM tarea_ot AS mytr
-          WHERE mytr.OT_idOT = OT.idOT
-          AND mytr.fecha_inicio <= rd.fecha_reporte
-          GROUP BY mytr.OT_idOT DESC
-          ORDER BY mytr.idtarea_ot DESC
-        ), ""
-      ) as numero_sap,
-      "" as tarea,
-      OT.cc_ecp as centro_costo,
-      "" as cuenta_mayor,
-      "" as sistema,
-      OT.abscisa as pk,
-      p.identificacion as cedula,
-      p.nombre_completo,
-      itf.itemc_item as item,
-      if(titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
-      itc.descripcion,
-      if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
-      if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
-      titc.descripcion as clasificacion_item,
-      if(rrd.facturable,"SI","NO") AS facturable,
-      rrd.cantidad AS cant_und,
-      tr.tarifa,
-      IFNULL(tr.tarifa_subcontrato,tr.tarifa) AS tarifa_subcontrato,
-      itf.unidad,
-      if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad), 0) as cantidad_total,
-      if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) * tr.tarifa, 0) as valor_subtotal,
-      if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr. tarifa, 0.18), 0) as a,
-      if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.01), 0) as i,
-      if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.04), 0) as u,
-      if(rrd.facturable, getTotal(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.23), 0) as total,
-      OT.locacion as lugar,
-      OT.municipio,
-      OT.zona,
-      e.referencia as placa_equipo,
-      rrd.horas_operacion,
-      rrd.horas_disponible,
-      e.codigo_siesa,
-      if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) as referencia,
-      rrd.nombre_operador,
-      rrd.hora_inicio AS tr1_entrada,
-      rrd.hora_fin AS tr1_salida,
-      rrd.hora_inicio2 AS tr2_entrada,
-      rrd.hora_fin2 AS tr2_salida,
-      rrd.hr_almuerzo,
-      if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
-      if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
-      if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
-      if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
-      if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
-      if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
-      if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
-      if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
-      rrd.racion,
-      rrd.gasto_viaje_pr AS pernocto,
-      rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
-      rd.validado_pyco AS estado_reporte,
-      rot.propietario_observacion AS asignacion,
-      IFNULL(rot.costo_und, tr.tarifa) AS costo_und,
-      rrd.cc,
-      IFNULL( rot.UN, r.unidad_negocio) AS UN';
+        month(rd.fecha_reporte) as mes,
+        if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
+        c.no_contrato as contrato,
+        OT.nombre_departamento_ecp as nombre_departamento,
+        OT.departamento_ecp as departamento_ecp,
+        bs.sector as sector,
+        bs.nombre_base as base,
+        OT.base_idbase as CO,
+        tp.nombre_tipo_ot as tipo_mtto,
+        sp.nombre_especialidad as especialidad,
+        itf.codigo,
+        titc.grupo_mayor AS tipo_un,
+        rd.fecha_reporte,
+        IF(rd.festivo, "SI", "NO") AS festivo,
+        OT.nombre_ot AS No_OT,
+        ft.nombre AS Frente_OT,
+        IFNULL(
+          (
+            SELECT mytr.sap
+            FROM tarea_ot AS mytr
+            JOIN item_tarea_ot ON item_tarea_ot.tarea_ot_idtarea_ot = mytr.idtarea_ot
+            WHERE mytr.OT_idOT = OT.idOT
+            AND mytr.fecha_inicio <= rd.fecha_reporte
+            AND item_tarea_ot.itemf_iditemf = itf.iditemf
+            GROUP BY mytr.OT_idOT DESC
+            ORDER BY mytr.idtarea_ot DESC
+          ), ""
+        ) as numero_sap,
+        "" as tarea,
+        OT.cc_ecp as centro_costo,
+        "" as cuenta_mayor,
+        "" as sistema,
+        OT.abscisa as pk,
+        p.identificacion as cedula,
+        p.nombre_completo,
+        itf.itemc_item as item,
+        if(titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
+        itc.descripcion,
+        if(length(titc.cl)>0,if(titc.cl="C","Convencional","Legal"),"") as conv_leg,
+        if(length(titc.bo)>0,if(titc.bo="B","Basico","Opcional"),"") as clasifica_gral,
+        titc.descripcion as clasificacion_item,
+        if(rrd.facturable,"SI","NO") AS facturable,
+        rrd.cantidad AS cant_und,
+        tr.tarifa,
+        IFNULL(tr.tarifa_subcontrato,tr.tarifa) AS tarifa_subcontrato,
+        itf.unidad,
+        if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad), 0) as cantidad_total,
+        if(rrd.facturable, getDisp(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad) * tr.tarifa, 0) as valor_subtotal,
+        if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr. tarifa, 0.18), 0) as a,
+        if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.01), 0) as i,
+        if(rrd.facturable, getAIU(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.04), 0) as u,
+        if(rrd.facturable, getTotal(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, rrd.cantidad, tr.tarifa, 0.23), 0) as total,
+        OT.locacion as lugar,
+        OT.municipio,
+        OT.zona AS zona_orden,
+        rrd.cc AS cc_reportado,
+        e.referencia as placa_equipo,
+        rrd.horas_operacion,
+        rrd.horas_disponible,
+        e.codigo_siesa,
+        if(e.referencia IS NULL, rot.codigo_temporal, e.referencia) as referencia,
+        rrd.nombre_operador,
+        rrd.hora_inicio AS tr1_entrada,
+        rrd.hora_fin AS tr1_salida,
+        rrd.hora_inicio2 AS tr2_entrada,
+        rrd.hora_fin2 AS tr2_salida,
+        rrd.hr_almuerzo,
+        if(!rd.festivo, rrd.horas_ordinarias, 0) AS HO,
+        if(!rd.festivo, rrd.horas_extra_dia, 0) AS HED,
+        if(!rd.festivo, rrd.horas_extra_noc, 0) AS HEN,
+        if(!rd.festivo, rrd.horas_recargo, 0) AS recargo_noc,
+        if(rd.festivo, rrd.horas_ordinarias, 0) AS HOF,
+        if(rd.festivo, rrd.horas_extra_dia, 0) AS HEDF,
+        if(rd.festivo, rrd.horas_extra_noc, 0) AS HENF,
+        if(rd.festivo, rrd.horas_recargo, 0) AS recargo_noc_fest,
+        rrd.racion,
+        rrd.gasto_viaje_pr AS pernocto,
+        rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
+        rd.validado_pyco AS estado_reporte,
+        rot.propietario_observacion AS asignacion,
+        IFNULL(rot.costo_und, tr.tarifa) AS costo_und,
+        IFNULL( rot.UN, r.unidad_negocio) AS UN';
     }
   }
 
