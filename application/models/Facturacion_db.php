@@ -126,7 +126,7 @@ class Facturacion_db extends CI_Model{
             JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
             AND item_tr.itemf_iditemf = itf.iditemf
-            AND mytr.fecha_inicio <= rd.fecha_reporte
+            AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio AS mytr.fecha_fin)
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
@@ -136,7 +136,7 @@ class Facturacion_db extends CI_Model{
         rd.fecha_reporte,
         IF(rd.festivo, "SI", "NO") AS festivo,
         OT.nombre_ot AS No_OT,
-        OT.cc_ecp as centro_costo,
+        OT.cc_ecp as cc_cliente_ot,
         ft.nombre AS Frente_OT,
         OT.locacion as lugar,
         OT.municipio,
@@ -210,7 +210,7 @@ class Facturacion_db extends CI_Model{
           ), ""
         ) as numero_sap,
         "" as tarea,
-        OT.cc_ecp as cc_cliente,
+        OT.cc_ecp as cc_cliente_ot,
         "" as cuenta_mayor,
         "" as sistema,
         OT.abscisa as pk,
@@ -288,7 +288,18 @@ class Facturacion_db extends CI_Model{
       rd.fecha_reporte,
       rd.festivo,
       OT.nombre_ot AS No_OT,
-      OT.numero_sap,
+      IFNULL(
+        (
+          SELECT mytr.sap
+          FROM tarea_ot AS mytr
+          JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
+          WHERE mytr.OT_idOT = OT.idOT
+          AND item_tr.itemf_iditemf = itf.iditemf
+          AND (rd.fecha_reporte BETWEEN mytr.fecha_inicio AS mytr.fecha_fin)
+          GROUP BY mytr.OT_idOT DESC
+          ORDER BY mytr.idtarea_ot DESC
+        ), ""
+      ) as numero_sap,
       OT.cc_ecp as centro_costo,
       "" as cuenta_mayor,
       "" AS sistema,
