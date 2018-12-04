@@ -84,10 +84,10 @@ class Facturacion_db extends CI_Model{
           (
             SELECT mytr.sap
             FROM tarea_ot AS mytr
-            JOIN item_tarea_ot ON item_tarea_ot.tarea_ot_idtarea_ot = mytr.idtarea_ot
+            JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
+            AND item_tr.itemf_iditemf = itf.iditemf
             AND mytr.fecha_inicio <= rd.fecha_reporte
-            AND item_tarea_ot.itemf_iditemf = itf.iditemf
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
@@ -123,10 +123,10 @@ class Facturacion_db extends CI_Model{
           (
             SELECT mytr.sap
             FROM tarea_ot AS mytr
-            JOIN item_tarea_ot ON item_tarea_ot.tarea_ot_idtarea_ot = mytr.idtarea_ot
+            JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
+            AND item_tr.itemf_iditemf = itf.iditemf
             AND mytr.fecha_inicio <= rd.fecha_reporte
-            AND item_tarea_ot.itemf_iditemf = itf.iditemf
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
@@ -143,7 +143,7 @@ class Facturacion_db extends CI_Model{
         OT.abscisa as pk,
         itf.itemc_item as item,
         titc.grupo_mayor AS tipo,
-        rrd.cc,
+        rrd.cc AS cc_reportado,
         IFNULL( rot.UN, r.unidad_negocio) AS UN,
         if(titc.grupo_mayor = "actividad", "ACTIVIDAD", rot.UN) as un_asociada,
         itc.descripcion,
@@ -201,16 +201,16 @@ class Facturacion_db extends CI_Model{
           (
             SELECT mytr.sap
             FROM tarea_ot AS mytr
-            JOIN item_tarea_ot ON item_tarea_ot.tarea_ot_idtarea_ot = mytr.idtarea_ot
+            JOIN item_tarea_ot as item_tr ON item_tr.tarea_ot_idtarea_ot = mytr.idtarea_ot
             WHERE mytr.OT_idOT = OT.idOT
+            AND item_tr.itemf_iditemf = itf.iditemf
             AND mytr.fecha_inicio <= rd.fecha_reporte
-            AND item_tarea_ot.itemf_iditemf = itf.iditemf
             GROUP BY mytr.OT_idOT DESC
             ORDER BY mytr.idtarea_ot DESC
           ), ""
         ) as numero_sap,
         "" as tarea,
-        OT.cc_ecp as centro_costo,
+        OT.cc_ecp as cc_cliente,
         "" as cuenta_mayor,
         "" as sistema,
         OT.abscisa as pk,
