@@ -390,6 +390,7 @@ class Facturacion_db extends CI_Model{
       b.nombre_base,
       if(OT.basica, "BASICA","-") AS ot_basica,
       OT.vereda,
+      OT.municipio,
       OT.actividad,
       OT.estado_doc,
       OT.ot_legalizada AS legalizacion,
@@ -478,6 +479,7 @@ class Facturacion_db extends CI_Model{
       0 AS total,
 
       OT.vereda,
+      OT.municipio,
       OT.actividad,
       MIN(tr.fecha_inicio) AS inicio_planeado,
       MAX(tr.fecha_fin) AS fin_planeado,
