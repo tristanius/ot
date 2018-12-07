@@ -111,7 +111,8 @@ class Facturacion_db extends CI_Model{
         OT.departamento,
         OT.municipio
       ';
-    }elseif( $tipo == 2){
+    }
+    elseif( $tipo == 2) {
       return '
         c.no_contrato as contrato,
         year(rd.fecha_reporte) as año,
@@ -176,9 +177,11 @@ class Facturacion_db extends CI_Model{
         rrd.hora_fin2 AS tr2_salida,
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
+        IF(rot.propietario_recurso, "Propio", "externo") AS propietario,
         IF(rot.costo_und IS NULL, tr.tarifa, IF( rot.costo_und = 0, tr.tarifa, rot.costo_und ) ) AS costo_und
       ';
-    }else{
+    }
+    else{
       return 'year(rd.fecha_reporte) as año,
         month(rd.fecha_reporte) as mes,
         if(day(rd.fecha_reporte)<=15,1,2) as Quincena,
@@ -260,6 +263,7 @@ class Facturacion_db extends CI_Model{
         rrd.gasto_viaje_lugar AS lugar_gasto_viaje,
         rd.validado_pyco AS estado_reporte,
         rot.propietario_observacion AS asignacion,
+        IF(rot.propietario_recurso, "Propio", "externo") AS propietario,
         IFNULL(rot.costo_und, tr.tarifa) AS costo_und,
         IFNULL( rot.UN, r.unidad_negocio) AS UN';
     }

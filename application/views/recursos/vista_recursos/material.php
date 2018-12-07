@@ -55,5 +55,5 @@
       </tr>
     </tbody>
   </table>
-  <button type="button" class="btn green" ng-click="exportar_tabla('#tablaMaterialRecursosOT')" ng-if="condensado.guardado == true">Exportar</button>
+  <button type="button" class="btn green" ng-click="exportar_tabla('#tablaMaterialRecursosOT')" ng-if="validPriv(65)">Exportar</button>
 </div>

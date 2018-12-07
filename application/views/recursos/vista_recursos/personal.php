@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <table class="mytabla tabla-recursos font10">
+  <table id="tablaPersonalRecursosOT" class="mytabla tabla-recursos font10">
     <thead>
       <tr class="blue-grey lighten-4">
         <th></th>
@@ -65,4 +65,5 @@
       </tr>
     </tbody>
   </table>
+  <button type="button" class="btn green" ng-click="exportar_tabla('#tablaPersonalRecursosOT')" ng-if="validPriv(65)">Exportar</button>
 </div>
