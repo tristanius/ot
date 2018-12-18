@@ -337,12 +337,27 @@ class Ot_db extends CI_Model {
 	{
 		$this->load->database('ot');
 		$this->db->select('OT.idOT, OT.nombre_ot, OT.estado_doc, ');
-		$this->db->select('itf.iditemf, itc.item, itf.codigo, itf.descripcion,');
+		$this->db->select('itf.iditemf, itc.item, itf.codigo, itf.descripcion');
 		$this->db->select('( SELECT tarifa.tarifa FROM tarifa WHERE tarifa.itemf_iditemf = itf.iditemf ORDER BY tarifa.idtarifa DESC LIMIT 1 ) AS tarifa, ');
 		$this->db->select('tip.grupo_mayor AS tipo_item, IF(itt.facturable, "SI", "NO") AS facturable, ');
-		$this->db->select('IFNULL( (SELECT	SUM(itt2.cantidad) FROM item_tarea_ot AS itt2 WHERE itt2.itemf_iditemf = itt.itemf_iditemf'.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	) AS cantidad, ');
-		$this->db->select('IFNULL( (SELECT	SUM(itt2.duracion) FROM item_tarea_ot AS itt2 WHERE itt2.itemf_iditemf = itt.itemf_iditemf'.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	) AS duracion, ');
-		$this->db->select('IFNULL( (SELECT	SUM(itt2.cantidad_planeada) FROM item_tarea_ot AS itt2 WHERE itt2.itemf_iditemf = itt.itemf_iditemf'.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	) AS cantidad_planeada,');
+		$this->db->select('IFNULL(
+			(SELECT	SUM(itt2.cantidad)
+			FROM item_tarea_ot AS itt2
+			JOIN tarea_ot ON tarea_ot.idtarea_ot = itt2.tarea_ot_idtarea_ot
+			WHERE itt2.itemf_iditemf = itt.itemf_iditemf AND tarea_ot.OT_idOT = OT.idOT '.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	)
+			AS cantidad, ');
+		$this->db->select('IFNULL(
+			(SELECT	SUM(itt2.duracion)
+			FROM item_tarea_ot AS itt2
+			JOIN tarea_ot ON tarea_ot.idtarea_ot = itt2.tarea_ot_idtarea_ot
+			WHERE itt2.itemf_iditemf = itt.itemf_iditemf AND tarea_ot.OT_idOT = OT.idOT '.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	)
+			AS duracion, ');
+		$this->db->select('IFNULL(
+			(SELECT	SUM(itt2.cantidad_planeada)
+			FROM item_tarea_ot AS itt2
+			JOIN tarea_ot ON tarea_ot.idtarea_ot = itt2.tarea_ot_idtarea_ot
+			WHERE itt2.itemf_iditemf = itt.itemf_iditemf AND tarea_ot.OT_idOT = OT.idOT '.( isset($idfrente)? ' AND itt2.idfrente_ot = '.$idfrente : '' ).'), "-"	)
+			AS cantidad_planeada,');
 		if (isset($idfrente)) {
 			$this->db->select('( SELECT CONCAT(ft.nombre, " - ", ft.ubicacion) FROM frente_ot AS ft WHERE ft.idfrente_ot = '.$idfrente.' ) AS frente, ');
 		}
@@ -355,6 +370,7 @@ class Ot_db extends CI_Model {
 		$this->db->join('tipo_itemc AS tip', 'tip.idtipo_itemc = itc.idtipo_itemc');
 		$this->db->where('OT.idOT', $idOT);
 		$this->db->group_by('itf.iditemf, itt.facturable');
+		$this->db->order_by('itf.tipo','ASC');
 		$this->db->order_by('itf.codigo','ASC');
 		$this->db->order_by('itt.facturable', 'ASC');
 		return $this->db->get();

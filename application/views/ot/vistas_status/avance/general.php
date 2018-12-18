@@ -5,7 +5,7 @@
   <thead>
     <tr>
       <th colspan="1">Orden</th>
-      <th colspan="4">Item</th>
+      <th colspan="5">Item</th>
       <th colspan="4">Planeado</th>
       <th colspan="3">Ejecutado</th>
     </tr>
@@ -14,6 +14,7 @@
       <th>Item</th>
       <th>Codigo</th>
       <th>Descripción</th>
+      <th>Tipo</th>
       <th>Tarifa (*)</th>
       <th>Cant.</th>
       <th>Duración</th>
@@ -35,6 +36,7 @@
             <?= $item->descripcion ?>
           </div>
         </td>
+        <td><?= $item->tipo_item ?></td>
         <td class="right-align"><?= number_format( $item->tarifa, 2) ?></td>
         <td><?= $item->cantidad ?></td>
         <td><?= $item->duracion ?></td>

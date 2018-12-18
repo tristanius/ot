@@ -32,7 +32,7 @@
 					</td>
 					<td>
 						<select ng-model="act.idfrente_ot"
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot" ng-disabled="true">	
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="act.idfrente_ot = act.idfrente_ot" ng-disabled="true">
 						</select>
 					</td>
 					<td>{{ act.fecha_agregado }}</td>
@@ -58,7 +58,7 @@
 					</td>
 					<td>
 						<select ng-model="per.idfrente_ot"
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot" ng-disabled="true">	
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="per.idfrente_ot = per.idfrente_ot" ng-disabled="true">
 						</select>
 					</td>
 					<td>{{ per.fecha_agregado }}</td>
@@ -84,7 +84,7 @@
 					</td>
 					<td>
 						<select ng-model="eq.idfrente_ot"
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
@@ -111,7 +111,7 @@
 					</td>
 					<td>
 						<select ng-model="eq.idfrente_ot"
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
@@ -138,7 +138,7 @@
 					</td>
 					<td>
 						<select ng-model="eq.idfrente_ot"
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>
@@ -164,7 +164,7 @@
 					</td>
 					<td>
 						<select ng-model="eq.idfrente_ot"
-							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">	
+							ng-options="f.idfrente_ot as f.nombre for f in ot.frentes" ng-init="eq.idfrente_ot = eq.idfrente_ot" ng-disabled="true">
 						</select>
 					</td>
 					<td>{{ eq.fecha_agregado }}</td>

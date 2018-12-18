@@ -377,7 +377,6 @@ class Facturacion_db extends CI_Model{
     $this->db->order_by('rd.idreporte_diario','ASC');
     return $this->db->get();
   }
-
   public function informePYCO($where=NULL)
   {
     $this->load->database('ot');

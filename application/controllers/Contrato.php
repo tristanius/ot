@@ -77,14 +77,18 @@ class Contrato extends CI_Controller{
 
   public function get_contratos()
   {
+
+    $ret = new stdClass();
     if( $this->sesion_iniciada() ){
       $this->load->model('contrato_db', 'c');
       $contratos = $this->c->getContratos();
-      $ret = new stdClass();
       $ret->contratos = $contratos->result();
       $ret->status = TRUE;
-      echo json_encode($ret);
+    }else{
+      $ret->status = FALSE;
+      $ret->msj = "Sesion failed";
     }
+    echo json_encode($ret);
   }
 
   public function get($id)
