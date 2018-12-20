@@ -37,7 +37,9 @@
         <td ng-bind="c.tipo_acta"></td>
         <td>
           <button type="button" class="btn mini-btn" ng-click="factura('<?= site_url('factura/form/mod') ?>/'+c.idfactura, '#ventanaFactura','#ventanaFacturaOcultas')"> Editar </button>
-          <button type="button" class="btn mini-btn" ng-click="factura('<?= site_url('factura/ver') ?>/'+c.idfactura, '#ventanaFactura','#ventanaFacturaOcultas')"> Ver </button>
+          <button type="button" class="btn mini-btn" ng-click="ver('<?= site_url('factura/ver') ?>/'+c.idfactura, '#ventanaFactura','#ventanaFacturaOcultas')"> Ver </button>
+
+          <button type="button" class="btn mini-btn red darken-4" ng-click="delFactura('<?= site_url('factura/delete') ?>/', c.idfactura)"> Delete </button>
         </td>
       </tr>
     </tbody>

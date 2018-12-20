@@ -61,12 +61,15 @@ class Factura extends CI_Controller{
     return $contrato;
   }
   # Borrar una factura
-  public function delFactura($idfac)
+  public function delete()
   {
-    $this->load->database('ot');
-    $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfac));
-    $this->db->delete('factura', array('idfactura'=>$idfac));
-    echo "success";
+    $post = json_decode( file_get_contents('php://input') );
+    $this->load->model(array('fact'=>'factura_db'));
+    $this->fact->init_transact();
+    $ret = new stdClass();
+    $ret->status = $this->fact->delete($post->idfactura);
+    $this->fact->end_transact();
+    echo json_encode($ret);
   }
   # ============================================================================
   # ------- Procesos de form factura -------

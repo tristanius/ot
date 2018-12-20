@@ -52,15 +52,17 @@ var factura = function($scope, $http, $timeout){
     });
   }
 
-  $scope.delFactura = function(idfactura){
-    var modal = confirm('¿ Desea elimnar TODA ESTA FACTURA ?? !!!!!');
-    if (modal) {
-      $http.post($scope.$parent.site_url+'/factura/delFactura/'+idfactura, {}).then(
-        function(response) {
-          console.log(response.data);
-          if(response.data == 'success'){ $scope.getDataContrato(); }else{alert(response.data)}
+  $scope.delFactura = function(lnk, idfactura)
+  {
+    if ( confirm('¿ Desea eliminar esta acta de factura ?') ) {
+      $http.post(lnk, {idfactura: idfactura}).then(
+        function(resp) {
+          if(resp.data.status == true){
+            $scope.getDataContrato();
+          }
+          console.log(resp.data);
         },
-        function(response) { alert('algo ha fallado'); console.log(response.data); }
+        function(resp) { alert('algo ha fallado'); console.log(resp.data); }
       );
     }
   }

@@ -24,7 +24,7 @@
     <table id="tablaRecursos" class="mytabla font10" style="min-width:1270px; max-width:2500px;">
       <thead>
         <tr>
-          <th><small>Selecc.</small></th>
+          <th>Del.</th>
           <th style="min-width:100px">Orden</th>
           <th>C.O.</th>
           <th style="min-width:100px">Fecha</th>
@@ -48,7 +48,7 @@
           <th>Del.</th>
         </tr>
         <tr class="noMaterialStyles regularForm">
-          <th> <input type="checkbox" ng-model="allitems" ng-click="modSeletionState(orden.recursos, allitems)"> </th>
+          <th> </th>
           <th> <input class="inputMedium" type="text" placeholder="Filtro" ng-model="filtroItems.nombre_ot" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.base_idbase" ng-change="changeSelectFac('filtroItems')"> </th>
           <th> <input class="inputSmall" type="text" placeholder="Filtro" ng-model="filtroItems.fecha_reporte" ng-change="changeSelectFac('filtroItems')"> </th>

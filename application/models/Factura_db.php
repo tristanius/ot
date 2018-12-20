@@ -64,6 +64,13 @@ class Factura_db extends CI_Model{
     $this->load->database('ot');
     return $this->db->update('factura', $data, 'idfactura = '.$factura->idfactura);
   }
+  # Eliminar factura
+  public function delete($value='')
+  {
+    $this->load->database('ot');
+    $this->db->delete('factura_recurso_reporte', array('idfactura_recurso_reporte'=>$idfac));
+    return $this->db->delete('factura', array('idfactura'=>$idfac));
+  }
   #============================================================================
   # Recurso
   public function addRecurso($rec, $idfac)

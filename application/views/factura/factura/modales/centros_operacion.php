@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedCOs(); getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="!factura.validado"> Filtrar los C.O.´s seleccionados. </a>
+    <a href="#!" class="btn mini-btn modal-close" ng-click="selectedCOs(); getRecursos('<?= site_url('factura/get_recursos')  ?>')" ng-if="!factura.validado && !factura.idfactura"> Filtrar los C.O.´s seleccionados. </a>
     <a href="#!" class="btn mini-btn modal-close red darken-3" > Salir sin filtrar </a>
   </div>
 </div>
