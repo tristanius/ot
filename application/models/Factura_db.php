@@ -132,9 +132,14 @@ class Factura_db extends CI_Model{
       rrd.horas_operacion,
       rrd.horas_disponible,
       getDispon(itf.iditemf, rrd.horas_operacion, rrd.horas_disponible, itc.und_minima, itc.unidad, itc.hrdisp, itc.basedisp)*rrd.cantidad*1 AS disponibilidad,
-      vg.a AS a_vigencia,
-      vg.i AS i_vigencia,
-      vg.u AS u_vigencia,
+      IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT AND ( rd.fecha_reporte BETWEEN tarea_ot.fecha_inicio AND tarea_ot.fecha_fin ) ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a ) AS a_vigencia,
+      IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT AND ( rd.fecha_reporte BETWEEN tarea_ot.fecha_inicio AND tarea_ot.fecha_fin ) ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i ) AS i_vigencia,
+      IFNULL((SELECT tarea_ot.u FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT AND ( rd.fecha_reporte BETWEEN tarea_ot.fecha_inicio AND tarea_ot.fecha_fin ) ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.u ) AS u_vigencia,
+
+      IFNULL((SELECT tarea_ot.a FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT AND ( rd.fecha_reporte BETWEEN tarea_ot.fecha_inicio AND tarea_ot.fecha_fin ) ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.a )*(rrd.cantidad * tr.tarifa) AS subtotal_a,
+      IFNULL((SELECT tarea_ot.i FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT AND ( rd.fecha_reporte BETWEEN tarea_ot.fecha_inicio AND tarea_ot.fecha_fin ) ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.i )*(rrd.cantidad * tr.tarifa) AS subtotal_i,
+      IFNULL((SELECT tarea_ot.u FROM tarea_ot WHERE tarea_ot.OT_idOT = OT.idOT AND ( rd.fecha_reporte BETWEEN tarea_ot.fecha_inicio AND tarea_ot.fecha_fin ) ORDER BY tarea_ot.idtarea_ot ASC LIMIT 1), vg.u )*(rrd.cantidad * tr.tarifa) AS subtotal_u,
+
       frrd.*'
     )->from('contrato AS c')
     ->join('OT', 'OT.idcontrato = c.idcontrato')

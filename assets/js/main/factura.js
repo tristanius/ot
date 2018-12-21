@@ -225,7 +225,7 @@ var formFactura = function($scope, $http, $timeout){
   $scope.deleteRecurso = function(elemento, lnk){
     $scope.$parent.spinner = true;
     var i = $scope.factura.recursos.indexOf(elemento);
-    var conf = confirm("Desea continuar borrando este concepto de la factura "+$scope.factura.no_factura+"?");
+    var conf = confirm("Desea continuar borrando este recurso de la factura "+$scope.factura.no_factura+"?");
     if(conf){
       if( elemento.idfactura_recurso_reporte ){
         $http.post(lnk, elemento).then(
@@ -247,6 +247,7 @@ var formFactura = function($scope, $http, $timeout){
         );
       }else{
         $scope.factura.recursos.splice(i, 1);
+        $scope.doc_status = 'modificado';
       }
     }
     $scope.$parent.spinner = false;
