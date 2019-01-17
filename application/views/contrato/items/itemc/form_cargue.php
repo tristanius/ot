@@ -1,4 +1,4 @@
-<section id="formUploadItems"  class="modal modal-fixed-footer" ng-init="initModals('#formUploadItems.modal');">
+<section id="formUploadItems"  class="modal modal-fixed-footer" ng-init="initModals('#formUploadItems.modal'); initAdjunto('<?= site_url('item/import') ?>')">
 
   <div class="modal-content">
     <h4> Cargue de items al contrato <span ng-bind="contrato.no_contrato"></span> </h4>
@@ -17,7 +17,7 @@
       <div class="col s12 m12 l6 padding1ex">
         <div class="card-panel">
           <h6>Descargar Plantilla de cargue de items</h6>
-          <a href="<?= base_url('downloads/plantillas/cargue_items.xlsx') ?>" class="btn btn-small green">Descargar plantilla</a>
+          <a href="<?= base_url('downloads/plantillas/cargue_items.xlsx') ?>" class="btn btn-small green" download>Descargar plantilla</a>
         </div>
       </div>
       <p></p>
