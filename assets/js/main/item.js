@@ -121,7 +121,7 @@ var itemc = function($scope, $http, $timeout){
   $scope.initAdjunto = function(ruta) {
     console.log(ruta)
     // Se guarda en una variable el objeto retornado del inicio de la funcion de carga
-    $scope.adjunto = $("#fileuploader").uploadFile({
+    $scope.adjunto = $("#cargue_items").uploadFile({
       url:ruta,
       autoSubmit: false,
       allowedTypes:'xlsx',
