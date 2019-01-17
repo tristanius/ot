@@ -126,6 +126,7 @@ var itemc = function($scope, $http, $timeout){
       autoSubmit: false,
       allowedTypes:'xlsx',
       fileName:"myfile",
+      dragDrop:false,
       dynamicFormData: function(){
         var data = {
           idcontrato : $scope.contrato.idcontrato

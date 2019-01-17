@@ -33,7 +33,7 @@ class Itemf_db extends CI_Model{
       'descripcion' => $item->descripcion_interna,
       'unidad' => $item->unidad,
       'tipo' => $item->tipo,
-      'itemc_iditemc' => $item->iditemc,
+      'itemc_iditemc' => isset($item->iditemc)?$item->iditemc:$item->itemc_iditemc,
       'itemc_item' => $item->item,
       'incidencia' => $item->incidencia,
       'idusuario' => $this->session->userdata('idusuario')
@@ -41,6 +41,17 @@ class Itemf_db extends CI_Model{
     return $this->db->update('itemf', $data, 'iditemf = '.$item->iditemf);
   }
 
+  public function getBy($where=NULL, $select = NULL)
+  {
+    $this->load->database('ot');
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    if (isset($select)) {
+      $this->db->select($select);
+    }
+    return $this->db->from('itemf')->join('itemc', 'itemc.iditemc = itemf.itemc_iditemc')->join('contrato AS c', 'c.idcontrato = itemc.idcontrato')->get();
+  }
 
   # =================================================================================
   public function init_transact()

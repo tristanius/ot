@@ -109,7 +109,7 @@ class Item extends CI_Controller {
 				if( $j > 0 ){
 					$item = $this->getItemSchema($row, $idcontrato);
 					if(isset($item)){
-						$row['resultado'] = $this->addItem(); # Metodo creado para simplificar el codigo
+						$row['resultado'] = $this->addItem($item, $idcontrato); # Metodo creado para simplificar el codigo
 					}else{
 						$row['resultado'] = 'No se pudo formar la estructura del item.';
 						$ret->status = FALSE;
@@ -157,10 +157,10 @@ class Item extends CI_Controller {
 	public function addItem($item, $idcontrato)
 	{
 		$tipo = $item->tipo;
-		$items = $this->itc->getBy( array('itemc.item'=>$item->item, 'itemc.idcontrato'=>$idcontrato, 'itemc.tipo'=>$item->tipo) );
+		$items = $this->itf->getBy( array('itemf.codigo'=>$item->codigo, 'itemc.idcontrato'=>$idcontrato );
 		if ( $items->num_rows() <= 0 ) {
 			$item->iditemc = $this->itc->add($item, $idcontrato); # Agregamos el item de contrato y obtenemos el ID
-			$this->itf->add($item); # Agregamos el item de factutracion interna
+			$this->itf->add($item); # Agregamos el item de facturacion interna
 			return 'Item OK, por agregar.';
 		}
 		return 'Item y tipo ya existentes en el contrato.';
@@ -193,7 +193,6 @@ class Item extends CI_Controller {
 	    force_download('./downloads/items/'.$file.'.xlsx', NULL);
 		}
 	}
-
 
 	# --------------------------------------------------------------------------
 	private function sesion_iniciada()

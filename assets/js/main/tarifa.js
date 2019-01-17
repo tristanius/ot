@@ -5,6 +5,7 @@ var addTarifa = function($scope, $http, $timeout){
   $scope.initAdjunto = function(ruta){
     $scope.adjunto = $("#FileUploader").uploadFile({
       url:ruta,
+      dragDrop:false,
       fileName:"file",
       autoSubmit: false,
       onSuccess:function(files,data,xhr,pd){
