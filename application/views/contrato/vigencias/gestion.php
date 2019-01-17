@@ -13,9 +13,6 @@
       <button type="button" class="btn btn-small blue-grey darken-4 modal-trigger"  data-target="<?= $idtag ?>">Seleccionar</button>
     </div>
 
-    <div id="cargue_tarifas" ng-init="initUploadTarifas('<?= site_url('item/import') ?>')">Seleccionar archivo</div>
-    <button type="button" class="btn mini-btn" ng-click="IniciarUploadTarifas()" ng-if="isSelectedFile">Subir archivo</button>
-
     <div id="myTabsVigencias<?= $random ?>" ng-init="initJquerytTabs('#myTabsVigencias<?= $random ?>')">
       <ul>
         <li><a href="#tabs-1">Vigencias</a></li>
@@ -28,7 +25,7 @@
         <?php $this->load->view('contrato/vigencias/tabs_tarifas'); ?>
       </div>
     </div>
-
+    
     <?php  $this->load->view('contrato/select_contrato', array( 'idtag'=>$idtag )); ?>
   <div>
 </section>
