@@ -157,7 +157,7 @@ class Item extends CI_Controller {
 	public function addItem($item, $idcontrato)
 	{
 		$tipo = $item->tipo;
-		$items = $this->itf->getBy( array('itemf.codigo'=>$item->codigo, 'itemc.idcontrato'=>$idcontrato );
+		$items = $this->itf->getBy( array('itemf.codigo'=>$item->codigo, 'itemc.idcontrato'=>$idcontrato) );
 		if ( $items->num_rows() <= 0 ) {
 			$item->iditemc = $this->itc->add($item, $idcontrato); # Agregamos el item de contrato y obtenemos el ID
 			$this->itf->add($item); # Agregamos el item de facturacion interna
