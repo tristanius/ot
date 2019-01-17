@@ -1,4 +1,4 @@
-<section id="formUploadItems"  class="modal modal-fixed-footer" ng-init="initModals('#formUploadItems.modal');  ?>')">
+<section id="formUploadItems"  class="modal modal-fixed-footer" ng-init="initModals('#formUploadItems.modal');">
 
   <div class="modal-content">
     <h4> Cargue de items al contrato <span ng-bind="contrato.no_contrato"></span> </h4>
