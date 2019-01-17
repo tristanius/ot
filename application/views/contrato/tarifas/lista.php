@@ -1,4 +1,6 @@
 <div >
+  <div id="cargue_tarifas" ng-init="initUploadTarifas('<?= site_url('item/import') ?>')">Seleccionar archivo</div>
+  <button type="button" class="btn mini-btn" ng-click="IniciarUploadTarifas()" ng-if="isSelectedFile">Subir archivo</button>
   <p>
     <h5 class="center-align"> Listado de tarifas de la vigencia</h5>
 
