@@ -52,6 +52,11 @@ var vigencia_tarifas = function($scope, $http, $timeout){
     );
   }
 
+  $scope.save = function(lnk, myvg, lnk2){
+    myv.idcontrato = $scope.contrato.idcontrato;
+    $scope.peticion(lnk, myvg, );
+  }
+
   // Obtener vigencias de tarifas
   $scope.getVigencias = function(lnk, idcontrato){
     if(idcontrato){
